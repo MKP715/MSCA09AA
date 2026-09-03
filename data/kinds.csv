@@ -1,0 +1,32 @@
+﻿set,key,label_en,label_es,color,icon
+meeting,District,District,Distrito,brand,map-location-dot
+meeting,H&I,H&I,H&I,rose,hospital
+meeting,Intergroup,Intergroup / Central Office,Intergrupo / Oficina Central,amber,building
+meeting,Area,Area,Área,emerald,landmark
+meeting,Other,Other,Otro,slate,calendar
+event,Assembly,Assembly,Asamblea,fuchsia,people-roof
+event,Area Committee,Area Committee,Comité de Área,brand,landmark
+event,Servathon,Servathon,Servathon,emerald,hands-holding-circle
+event,Forum,Forum,Foro,orange,comments
+event,Workshop,Workshop,Taller,teal,screwdriver-wrench
+event,YPAA,YPAA,YPAA,red,fire
+event,Service School,Service School,Escuela de Servicio,lime,graduation-cap
+event,Convention,Convention,Convención,violet,star
+event,Event,Event,Evento,sky,calendar-day
+area,Assembly,Assembly,Asamblea,fuchsia,people-roof
+area,ASC,Area Service Committee,Comité de Servicio de Área,brand,landmark
+area,Foro,Foro,Foro,orange,comments
+area,Servathon,Servathon,Servathon,emerald,hands-holding-circle
+doc,Minutes,Minutes,Actas,brand,folder-open
+doc,Motions,Motions,Mociones,fuchsia,folder-open
+doc,Conference,Conference,Conferencia,emerald,folder-open
+doc,Calendar,Calendars,Calendarios,amber,folder-open
+doc,Contributions,Contributions,Contribuciones,teal,folder-open
+doc,Reports,Reports,Informes,rose,folder-open
+resource,New to A.A.,New to A.A.,Nuevo en A.A.,rose,hand-holding-heart
+resource,The Legacies,The Legacies,Los Legados,fuchsia,layer-group
+resource,General Service,General Service,Servicios Generales,brand,sitemap
+resource,Anonymity & Safety,Anonymity & Safety,Anonimato y Seguridad,violet,user-secret
+resource,Self-Support,Self-Support,Automantenimiento,emerald,hand-holding-dollar
+resource,Literature,Literature,Literatura,amber,book
+resource,Nearby Central Offices,Central offices & intergroups,Oficinas centrales e intergrupos,teal,building

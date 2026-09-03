@@ -1,0 +1,16 @@
+﻿sort,parent,label_en,label_es,href,icon,desc_en,desc_es
+10,,Home,Inicio,#/,house,,
+20,,Meetings & Events,Reuniones y Eventos,,calendar-days,,
+21,Meetings & Events,Service Calendar,Calendario de Servicio,#/meetings,calendar-check,"Every district, H&I, intergroup and Area meeting","Cada reunión de distrito, H&I, intergrupo y Área"
+22,Meetings & Events,Events,Eventos,#/events,star,"Assemblies, workshops, forums and round-ups","Asambleas, talleres, foros y eventos"
+30,,Districts,Distritos,#/districts,map-location-dot,,
+40,,Service,Servicio,,people-group,,
+41,Service,Committees,Comités,#/committees,sitemap,"What each Area committee does, and who to write",Qué hace cada comité y a quién escribir
+42,Service,Panel 76,Panel 76,#/servants,address-book,"Officers, chairs and D.C.M.C.s","Oficiales, coordinadores y M.C.D.C."
+43,Service,Minutes & Motions,Actas y Mociones,#/documents,file-lines,"Minutes, motions, agendas and reports","Actas, mociones, agendas e informes"
+44,Service,A.A. Resources,Recursos de A.A.,#/resources,book-open,"The Steps, Traditions, Concepts and more on aa.org","Pasos, Tradiciones, Conceptos y más en aa.org"
+50,,7th Tradition,Séptima Tradición,#/contribute,hand-holding-dollar,,
+60,,About,Información,,circle-info,,
+61,About,About Area 09,Sobre el Área 09,#/about,landmark,Who we are and how the Area is put together,Quiénes somos y cómo se organiza el Área
+62,About,Anonymity,Anonimato,#/anonymity,user-secret,Our website and anonymity policy,Nuestra política de sitio web y anonimato
+63,About,Contact,Contacto,#/contact,paper-plane,Reach the Area — or send us something to post,Contacta al Área o envíanos material

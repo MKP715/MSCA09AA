@@ -1,0 +1,72 @@
+﻿key,en,es
+skip,Skip to main content,Ir al contenido principal
+loading,Loading…,Cargando…
+loadErr,Could not load this data.,No se pudieron cargar estos datos.
+noResults,Nothing matches those filters yet.,Nada coincide con esos filtros todavía.
+clearFilters,Clear filters,Limpiar filtros
+search,Search,Buscar
+all,All,Todos
+upcoming,Upcoming,Próximas
+monthView,Month,Mes
+patternView,Monthly pattern,Patrón mensual
+gcalView,Google Calendar,Google Calendar
+day,Day,Día
+type,Type,Tipo
+format,Format,Formato
+language,Language,Idioma
+english,English,Inglés
+spanish,Spanish,Español
+hybrid,Hybrid,Híbrida
+inperson,In person,Presencial
+online,Online,En línea
+zoomId,Zoom ID,ID de Zoom
+passcode,Passcode,Contraseña
+joinZoom,Join on Zoom,Entrar por Zoom
+covers,Covers,Cubre
+website,Website,Sitio web
+contact,Contact,Contacto
+position,Position,Puesto
+district,District,Distrito
+addToCal,Add to my calendar,Añadir a mi calendario
+subscribe,Subscribe to this calendar,Suscribirse a este calendario
+week,Week,Semana
+today,Today,Hoy
+printable,Printable flyer (PDF),Volante imprimible (PDF)
+allTimesPT,All times shown are Pacific Time.,Todas las horas son del Pacífico.
+vacant,Open — needs a trusted servant,Abierto — necesita un servidor
+share,Share,Compartir
+copied,Link copied,Enlace copiado
+shareFail,Could not copy — the link is in the address bar,No se pudo copiar — el enlace está en la barra de direcciones
+close,Close,Cerrar
+details,Details,Detalles
+flyer,Flyer,Volante
+download,Download,Descargar
+open,Open,Abrir
+when,When,Cuándo
+where,Where,Dónde
+about,About,Acerca de
+viewFlyer,View flyer,Ver volante
+nextDates,Next dates,Próximas fechas
+newTab,opens in a new tab,se abre en una pestaña nueva
+noEvents,No events are listed yet.,Todavía no hay eventos publicados.
+trustedServants,Trusted servants,Servidores de confianza
+meetingDetails,Meeting details,Detalles de la reunión
+map,Map,Mapa
+newToAA,New to A.A.?,¿Nuevo en A.A.?
+home,Home,Inicio
+allYears,All years,Todos los años
+showPast,Show meetings already held this year,Ver las reuniones ya celebradas este año
+hostedBy,Hosted by,Anfitrión
+coversDistricts,Covers districts,Cubre los distritos
+every,Every,Cada
+allDay,All day,Todo el día
+areaLinks,Area 09,Área 09
+aaLinks,A.A. Links,Enlaces de A.A.
+staticSite,Static site · no server ·,Sitio estático · sin servidor ·
+syncedWith,Synced with Google Calendar ·,Sincronizado con Google Calendar ·
+openInGcal,Open in Google Calendar,Abrir en Google Calendar
+searchMeetings,"District, city, committee…","Distrito, ciudad, comité…"
+matchOne,district matches,distrito coincide con
+matchMany,districts match,distritos coinciden con
+areaCommittee,Area committee,Comité de Área
+dataError,"The data files (data/*.csv) did not load. If you opened this file straight from disk, the browser blocks reading local files — publish it to GitHub Pages or serve it locally (for example: python -m http.server).","Los archivos de datos (data/*.csv) no se cargaron. Si abriste este archivo directamente desde el disco, el navegador bloquea la lectura de archivos locales — súbelo a GitHub Pages o sírvelo con un servidor local (por ejemplo: python -m http.server)."

@@ -1,8 +1,190 @@
-﻿start,end,title,title_es,kind,location,city,url,flyer,language,description
-2026-09-13 08:00:00,2026-09-13 15:00:00,Area Service Assembly,,Event,Mizell Center,Palm Springs,https://msca09aa.org/event/area-service-assembly/,,English,
-2026-09-17 18:00:00,2026-09-17 19:30:00,Monthly Service Study and Sharing Session,,Event,,,https://msca09aa.org/event/monthly-service-study-and-sharing-session-5/,,English,
-2026-09-27 17:00:00,2026-09-27 19:00:00,ROCYPAA Business Meeting,,Event,Irvine United Congregational Church,Irvine,https://msca09aa.org/event/rocypaa-business-meeting-2/,,English,
-2026-10-02 19:30:00,2026-10-02 22:00:00,Soberfest / Alcoholic Family Feud,,Event,Community of Christ Church,Orange,https://msca09aa.org/event/soberfest-alcoholic-family-feud/,,English,
-2026-11-14 10:00:00,2026-11-14 14:00:00,MSCA Area 09 Panel 76 Servathon,,Event,Knights of Columbus,San Bernadino,https://msca09aa.org/event/msca-area-09-panel-76-servathon/,,English,
-2026-12-04 00:00:00,2026-12-06 23:59:59,2026 Pacific Regional Forum,,Event,Wyndham San Diego,San Diego,https://msca09aa.org/event/2026-pacific-regional-forum/,,English,
-2026-12-12 00:00:00,2026-12-12 23:59:59,11th Hispanic Woman’s Workshop,,Event,Anaheim First Christian Church,Anaheim,https://msca09aa.org/event/11th-hispanic-womans-workshop/,,English,
+﻿slug,start,end,all_day,title,title_es,kind,language,venue,address,city,region,postal,cost,flyers,description,website,contact_email
+january-area-service-assembly,2026-01-11 08:30:00,2026-01-11 15:00:00,,January Area Service Assembly,,Assembly,English,1305 E Pacific Coast Highway,1305 E Pacific Coast Highway,Long Beach,CA,90806,,docs/events/january-area-service-assembly-1.jpg; docs/events/january-area-service-assembly-2.jpg,,,
+area-service-committee-asc-1,2026-02-08 09:00:00,2026-02-08 15:00:00,,Area Service Committee (ASC-1),,Area Committee,Spanish,Jurupa Community Center,4810 Pedley Road,Jurupa Valley,CA,92509,,docs/events/area-service-committee-asc-1-1.jpg; docs/events/area-service-committee-asc-1-2.jpg,"Agenda: English 
+
+ Agenda: español 
+
+ https://us06web.zoom.us/j/89661666203#success 
+
+ Meeting ID: 896 6166 6203
+
+ Password: Panel76
+
+ 4810 Pedley Road Jurupa Valley, CA 92509",https://us06web.zoom.us/j/89661666203#success,
+monthly-service-study-and-sharing-session,2026-02-19 18:00:00,2026-02-19 19:30:00,,Monthly Service Study and Sharing Session,,Event,English,,,,,,,docs/events/monthly-service-study-and-sharing-session-1.jpg,"https://us06web.zoom.us/j/85989557002 
+
+ Meeting ID: 859 8955 7002
+
+ Passcode: Panel76",,
+aa-s-12-concepts-for-world-service,2026-02-20 10:00:00,2026-02-20 11:00:00,,AA’s 12 Concepts For World Service,,Event,English,,,,,,,docs/events/aa-s-12-concepts-for-world-service-1.jpg; docs/events/aa-s-12-concepts-for-world-service-2.jpg,"AA’s 12 Concepts For World Service
+
+ Zoom ID: 826 943 0797
+
+PW: 124145",,
+hispanic-intradistrict-meeting,2026-02-22 00:00:00,2026-02-22 23:59:59,yes,Hispanic Intradistrict Meeting,,Event,Spanish,,,,,,,,,,
+gsr-school-with-district-9,2026-02-22 00:00:00,2026-02-22 23:59:59,yes,GSR School with District 9,,Service School,English,,,,,,,,,,
+prassa-in-hawaii,2026-02-27 00:00:00,2026-03-01 23:59:59,yes,PRASSA in Hawaii,,Event,English,Hilton Hawaiian Village,"2005 Kālia Rd,",Honolulu,HI,96815,,docs/events/prassa-in-hawaii-1.jpg,https://praasa.org,www.prassa.org,
+cupids-reds-flags,2026-02-28 16:30:00,2026-02-28 17:30:00,,Cupids Reds Flags,,Event,English,5969 Brockton Ave,5969 Brockton Ave,Riverside,CA,92506,,docs/events/cupids-reds-flags-1.jpg,,,
+area-service-committee-asc-2,2026-03-08 09:00:00,2026-03-08 15:00:00,,Area Service Committee (ASC-2),,Area Committee,English,Long Beach Community College,4901 East Carson Street,Long Beach,CA,90808,,docs/events/area-service-committee-asc-2-1.jpg; docs/events/area-service-committee-asc-2-2.jpg; docs/events/area-service-committee-asc-2-3.jpg,"https://us06web.zoom.us/j/89661666203#success 
+
+ Meeting ID:
+
+ 896 6166 6203
+
+ Password: Panel76",,
+acypaa-53,2026-03-19 00:00:00,2026-03-22 23:59:59,yes,ACYPAA 53,,YPAA,English,Sheraton Gateway Los Angeles Hotel,6101 W Century Blvd,Los Angeles,,90045,,docs/events/acypaa-53-1.jpg; docs/events/acypaa-53-2.jpg; docs/events/acypaa-53-3.jpg,,,
+monthly-service-study-and-sharing-session-2,2026-03-19 18:00:00,2026-03-19 19:30:00,,Monthly Service Study and Sharing Session,,Event,English,,,,,,,docs/events/monthly-service-study-and-sharing-session-1.jpg; docs/events/monthly-service-study-and-sharing-session-2.jpg,"https://us06web.zoom.us/j/85989557002 
+
+ Meeting ID: 859 8955 7002
+
+ Passcode: Panel76",,
+district-6-12-18-pre-conference-agenda-item-bootcamp-in-pers,2026-03-22 08:30:00,2026-03-22 12:30:00,,"District 6,12,18 Pre Conference Agenda Item Bootcamp (in person)",,Convention,English,Norma Hertzog Community Center,1845 Park Avenue,Costa Mesa,CA,92627,,docs/events/district-6-12-18-pre-conference-agenda-item-bootcamp-in-pers-1.jpg; docs/events/district-6-12-18-pre-conference-agenda-item-bootcamp-in-pers-2.jpg,"Bootcamp Pre-Conference. District 6, 12 & 18 at the Norma Herzog Center – Costa Mesa
+
+ (Hybrid) Zoom ID: 886 6439 3306 PC:
+
+ BootCamp26 8:30am-12:30pm",,
+gsr-school-virtual,2026-03-25 19:00:00,2026-03-25 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+interdistrict-meeting-english-and-spanish,2026-03-29 08:00:00,2026-03-29 12:30:00,,Interdistrict Meeting English and Spanish,,Event,Spanish,Intercity Fellowship Hall,5881 Cherry Ave,Long Beach,CA,90805,,docs/events/interdistrict-meeting-english-and-spanish-1.jpg; docs/events/interdistrict-meeting-english-and-spanish-2.jpg; docs/events/interdistrict-meeting-english-and-spanish-3.jpg; docs/events/interdistrict-meeting-english-and-spanish-4.jpg,,,
+gsr-school-virtual-2,2026-04-01 19:00:00,2026-04-01 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+gsr-school-virtual-3,2026-04-08 19:00:00,2026-04-08 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+preconference-area-service-committee,2026-04-12 09:00:00,2026-04-12 15:00:00,,Preconference Area Service Committee,,Area Committee,English,Crown Valley Community Center,29751 Crown Valley Parkway,Laguna Niguel,CA,92677,,docs/events/preconference-area-service-committee-1.jpg; docs/events/preconference-area-service-committee-2.jpg,"MSCA 09 Preconference – Come get caught up on all the General Service Conference Agenda Items. Will be in person and online – Hybrid!
+
+ Meeting ID: 896 6166 6203 Passcode: Panel76 
+
+ https://us06web.zoom.us/j/89661666203",https://us06web.zoom.us/j/89661666203?pwd=WQAQbswqxDwlCmbiMI852nxafbUJBA.1,
+gsr-school-virtual-4,2026-04-15 19:00:00,2026-04-15 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+monthly-service-study-and-sharing-session-3,2026-04-16 18:00:00,2026-04-16 19:30:00,,Monthly Service Study and Sharing Session,,Event,English,,,,,,,docs/events/monthly-service-study-and-sharing-session-1.jpg; docs/events/monthly-service-study-and-sharing-session-2.jpg,"https://us06web.zoom.us/j/85989557002 
+
+ Meeting ID: 859 8955 7002
+
+ Passcode: Panel76",,
+37th-inland-empire-a-a-convention,2026-04-17 00:00:00,2026-04-19 23:59:59,yes,37th Inland Empire A.A. Convention,,Convention,English,Soboba Casino Resort Event Center,22777 Soboba Rd,San Jacinto,California,92583,,docs/events/37th-inland-empire-a-a-convention-1.jpg,"37th Inland Empire A.A. Convention on April 17th-19@ Soboba Casino in San Jacinto,CA",,
+d09-gsr-school,2026-04-19 15:00:00,2026-04-19 16:00:00,,D09 GSR School,,Service School,English,,,,,,,docs/events/d09-gsr-school-1.jpg,virtual only ID: 928-8170-4093 PC:634401 3PM PDT,,
+41st-orange-county-a-a-convention,2026-05-01 00:00:00,2026-05-03 23:59:59,yes,41st Orange County A.A. Convention,,Convention,English,Hilton Orange County,3050 Bristol Strett,Costa Mesa,CA,92626,,,"41st Orange County A.A. Convention On May 1st-3rd Hilton Orange County, Costa Mesa, CA",,
+gsr-school-virtual-5,2026-05-06 19:00:00,2026-05-06 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+gsr-school-virtual-6,2026-05-13 19:00:00,2026-05-13 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+delegate-shareback-session-and-asa,2026-05-17 08:00:00,2026-05-17 15:00:00,,Delegate Shareback Session and ASA,,Event,English,Jurupa Community Center,4810 Pedley Road,Jurupa Valley,CA,92509,,docs/events/delegate-shareback-session-and-asa-1.jpg; docs/events/delegate-shareback-session-and-asa-2.jpg,,,
+d09-gsr-school-2,2026-05-17 15:00:00,2026-05-17 16:00:00,,D09 GSR School,,Service School,English,,,,,,,docs/events/d09-gsr-school-1.jpg,virtual only ID: 928-8170-4093 PC:634401 3PM PDT,,
+gsr-school-virtual-7,2026-05-20 19:00:00,2026-05-20 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+monthly-service-study-and-sharing-session-4,2026-05-21 18:00:00,2026-05-21 19:30:00,,Monthly Service Study and Sharing Session,,Event,English,,,,,,,docs/events/monthly-service-study-and-sharing-session-1.jpg; docs/events/monthly-service-study-and-sharing-session-2.jpg,"https://us06web.zoom.us/j/85989557002 
+
+ Meeting ID: 859 8955 7002
+
+ Passcode: Panel76",,
+gsr-school-virtual-8,2026-05-27 19:00:00,2026-05-27 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+journey-back-in-aa-time,2026-05-30 13:30:00,2026-05-30 15:30:00,,Journey Back in AA Time,,Event,English,Southbay Alano Club,702 11th Pl,Hermosa Beach,CA,90254,,docs/events/journey-back-in-aa-time-1.jpg,,,
+gsr-school-virtual-9,2026-06-03 19:00:00,2026-06-03 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+sunshine-of-the-spirit-high-desert-convention,2026-06-05 00:00:00,2026-06-07 23:59:59,yes,Sunshine of the Spirit – High desert convention,,Convention,English,Marriott Courtyard – Hesperia,9619 Mariposa Road,Hesperia,CA,92345,,docs/events/sunshine-of-the-spirit-high-desert-convention-1.jpg,,,
+gsr-school-virtual-10,2026-06-10 19:00:00,2026-06-10 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+area-service-committee-meeting,2026-06-14 08:00:00,2026-06-14 15:00:00,,Area Service Committee Meeting,,Area Committee,English,,,,,,,docs/events/area-service-committee-meeting-1.jpg; docs/events/area-service-committee-meeting-2.jpg,,,
+gsr-school-virtual-11,2026-06-17 19:00:00,2026-06-17 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+monthly-service-study-and-sharing-session-5,2026-06-18 18:00:00,2026-06-18 19:30:00,,Monthly Service Study and Sharing Session,,Event,English,,,,,,,docs/events/monthly-service-study-and-sharing-session-1.jpg; docs/events/monthly-service-study-and-sharing-session-2.jpg,"https://us06web.zoom.us/j/85989557002 
+
+ Meeting ID: 859 8955 7002
+
+ Passcode: Panel76",,
+d09-gsr-school-3,2026-06-21 15:00:00,2026-06-21 16:00:00,,D09 GSR School,,Service School,English,,,,,,,docs/events/d09-gsr-school-1.jpg,virtual only ID: 928-8170-4093 PC:634401 3PM PDT,,
+gsr-school-virtual-12,2026-06-24 19:00:00,2026-06-24 20:00:00,,GSR School Virtual,,Service School,English,,,,,,,docs/events/gsr-school-virtual-1.jpg,GSR School Virtual,,
+spanish-interdistrict-meeting,2026-06-28 08:00:00,2026-06-28 12:00:00,,SPANISH INTERDISTRICT MEETING,,Event,Spanish,"1117 W 17th St, Santa Ana, CA 92706",1117 W 17th St,Santa Ana,CA,92706,,docs/events/spanish-interdistrict-meeting-1.jpg; docs/events/spanish-interdistrict-meeting-2.jpg,"Date: Sunday, June 28, 2026
+
+ Time: 8:00 AM – 12:00 PM
+
+ Host: District 24
+
+ Location: 1117 W 17th St, Santa Ana, CA 92706",,
+4-areas-dcm-sharing-session,2026-07-11 09:00:00,2026-07-11 14:30:00,,4 Areas DCM Sharing Session,,Event,English,Highland Park Senior Center,6152 N Figueroa St,Los Angeles,CA,90042,,docs/events/4-areas-dcm-sharing-session-1.jpg; docs/events/4-areas-dcm-sharing-session-2.jpg,,,
+foro-la-fortaleza-es-la-vida-servidor-in-spanish-english,2026-07-12 00:00:00,2026-07-12 23:59:59,yes,Foro La Fortaleza Es La Vida Servidor in Spanish & English,,Forum,Spanish,Thousand Palms Community Center,31189 Robert Road,Thousand Palms,CA,92276,,docs/events/foro-la-fortaleza-es-la-vida-servidor-in-spanish-english-1.jpg; docs/events/foro-la-fortaleza-es-la-vida-servidor-in-spanish-english-2.jpg; docs/events/foro-la-fortaleza-es-la-vida-servidor-in-spanish-english-3.jpg; docs/events/foro-la-fortaleza-es-la-vida-servidor-in-spanish-english-4.jpg,"The Life of the Servant is Strength, 31189 Robert Rd. Thousand Palms, CA 92276
+
+ SP_35 Foro 
+
+ EN_35 Forum",,
+sponsorship-workshop,2026-08-07 18:00:00,2026-08-07 21:00:00,,Sponsorship Workshop,,Workshop,English,Garden Grove Alano Club,9845 Belfast Drive,Garden Grove,CA,92844,,docs/events/sponsorship-workshop-1.jpg,,,
+area-service-committee-meeting-2,2026-08-09 08:00:00,2026-08-09 15:00:00,,Area Service Committee Meeting,,Area Committee,English,Crown Valley Community Center,29751 Crown Valley Parkway,Laguna Niguel,CA,92677,,docs/events/area-service-committee-meeting-1.jpg; docs/events/area-service-committee-meeting-2.jpg,"Area Service Committee Meeting
+
+ Date: August 9th, 2026
+
+ Time: 8am – 3pm pt
+
+ Location:
+
+ CROWN VALLEY COMMUNITY CENTER
+
+ 29751 CROWN VALLEY PARKWAY
+
+ LAGUNA NIGUEL, CA 92677
+
+ Zoom: Zoom: 896 6166 6203 | Password: Panel76",,
+secretary-treasurer-workshop,2026-08-16 13:00:00,2026-08-16 15:00:00,,Secretary & Treasurer Workshop,,Workshop,English,"120 S. Harvard St., Hemet, CA",120 S. Harvard St.,Hemet,CA,92543,,docs/events/secretary-treasurer-workshop-1.jpg,"District 14 Secretary & Treasurer Workshop 
+ Join District 14 for an informative Secretary & Treasurer Workshop !
+
+ Whether you are a current trusted servant or just interested in learning more about these important service positions, this workshop will provide valuable insights and guidance.
+
+ 📅 Event Details 
+ Date: Sunday, August 16, 2026
+
+ Time: 1:00 PM – 3:00 PM
+
+ Location: 120 S. Harvard St., Hemet, CA 
+
+ 🎤 Featured Speakers 
+ Craig S. – Treasurer (7am Meeting at Arid Club) 
+
+ Teddi P. – Secretary (District 17 Secretary) 
+
+ 📌 What to Expect 
+ Q&A – Ask It Basket: Bring your questions for our experienced speakers!
+
+ Refreshments: Snacks will be provided during the event.",,
+d09-gsr-school-4,2026-08-16 15:00:00,2026-08-16 16:00:00,,D09 GSR School,,Service School,English,,,,,,,docs/events/d09-gsr-school-1.jpg,virtual only ID: 928-8170-4093 PC:634401 3PM PDT,,
+monthly-service-study-and-sharing-session-6,2026-08-20 18:00:00,2026-08-20 19:30:00,,Monthly Service Study and Sharing Session,,Event,English,,,,,,,docs/events/monthly-service-study-and-sharing-session-1.jpg; docs/events/monthly-service-study-and-sharing-session-2.jpg,"https://us06web.zoom.us/j/85989557002 
+
+ Meeting ID: 859 8955 7002
+
+ Passcode: Panel76",,
+district-6-one-love-reggae-summer-event,2026-08-22 12:00:00,2026-08-22 16:00:00,,District 6 – One Love Reggae Summer Event,,Event,English,lake park club house,1035 11th street,hunnington beach,CA,92648,,docs/events/district-6-one-love-reggae-summer-event-1.jpg,flyer,,
+rocypaa-business-meeting,2026-08-23 17:00:00,2026-08-23 19:00:00,,ROCYPAA Business Meeting,,YPAA,English,Irvine United Congregational Church,4915 Alton Pkwy,Irvine,CA,92604,,docs/events/rocypaa-business-meeting-1.jpg,,,
+psr-2026-pi-forum,2026-08-27 17:00:00,2026-08-27 19:00:00,,PSR 2026 PI Forum,,Forum,English,,,,,,,docs/events/psr-2026-pi-forum-1.jpg,"Zoom Meeting:
+
+ID: 372-574-1056
+
+Password: PIROCKS",,
+20th-mountain-aa-conference,2026-08-28 00:00:00,2026-08-30 23:59:59,yes,20th Mountain AA Conference,,Convention,English,Big Bear Performing Arts Center,39707 Big Bear Blvd,Big Bear Lake,CA,92315,,docs/events/20th-mountain-aa-conference-1.jpg,"20th Mountain AA Conference August 28th–30th Big Bear performing Arts Center 39707 Big Bear Blvd, Big Bear Lake, CA 92315
+
+ mountainaaconference.com",,
+area-service-assembly,2026-09-13 08:00:00,2026-09-13 15:00:00,,Area Service Assembly,,Assembly,English,Mizell Center,480 South Sunrise Way,Palm Springs,CA,92262,,docs/events/area-service-assembly-1.jpg; docs/events/area-service-assembly-2.jpg,"Details:
+
+ Area Service Assembly (ASA)
+
+ Hosted by District 9 & District 30
+
+ Date:
+
+ September 13th, 2026
+
+ Time:
+
+ 8:00 AM PT – 9:00 AM PT – Registration
+
+ ASA 9:00 AM PT – 3:00 PM PT ASA
+
+ Location:
+
+ Mizell Center
+
+ 480 S Sunrise Way
+
+ Palm Springs, CA 92262
+
+ Zoom ID: 896 6166 6203
+
+ Passcode: Panel76",,
+monthly-service-study-and-sharing-session-7,2026-09-17 18:00:00,2026-09-17 19:30:00,,Monthly Service Study and Sharing Session,,Event,English,,,,,,,docs/events/monthly-service-study-and-sharing-session-1.jpg; docs/events/monthly-service-study-and-sharing-session-2.jpg,"https://us06web.zoom.us/j/85989557002 
+
+ Meeting ID: 859 8955 7002
+
+ Passcode: Panel76",,
+rocypaa-business-meeting-2,2026-09-27 17:00:00,2026-09-27 19:00:00,,ROCYPAA Business Meeting,,YPAA,English,Irvine United Congregational Church,4915 Alton Pkwy,Irvine,CA,92604,,docs/events/rocypaa-business-meeting-1.jpg,,,
+soberfest-alcoholic-family-feud,2026-10-02 19:30:00,2026-10-02 22:00:00,,Soberfest / Alcoholic Family Feud,,Event,English,Community of Christ Church,395 S. Tustin St.,Orange,CA,92866,,docs/events/soberfest-alcoholic-family-feud-1.jpg,,,
+msca-area-09-panel-76-servathon,2026-11-14 10:00:00,2026-11-14 14:00:00,,MSCA Area 09 Panel 76 Servathon,,Servathon,English,Knights of Columbus,1729 E Baseline St,San Bernadino,CA,92410,,docs/events/msca-area-09-panel-76-servathon-1.jpg; docs/events/msca-area-09-panel-76-servathon-2.jpg,,,
+2026-pacific-regional-forum,2026-12-04 00:00:00,2026-12-06 23:59:59,yes,2026 Pacific Regional Forum,,Forum,English,Wyndham San Diego,1355 North Harbor Drive,San Diego,CA,92101,,docs/events/2026-pacific-regional-forum-1.jpg; docs/events/2026-pacific-regional-forum-2.jpg,"2026 Pacific Regional Forum Dec-4-6 Wyndham San Diego 1355 North Harbor Drive, San Diego, CA 92101",,
+11th-hispanic-woman-s-workshop,2026-12-12 00:00:00,2026-12-12 23:59:59,yes,11th Hispanic Woman’s Workshop,,Workshop,Spanish,Anaheim First Christian Church,520 W South St,Anaheim,CA,92805,,docs/events/11th-hispanic-woman-s-workshop-1.jpg; docs/events/11th-hispanic-woman-s-workshop-2.jpg,"11th Hispanic Woman’s Workshop Dec 12th, 520 W South St Anaheim, CA 92805",,
