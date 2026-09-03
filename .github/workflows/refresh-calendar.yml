@@ -1,0 +1,64 @@
+name: Refresh service calendar
+
+# Keeps data/calendar.ics in step with the Area's Google Calendar.
+#
+# The site is a static page on GitHub Pages, so it cannot fetch the Google
+# feed at run time (Google sends no CORS header). Instead this job mirrors
+# the published .ics into the repository on a schedule; the page reads the
+# mirror, and the "Google Calendar" tab embeds the live calendar directly.
+#
+# Add a meeting in Google Calendar and it appears on the site at the next
+# run — or immediately, by pressing "Run workflow" on the Actions tab.
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'      # every six hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-calendar
+  cancel-in-progress: false
+
+env:
+  CAL_ID: d750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db%40group.calendar.google.com
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download the published calendar
+        run: |
+          set -euo pipefail
+          curl -sSfL --retry 3 --retry-delay 5 \
+            -o /tmp/calendar.ics \
+            "https://calendar.google.com/calendar/ical/${CAL_ID}/public/basic.ics"
+
+      - name: Sanity-check the download
+        run: |
+          set -euo pipefail
+          head -1 /tmp/calendar.ics | grep -q 'BEGIN:VCALENDAR' \
+            || { echo "Not an iCalendar file — refusing to publish."; exit 1; }
+          COUNT=$(grep -c 'BEGIN:VEVENT' /tmp/calendar.ics || true)
+          echo "Events in feed: $COUNT"
+          [ "$COUNT" -ge 5 ] || { echo "Suspiciously few events — refusing to publish."; exit 1; }
+
+      - name: Commit if the calendar changed
+        run: |
+          set -euo pipefail
+          # DTSTAMP changes on every fetch, so compare everything else.
+          strip() { grep -v '^DTSTAMP:' "$1" | tr -d '\r'; }
+          if [ -f data/calendar.ics ] && diff -q <(strip data/calendar.ics) <(strip /tmp/calendar.ics) >/dev/null; then
+            echo "No change."
+            exit 0
+          fi
+          cp /tmp/calendar.ics data/calendar.ics
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/calendar.ics
+          git commit -m "Refresh service calendar from Google Calendar"
+          git push

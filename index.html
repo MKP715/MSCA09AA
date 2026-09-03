@@ -1,0 +1,2779 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MSCA09 &mdash; Mid-Southern California Area 09 of Alcoholics Anonymous</title>
+<meta name="description" content="Mid-Southern California Area 09 of Alcoholics Anonymous. District meetings, service calendar, committees, trusted servants, minutes and 7th Tradition contributions for Orange, Riverside, San Bernardino and part of Los Angeles counties.">
+<meta name="theme-color" content="#4338ca">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://msca09aa.org/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="MSCA09 &mdash; Mid-Southern California Area 09 of A.A.">
+<meta property="og:description" content="Service meetings, districts, committees and contributions for Mid-Southern California Area 09 of Alcoholics Anonymous.">
+<meta property="og:site_name" content="MSCA09">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='.5' stop-color='%23d946ef'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='26' font-weight='700' fill='%23fff' text-anchor='middle'%3E09%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['"Bricolage Grotesque"', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'sans-serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif']
+      },
+      colors: {
+        ink:   { 50:'#f6f7fb', 100:'#eceef7', 700:'#2b2f45', 800:'#1c2033', 900:'#12152a', 950:'#0a0c1a' },
+        brand: { 50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',
+                 500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' }
+      },
+      boxShadow: {
+        pop:  '0 10px 30px -10px rgba(79,70,229,.35)',
+        lift: '0 18px 40px -14px rgba(15,23,42,.30)'
+      },
+      keyframes: {
+        floaty:  { '0%,100%':{transform:'translateY(0) rotate(0deg)'}, '50%':{transform:'translateY(-18px) rotate(4deg)'} },
+        drift:   { '0%,100%':{transform:'translate(0,0) scale(1)'},   '50%':{transform:'translate(24px,-16px) scale(1.06)'} },
+        shimmer: { '0%':{backgroundPosition:'0% 50%'}, '50%':{backgroundPosition:'100% 50%'}, '100%':{backgroundPosition:'0% 50%'} },
+        pulseRing:{ '0%':{transform:'scale(.9)',opacity:'.7'}, '70%':{transform:'scale(1.35)',opacity:'0'}, '100%':{opacity:'0'} }
+      },
+      animation: {
+        floaty:'floaty 7s ease-in-out infinite',
+        drift:'drift 14s ease-in-out infinite',
+        shimmer:'shimmer 9s ease infinite',
+        pulseRing:'pulseRing 2.4s cubic-bezier(.24,.86,.5,1) infinite'
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  :root{
+    --ring: 99 102 241;
+    --page: #f7f7fb;
+  }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ background:var(--page); }
+  .dark body{ --page:#0a0c1a; }
+
+  /* ---- vivid utility gradients -------------------------------------- */
+  .grad-hero{
+    background-image:
+      radial-gradient(1200px 620px at 8% -10%, rgba(99,102,241,.55), transparent 60%),
+      radial-gradient(900px 520px at 92% 0%, rgba(217,70,239,.45), transparent 60%),
+      radial-gradient(900px 640px at 50% 120%, rgba(249,115,22,.42), transparent 62%),
+      linear-gradient(135deg,#312e81 0%,#4c1d95 40%,#831843 75%,#7c2d12 100%);
+    background-size: 200% 200%;
+    animation: shimmer 18s ease infinite;
+  }
+  .grad-text{
+    background-image:linear-gradient(100deg,#6366f1,#d946ef 45%,#fb923c);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .grad-rule{ background-image:linear-gradient(90deg,#6366f1,#d946ef,#fb923c,#22d3ee); }
+
+  /* ---- glassy cards --------------------------------------------------- */
+  .card{
+    background:rgba(255,255,255,.92);
+    border:1px solid rgba(15,23,42,.07);
+    backdrop-filter:saturate(1.4) blur(6px);
+  }
+  .dark .card{ background:rgba(23,26,48,.82); border-color:rgba(255,255,255,.09); }
+  .card-hover{ transition:transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease, border-color .22s ease; }
+  .card-hover:hover{ transform:translateY(-4px); }
+  @media (prefers-reduced-motion: reduce){
+    .card-hover:hover{ transform:none; }
+    *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
+
+  /* ---- nav ------------------------------------------------------------ */
+  .navlink{ position:relative; }
+  .navlink::after{
+    content:''; position:absolute; left:.75rem; right:.75rem; bottom:.3rem; height:2px;
+    border-radius:2px; transform:scaleX(0); transform-origin:left;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1);
+    background-image:linear-gradient(90deg,#818cf8,#e879f9,#fb923c);
+  }
+  .navlink:hover::after, .navlink[aria-current="page"]::after{ transform:scaleX(1); }
+  .navlink[aria-current="page"]{ color:#4338ca; }
+  .dark .navlink[aria-current="page"]{ color:#c7d2fe; }
+
+  details.menu > summary{ list-style:none; cursor:pointer; }
+  details.menu > summary::-webkit-details-marker{ display:none; }
+
+  /* ---- misc ----------------------------------------------------------- */
+  .chip{
+    display:inline-flex; align-items:center; gap:.4rem;
+    padding:.28rem .7rem; border-radius:9999px; font-size:.72rem; font-weight:600;
+    letter-spacing:.02em; white-space:nowrap;
+  }
+  .chip-wrap{ white-space:normal; text-align:left; max-width:100%; }
+  .fltbtn{ transition:all .18s ease; }
+  .fltbtn[aria-pressed="true"]{ box-shadow:0 6px 18px -6px rgba(79,70,229,.6); }
+
+  .skip{ position:absolute; left:-9999px; }
+  .skip:focus{ left:1rem; top:1rem; z-index:100; padding:.75rem 1rem; border-radius:.75rem;
+    background:#4338ca; color:#fff; box-shadow:0 10px 30px -8px rgba(0,0,0,.5); }
+
+  :focus-visible{ outline:3px solid rgb(var(--ring)); outline-offset:2px; border-radius:.35rem; }
+
+  .prose-aa p{ margin-bottom:1rem; line-height:1.75; }
+  .prose-aa a{ text-decoration:underline; text-underline-offset:3px; }
+
+  ::-webkit-scrollbar{ width:11px; height:11px; }
+  ::-webkit-scrollbar-thumb{ background:rgba(99,102,241,.45); border-radius:9px; border:3px solid transparent; background-clip:content-box; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+
+  .blob{ position:absolute; border-radius:9999px; filter:blur(46px); opacity:.55; pointer-events:none; }
+
+  table.grid-cal td, table.grid-cal th{ vertical-align:top; }
+
+  [hidden]{ display:none !important; }
+  .fade-in{ animation:fadeUp .45s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+</style>
+</head>
+
+<body class="font-sans text-ink-800 dark:text-ink-100 antialiased selection:bg-fuchsia-300/60">
+
+<a class="skip" href="#main" data-i18n="skip">Skip to main content</a>
+
+<!-- ══════════════════════════════════════════════════ ANNOUNCEMENT BAR ── -->
+<div id="annbar" class="grad-rule text-white text-[13px]">
+  <div class="mx-auto max-w-7xl px-4 py-1.5 flex items-center gap-3 justify-center text-center">
+    <i class="fa-solid fa-circle-info opacity-90" aria-hidden="true"></i>
+    <p class="font-medium"><span data-i18n="annBar">Need a meeting right now?</span>
+      <a href="https://www.aa.org/find-aa" target="_blank" rel="noopener"
+         class="underline underline-offset-2 font-bold hover:text-yellow-200" data-i18n="annBarLink">Find an A.A. meeting near you &rarr;</a></p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ HEADER ──── -->
+<header class="sticky top-0 z-50 border-b border-black/5 dark:border-white/10
+               bg-white/85 dark:bg-ink-950/85 backdrop-blur-xl">
+  <nav class="mx-auto max-w-7xl px-4" aria-label="Main">
+    <div class="flex items-center gap-2 sm:gap-3 h-[68px]">
+
+      <a href="#/" class="flex items-center gap-2.5 min-w-0 group" aria-label="MSCA09 home">
+        <span class="relative grid place-items-center w-11 h-11 rounded-2xl text-white font-display font-extrabold
+                     shadow-pop bg-gradient-to-br from-brand-500 via-fuchsia-500 to-orange-400">
+          09
+          <span class="absolute inset-0 rounded-2xl ring-2 ring-fuchsia-400/60 animate-pulseRing" aria-hidden="true"></span>
+        </span>
+        <span class="leading-tight">
+          <span class="block font-display font-extrabold text-[17px] tracking-tight">MSCA<span class="grad-text">09</span></span>
+          <span class="hidden sm:block text-[10.5px] uppercase tracking-[.14em] text-ink-700/70 dark:text-ink-100/60 truncate"
+                data-i18n="brandSub">Mid&#8209;Southern California</span>
+        </span>
+      </a>
+
+      <!-- desktop nav -->
+      <div id="deskNav" class="hidden lg:flex items-center gap-0.5 ml-2 text-[14.5px] font-medium"></div>
+
+      <div class="ml-auto flex items-center gap-1 sm:gap-1.5 shrink-0">
+        <a href="#/newcomers"
+           class="hidden sm:inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13.5px] font-bold text-white
+                  bg-gradient-to-r from-brand-600 to-fuchsia-600 hover:from-brand-500 hover:to-fuchsia-500
+                  shadow-pop transition">
+          <i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i>
+          <span data-i18n="ctaNew">New to A.A.?</span>
+        </a>
+
+        <button id="langBtn" type="button"
+                class="rounded-full px-3 py-2 text-[13px] font-bold border border-black/10 dark:border-white/15
+                       hover:bg-black/5 dark:hover:bg-white/10 transition"
+                aria-label="Cambiar a espanol / Switch language">
+          <i class="fa-solid fa-language mr-1" aria-hidden="true"></i><span id="langLabel">ES</span>
+        </button>
+
+        <button id="themeBtn" type="button"
+                class="rounded-full w-10 h-10 grid place-items-center border border-black/10 dark:border-white/15
+                       hover:bg-black/5 dark:hover:bg-white/10 transition"
+                aria-label="Toggle dark mode">
+          <i id="themeIcon" class="fa-solid fa-moon" aria-hidden="true"></i>
+        </button>
+
+        <button id="menuBtn" type="button"
+                class="lg:hidden rounded-full w-10 h-10 grid place-items-center border border-black/10 dark:border-white/15"
+                aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile nav -->
+    <div id="mobileNav" class="lg:hidden overflow-hidden max-h-0 transition-[max-height] duration-300 ease-out">
+      <div id="mobNavInner" class="py-3 space-y-1 border-t border-black/5 dark:border-white/10"></div>
+    </div>
+  </nav>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════ MAIN ──── -->
+<main id="main" tabindex="-1" class="min-h-[70vh]"></main>
+
+<!-- ══════════════════════════════════════════════════════════ FOOTER ──── -->
+<footer class="mt-24 relative overflow-hidden bg-ink-900 text-ink-100/90">
+  <div class="grad-rule h-1.5"></div>
+  <div class="blob w-96 h-96 -left-24 -top-24 bg-brand-600/40 animate-drift" aria-hidden="true"></div>
+  <div class="blob w-80 h-80 right-0 bottom-0 bg-fuchsia-600/30 animate-drift" style="animation-delay:-6s" aria-hidden="true"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 py-14 grid gap-10 md:grid-cols-4">
+    <div class="md:col-span-2">
+      <div class="flex items-center gap-3">
+        <span class="grid place-items-center w-12 h-12 rounded-2xl text-white font-display font-extrabold
+                     bg-gradient-to-br from-brand-500 via-fuchsia-500 to-orange-400">09</span>
+        <div>
+          <p class="font-display font-extrabold text-lg">Mid-Southern California Area 09</p>
+          <p class="text-sm text-ink-100/60" data-i18n="footAA">of Alcoholics Anonymous</p>
+        </div>
+      </div>
+      <p class="mt-5 text-sm leading-relaxed text-ink-100/75 max-w-md" data-i18n="footBlurb">
+        Area 09 is one of 93 General Service Conference areas in the U.S. and Canada. We serve
+        A.A. groups across Orange County, Riverside County, San Bernardino County and part of
+        Los Angeles County &mdash; in English and in Spanish.
+      </p>
+      <p class="mt-5 text-sm text-ink-100/75">
+        <i class="fa-solid fa-envelope mr-2 text-fuchsia-300" aria-hidden="true"></i>
+        MSCA09, P.O. Box 51446, Irvine, CA 92619-1446
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <a href="#/contribute" class="chip bg-emerald-500/20 text-emerald-200 hover:bg-emerald-500/30 transition">
+          <i class="fa-solid fa-hand-holding-dollar" aria-hidden="true"></i><span data-i18n="nav7th">7th Tradition</span></a>
+        <a href="#/contact" class="chip bg-brand-500/20 text-brand-200 hover:bg-brand-500/30 transition">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i><span data-i18n="navContact">Contact</span></a>
+        <a href="#/about-anonymity" class="chip bg-fuchsia-500/20 text-fuchsia-200 hover:bg-fuchsia-500/30 transition">
+          <i class="fa-solid fa-user-secret" aria-hidden="true"></i><span data-i18n="navAnon">Anonymity</span></a>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="font-display font-bold text-sm uppercase tracking-widest text-fuchsia-300 mb-4" data-i18n="footArea">Area 09</h3>
+      <ul id="footNav1" class="space-y-2.5 text-sm text-ink-100/75"></ul>
+    </div>
+
+    <div>
+      <h3 class="font-display font-bold text-sm uppercase tracking-widest text-orange-300 mb-4" data-i18n="footAAlinks">A.A. Links</h3>
+      <ul class="space-y-2.5 text-sm text-ink-100/75">
+        <li><a class="hover:text-white transition" href="https://www.aa.org/" target="_blank" rel="noopener">aa.org &nearr;</a></li>
+        <li><a class="hover:text-white transition" href="https://www.aa.org/es" target="_blank" rel="noopener">A.A. en Espa&ntilde;ol &nearr;</a></li>
+        <li><a class="hover:text-white transition" href="https://www.aagrapevine.org/" target="_blank" rel="noopener">A.A. Grapevine &nearr;</a></li>
+        <li><a class="hover:text-white transition" href="https://www.aa.org/find-aa" target="_blank" rel="noopener">Find a Meeting &nearr;</a></li>
+        <li><a class="hover:text-white transition" href="https://praasa.org/" target="_blank" rel="noopener">PRAASA &nearr;</a></li>
+        <li><a class="hover:text-white transition" href="https://aa-intergroup.org/" target="_blank" rel="noopener">Online Intergroup &nearr;</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="relative border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-4 py-6 text-xs text-ink-100/55 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+      <p data-i18n="footLegal">
+        &copy; Mid-Southern California Area 09 of Alcoholics Anonymous. A.A.&reg;, Alcoholics Anonymous&reg;,
+        the Big Book&reg;, Box 4-5-9&reg;, Grapevine&reg; and La Vi&ntilde;a&reg; are registered trademarks of
+        A.A. World Services, Inc. and A.A. Grapevine, Inc. This site is not affiliated with, endorsed by or
+        speaking for A.A. World Services, Inc.
+      </p>
+      <p id="buildStamp" class="shrink-0"></p>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" type="button"
+        class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full text-white shadow-lift opacity-0 pointer-events-none
+               bg-gradient-to-br from-brand-600 to-fuchsia-600 transition-opacity duration-300"
+        aria-label="Back to top">
+  <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ical.js/1.5.0/ical.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   MSCA09  ·  Mid-Southern California Area 09 of Alcoholics Anonymous
+   Single-file, static, no server required.  Data lives in /data/*.csv so a
+   web servant can update the site by editing a spreadsheet-friendly file.
+
+   ANONYMITY: nothing in this file or in /data ever publishes a member's last
+   name, personal e-mail address or personal phone number.  All contact is
+   through role-based Area / district addresses.
+   ══════════════════════════════════════════════════════════════════════════ */
+(function () {
+'use strict';
+
+/* ───────────────────────────────────────────────────────────── helpers ─── */
+const $  = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.prototype.slice.call((r || document).querySelectorAll(s));
+const esc = (v) => String(v == null ? '' : v)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const attr = esc;
+const slug = (v) => String(v||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const norm = (v) => String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const uniq = (a) => Array.from(new Set(a));
+const byText = (a,b) => String(a).localeCompare(String(b), undefined, {numeric:true, sensitivity:'base'});
+
+const DOW_LONG = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DOW_ES   = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const MON_EN   = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MON_ES   = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function fmtTime(h, m) {
+  const ap = h >= 12 ? 'PM' : 'AM';
+  let hh = h % 12; if (hh === 0) hh = 12;
+  return hh + ':' + String(m).padStart(2,'0') + ' ' + ap;
+}
+function fmtHHMM(s) {
+  if (!s) return '';
+  const p = String(s).split(':');
+  return fmtTime(parseInt(p[0],10) || 0, parseInt(p[1],10) || 0);
+}
+function dayName(i)  { return state.lang === 'es' ? DOW_ES[i]   : DOW_LONG[i]; }
+function monName(i)  { return state.lang === 'es' ? MON_ES[i]   : MON_EN[i]; }
+function fmtDate(d)  { return dayName(d.getDay()) + ', ' + monName(d.getMonth()) + ' ' + d.getDate(); }
+function fmtDateY(d) { return fmtDate(d) + ', ' + d.getFullYear(); }
+function ordinal(n)  {
+  if (state.lang === 'es') return n + 'º';
+  const s = ['th','st','nd','rd'], v = n % 100;
+  return n + (s[(v-20)%10] || s[v] || s[0]);
+}
+function mailto(addr, subj) {
+  return 'mailto:' + addr + (subj ? '?subject=' + encodeURIComponent(subj) : '');
+}
+function icon(name, cls) {
+  return '<i class="fa-solid fa-' + attr(name) + (cls ? ' ' + attr(cls) : '') + '" aria-hidden="true"></i>';
+}
+
+/* ───────────────────────────────────────────────────────────── i18n ────── */
+const T = {
+  en: {
+    skip:'Skip to main content',
+    brandSub:'Mid‑Southern California',
+    annBar:'Need a meeting right now?',
+    annBarLink:'Find an A.A. meeting near you →',
+    ctaNew:'New to A.A.?',
+    navHome:'Home', navMeetings:'Service Calendar', navDistricts:'Districts',
+    navCommittees:'Committees', navServants:'Panel 76', navDocs:'Minutes & Motions',
+    navEvents:'Events', nav7th:'7th Tradition', navResources:'A.A. Resources',
+    navAbout:'About Area 09', navContact:'Contact', navAnon:'Anonymity',
+    navGroupMeet:'Meetings & Events', navGroupServe:'Service', navGroupAbout:'About',
+    navAreaCal:'Area Calendar 2026', navNew:'New to A.A.',
+    footAA:'of Alcoholics Anonymous', footArea:'Area 09', footAAlinks:'A.A. Links',
+    footBlurb:'Area 09 is one of 93 General Service Conference areas in the U.S. and Canada. We serve A.A. groups across Orange County, Riverside County, San Bernardino County and part of Los Angeles County — in English and in Spanish.',
+    footLegal:'© Mid-Southern California Area 09 of Alcoholics Anonymous. A.A.®, Alcoholics Anonymous®, the Big Book®, Box 4-5-9®, Grapevine® and La Viña® are registered trademarks of A.A. World Services, Inc. and A.A. Grapevine, Inc. This site is not affiliated with, endorsed by or speaking for A.A. World Services, Inc.',
+    heroKicker:'Mid-Southern California Area 09 of Alcoholics Anonymous',
+    heroLead:'District meetings, Area assemblies, committees and the people who serve them — for Orange, Riverside, San Bernardino and part of Los Angeles County. Everything here is one click away, in English and Spanish.',
+    heroBtn1:'Find your district', heroBtn2:'See the service calendar',
+    statDistricts:'Districts', statSpanish:'Spanish-speaking districts',
+    statMeetings:'Service meetings a month', statCounties:'Counties served',
+    homeNextTitle:'Happening next', homeNextSub:'The next service meetings across the Area. All times Pacific.',
+    homeSeeAll:'See the full service calendar',
+    quickTitle:'Where would you like to start?',
+    loading:'Loading…', loadErr:'Could not load this data.',
+    noResults:'Nothing matches those filters yet.', clearFilters:'Clear filters',
+    search:'Search', filters:'Filters', all:'All',
+    upcoming:'Upcoming', monthView:'Month', patternView:'Monthly pattern', gcalView:'Google Calendar',
+    day:'Day', type:'Type', format:'Format', language:'Language',
+    english:'English', spanish:'Spanish', hybrid:'Hybrid', inperson:'In person', online:'Online',
+    zoomId:'Zoom ID', passcode:'Passcode', joinZoom:'Join on Zoom', covers:'Covers',
+    website:'Website', email:'Email', contact:'Contact', position:'Position', name:'Name',
+    district:'District', addToCal:'Add to my calendar', subscribe:'Subscribe to this calendar',
+    week:'Week', today:'Today', next30:'Next 30 days', next90:'Next 90 days', next12:'Next 12 months',
+    printable:'Printable flyer (PDF)',
+    allTimesPT:'All times shown are Pacific Time.',
+    vacant:'Open — this position needs a trusted servant',
+    vacantCta:'Interested? Talk to your D.C.M.C., or write the Area Chair.'
+  },
+  es: {
+    skip:'Ir al contenido principal',
+    brandSub:'Medio‑Sur de California',
+    annBar:'¿Necesitas una reunión ahora?',
+    annBarLink:'Encuentra una reunión de A.A. cerca de ti →',
+    ctaNew:'¿Nuevo en A.A.?',
+    navHome:'Inicio', navMeetings:'Calendario de Servicio', navDistricts:'Distritos',
+    navCommittees:'Comités', navServants:'Panel 76', navDocs:'Actas y Mociones',
+    navEvents:'Eventos', nav7th:'Séptima Tradición', navResources:'Recursos de A.A.',
+    navAbout:'Sobre el Área 09', navContact:'Contacto', navAnon:'Anonimato',
+    navGroupMeet:'Reuniones y Eventos', navGroupServe:'Servicio', navGroupAbout:'Información',
+    navAreaCal:'Calendario del Área 2026', navNew:'Nuevo en A.A.',
+    footAA:'de Alcohólicos Anónimos', footArea:'Área 09', footAAlinks:'Enlaces de A.A.',
+    footBlurb:'El Área 09 es una de las 93 áreas de la Conferencia de Servicios Generales en EE.UU. y Canadá. Servimos a los grupos de A.A. de los condados de Orange, Riverside, San Bernardino y parte de Los Ángeles — en inglés y en español.',
+    footLegal:'© Área 09 del Medio-Sur de California de Alcohólicos Anónimos. A.A.®, Alcohólicos Anónimos®, el Libro Grande®, Box 4-5-9®, Grapevine® y La Viña® son marcas registradas de A.A. World Services, Inc. y A.A. Grapevine, Inc. Este sitio no está afiliado ni respaldado por A.A. World Services, Inc.',
+    heroKicker:'Área 09 del Medio-Sur de California de Alcohólicos Anónimos',
+    heroLead:'Reuniones de distrito, asambleas de área, comités y las personas que sirven — para Orange, Riverside, San Bernardino y parte del condado de Los Ángeles. Todo a un clic, en inglés y español.',
+    heroBtn1:'Encuentra tu distrito', heroBtn2:'Ver el calendario de servicio',
+    statDistricts:'Distritos', statSpanish:'Distritos de habla hispana',
+    statMeetings:'Reuniones de servicio al mes', statCounties:'Condados servidos',
+    homeNextTitle:'Lo que sigue', homeNextSub:'Las próximas reuniones de servicio del Área. Hora del Pacífico.',
+    homeSeeAll:'Ver el calendario de servicio completo',
+    quickTitle:'¿Por dónde quieres empezar?',
+    loading:'Cargando…', loadErr:'No se pudieron cargar estos datos.',
+    noResults:'Nada coincide con esos filtros todavía.', clearFilters:'Limpiar filtros',
+    search:'Buscar', filters:'Filtros', all:'Todos',
+    upcoming:'Próximas', monthView:'Mes', patternView:'Patrón mensual', gcalView:'Google Calendar',
+    day:'Día', type:'Tipo', format:'Formato', language:'Idioma',
+    english:'Inglés', spanish:'Español', hybrid:'Híbrida', inperson:'Presencial', online:'En línea',
+    zoomId:'ID de Zoom', passcode:'Contraseña', joinZoom:'Entrar por Zoom', covers:'Cubre',
+    website:'Sitio web', email:'Correo', contact:'Contacto', position:'Puesto', name:'Nombre',
+    district:'Distrito', addToCal:'Añadir a mi calendario', subscribe:'Suscribirse a este calendario',
+    week:'Semana', today:'Hoy', next30:'Próximos 30 días', next90:'Próximos 90 días', next12:'Próximos 12 meses',
+    printable:'Volante imprimible (PDF)',
+    allTimesPT:'Todas las horas son del Pacífico.',
+    vacant:'Abierto — este puesto necesita un servidor de confianza',
+    vacantCta:'¿Te interesa? Habla con tu M.C.D.C. o escribe al Coordinador del Área.'
+  }
+};
+function t(k) { return (T[state.lang] && T[state.lang][k]) || T.en[k] || k; }
+
+/* ───────────────────────────────────────────────────────────── state ───── */
+const state = {
+  lang: (localStorage.getItem('msca09.lang') === 'es') ? 'es' : 'en',
+  data: {},
+  ics : null,
+  icsStamp: null,
+  route: '',
+  ready: false
+};
+
+/* ─────────────────────────────────────────────────── theme / chrome ────── */
+function applyTheme(dark) {
+  document.documentElement.classList.toggle('dark', dark);
+  const i = $('#themeIcon');
+  if (i) i.className = 'fa-solid ' + (dark ? 'fa-sun' : 'fa-moon');
+  localStorage.setItem('msca09.dark', dark ? '1' : '0');
+}
+(function initTheme(){
+  let dark = false;
+  try {
+    const saved = localStorage.getItem('msca09.dark');
+    dark = saved === null ? window.matchMedia('(prefers-color-scheme: dark)').matches : saved === '1';
+  } catch (e) {}
+  document.documentElement.classList.toggle('dark', dark);
+})();
+
+/* ─────────────────────────────────────────────────────── navigation ────── */
+const NAV = [
+  { key:'navHome', href:'#/', icon:'house' },
+  { key:'navGroupMeet', icon:'calendar-days', children:[
+      { key:'navMeetings',  href:'#/meetings',  icon:'calendar-check',
+        desc:{en:'Every district, H&I, intergroup and Area meeting', es:'Cada reunión de distrito, H&I, intergrupo y Área'} },
+      { key:'navEvents',    href:'#/events',    icon:'star',
+        desc:{en:'Assemblies, workshops, forums and round-ups', es:'Asambleas, talleres, foros y eventos'} },
+      { key:'navAreaCal',   href:'#/events', icon:'calendar-day',
+        desc:{en:'The approved 2026 Area meeting schedule', es:'El calendario aprobado del Área 2026'} }
+  ]},
+  { key:'navDistricts', href:'#/districts', icon:'map-location-dot' },
+  { key:'navGroupServe', icon:'people-group', children:[
+      { key:'navCommittees', href:'#/committees', icon:'sitemap',
+        desc:{en:'What each Area committee does, and who to write', es:'Qué hace cada comité y a quién escribir'} },
+      { key:'navServants',   href:'#/servants',   icon:'address-book',
+        desc:{en:'Panel 76 officers, chairs and D.C.M.C.s', es:'Oficiales, coordinadores y M.C.D.C. del Panel 76'} },
+      { key:'navDocs',       href:'#/documents',  icon:'file-lines',
+        desc:{en:'Minutes, motions, agendas and reports', es:'Actas, mociones, agendas e informes'} },
+      { key:'navResources',  href:'#/resources',  icon:'book-open',
+        desc:{en:'The Steps, Traditions, Concepts and more on aa.org', es:'Pasos, Tradiciones, Conceptos y más en aa.org'} }
+  ]},
+  { key:'nav7th', href:'#/contribute', icon:'hand-holding-dollar' },
+  { key:'navGroupAbout', icon:'circle-info', children:[
+      { key:'navAbout',   href:'#/about', icon:'landmark',
+        desc:{en:'Who we are and how the Area is put together', es:'Quiénes somos y cómo se organiza el Área'} },
+      { key:'navAnon',    href:'#/anonymity', icon:'user-secret',
+        desc:{en:'Our website and anonymity policy', es:'Nuestra política de sitio web y anonimato'} },
+      { key:'navContact', href:'#/contact', icon:'paper-plane',
+        desc:{en:'Reach the Area — or send us something to post', es:'Contacta al Área o envíanos material'} }
+  ]}
+];
+
+function renderNav() {
+  const desk = $('#deskNav'), mob = $('#mobNavInner');
+  if (!desk || !mob) return;
+  const cur = '#/' + state.route.split('/')[0];
+
+  desk.innerHTML = NAV.map(function (n) {
+    if (!n.children) {
+      const active = (n.href === cur);
+      return '<a class="navlink px-3 py-2 rounded-lg hover:text-brand-700 dark:hover:text-brand-300 transition"' +
+             (active ? ' aria-current="page"' : '') + ' href="' + attr(n.href) + '">' + esc(t(n.key)) + '</a>';
+    }
+    const anyActive = n.children.some(function(c){ return c.href === cur; });
+    return '' +
+      '<details class="menu relative group" data-menu>' +
+        '<summary class="navlink px-3 py-2 rounded-lg hover:text-brand-700 dark:hover:text-brand-300 transition inline-flex items-center gap-1.5"' +
+          (anyActive ? ' aria-current="page"' : '') + '>' + esc(t(n.key)) +
+          '<i class="fa-solid fa-chevron-down text-[10px] opacity-60 transition group-open:rotate-180" aria-hidden="true"></i>' +
+        '</summary>' +
+        '<div class="absolute left-0 mt-2 w-[22rem] rounded-2xl border border-black/10 dark:border-white/10 ' +
+             'bg-white dark:bg-ink-900 shadow-lift p-2 z-50">' +
+          n.children.map(function (c) {
+            return '<a href="' + attr(c.href) + '" class="flex gap-3 items-start rounded-xl px-3 py-2.5 ' +
+                   'hover:bg-brand-50 dark:hover:bg-white/5 transition">' +
+                   '<span class="mt-0.5 w-8 h-8 shrink-0 grid place-items-center rounded-lg text-white ' +
+                   'bg-gradient-to-br from-brand-500 to-fuchsia-500">' + icon(c.icon,'text-xs') + '</span>' +
+                   '<span><span class="block font-semibold text-[14px]">' + esc(t(c.key)) + '</span>' +
+                   '<span class="block text-[12.5px] leading-snug opacity-70">' + esc(c.desc[state.lang] || c.desc.en) + '</span></span></a>';
+          }).join('') +
+        '</div>' +
+      '</details>';
+  }).join('');
+
+  mob.innerHTML = NAV.map(function (n) {
+    if (!n.children) {
+      return '<a class="flex items-center gap-3 px-3 py-3 rounded-xl font-semibold hover:bg-black/5 dark:hover:bg-white/5" href="' +
+             attr(n.href) + '">' + icon(n.icon,'w-5 text-brand-600 dark:text-brand-300') + esc(t(n.key)) + '</a>';
+    }
+    return '<div class="px-3 pt-3 pb-1 text-[11px] font-bold uppercase tracking-widest opacity-50">' + esc(t(n.key)) + '</div>' +
+      n.children.map(function (c) {
+        return '<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5" href="' +
+               attr(c.href) + '">' + icon(c.icon,'w-5 text-fuchsia-600 dark:text-fuchsia-300') + esc(t(c.key)) + '</a>';
+      }).join('');
+  }).join('') +
+  '<a class="mt-3 flex items-center justify-center gap-2 px-3 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-fuchsia-600" href="#/newcomers">' +
+  icon('hand-holding-heart') + esc(t('ctaNew')) + '</a>';
+
+  const f1 = $('#footNav1');
+  if (f1) {
+    const links = [['navMeetings','#/meetings'],['navDistricts','#/districts'],['navCommittees','#/committees'],
+                   ['navServants','#/servants'],['navDocs','#/documents'],['navEvents','#/events'],
+                   ['navResources','#/resources'],['navAbout','#/about']];
+    f1.innerHTML = links.map(function (l) {
+      return '<li><a class="hover:text-white transition" href="' + attr(l[1]) + '">' + esc(t(l[0])) + '</a></li>';
+    }).join('');
+  }
+}
+
+function applyStaticI18n() {
+  $$('[data-i18n]').forEach(function (el) {
+    const k = el.getAttribute('data-i18n');
+    const v = (T[state.lang] && T[state.lang][k]) || T.en[k];
+    if (v) el.textContent = v;
+  });
+  document.documentElement.lang = state.lang;
+  const ll = $('#langLabel'); if (ll) ll.textContent = state.lang === 'en' ? 'ES' : 'EN';
+}
+
+/* ─────────────────────────────────────────────────────── data layer ────── */
+const CSV_FILES = ['districts','trusted-servants','committees','documents','events','area-meetings','resources'];
+
+function parseCSV(text) {
+  const clean = text.replace(/^﻿/, '');
+  const out = Papa.parse(clean.trim(), { header:true, skipEmptyLines:'greedy' });
+  return (out.data || []).filter(function (r) {
+    return Object.keys(r).some(function (k) { return String(r[k] || '').trim() !== ''; });
+  });
+}
+
+async function loadAll() {
+  const jobs = CSV_FILES.map(function (name) {
+    return fetch('data/' + name + '.csv', { cache:'no-cache' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function (txt) { state.data[name] = parseCSV(txt); })
+      .catch(function (e) { state.data[name] = []; console.warn('[MSCA09] data/' + name + '.csv:', e.message); });
+  });
+  jobs.push(loadCalendar());
+  await Promise.all(jobs);
+  state.ready = true;
+}
+
+/* ── calendar ───────────────────────────────────────────────────────────
+   Primary source is data/calendar.ics, served from the same origin so it
+   always works on GitHub Pages.  We then TRY, in the background, to refresh
+   straight from the Area's Google Calendar; Google sends no CORS header, so
+   that attempt goes through public read proxies and quietly falls back.   */
+const GCAL_ID  = 'd750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db@group.calendar.google.com';
+const GCAL_ICS = 'https://calendar.google.com/calendar/ical/' + encodeURIComponent(GCAL_ID) + '/public/basic.ics';
+const GCAL_EMBED = 'https://calendar.google.com/calendar/embed?src=' + encodeURIComponent(GCAL_ID) +
+                   '&ctz=America%2FLos_Angeles&mode=AGENDA&showTitle=0&showPrint=0&showTabs=1&showCalendars=0&showNav=1';
+const GCAL_PAGE = 'https://calendar.google.com/calendar/embed?src=' + encodeURIComponent(GCAL_ID) + '&ctz=America%2FLos_Angeles';
+
+async function loadCalendar() {
+  try {
+    const r = await fetch('data/calendar.ics', { cache:'no-cache' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    state.ics = await r.text();
+    state.icsStamp = latestStamp(state.ics);
+  } catch (e) {
+    console.warn('[MSCA09] calendar unavailable:', e.message);
+    state.ics = null;
+  }
+}
+
+/* Newest DTSTAMP / LAST-MODIFIED in the file, so the page can say how fresh
+   the mirror is.  data/calendar.ics is refreshed from the Area's Google
+   Calendar by a scheduled GitHub Action - see .github/workflows.           */
+function latestStamp(text) {
+  let best = null;
+  const re = /^(?:LAST-MODIFIED|DTSTAMP):(\d{8})T(\d{6})Z/gm;
+  let m;
+  while ((m = re.exec(text))) {
+    const d = new Date(Date.UTC(
+      +m[1].slice(0,4), +m[1].slice(4,6) - 1, +m[1].slice(6,8),
+      +m[2].slice(0,2), +m[2].slice(2,4), +m[2].slice(4,6)));
+    if (!best || d > best) best = d;
+  }
+  return best;
+}
+
+/* Expand the ICS into concrete occurrences between two dates.  Times are
+   kept exactly as written (Pacific) rather than converted, because the whole
+   Area runs on Pacific time and the printed flyer reads the same way.     */
+function expandOccurrences(from, to) {
+  if (!state.ics || typeof ICAL === 'undefined') return [];
+  let comp;
+  try { comp = new ICAL.Component(ICAL.parse(state.ics)); }
+  catch (e) { console.warn('[MSCA09] ICS parse failed', e); return []; }
+
+  const out = [];
+  comp.getAllSubcomponents('vevent').forEach(function (ve) {
+    let ev; try { ev = new ICAL.Event(ve); } catch (e) { return; }
+    const meta = describeEvent(ev, ve);
+
+    function push(tm) {
+      const d = new Date(tm.year, tm.month - 1, tm.day, tm.hour || 0, tm.minute || 0);
+      if (d < from || d > to) return;
+      out.push(Object.assign({}, meta, { date:d, hour:tm.hour || 0, minute:tm.minute || 0 }));
+    }
+
+    if (ev.isRecurring()) {
+      let it; try { it = ev.iterator(); } catch (e) { return; }
+      let nx, n = 0;
+      while ((nx = it.next()) && n++ < 900) {
+        const d = new Date(nx.year, nx.month - 1, nx.day, nx.hour || 0, nx.minute || 0);
+        if (d > to) break;
+        if (d >= from) push(nx);
+      }
+    } else if (ev.startDate) {
+      push(ev.startDate);
+    }
+  });
+
+  out.sort(function (a, b) { return a.date - b.date; });
+  return out;
+}
+
+/* All distinct meetings in the calendar (one row per VEVENT, not per date). */
+function calendarSeries() {
+  if (!state.ics || typeof ICAL === 'undefined') return [];
+  let comp;
+  try { comp = new ICAL.Component(ICAL.parse(state.ics)); } catch (e) { return []; }
+  return comp.getAllSubcomponents('vevent').map(function (ve) {
+    let ev; try { ev = new ICAL.Event(ve); } catch (e) { return null; }
+    const m = describeEvent(ev, ve);
+    if (ev.startDate) { m.hour = ev.startDate.hour; m.minute = ev.startDate.minute; }
+    return m;
+  }).filter(Boolean);
+}
+
+/* DESCRIPTION written by the Area is:  MSCA09|<Kind>|<Format>\n\n--\n<detail> */
+function describeEvent(ev, ve) {
+  const summary = ev.summary || '';
+  const raw = ev.description || '';
+  const split = raw.split(/\n\n--\n/);
+  const tag = (split[0] || '').split('|');
+  const detail = split.slice(1).join('\n\n--\n');
+
+  const meta = {
+    uid: ev.uid || summary,
+    title: summary,
+    kind: (tag[0] === 'MSCA09' && tag[1]) ? tag[1].trim() : 'Other',
+    format: (tag[0] === 'MSCA09' && tag[2]) ? tag[2].trim() : '',
+    location: ev.location || '',
+    zoomId:'', passcode:'', web:'', covers:'', notes:[],
+    language: /\(spanish\)|spanish-speaking|español/i.test(summary + ' ' + detail) ? 'Spanish' : 'English',
+    districtNo:'', byday:[], freq:'', hour:0, minute:0
+  };
+
+  detail.split('\n').forEach(function (line) {
+    const s = line.trim();
+    if (!s || s === '--') return;
+    let m;
+    if ((m = s.match(/^Zoom ID:\s*(.+)$/i)))  { meta.zoomId = m[1].trim(); return; }
+    if ((m = s.match(/^Passcode:\s*(.+)$/i))) { meta.passcode = m[1].trim(); return; }
+    if ((m = s.match(/^Web:\s*(.+)$/i)))      { meta.web = m[1].trim(); return; }
+    if ((m = s.match(/^Covers:\s*(.+)$/i)))   { meta.covers = m[1].trim(); return; }
+    if (/^Location:/i.test(s)) return;
+    if (/^Source:/i.test(s)) return;
+    if (/\(Pacific\)/i.test(s)) return;
+    if (s === meta.title) return;
+    if (/^Spanish-speaking district$/i.test(s)) return;
+    meta.notes.push(s);
+  });
+
+  const dm = summary.match(/District\s+([0-9]+(?:\s*&\s*[0-9]+)?)/i) || summary.match(/Distrito\s+([0-9]+)/i);
+  if (dm) meta.districtNo = dm[1].replace(/\s+/g, ' ');
+
+  try {
+    const rr = ve.getFirstPropertyValue('rrule');
+    if (rr) {
+      meta.freq = rr.freq || '';
+      const p = rr.parts || {};
+      const bd = p.BYDAY || p.byday;
+      if (bd) meta.byday = [].concat(bd);
+    }
+  } catch (e) {}
+  return meta;
+}
+
+const KIND_STYLE = {
+  'District':   { c:'brand',   fa:'map-location-dot', en:'District',   es:'Distrito' },
+  'H&I':        { c:'rose',    fa:'hospital',         en:'H&I',        es:'H&I' },
+  'Intergroup': { c:'amber',   fa:'building',         en:'Intergroup / Central Office', es:'Intergrupo / Oficina Central' },
+  'Area':       { c:'emerald', fa:'landmark',         en:'Area',       es:'Área' },
+  'Other':      { c:'slate',   fa:'calendar',         en:'Other',      es:'Otro' }
+};
+const TONE = {
+  brand:  'bg-brand-100 text-brand-800 dark:bg-brand-500/20 dark:text-brand-200',
+  rose:   'bg-rose-100 text-rose-800 dark:bg-rose-500/20 dark:text-rose-200',
+  amber:  'bg-amber-100 text-amber-900 dark:bg-amber-500/20 dark:text-amber-200',
+  emerald:'bg-emerald-100 text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-200',
+  slate:  'bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-slate-200',
+  fuchsia:'bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-500/20 dark:text-fuchsia-200',
+  sky:    'bg-sky-100 text-sky-800 dark:bg-sky-500/20 dark:text-sky-200',
+  orange: 'bg-orange-100 text-orange-900 dark:bg-orange-500/20 dark:text-orange-200',
+  teal:   'bg-teal-100 text-teal-800 dark:bg-teal-500/20 dark:text-teal-200',
+  indigo: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-500/20 dark:text-indigo-200',
+  violet: 'bg-violet-100 text-violet-800 dark:bg-violet-500/20 dark:text-violet-200',
+  cyan:   'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-200',
+  lime:   'bg-lime-100 text-lime-900 dark:bg-lime-500/20 dark:text-lime-200',
+  pink:   'bg-pink-100 text-pink-800 dark:bg-pink-500/20 dark:text-pink-200',
+  purple: 'bg-purple-100 text-purple-800 dark:bg-purple-500/20 dark:text-purple-200',
+  red:    'bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-200',
+  blue:   'bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-200',
+  stone:  'bg-stone-200 text-stone-800 dark:bg-stone-500/20 dark:text-stone-200'
+};
+const GRAD = {
+  brand:'from-brand-500 to-indigo-600', rose:'from-rose-500 to-pink-600',
+  amber:'from-amber-400 to-orange-500', emerald:'from-emerald-500 to-teal-600',
+  slate:'from-slate-500 to-slate-700',  fuchsia:'from-fuchsia-500 to-purple-600',
+  sky:'from-sky-400 to-blue-600',       orange:'from-orange-400 to-red-500',
+  teal:'from-teal-400 to-cyan-600',     indigo:'from-indigo-500 to-violet-600',
+  violet:'from-violet-500 to-fuchsia-600', cyan:'from-cyan-400 to-sky-600',
+  lime:'from-lime-400 to-emerald-500',  pink:'from-pink-400 to-rose-600',
+  purple:'from-purple-500 to-indigo-600', red:'from-red-500 to-orange-600',
+  blue:'from-blue-500 to-indigo-600',   stone:'from-stone-400 to-stone-600'
+};
+function tone(c) { return TONE[c] || TONE.slate; }
+function grad(c) { return GRAD[c] || GRAD.brand; }
+function kindLabel(k) { const s = KIND_STYLE[k] || KIND_STYLE.Other; return state.lang === 'es' ? s.es : s.en; }
+function fmtLabel(f) {
+  if (/hybrid/i.test(f)) return t('hybrid');
+  if (/physical|person/i.test(f)) return t('inperson');
+  if (/online|virtual/i.test(f)) return t('online');
+  return f;
+}
+
+/* ────────────────────────────────────────────── shared UI fragments ────── */
+function pageHead(o) {
+  return '' +
+  '<section class="relative overflow-hidden grad-hero text-white">' +
+    '<div class="blob w-[26rem] h-[26rem] -left-24 -top-32 bg-fuchsia-500/40 animate-drift" aria-hidden="true"></div>' +
+    '<div class="blob w-80 h-80 right-[-4rem] top-10 bg-orange-400/40 animate-drift" style="animation-delay:-5s" aria-hidden="true"></div>' +
+    '<div class="relative mx-auto max-w-7xl px-4 py-14 sm:py-16">' +
+      '<p class="inline-flex items-start gap-2 chip chip-wrap bg-white/15 text-white/90 backdrop-blur mb-4">' +
+        icon(o.icon || 'star') + esc(o.kicker || '') + '</p>' +
+      '<h1 class="font-display font-extrabold tracking-tight text-4xl sm:text-5xl leading-[1.06] max-w-4xl">' + o.title + '</h1>' +
+      (o.lead ? '<p class="mt-5 text-white/85 text-lg leading-relaxed max-w-3xl">' + o.lead + '</p>' : '') +
+      (o.extra || '') +
+    '</div>' +
+  '</section>';
+}
+function sectionTitle(txt, sub) {
+  return '<div class="mb-7">' +
+    '<h2 class="font-display font-extrabold text-2xl sm:text-3xl tracking-tight">' + txt + '</h2>' +
+    (sub ? '<p class="mt-2 opacity-70 max-w-3xl leading-relaxed">' + sub + '</p>' : '') +
+    '<div class="mt-4 h-1 w-24 rounded-full grad-rule"></div></div>';
+}
+function emptyState(msg) {
+  return '<div class="card rounded-3xl p-10 text-center">' +
+    '<div class="mx-auto w-14 h-14 rounded-2xl grid place-items-center bg-gradient-to-br from-brand-500 to-fuchsia-500 text-white text-xl">' +
+    icon('magnifying-glass') + '</div>' +
+    '<p class="mt-4 font-semibold">' + esc(msg || t('noResults')) + '</p></div>';
+}
+function anonNote() {
+  const en = 'In keeping with our Eleventh and Twelfth Traditions this site publishes first names and last initials only. Contact always runs through a role-based service address — never a member’s personal e-mail or phone number.';
+  const es = 'De acuerdo con nuestras Tradiciones Once y Doce, este sitio publica solo el nombre y la inicial del apellido. El contacto siempre se hace por una dirección de servicio — nunca el correo o teléfono personal de un miembro.';
+  return '<div class="rounded-2xl border border-fuchsia-400/40 bg-fuchsia-50 dark:bg-fuchsia-500/10 p-4 flex gap-3 text-[13.5px]">' +
+    '<span class="shrink-0 w-8 h-8 rounded-lg grid place-items-center bg-fuchsia-600 text-white">' + icon('user-secret','text-xs') + '</span>' +
+    '<p class="leading-relaxed">' + (state.lang === 'es' ? es : en) + '</p></div>';
+}
+function linkOut(href, label, cls) {
+  return '<a href="' + attr(href) + '" target="_blank" rel="noopener" class="' + (cls || '') + '">' +
+         esc(label) + ' <i class="fa-solid fa-arrow-up-right-from-square text-[.7em] opacity-60" aria-hidden="true"></i></a>';
+}
+function pill(label, toneName, iconName) {
+  return '<span class="chip ' + tone(toneName) + '">' + (iconName ? icon(iconName,'text-[.7rem]') : '') + esc(label) + '</span>';
+}
+
+window.MSCA = {
+  state:state, T:T, t:t, esc:esc, attr:attr, icon:icon, mailto:mailto,
+  slug:slug, norm:norm, uniq:uniq, byText:byText,
+  fmtTime:fmtTime, fmtHHMM:fmtHHMM, fmtDate:fmtDate, fmtDateY:fmtDateY,
+  dayName:dayName, monName:monName, ordinal:ordinal,
+  DOW_LONG:DOW_LONG, DOW_ES:DOW_ES, MON_EN:MON_EN, MON_ES:MON_ES,
+  expandOccurrences:expandOccurrences, calendarSeries:calendarSeries, latestStamp:latestStamp,
+  KIND_STYLE:KIND_STYLE, TONE:TONE, GRAD:GRAD, tone:tone, grad:grad,
+  kindLabel:kindLabel, fmtLabel:fmtLabel,
+  pageHead:pageHead, sectionTitle:sectionTitle, emptyState:emptyState,
+  anonNote:anonNote, linkOut:linkOut, pill:pill,
+  GCAL_EMBED:GCAL_EMBED, GCAL_ICS:GCAL_ICS, GCAL_ID:GCAL_ID, GCAL_PAGE:GCAL_PAGE,
+  renderNav:renderNav, applyStaticI18n:applyStaticI18n, applyTheme:applyTheme,
+  loadAll:loadAll, NAV:NAV, $:$, $$:$$
+};
+})();
+</script>
+
+<script>
+/* ═══════════════════════════════ VIEWS · part 1 ═══════════════════════════
+   Home · Service calendar · Districts
+   ═══════════════════════════════════════════════════════════════════════ */
+(function () {
+'use strict';
+const M = window.MSCA, S = M.state, t = M.t, esc = M.esc, attr = M.attr, icon = M.icon;
+const $ = M.$, $$ = M.$$;
+
+const VIEWS = {};
+M.VIEWS = VIEWS;
+
+/* ─────────────────────────────────────────────────────────────── HOME ─── */
+VIEWS.home = function () {
+  const districts = S.data['districts'] || [];
+  const spanish = districts.filter(function (d) { return d.language === 'Spanish'; });
+  const series  = M.calendarSeries();
+  const now = new Date();
+  const soon = M.expandOccurrences(now, new Date(now.getTime() + 14 * 864e5)).slice(0, 8);
+  const events = (S.data['events'] || []).filter(function (e) {
+    return new Date(String(e.end || e.start).replace(' ', 'T')) >= now;
+  }).slice(0, 3);
+
+  const stats = [
+    { n: districts.length, k: 'statDistricts', c: 'brand',   i: 'map-location-dot' },
+    { n: spanish.length,   k: 'statSpanish',   c: 'orange',  i: 'language' },
+    { n: series.length,    k: 'statMeetings',  c: 'fuchsia', i: 'calendar-check' },
+    { n: 4,                k: 'statCounties',  c: 'emerald', i: 'mountain-sun' }
+  ];
+
+  const quick = [
+    { href:'#/meetings',   i:'calendar-days',      c:'brand',
+      en:['Service calendar','Every district, H&I, intergroup and Area meeting — filter by day, type, format or language.'],
+      es:['Calendario de servicio','Cada reunión de distrito, H&I, intergrupo y Área — filtra por día, tipo, formato o idioma.'] },
+    { href:'#/districts',  i:'map-location-dot',   c:'orange',
+      en:['Find your district','Type your city and we will tell you which district your group belongs to.'],
+      es:['Encuentra tu distrito','Escribe tu ciudad y te diremos a qué distrito pertenece tu grupo.'] },
+    { href:'#/servants',   i:'address-book',       c:'fuchsia',
+      en:['Panel 76 trusted servants','Officers, committee chairs and D.C.M.C.s — with service e-mail addresses.'],
+      es:['Servidores del Panel 76','Oficiales, coordinadores de comité y M.C.D.C. — con correos de servicio.'] },
+    { href:'#/documents',  i:'file-lines',         c:'emerald',
+      en:['Minutes, motions & agendas','Everything the Assembly has approved, searchable and dated.'],
+      es:['Actas, mociones y agendas','Todo lo aprobado por la Asamblea, con búsqueda y fecha.'] },
+    { href:'#/contribute', i:'hand-holding-dollar',c:'teal',
+      en:['7th Tradition','How a group, a district or a member sends a contribution to Area 09.'],
+      es:['Séptima Tradición','Cómo un grupo, un distrito o un miembro contribuye al Área 09.'] },
+    { href:'#/newcomers',  i:'hand-holding-heart', c:'rose',
+      en:['New to A.A.?','If you want to stop drinking, you are in the right place. Start here.'],
+      es:['¿Nuevo en A.A.?','Si quieres dejar de beber, estás en el lugar correcto. Empieza aquí.'] }
+  ];
+
+  return '' +
+  /* ── hero ─────────────────────────────────────────────────────────── */
+  '<section class="relative overflow-hidden grad-hero text-white">' +
+    '<div class="blob w-[30rem] h-[30rem] -left-32 -top-40 bg-fuchsia-500/50 animate-drift" aria-hidden="true"></div>' +
+    '<div class="blob w-96 h-96 right-[-6rem] top-0 bg-orange-400/50 animate-drift" style="animation-delay:-4s" aria-hidden="true"></div>' +
+    '<div class="blob w-80 h-80 left-1/3 bottom-[-8rem] bg-cyan-400/40 animate-drift" style="animation-delay:-9s" aria-hidden="true"></div>' +
+    '<div class="relative mx-auto max-w-7xl px-4 pt-16 pb-20 sm:pt-20 sm:pb-24">' +
+      '<p class="chip chip-wrap bg-white/15 text-white/95 backdrop-blur mb-5">' + icon('circle-nodes') + esc(t('heroKicker')) + '</p>' +
+      '<h1 class="font-display font-extrabold tracking-tight text-[2.6rem] leading-[1.03] sm:text-6xl lg:text-7xl max-w-4xl xl:max-w-2xl">' +
+        (S.lang === 'es'
+          ? 'El servicio es cómo<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-fuchsia-200 to-cyan-200">nos mantenemos sobrios juntos</span>'
+          : 'Service is how we<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-fuchsia-200 to-cyan-200">stay sober together</span>') +
+      '</h1>' +
+      '<p class="mt-6 text-lg sm:text-xl text-white/85 max-w-2xl xl:max-w-xl leading-relaxed">' + esc(t('heroLead')) + '</p>' +
+      '<div class="mt-8 flex flex-wrap gap-3">' +
+        '<a href="#/districts" class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-bold text-ink-900 bg-white hover:bg-amber-100 shadow-lift transition">' +
+          icon('map-location-dot') + esc(t('heroBtn1')) + '</a>' +
+        '<a href="#/meetings" class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
+          icon('calendar-days') + esc(t('heroBtn2')) + '</a>' +
+      '</div>' +
+      '<div class="mt-14 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 xl:max-w-xl gap-3 sm:gap-4">' +
+        stats.map(function (s) {
+          return '<div class="rounded-2xl bg-white/10 backdrop-blur border border-white/15 p-5">' +
+            '<div class="text-3xl sm:text-4xl font-display font-extrabold">' + esc(s.n) + '</div>' +
+            '<div class="mt-1 text-[12.5px] uppercase tracking-wider text-white/70 leading-snug">' + esc(t(s.k)) + '</div></div>';
+        }).join('') +
+      '</div>' +
+      heroPanel(soon) +
+    '</div>' +
+  '</section>' +
+
+  /* ── happening next ───────────────────────────────────────────────── */
+  '<section class="mx-auto max-w-7xl px-4 py-16">' +
+    '<div class="flex flex-wrap items-end justify-between gap-4 mb-7">' +
+      '<div>' +
+        '<h2 class="font-display font-extrabold text-3xl tracking-tight">' + esc(t('homeNextTitle')) + '</h2>' +
+        '<p class="mt-2 opacity-70">' + esc(t('homeNextSub')) + '</p>' +
+        '<div class="mt-4 h-1 w-24 rounded-full grad-rule"></div>' +
+      '</div>' +
+      '<a href="#/meetings" class="inline-flex items-center gap-2 font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+        esc(t('homeSeeAll')) + ' ' + icon('arrow-right') + '</a>' +
+    '</div>' +
+    (soon.length
+      ? '<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">' + soon.map(occCard).join('') + '</div>'
+      : '<div class="card rounded-3xl p-8 text-center opacity-70">' + esc(t('loading')) + '</div>') +
+  '</section>' +
+
+  /* ── quick links ──────────────────────────────────────────────────── */
+  '<section class="mx-auto max-w-7xl px-4 pb-6">' +
+    M.sectionTitle(esc(t('quickTitle'))) +
+    '<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">' +
+      quick.map(function (q, idx) {
+        const txt = S.lang === 'es' ? q.es : q.en;
+        return '<a href="' + attr(q.href) + '" data-aos="fade-up" data-aos-delay="' + (idx * 60) + '" ' +
+          'class="card card-hover rounded-3xl p-6 block hover:shadow-lift group">' +
+          '<span class="w-12 h-12 grid place-items-center rounded-2xl text-white text-lg bg-gradient-to-br ' + M.grad(q.c) + '">' +
+            icon(q.i) + '</span>' +
+          '<h3 class="mt-4 font-display font-bold text-lg">' + esc(txt[0]) + '</h3>' +
+          '<p class="mt-1.5 text-[14.5px] leading-relaxed opacity-75">' + esc(txt[1]) + '</p>' +
+          '<span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 dark:text-brand-300">' +
+            (S.lang === 'es' ? 'Abrir' : 'Open') + ' <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1" aria-hidden="true"></i></span>' +
+        '</a>';
+      }).join('') +
+    '</div>' +
+  '</section>' +
+
+  /* ── events strip ─────────────────────────────────────────────────── */
+  (events.length ? '<section class="mx-auto max-w-7xl px-4 py-16">' +
+    M.sectionTitle(S.lang === 'es' ? 'Próximos eventos del Área' : 'Upcoming Area events',
+                   S.lang === 'es' ? 'Asambleas, talleres y eventos abiertos a todo A.A.'
+                                   : 'Assemblies, workshops and gatherings open to all of A.A.') +
+    '<div class="grid gap-4 md:grid-cols-3">' + events.map(eventCard).join('') + '</div>' +
+    '<div class="mt-6"><a href="#/events" class="inline-flex items-center gap-2 font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+      (S.lang === 'es' ? 'Ver todos los eventos' : 'See all events') + ' ' + icon('arrow-right') + '</a></div>' +
+  '</section>' : '') +
+
+  /* ── the three legacies ───────────────────────────────────────────── */
+  '<section class="mx-auto max-w-7xl px-4 pb-20">' +
+    '<div class="rounded-[2rem] overflow-hidden grad-hero text-white relative">' +
+      '<div class="blob w-96 h-96 right-[-6rem] -top-24 bg-cyan-400/40 animate-drift" aria-hidden="true"></div>' +
+      '<div class="relative p-8 sm:p-12">' +
+        '<h2 class="font-display font-extrabold text-3xl sm:text-4xl tracking-tight">' +
+          (S.lang === 'es' ? 'Las Tres Legados' : 'The Three Legacies') + '</h2>' +
+        '<p class="mt-3 text-white/80 max-w-2xl leading-relaxed">' +
+          (S.lang === 'es'
+            ? 'Recuperación, Unidad y Servicio. El Área 09 existe para el tercero — para que el grupo tenga voz y el mensaje siga llegando.'
+            : 'Recovery, Unity and Service. Area 09 exists for the third one — so that the group has a voice and the message keeps getting through.') + '</p>' +
+        '<div class="mt-8 grid gap-4 sm:grid-cols-3">' +
+          [['The Twelve Steps','Los Doce Pasos','https://www.aa.org/the-twelve-steps','shoe-prints',
+            'Recovery — the program of A.A.','Recuperación — el programa de A.A.'],
+           ['The Twelve Traditions','Las Doce Tradiciones','https://www.aa.org/the-twelve-traditions','link',
+            'Unity — how A.A. groups stay together.','Unidad — cómo permanecen unidos los grupos.'],
+           ['The Twelve Concepts','Los Doce Conceptos','https://www.aa.org/the-twelve-concepts','sitemap',
+            'Service — how A.A. as a whole functions.','Servicio — cómo funciona A.A. en su conjunto.']
+          ].map(function (l) {
+            return '<a href="' + attr(l[2]) + '" target="_blank" rel="noopener" ' +
+              'class="rounded-2xl bg-white/10 hover:bg-white/20 backdrop-blur border border-white/15 p-6 transition block">' +
+              '<span class="text-2xl">' + icon(l[3]) + '</span>' +
+              '<h3 class="mt-3 font-display font-bold text-lg">' + esc(S.lang === 'es' ? l[1] : l[0]) + '</h3>' +
+              '<p class="mt-1 text-[14px] text-white/75">' + esc(S.lang === 'es' ? l[5] : l[4]) + '</p>' +
+              '<span class="mt-3 inline-block text-[12.5px] font-semibold text-amber-200">aa.org ' +
+              '<i class="fa-solid fa-arrow-up-right-from-square text-[.7em]" aria-hidden="true"></i></span></a>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</section>';
+};
+
+/* the floating "up next" panel that fills the right of the hero on wide
+   screens; it is hidden below xl so the hero stays calm on a phone      */
+function heroPanel(soon) {
+  const es = S.lang === 'es';
+  const list = (soon || []).slice(0, 4);
+  if (!list.length) return '';
+  return '<aside class="hidden xl:block absolute right-4 top-1/2 -translate-y-1/2 w-[23rem] 2xl:w-[26rem]" aria-label="' +
+      attr(es ? 'Próximas reuniones' : 'Next meetings') + '">' +
+    '<div class="rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lift p-6 animate-floaty">' +
+      '<div class="flex items-center gap-2.5">' +
+        '<span class="w-2.5 h-2.5 rounded-full bg-emerald-300 animate-pulse"></span>' +
+        '<p class="text-[11px] font-bold uppercase tracking-[.18em] text-white/70">' +
+          esc(es ? 'A continuación' : 'Up next') + '</p></div>' +
+      '<ul class="mt-4 space-y-3">' +
+        list.map(function (o) {
+          const st = M.KIND_STYLE[o.kind] || M.KIND_STYLE.Other;
+          return '<li class="flex items-start gap-3 pb-3 border-b border-white/10 last:border-0 last:pb-0">' +
+            '<span class="shrink-0 grid place-items-center w-11 h-11 rounded-xl bg-white/15 text-center leading-none">' +
+              '<span><span class="block text-[9px] uppercase tracking-wider text-white/60">' +
+                esc(M.monName(o.date.getMonth()).slice(0, 3)) + '</span>' +
+              '<span class="block text-base font-display font-extrabold">' + o.date.getDate() + '</span></span></span>' +
+            '<span class="min-w-0 flex-1">' +
+              '<span class="block font-semibold text-[14.5px] leading-snug truncate">' + esc(o.title) + '</span>' +
+              '<span class="block text-[12.5px] text-white/65">' + esc(M.fmtTime(o.hour, o.minute)) + ' PT &middot; ' +
+                esc(M.kindLabel(o.kind)) + '</span>' +
+            '</span></li>';
+        }).join('') +
+      '</ul>' +
+      '<a href="#/meetings" class="mt-5 flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
+        icon('calendar-days') + esc(es ? 'Ver el calendario' : 'Open the calendar') + '</a>' +
+    '</div></aside>';
+}
+
+/* small cards reused in several places -------------------------------- */
+function occCard(o) {
+  const st = M.KIND_STYLE[o.kind] || M.KIND_STYLE.Other;
+  return '<article class="card card-hover rounded-2xl p-5 flex flex-col">' +
+    '<div class="flex items-start justify-between gap-2">' +
+      '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa, 'text-[.7rem]') + esc(M.kindLabel(o.kind)) + '</span>' +
+      (o.language === 'Spanish' ? '<span class="chip ' + M.tone('orange') + '">ES</span>' : '') +
+    '</div>' +
+    '<h3 class="mt-3 font-display font-bold text-[17px] leading-snug">' + esc(o.title) + '</h3>' +
+    '<p class="mt-1.5 text-[13.5px] font-semibold text-brand-700 dark:text-brand-300">' +
+      esc(M.fmtDate(o.date)) + ' &middot; ' + esc(M.fmtTime(o.hour, o.minute)) + ' PT</p>' +
+    (o.location ? '<p class="mt-2 text-[13px] opacity-70 leading-snug">' + icon('location-dot','mr-1 opacity-60') + esc(o.location) + '</p>' : '') +
+    '<div class="mt-auto pt-3 flex flex-wrap gap-1.5">' +
+      (o.format ? '<span class="chip ' + M.tone('slate') + '">' + esc(M.fmtLabel(o.format)) + '</span>' : '') +
+      (o.zoomId ? '<span class="chip ' + M.tone('sky') + '">' + icon('video','text-[.7rem]') + 'Zoom</span>' : '') +
+    '</div>' +
+  '</article>';
+}
+function eventCard(e) {
+  const d = new Date(String(e.start).replace(' ', 'T'));
+  const de = new Date(String(e.end || e.start).replace(' ', 'T'));
+  const multi = de.toDateString() !== d.toDateString();
+  return '<article class="card card-hover rounded-2xl overflow-hidden">' +
+    '<div class="h-1.5 grad-rule"></div>' +
+    '<div class="p-5">' +
+      '<p class="text-[13px] font-bold text-fuchsia-700 dark:text-fuchsia-300">' +
+        esc(M.monName(d.getMonth()) + ' ' + d.getDate() + (multi ? '–' + de.getDate() : '') + ', ' + d.getFullYear()) + '</p>' +
+      '<h3 class="mt-1.5 font-display font-bold text-lg leading-snug">' + esc(e.title) + '</h3>' +
+      (e.location ? '<p class="mt-2 text-[13.5px] opacity-70">' + icon('location-dot','mr-1 opacity-60') +
+        esc(e.location + (e.city ? ', ' + e.city : '')) + '</p>' : '') +
+      (e.url ? '<a href="' + attr(e.url) + '" target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+        (S.lang === 'es' ? 'Detalles' : 'Details') + ' <i class="fa-solid fa-arrow-up-right-from-square text-[.7em]" aria-hidden="true"></i></a>' : '') +
+    '</div></article>';
+}
+M.occCard = occCard; M.eventCard = eventCard;
+
+/* ────────────────────────────────────────────────── SERVICE CALENDAR ─── */
+const calState = { view:'upcoming', kind:'', fmt:'', lang:'', dow:'', q:'', range:60, month:null };
+
+VIEWS.meetings = function () {
+  const es = S.lang === 'es';
+  return M.pageHead({
+    icon:'calendar-days',
+    kicker: es ? 'Calendario de servicio del Área 09' : 'Area 09 service calendar',
+    title: es ? 'Cada reunión de servicio,<br>en un solo lugar'
+              : 'Every service meeting,<br>in one place',
+    lead: es
+      ? 'Distritos, comités de H&I, intergrupos y oficinas centrales, y las reuniones del Área. Filtra por día, tipo, formato o idioma. Todas las horas son del Pacífico.'
+      : 'Districts, H&I committees, intergroups and central offices, and the Area’s own meetings. Filter by day, type, format or language. All times are Pacific.',
+    extra:
+      '<div class="mt-7 flex flex-wrap gap-2.5">' +
+        '<a href="' + attr(M.GCAL_ICS) + '" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
+          icon('calendar-plus') + esc(t('subscribe')) + '</a>' +
+        '<a href="MSCA09%20DistrictCal.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
+          icon('file-pdf') + esc(t('printable')) + '</a>' +
+        (S.icsStamp
+          ? '<span class="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/40">' +
+            '<span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>' +
+            esc((es ? 'Sincronizado con Google Calendar · ' : 'Synced with Google Calendar · ') +
+                M.monName(S.icsStamp.getMonth()) + ' ' + S.icsStamp.getDate() + ', ' + S.icsStamp.getFullYear()) + '</span>'
+          : '') +
+      '</div>'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-10">' +
+    '<div id="calShell"></div>' +
+  '</section>';
+};
+
+VIEWS.meetings.mount = function () {
+  const shell = $('#calShell');
+  if (!shell) return;
+  drawCalendar(shell);
+};
+
+function drawCalendar(shell) {
+  const es = S.lang === 'es';
+  const series = M.calendarSeries();
+  const kinds = M.uniq(series.map(function (s) { return s.kind; })).sort();
+  const fmts  = M.uniq(series.map(function (s) { return s.format; }).filter(Boolean)).sort();
+
+  const tabs = [
+    ['upcoming', t('upcoming'),    'list-ul'],
+    ['month',    t('monthView'),   'calendar'],
+    ['pattern',  t('patternView'), 'table-cells'],
+    ['gcal',     t('gcalView'),    'brands fa-google']
+  ];
+
+  shell.innerHTML =
+  '<div class="card rounded-3xl p-5 sm:p-6 mb-6">' +
+    /* view tabs */
+    '<div class="flex flex-wrap gap-2 mb-5" role="tablist">' +
+      tabs.map(function (tb) {
+        const on = calState.view === tb[0];
+        return '<button type="button" role="tab" data-calview="' + attr(tb[0]) + '" aria-selected="' + on + '" ' +
+          'class="fltbtn inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ' +
+          (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
+              : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+          '<i class="' + (tb[2].indexOf('brands') === 0 ? 'fa-' + tb[2] : 'fa-solid fa-' + tb[2]) + '" aria-hidden="true"></i>' +
+          esc(tb[1]) + '</button>';
+      }).join('') +
+    '</div>' +
+
+    /* filters */
+    '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">' +
+      '<label class="lg:col-span-2 block">' +
+        '<span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' + esc(t('search')) + '</span>' +
+        '<div class="relative">' +
+          '<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40 text-sm" aria-hidden="true"></i>' +
+          '<input id="calQ" type="search" value="' + attr(calState.q) + '" placeholder="' +
+            attr(es ? 'Distrito, ciudad, comité…' : 'District, city, committee…') + '" ' +
+            'class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 pl-10 pr-3 py-2.5 text-sm">' +
+        '</div></label>' +
+      selectField('calKind', t('type'), kinds.map(function (k) { return [k, M.kindLabel(k)]; }), calState.kind) +
+      selectField('calDow', t('day'), M.DOW_LONG.map(function (d, i) { return [String(i), M.dayName(i)]; }), calState.dow) +
+      selectField('calFmt', t('format'), fmts.map(function (f) { return [f, M.fmtLabel(f)]; }), calState.fmt) +
+    '</div>' +
+    '<div class="mt-3 flex flex-wrap items-center gap-2">' +
+      langChip('', t('all')) + langChip('English', t('english')) + langChip('Spanish', t('spanish')) +
+      '<button type="button" id="calClear" class="ml-auto text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+        icon('rotate-left','mr-1') + esc(t('clearFilters')) + '</button>' +
+    '</div>' +
+  '</div>' +
+  '<div id="calBody"></div>' +
+  '<p class="mt-6 text-[12.5px] opacity-60">' + icon('clock','mr-1.5') + esc(t('allTimesPT')) + '</p>';
+
+  /* wire up */
+  $$('[data-calview]', shell).forEach(function (b) {
+    b.addEventListener('click', function () { calState.view = b.getAttribute('data-calview'); drawCalendar(shell); });
+  });
+  const q = $('#calQ', shell);
+  if (q) {
+    let tm;
+    q.addEventListener('input', function () {
+      clearTimeout(tm);
+      tm = setTimeout(function () { calState.q = q.value; drawBody(); }, 180);
+    });
+  }
+  bindSelect('calKind', 'kind'); bindSelect('calDow', 'dow'); bindSelect('calFmt', 'fmt');
+  $$('[data-callang]', shell).forEach(function (b) {
+    b.addEventListener('click', function () { calState.lang = b.getAttribute('data-callang'); drawCalendar(shell); });
+  });
+  const cl = $('#calClear', shell);
+  if (cl) cl.addEventListener('click', function () {
+    calState.kind = calState.fmt = calState.lang = calState.dow = calState.q = '';
+    drawCalendar(shell);
+  });
+
+  function bindSelect(id, key) {
+    const el = $('#' + id, shell);
+    if (el) el.addEventListener('change', function () { calState[key] = el.value; drawBody(); });
+  }
+  function drawBody() {
+    const body = $('#calBody', shell);
+    if (!body) return;
+    body.innerHTML = calBodyHTML();
+    wireBody(body);
+  }
+  drawBody();
+}
+
+function selectField(id, label, opts, val) {
+  return '<label class="block"><span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' +
+    esc(label) + '</span>' +
+    '<select id="' + attr(id) + '" class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 px-3 py-2.5 text-sm">' +
+      '<option value="">' + esc(t('all')) + '</option>' +
+      opts.map(function (o) {
+        return '<option value="' + attr(o[0]) + '"' + (String(val) === String(o[0]) ? ' selected' : '') + '>' + esc(o[1]) + '</option>';
+      }).join('') +
+    '</select></label>';
+}
+function langChip(val, label) {
+  const on = calState.lang === val;
+  return '<button type="button" data-callang="' + attr(val) + '" aria-pressed="' + on + '" ' +
+    'class="fltbtn chip ' + (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600'
+                               : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+    esc(label) + '</button>';
+}
+
+function matches(o) {
+  if (calState.kind && o.kind !== calState.kind) return false;
+  if (calState.fmt && o.format !== calState.fmt) return false;
+  if (calState.lang && o.language !== calState.lang) return false;
+  if (calState.q) {
+    const hay = M.norm([o.title, o.location, o.covers, o.web, o.notes.join(' '), o.kind].join(' '));
+    if (hay.indexOf(M.norm(calState.q)) === -1) return false;
+  }
+  return true;
+}
+
+function calBodyHTML() {
+  if (calState.view === 'gcal') {
+    const es = S.lang === 'es';
+    return '<div class="card rounded-3xl p-4 sm:p-5">' +
+      '<p class="text-[13.5px] opacity-70 mb-3">' +
+        esc(es ? 'Este es el calendario de Google del Área en vivo. Cualquier cambio que haga el servidor web aparece aquí de inmediato.'
+               : 'This is the Area’s live Google Calendar. Anything the web servant changes shows up here immediately.') + '</p>' +
+      '<div class="rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white">' +
+        '<iframe title="MSCA09 Service Meetings calendar" src="' + attr(M.GCAL_EMBED) + '" ' +
+        'style="border:0" width="100%" height="620" frameborder="0" scrolling="no" loading="lazy"></iframe>' +
+      '</div>' +
+      '<div class="mt-4 flex flex-wrap gap-2">' +
+        '<a href="' + attr(M.GCAL_PAGE) + '" target="_blank" rel="noopener" class="chip ' + M.tone('brand') + '">' +
+          icon('up-right-from-square','text-[.7rem]') + (es ? 'Abrir en Google Calendar' : 'Open in Google Calendar') + '</a>' +
+        '<a href="' + attr(M.GCAL_ICS) + '" class="chip ' + M.tone('emerald') + '">' +
+          icon('calendar-plus','text-[.7rem]') + esc(t('subscribe')) + '</a>' +
+      '</div></div>';
+  }
+  if (calState.view === 'pattern') return patternHTML();
+  if (calState.view === 'month')   return monthHTML();
+  return upcomingHTML();
+}
+
+function wireBody(body) {
+  $$('[data-monthstep]', body).forEach(function (b) {
+    b.addEventListener('click', function () {
+      const step = parseInt(b.getAttribute('data-monthstep'), 10);
+      const cur = calState.month || new Date();
+      calState.month = new Date(cur.getFullYear(), cur.getMonth() + step, 1);
+      body.innerHTML = calBodyHTML(); wireBody(body);
+    });
+  });
+  $$('[data-occ]', body).forEach(function (el) {
+    el.addEventListener('click', function () {
+      const d = el.nextElementSibling;
+      if (d) { d.hidden = !d.hidden; el.setAttribute('aria-expanded', String(!d.hidden)); }
+    });
+  });
+}
+
+function upcomingHTML() {
+  const now = new Date(); now.setHours(0, 0, 0, 0);
+  const to = new Date(now.getTime() + 62 * 864e5);
+  let occ = M.expandOccurrences(now, to).filter(matches);
+  if (calState.dow !== '') occ = occ.filter(function (o) { return String(o.date.getDay()) === calState.dow; });
+  if (!occ.length) return M.emptyState();
+
+  const groups = {};
+  occ.forEach(function (o) {
+    const k = o.date.toDateString();
+    (groups[k] = groups[k] || []).push(o);
+  });
+
+  return '<div class="space-y-7">' + Object.keys(groups).map(function (k) {
+    const d = new Date(k);
+    const isToday = d.toDateString() === new Date().toDateString();
+    return '<section>' +
+      '<div class="flex items-center gap-3 mb-3">' +
+        '<span class="grid place-items-center w-14 h-14 rounded-2xl text-white bg-gradient-to-br ' +
+          (isToday ? 'from-fuchsia-500 to-orange-500' : 'from-brand-500 to-indigo-600') + ' shadow-pop">' +
+          '<span class="block text-center leading-none">' +
+            '<span class="block text-[10px] uppercase tracking-wider opacity-80">' + esc(M.monName(d.getMonth()).slice(0, 3)) + '</span>' +
+            '<span class="block text-xl font-display font-extrabold">' + d.getDate() + '</span></span></span>' +
+        '<div><p class="font-display font-bold text-lg leading-tight">' + esc(M.dayName(d.getDay())) + '</p>' +
+        '<p class="text-[13px] opacity-60">' + esc(M.monName(d.getMonth()) + ' ' + d.getDate() + ', ' + d.getFullYear()) +
+        (isToday ? ' &middot; <span class="font-bold text-fuchsia-600 dark:text-fuchsia-300">' + esc(t('today')) + '</span>' : '') + '</p></div>' +
+      '</div>' +
+      '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">' + groups[k].map(occDetailCard).join('') + '</div>' +
+    '</section>';
+  }).join('') + '</div>';
+}
+
+function occDetailCard(o) {
+  const st = M.KIND_STYLE[o.kind] || M.KIND_STYLE.Other;
+  const id = M.slug(o.uid + '-' + o.date.getTime());
+  const gcal = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+    '&text=' + encodeURIComponent(o.title) +
+    '&dates=' + gcalStamp(o.date) + '/' + gcalStamp(new Date(o.date.getTime() + 36e5)) +
+    '&ctz=America/Los_Angeles' +
+    (o.location ? '&location=' + encodeURIComponent(o.location) : '');
+  return '<article class="card card-hover rounded-2xl overflow-hidden">' +
+    '<button type="button" data-occ aria-expanded="false" aria-controls="' + attr(id) + '" class="w-full text-left p-5">' +
+      '<div class="flex items-start justify-between gap-2">' +
+        '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa, 'text-[.7rem]') + esc(M.kindLabel(o.kind)) + '</span>' +
+        '<span class="text-[13px] font-bold text-brand-700 dark:text-brand-300 whitespace-nowrap">' +
+          esc(M.fmtTime(o.hour, o.minute)) + '</span>' +
+      '</div>' +
+      '<h3 class="mt-2.5 font-display font-bold text-[17px] leading-snug">' + esc(o.title) + '</h3>' +
+      (o.location ? '<p class="mt-2 text-[13px] opacity-70 leading-snug">' + icon('location-dot','mr-1 opacity-60') + esc(o.location) + '</p>' : '') +
+      '<div class="mt-3 flex flex-wrap gap-1.5">' +
+        (o.format ? '<span class="chip ' + M.tone('slate') + '">' + esc(M.fmtLabel(o.format)) + '</span>' : '') +
+        (o.zoomId ? '<span class="chip ' + M.tone('sky') + '">' + icon('video','text-[.7rem]') + 'Zoom</span>' : '') +
+        (o.language === 'Spanish' ? '<span class="chip ' + M.tone('orange') + '">' + esc(t('spanish')) + '</span>' : '') +
+      '</div>' +
+    '</button>' +
+    '<div id="' + attr(id) + '" hidden class="px-5 pb-5 -mt-1 space-y-2.5 text-[13.5px] border-t border-black/5 dark:border-white/10 pt-4">' +
+      (o.zoomId ? '<p><span class="font-semibold">' + esc(t('zoomId')) + ':</span> ' + esc(o.zoomId) +
+        (o.passcode ? ' &middot; <span class="font-semibold">' + esc(t('passcode')) + ':</span> ' + esc(o.passcode) : '') + '</p>' +
+        '<a class="chip ' + M.tone('sky') + '" target="_blank" rel="noopener" href="https://zoom.us/j/' +
+          attr(o.zoomId.replace(/\D/g, '')) + '">' + icon('video','text-[.7rem]') + esc(t('joinZoom')) + '</a>' : '') +
+      (o.covers ? '<p><span class="font-semibold">' + esc(t('covers')) + ':</span> ' + esc(o.covers) + '</p>' : '') +
+      (o.web ? '<p>' + M.linkOut(/^https?:/.test(o.web) ? o.web : 'https://' + o.web, o.web,
+        'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</p>' : '') +
+      (o.notes.length ? '<p class="opacity-70 leading-relaxed">' + esc(o.notes.join(' ')) + '</p>' : '') +
+      '<div class="pt-1 flex flex-wrap gap-2">' +
+        '<a class="chip ' + M.tone('emerald') + '" target="_blank" rel="noopener" href="' + attr(gcal) + '">' +
+          icon('calendar-plus','text-[.7rem]') + esc(t('addToCal')) + '</a>' +
+        (o.districtNo ? '<a class="chip ' + M.tone('brand') + '" href="#/districts/' + attr(M.slug(o.districtNo)) + '">' +
+          icon('map-location-dot','text-[.7rem]') + esc(t('district') + ' ' + o.districtNo) + '</a>' : '') +
+      '</div>' +
+    '</div>' +
+  '</article>';
+}
+function gcalStamp(d) {
+  function p(n) { return String(n).padStart(2, '0'); }
+  return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + 'T' + p(d.getHours()) + p(d.getMinutes()) + '00';
+}
+
+function monthHTML() {
+  const base = calState.month || new Date();
+  const y = base.getFullYear(), m = base.getMonth();
+  const first = new Date(y, m, 1), last = new Date(y, m + 1, 0);
+  let occ = M.expandOccurrences(new Date(y, m, 1, 0, 0), new Date(y, m + 1, 0, 23, 59)).filter(matches);
+  if (calState.dow !== '') occ = occ.filter(function (o) { return String(o.date.getDay()) === calState.dow; });
+
+  const byDay = {};
+  occ.forEach(function (o) { (byDay[o.date.getDate()] = byDay[o.date.getDate()] || []).push(o); });
+
+  const lead = first.getDay();
+  const cells = [];
+  for (let i = 0; i < lead; i++) cells.push(null);
+  for (let d = 1; d <= last.getDate(); d++) cells.push(d);
+  while (cells.length % 7) cells.push(null);
+
+  const todayStr = new Date().toDateString();
+
+  return '<div class="card rounded-3xl p-4 sm:p-6">' +
+    '<div class="flex items-center justify-between gap-3 mb-5">' +
+      '<button type="button" data-monthstep="-1" class="w-10 h-10 rounded-full border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10" aria-label="Previous month">' + icon('chevron-left') + '</button>' +
+      '<h3 class="font-display font-extrabold text-xl sm:text-2xl">' + esc(M.monName(m) + ' ' + y) + '</h3>' +
+      '<button type="button" data-monthstep="1" class="w-10 h-10 rounded-full border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10" aria-label="Next month">' + icon('chevron-right') + '</button>' +
+    '</div>' +
+    '<div class="overflow-x-auto">' +
+    '<div class="min-w-[720px] grid grid-cols-7 gap-1.5">' +
+      M.DOW_LONG.map(function (d, i) {
+        return '<div class="text-center text-[11px] font-bold uppercase tracking-widest opacity-55 pb-1.5">' +
+          esc(M.dayName(i).slice(0, 3)) + '</div>';
+      }).join('') +
+      cells.map(function (d) {
+        if (d === null) return '<div class="rounded-xl bg-black/[.02] dark:bg-white/[.02] min-h-[104px]"></div>';
+        const isToday = new Date(y, m, d).toDateString() === todayStr;
+        const list = byDay[d] || [];
+        return '<div class="rounded-xl border ' + (isToday ? 'border-fuchsia-400 ring-2 ring-fuchsia-300/40' : 'border-black/5 dark:border-white/10') +
+          ' bg-white/70 dark:bg-white/[.04] p-2 min-h-[104px]">' +
+          '<div class="text-[12px] font-bold ' + (isToday ? 'text-fuchsia-600 dark:text-fuchsia-300' : 'opacity-60') + '">' + d + '</div>' +
+          '<div class="mt-1 space-y-1">' + list.slice(0, 4).map(function (o) {
+            const st = M.KIND_STYLE[o.kind] || M.KIND_STYLE.Other;
+            return '<div class="rounded-md px-1.5 py-1 text-[10.5px] leading-tight font-semibold ' + M.tone(st.c) + '" title="' +
+              attr(o.title + ' — ' + M.fmtTime(o.hour, o.minute)) + '">' +
+              esc(M.fmtTime(o.hour, o.minute).replace(':00', '')) + ' ' + esc(o.title) + '</div>';
+          }).join('') +
+          (list.length > 4 ? '<div class="text-[10.5px] opacity-60 pl-1">+' + (list.length - 4) + '</div>' : '') +
+          '</div></div>';
+      }).join('') +
+    '</div></div></div>';
+}
+
+/* The printed flyer as a live table: which week of the month each meeting
+   falls on, by day.  Rebuilt from the calendar's own RRULEs.              */
+function patternHTML() {
+  const es = S.lang === 'es';
+  const series = M.calendarSeries().filter(matches);
+  const weeks = [1, 2, 3, 4, 5];
+  const grid = {};
+  weeks.forEach(function (w) { grid[w] = [[], [], [], [], [], [], []]; });
+
+  const DOWI = { SU:0, MO:1, TU:2, WE:3, TH:4, FR:5, SA:6 };
+  series.forEach(function (s) {
+    (s.byday.length ? s.byday : []).forEach(function (bd) {
+      const mm = String(bd).match(/^(-?\d)?([A-Z]{2})$/);
+      if (!mm) return;
+      const di = DOWI[mm[2]];
+      if (di === undefined) return;
+      if (calState.dow !== '' && String(di) !== calState.dow) return;
+      if (mm[1]) {
+        const w = parseInt(mm[1], 10);
+        if (grid[w]) grid[w][di].push(s);
+      } else {
+        weeks.forEach(function (w) { grid[w][di].push(s); });
+      }
+    });
+  });
+
+  const any = weeks.some(function (w) { return grid[w].some(function (c) { return c.length; }); });
+  if (!any) return M.emptyState();
+
+  return '<div class="card rounded-3xl p-4 sm:p-6">' +
+    '<p class="text-[13.5px] opacity-70 mb-4">' +
+      esc(es ? 'La misma cuadrícula del volante impreso, generada desde el calendario — así siempre coincide.'
+             : 'The same grid as the printed flyer, generated straight from the calendar — so the two can never drift apart.') + '</p>' +
+    '<div class="overflow-x-auto -mx-2 px-2">' +
+    '<table class="grid-cal min-w-[900px] w-full border-separate" style="border-spacing:5px">' +
+      '<thead><tr>' +
+        '<th class="w-16"></th>' +
+        M.DOW_LONG.map(function (d, i) {
+          return '<th class="text-[11px] font-bold uppercase tracking-widest opacity-55 pb-1">' + esc(M.dayName(i)) + '</th>';
+        }).join('') +
+      '</tr></thead><tbody>' +
+      weeks.map(function (w) {
+        return '<tr>' +
+          '<th class="align-middle text-[11px] font-bold uppercase tracking-widest opacity-55 whitespace-nowrap pr-2">' +
+            esc(t('week')) + '<br><span class="text-2xl font-display opacity-90">' + w + '</span></th>' +
+          grid[w].map(function (cell) {
+            if (!cell.length) return '<td class="rounded-xl bg-black/[.02] dark:bg-white/[.02] min-w-[110px]"></td>';
+            return '<td class="rounded-xl border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/[.04] p-1.5 align-top min-w-[110px]">' +
+              cell.sort(function (a, b) { return (a.hour * 60 + a.minute) - (b.hour * 60 + b.minute); }).map(function (s) {
+                const st = M.KIND_STYLE[s.kind] || M.KIND_STYLE.Other;
+                return '<div class="rounded-lg px-2 py-1.5 mb-1 text-[11px] leading-tight font-semibold ' + M.tone(st.c) + '">' +
+                  esc(s.title) + '<span class="block font-normal opacity-80">' +
+                  esc(M.fmtTime(s.hour, s.minute).replace(':00', '')) + '</span></div>';
+              }).join('') + '</td>';
+          }).join('') +
+        '</tr>';
+      }).join('') +
+    '</tbody></table></div>' +
+    '<div class="mt-5 flex flex-wrap gap-2">' +
+      Object.keys(M.KIND_STYLE).filter(function (k) { return k !== 'Other'; }).map(function (k) {
+        const st = M.KIND_STYLE[k];
+        return '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa, 'text-[.7rem]') + esc(M.kindLabel(k)) + '</span>';
+      }).join('') +
+    '</div></div>';
+}
+
+/* ───────────────────────────────────────────────────────── DISTRICTS ─── */
+VIEWS.districts = function (params) {
+  const es = S.lang === 'es';
+  const rows = S.data['districts'] || [];
+  const focus = params && params[0] ? params[0] : '';
+
+  return M.pageHead({
+    icon:'map-location-dot',
+    kicker: es ? 'Distritos del Área 09' : 'Area 09 districts',
+    title: es ? 'Encuentra tu distrito' : 'Find your district',
+    lead: es
+      ? 'Un distrito es un grupo de grupos de A.A. cercanos. Escribe tu ciudad y te diremos cuál es el tuyo, cuándo se reúne y a quién escribir.'
+      : 'A district is a cluster of nearby A.A. groups. Type your city and we will tell you which one is yours, when it meets, and who to write to.',
+    extra:
+      '<div class="mt-7 max-w-xl relative">' +
+        '<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-ink-900/40" aria-hidden="true"></i>' +
+        '<input id="distQ" type="search" autocomplete="off" placeholder="' +
+          attr(es ? 'Ciudad, número de distrito…' : 'City, district number…') + '" ' +
+          'class="w-full rounded-full bg-white text-ink-900 pl-11 pr-4 py-3.5 font-medium shadow-lift placeholder:text-ink-900/40">' +
+      '</div>' +
+      '<div class="mt-3 flex flex-wrap gap-2">' +
+        '<button type="button" data-distlang="" class="chip bg-white/20 text-white hover:bg-white/30">' + esc(t('all')) + '</button>' +
+        '<button type="button" data-distlang="English" class="chip bg-white/20 text-white hover:bg-white/30">' + esc(t('english')) + '</button>' +
+        '<button type="button" data-distlang="Spanish" class="chip bg-white/20 text-white hover:bg-white/30">' + esc(t('spanish')) + '</button>' +
+      '</div>'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    '<div id="distNote" class="mb-6"></div>' +
+    '<div id="distList" data-focus="' + attr(focus) + '"></div>' +
+  '</section>';
+};
+
+VIEWS.districts.mount = function () {
+  const list = $('#distList'); if (!list) return;
+  const rows = S.data['districts'] || [];
+  const st = { q:'', lang:'' };
+  const focus = list.getAttribute('data-focus') || '';
+  if (focus) st.q = focus.replace(/-/g, ' ');
+
+  const q = $('#distQ');
+  if (q) {
+    if (focus) q.value = st.q;
+    let tm;
+    q.addEventListener('input', function () {
+      clearTimeout(tm); tm = setTimeout(function () { st.q = q.value; draw(); }, 150);
+    });
+  }
+  $$('[data-distlang]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      st.lang = b.getAttribute('data-distlang');
+      $$('[data-distlang]').forEach(function (x) {
+        x.className = 'chip ' + (x === b ? 'bg-white text-ink-900 font-bold' : 'bg-white/20 text-white hover:bg-white/30');
+      });
+      draw();
+    });
+  });
+
+  function draw() {
+    const nq = M.norm(st.q);
+    const hits = rows.filter(function (r) {
+      if (st.lang && r.language !== st.lang) return false;
+      if (!nq) return true;
+      const hay = M.norm([r.district, r.display_name, r.city, r.address, r.location_name,
+                          r.covers_cities, r.covers_districts, r.meeting_pattern].join(' '));
+      return hay.indexOf(nq) !== -1;
+    });
+
+    const note = $('#distNote');
+    if (note) {
+      note.innerHTML = (nq && hits.length)
+        ? '<div class="rounded-2xl border border-emerald-400/40 bg-emerald-50 dark:bg-emerald-500/10 p-4 text-[14px]">' +
+          icon('circle-check','mr-2 text-emerald-600') +
+          esc((S.lang === 'es' ? hits.length + ' distrito(s) coinciden con “' : hits.length + ' district' + (hits.length > 1 ? 's' : '') + ' match “') + st.q + '”') + '</div>'
+        : '';
+    }
+    list.innerHTML = hits.length
+      ? '<div class="grid gap-5 lg:grid-cols-2">' + hits.map(districtCard).join('') + '</div>'
+      : M.emptyState(S.lang === 'es'
+          ? 'No encontramos esa ciudad. Prueba con una ciudad vecina, o escribe a registrar@msca09aa.org.'
+          : 'We could not find that city. Try a neighbouring city, or write to registrar@msca09aa.org.');
+  }
+  draw();
+};
+
+function districtCard(r) {
+  const es = S.lang === 'es';
+  const spanish = r.language === 'Spanish';
+  const servants = (S.data['trusted-servants'] || []).filter(function (s) {
+    return s.level === 'District' && M.norm(s.body).replace(/[^0-9&]/g, '') === M.norm(r.display_name).replace(/[^0-9&]/g, '');
+  });
+  const dcmc = servants.filter(function (s) { return /dcmc|mcd/i.test(s.position) && !/alt/i.test(s.position); })[0];
+  const cities = (r.covers_cities || '').split(';').map(function (s) { return s.trim(); }).filter(Boolean);
+  const covers = (r.covers_districts || '').split(';').map(function (s) { return s.trim(); }).filter(Boolean);
+
+  return '<article id="d-' + attr(M.slug(r.district)) + '" class="card card-hover rounded-3xl overflow-hidden">' +
+    '<div class="h-1.5 ' + (spanish ? 'bg-gradient-to-r from-orange-400 via-rose-500 to-fuchsia-500' : 'grad-rule') + '"></div>' +
+    '<div class="p-6">' +
+      '<div class="flex items-start justify-between gap-3">' +
+        '<div>' +
+          '<h3 class="font-display font-extrabold text-2xl tracking-tight">' + esc(r.display_name) + '</h3>' +
+          '<p class="mt-1 text-[14px] font-semibold text-brand-700 dark:text-brand-300">' +
+            esc(patternLabel(r)) + ' &middot; ' + esc(M.fmtHHMM(r.start_time)) + ' PT</p>' +
+        '</div>' +
+        '<span class="chip ' + M.tone(spanish ? 'orange' : 'brand') + '">' +
+          (spanish ? icon('language','text-[.7rem]') + esc(t('spanish')) : esc(t('english'))) + '</span>' +
+      '</div>' +
+
+      '<div class="mt-4 space-y-2 text-[14px]">' +
+        (r.address || r.location_name || r.city
+          ? '<p>' + icon('location-dot','w-5 text-rose-500') +
+            esc([r.location_name, r.address, r.city].filter(Boolean).join(', ')) + '</p>' : '') +
+        '<p>' + icon('circle-half-stroke','w-5 text-violet-500') + esc(M.fmtLabel(r.format)) + '</p>' +
+        (r.zoom_id ? '<p>' + icon('video','w-5 text-sky-500') + '<span class="font-semibold">' + esc(t('zoomId')) + ':</span> ' +
+          esc(r.zoom_id) + (r.zoom_passcode ? ' &middot; <span class="font-semibold">' + esc(t('passcode')) + ':</span> ' + esc(r.zoom_passcode) : '') + '</p>' : '') +
+        (dcmc && dcmc.name ? '<p>' + icon('user','w-5 text-fuchsia-500') +
+          '<span class="font-semibold">' + esc(dcmc.position) + ':</span> ' + esc(dcmc.name) + '</p>' : '') +
+      '</div>' +
+
+      (cities.length
+        ? '<details class="mt-4 group"><summary class="cursor-pointer text-[13.5px] font-semibold text-brand-700 dark:text-brand-300">' +
+          esc(t('covers')) + ' ' + cities.length + ' ' + esc(es ? 'ciudades' : 'cities') +
+          ' <i class="fa-solid fa-chevron-down text-[10px] transition group-open:rotate-180" aria-hidden="true"></i></summary>' +
+          '<p class="mt-2 text-[13px] opacity-75 leading-relaxed">' + esc(cities.join(' · ')) + '</p></details>'
+        : '') +
+      (covers.length
+        ? '<p class="mt-3 text-[13px] opacity-75">' + icon('diagram-project','w-5 text-teal-500') +
+          esc((es ? 'Cubre los distritos ' : 'Covers districts ') + covers.join(', ')) + '</p>'
+        : '') +
+      (r.notes ? '<p class="mt-3 text-[12.5px] opacity-60 italic">' + esc(r.notes) + '</p>' : '') +
+
+      '<div class="mt-5 flex flex-wrap gap-2">' +
+        (r.email ? '<a class="chip ' + M.tone('emerald') + '" href="' + attr(M.mailto(r.email, r.display_name)) + '">' +
+          icon('envelope','text-[.7rem]') + esc(r.email) + '</a>' : '') +
+        (r.zoom_url ? '<a class="chip ' + M.tone('sky') + '" target="_blank" rel="noopener" href="' + attr(r.zoom_url) + '">' +
+          icon('video','text-[.7rem]') + esc(t('joinZoom')) + '</a>' : '') +
+        (r.website ? '<a class="chip ' + M.tone('brand') + '" target="_blank" rel="noopener" href="' + attr(r.website) + '">' +
+          icon('globe','text-[.7rem]') + esc(t('website')) + '</a>' : '') +
+        '<a class="chip ' + M.tone('fuchsia') + '" href="#/servants">' + icon('address-book','text-[.7rem]') +
+          esc(es ? 'Servidores' : 'Trusted servants') + '</a>' +
+      '</div>' +
+    '</div></article>';
+}
+
+function patternLabel(r) {
+  const es = S.lang === 'es';
+  const dow = M.dayName(M.DOW_LONG.indexOf(r.day_of_week));
+  if (!r.week_of_month) return (es ? 'Cada ' : 'Every ') + dow;
+  const ws = String(r.week_of_month).split(',').map(function (w) { return M.ordinal(parseInt(w, 10)); });
+  return ws.join(', ') + ' ' + dow;
+}
+
+})();
+</script>
+
+<script>
+/* ═══════════════════════════════ VIEWS · part 2 ═══════════════════════════
+   Committees · Trusted servants · Documents · Events · 7th Tradition ·
+   Newcomers · Resources · About · Anonymity · Contact
+   ═══════════════════════════════════════════════════════════════════════ */
+(function () {
+'use strict';
+const M = window.MSCA, S = M.state, t = M.t, esc = M.esc, attr = M.attr, icon = M.icon;
+const $ = M.$, $$ = M.$$, VIEWS = M.VIEWS;
+
+/* ──────────────────────────────────────────────────────── COMMITTEES ─── */
+VIEWS.committees = function () {
+  const es = S.lang === 'es';
+  const rows = S.data['committees'] || [];
+  const servants = S.data['trusted-servants'] || [];
+
+  function chairFor(c) {
+    const wanted = M.norm(c.name), wantedEs = M.norm(c.name_es);
+    return servants.filter(function (s) {
+      if (s.level !== 'Area Committee') return false;
+      const p = M.norm(s.position);
+      return p === wanted || p === wantedEs || p.indexOf(wanted) === 0 || wanted.indexOf(p) === 0;
+    });
+  }
+
+  return M.pageHead({
+    icon:'sitemap',
+    kicker: es ? 'Comités de servicio del Área 09' : 'Area 09 service committees',
+    title: es ? 'Los comités que llevan<br>el mensaje' : 'The committees that<br>carry the message',
+    lead: es
+      ? 'Cada comité tiene un trabajo sencillo: que el alcohólico que todavía sufre encuentre A.A. Todos necesitan servidores — y todos empezaron con alguien que levantó la mano.'
+      : 'Every committee has one simple job: helping the alcoholic who still suffers find A.A. Every one of them needs servants — and every one of them started with somebody raising a hand.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    M.anonNote() +
+    '<div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">' +
+      rows.map(function (c, i) {
+        const chairs = chairFor(c);
+        const nm = es && c.name_es ? c.name_es : c.name;
+        const sm = es && c.summary_es ? c.summary_es : c.summary;
+        return '<article id="c-' + attr(c.slug) + '" data-aos="fade-up" data-aos-delay="' + ((i % 3) * 70) +
+          '" class="card card-hover rounded-3xl overflow-hidden flex flex-col">' +
+          '<div class="h-1.5 bg-gradient-to-r ' + M.grad(c.color) + '"></div>' +
+          '<div class="p-6 flex flex-col flex-1">' +
+            '<span class="w-11 h-11 grid place-items-center rounded-2xl text-white bg-gradient-to-br ' + M.grad(c.color) + '">' +
+              icon(c.icon || 'circle-dot') + '</span>' +
+            '<h3 class="mt-4 font-display font-bold text-lg leading-snug">' + esc(nm) + '</h3>' +
+            '<p class="mt-2 text-[14px] leading-relaxed opacity-75 flex-1">' + esc(sm) + '</p>' +
+            (chairs.length
+              ? '<div class="mt-4 space-y-1.5">' + chairs.map(function (s) {
+                  return '<p class="text-[13.5px]">' +
+                    (s.name
+                      ? '<span class="font-semibold">' + esc(s.name) + '</span> <span class="opacity-60">&middot; ' + esc(s.language) + '</span>'
+                      : '<span class="chip ' + M.tone('amber') + '">' + icon('hand','text-[.7rem]') + esc(t('vacant')) + '</span>') + '</p>';
+                }).join('') + '</div>'
+              : '') +
+            '<div class="mt-4 flex flex-wrap gap-2">' +
+              (c.email ? '<a class="chip ' + M.tone(c.color) + '" href="' + attr(M.mailto(c.email, nm)) + '">' +
+                icon('envelope','text-[.7rem]') + esc(c.email) + '</a>' : '') +
+              (c.email_es ? '<a class="chip ' + M.tone('orange') + '" href="' + attr(M.mailto(c.email_es, nm)) + '">' +
+                icon('language','text-[.7rem]') + esc(c.email_es) + '</a>' : '') +
+            '</div>' +
+            (c.aa_url ? '<p class="mt-3">' + M.linkOut(c.aa_url, c.aa_label,
+              'text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</p>' : '') +
+          '</div></article>';
+      }).join('') +
+    '</div>' +
+    '<div class="mt-10 rounded-3xl p-8 grad-hero text-white relative overflow-hidden">' +
+      '<div class="blob w-80 h-80 right-[-4rem] -top-20 bg-amber-400/40 animate-drift" aria-hidden="true"></div>' +
+      '<div class="relative">' +
+        '<h2 class="font-display font-extrabold text-2xl">' +
+          esc(es ? '¿Quieres servir?' : 'Want to be of service?') + '</h2>' +
+        '<p class="mt-2 text-white/85 max-w-2xl leading-relaxed">' +
+          esc(es ? 'Los puestos abiertos arriba están esperando. Habla con tu R.S.G. o tu M.C.D.C., o escribe directamente al Coordinador del Área.'
+                 : 'The open positions above are waiting. Talk to your G.S.R. or your D.C.M.C., or write straight to the Area Chair.') + '</p>' +
+        '<a href="' + attr(M.mailto('chair@msca09aa.org', 'I would like to be of service')) + '" ' +
+          'class="mt-5 inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
+          icon('hand-holding-heart') + esc(es ? 'Escribe al Coordinador' : 'Write the Area Chair') + '</a>' +
+      '</div></div>' +
+  '</section>';
+};
+
+/* ─────────────────────────────────────────────────── TRUSTED SERVANTS ── */
+VIEWS.servants = function () {
+  const es = S.lang === 'es';
+  return M.pageHead({
+    icon:'address-book',
+    kicker:'Panel 76 · 2026–2027',
+    title: es ? 'Servidores de confianza<br>del Panel 76' : 'Panel 76<br>trusted servants',
+    lead: es
+      ? '“Nuestros líderes son solamente servidores de confianza; no gobiernan.” Estas son las personas que sirven al Área 09 en este panel — y las direcciones de servicio para escribirles.'
+      : '“Our leaders are but trusted servants; they do not govern.” These are the people serving Area 09 this panel — and the service addresses to reach them.',
+    extra:
+      '<div class="mt-7 max-w-xl relative">' +
+        '<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-ink-900/40" aria-hidden="true"></i>' +
+        '<input id="svQ" type="search" autocomplete="off" placeholder="' +
+          attr(es ? 'Puesto, distrito, nombre…' : 'Position, district, name…') + '" ' +
+          'class="w-full rounded-full bg-white text-ink-900 pl-11 pr-4 py-3.5 font-medium shadow-lift placeholder:text-ink-900/40">' +
+      '</div>'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    M.anonNote() +
+    '<div id="svFilters" class="mt-6 flex flex-wrap gap-2"></div>' +
+    '<div id="svList" class="mt-8"></div>' +
+  '</section>';
+};
+
+VIEWS.servants.mount = function () {
+  const rows = S.data['trusted-servants'] || [];
+  const st = { q:'', level:'', lang:'' };
+  const levels = [
+    ['',                'all',      'layer-group'],
+    ['Area',            null,       'landmark'],
+    ['Area Committee',  null,       'sitemap'],
+    ['District',        null,       'map-location-dot']
+  ];
+  const levelLabel = {
+    'Area':           { en:'Area officers',      es:'Oficiales del Área' },
+    'Area Committee': { en:'Committee chairs',   es:'Coordinadores de comité' },
+    'District':       { en:'Districts',          es:'Distritos' }
+  };
+
+  const q = $('#svQ');
+  if (q) { let tm; q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { st.q = q.value; draw(); }, 150); }); }
+
+  function drawFilters() {
+    const f = $('#svFilters'); if (!f) return;
+    f.className = 'mt-6 flex flex-wrap items-center gap-2';
+    f.innerHTML = levels.map(function (l) {
+      const on = st.level === l[0];
+      const label = l[0] ? (levelLabel[l[0]][S.lang] || levelLabel[l[0]].en) : t('all');
+      return '<button type="button" data-svlevel="' + attr(l[0]) + '" aria-pressed="' + on + '" ' +
+        'class="fltbtn inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ' +
+        (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
+            : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+        icon(l[2], 'text-xs') + esc(label) + '</button>';
+    }).join('') +
+    '<span class="mx-1 self-center w-px h-6 bg-black/10 dark:bg-white/15"></span>' +
+    ['', 'English', 'Spanish'].map(function (lg) {
+      const on = st.lang === lg;
+      const label = lg === '' ? t('all') : (lg === 'English' ? t('english') : t('spanish'));
+      return '<button type="button" data-svlang="' + attr(lg) + '" aria-pressed="' + on + '" ' +
+        'class="fltbtn chip ' + (on ? 'text-white bg-gradient-to-r from-orange-500 to-rose-500'
+                                    : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+        esc(label) + '</button>';
+    }).join('');
+    $$('[data-svlevel]', f).forEach(function (b) {
+      b.addEventListener('click', function () { st.level = b.getAttribute('data-svlevel'); drawFilters(); draw(); });
+    });
+    $$('[data-svlang]', f).forEach(function (b) {
+      b.addEventListener('click', function () { st.lang = b.getAttribute('data-svlang'); drawFilters(); draw(); });
+    });
+  }
+
+  function draw() {
+    const list = $('#svList'); if (!list) return;
+    const nq = M.norm(st.q);
+    const hits = rows.filter(function (r) {
+      if (st.level && r.level !== st.level) return false;
+      if (st.lang && r.language !== st.lang) return false;
+      if (!nq) return true;
+      return M.norm([r.position, r.name, r.body, r.email, r.level].join(' ')).indexOf(nq) !== -1;
+    });
+    if (!hits.length) { list.innerHTML = M.emptyState(); return; }
+
+    const groups = {};
+    hits.forEach(function (r) { (groups[r.body] = groups[r.body] || []).push(r); });
+    const order = Object.keys(groups).sort(function (a, b) {
+      const sa = parseInt(groups[a][0].body_sort || '99', 10), sb = parseInt(groups[b][0].body_sort || '99', 10);
+      return sa !== sb ? sa - sb : M.byText(a, b);
+    });
+
+    list.innerHTML = order.map(function (body) {
+      const people = groups[body].slice().sort(function (a, b) {
+        return (parseInt(a.position_sort || '99', 10) - parseInt(b.position_sort || '99', 10)) || M.byText(a.position, b.position);
+      });
+      const isDistrict = people[0].level === 'District';
+      return '<section class="mb-8">' +
+        '<div class="flex items-center gap-3 mb-3">' +
+          '<span class="w-10 h-10 grid place-items-center rounded-xl text-white bg-gradient-to-br ' +
+            M.grad(isDistrict ? 'brand' : (people[0].level === 'Area' ? 'fuchsia' : 'teal')) + '">' +
+            icon(isDistrict ? 'map-location-dot' : (people[0].level === 'Area' ? 'landmark' : 'sitemap'), 'text-sm') + '</span>' +
+          '<h2 class="font-display font-extrabold text-xl tracking-tight">' + esc(body) + '</h2>' +
+          '<span class="chip ' + M.tone('slate') + '">' + people.length + '</span>' +
+        '</div>' +
+        '<div class="card rounded-2xl overflow-hidden">' +
+          '<div class="overflow-x-auto"><table class="w-full text-[14px]">' +
+            '<thead class="bg-black/[.03] dark:bg-white/[.05] text-left">' +
+              '<tr><th class="px-4 py-2.5 font-semibold text-[11px] uppercase tracking-widest opacity-60">' + esc(t('position')) + '</th>' +
+              '<th class="px-4 py-2.5 font-semibold text-[11px] uppercase tracking-widest opacity-60">' + esc(t('name')) + '</th>' +
+              '<th class="px-4 py-2.5 font-semibold text-[11px] uppercase tracking-widest opacity-60">' + esc(t('contact')) + '</th></tr></thead>' +
+            '<tbody>' + people.map(function (p) {
+              return '<tr class="border-t border-black/5 dark:border-white/10">' +
+                '<td class="px-4 py-3 font-semibold align-top">' + esc(p.position) +
+                  (p.language === 'Spanish' ? ' <span class="chip ' + M.tone('orange') + ' align-middle">ES</span>' : '') + '</td>' +
+                '<td class="px-4 py-3 align-top">' + (p.name
+                  ? esc(p.name)
+                  : '<span class="chip ' + M.tone('amber') + '">' + icon('hand','text-[.7rem]') + esc(t('vacant')) + '</span>') + '</td>' +
+                '<td class="px-4 py-3 align-top">' +
+                  (p.email ? '<a class="text-brand-700 dark:text-brand-300 hover:underline break-all" href="' +
+                    attr(M.mailto(p.email, p.position)) + '">' + esc(p.email) + '</a>' : '<span class="opacity-40">—</span>') +
+                  (p.website ? '<br>' + M.linkOut(p.website, p.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''),
+                    'text-[12.5px] opacity-70 hover:underline') : '') +
+                  (p.notes ? '<span class="block text-[12px] opacity-55 mt-1">' + esc(p.notes) + '</span>' : '') +
+                '</td></tr>';
+            }).join('') + '</tbody></table></div>' +
+        '</div></section>';
+    }).join('');
+  }
+
+  drawFilters(); draw();
+};
+
+/* ────────────────────────────────────────────────────────── DOCUMENTS ─── */
+VIEWS.documents = function () {
+  const es = S.lang === 'es';
+  return M.pageHead({
+    icon:'file-lines',
+    kicker: es ? 'El registro del Área' : 'The Area’s record',
+    title: es ? 'Actas, mociones,<br>agendas e informes' : 'Minutes, motions,<br>agendas and reports',
+    lead: es
+      ? 'Todo lo que la Asamblea ha aprobado, con fecha y en ambos idiomas cuando existe. Busca por año, tipo o palabra.'
+      : 'Everything the Assembly has approved, dated, and in both languages where we have them. Search by year, kind or keyword.',
+    extra:
+      '<div class="mt-7 max-w-xl relative">' +
+        '<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-ink-900/40" aria-hidden="true"></i>' +
+        '<input id="docQ" type="search" autocomplete="off" placeholder="' +
+          attr(es ? 'Buscar actas, mociones…' : 'Search minutes, motions…') + '" ' +
+          'class="w-full rounded-full bg-white text-ink-900 pl-11 pr-4 py-3.5 font-medium shadow-lift placeholder:text-ink-900/40">' +
+      '</div>'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    '<div id="docFilters" class="flex flex-wrap gap-2"></div>' +
+    '<div id="docList" class="mt-8"></div>' +
+  '</section>';
+};
+
+VIEWS.documents.mount = function () {
+  const rows = S.data['documents'] || [];
+  const st = { q:'', cat:'', year:'', lang:'' };
+  const cats = M.uniq(rows.map(function (r) { return r.category; })).filter(Boolean).sort();
+  const years = M.uniq(rows.map(function (r) { return r.year; })).filter(Boolean).sort().reverse();
+  const CATLABEL = {
+    Minutes:{en:'Minutes',es:'Actas'}, Motions:{en:'Motions',es:'Mociones'},
+    Conference:{en:'Conference',es:'Conferencia'}, Calendar:{en:'Calendars',es:'Calendarios'},
+    Contributions:{en:'Contributions',es:'Contribuciones'}, Reports:{en:'Reports',es:'Informes'}
+  };
+  const CATCOLOR = { Minutes:'brand', Motions:'fuchsia', Conference:'emerald',
+                     Calendar:'amber', Contributions:'teal', Reports:'rose' };
+
+  const q = $('#docQ');
+  if (q) { let tm; q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { st.q = q.value; draw(); }, 150); }); }
+
+  function drawFilters() {
+    const f = $('#docFilters'); if (!f) return;
+    f.innerHTML =
+      chipBtn('doccat', '', t('all'), st.cat === '') +
+      cats.map(function (c) {
+        return chipBtn('doccat', c, (CATLABEL[c] && CATLABEL[c][S.lang]) || c, st.cat === c);
+      }).join('') +
+      '<span class="w-full"></span>' +
+      chipBtn('docyear', '', t('all') + ' · ' + (S.lang === 'es' ? 'años' : 'years'), st.year === '') +
+      years.map(function (y) { return chipBtn('docyear', y, y, st.year === y); }).join('');
+    $$('[data-doccat]', f).forEach(function (b) {
+      b.addEventListener('click', function () { st.cat = b.getAttribute('data-doccat'); drawFilters(); draw(); });
+    });
+    $$('[data-docyear]', f).forEach(function (b) {
+      b.addEventListener('click', function () { st.year = b.getAttribute('data-docyear'); drawFilters(); draw(); });
+    });
+  }
+  function chipBtn(kind, val, label, on) {
+    return '<button type="button" data-' + kind + '="' + attr(val) + '" aria-pressed="' + on + '" ' +
+      'class="fltbtn inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ' +
+      (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
+          : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' + esc(label) + '</button>';
+  }
+
+  function draw() {
+    const list = $('#docList'); if (!list) return;
+    const nq = M.norm(st.q);
+    const hits = rows.filter(function (r) {
+      if (st.cat && r.category !== st.cat) return false;
+      if (st.year && r.year !== st.year) return false;
+      if (!nq) return true;
+      return M.norm([r.title, r.category, r.year, r.language, r.meeting_type].join(' ')).indexOf(nq) !== -1;
+    });
+    if (!hits.length) { list.innerHTML = M.emptyState(); return; }
+
+    const groups = {};
+    hits.forEach(function (r) { (groups[r.category] = groups[r.category] || []).push(r); });
+
+    list.innerHTML = Object.keys(groups).sort().map(function (cat) {
+      const items = groups[cat].slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+      const col = CATCOLOR[cat] || 'slate';
+      return '<section class="mb-9">' +
+        '<div class="flex items-center gap-3 mb-4">' +
+          '<span class="w-10 h-10 grid place-items-center rounded-xl text-white bg-gradient-to-br ' + M.grad(col) + '">' +
+            icon('folder-open','text-sm') + '</span>' +
+          '<h2 class="font-display font-extrabold text-xl tracking-tight">' +
+            esc((CATLABEL[cat] && CATLABEL[cat][S.lang]) || cat) + '</h2>' +
+          '<span class="chip ' + M.tone('slate') + '">' + items.length + '</span></div>' +
+        '<div class="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">' +
+          items.map(function (r) {
+            return '<a href="' + attr(r.url) + '" target="_blank" rel="noopener" ' +
+              'class="card card-hover rounded-2xl p-4 flex items-start gap-3 group">' +
+              '<span class="shrink-0 w-9 h-9 grid place-items-center rounded-lg ' + M.tone(col) + '">' +
+                icon(r.format === 'PDF' ? 'file-pdf' : 'file-word','text-sm') + '</span>' +
+              '<span class="min-w-0">' +
+                '<span class="block font-semibold text-[14px] leading-snug group-hover:underline">' + esc(r.title) + '</span>' +
+                '<span class="block mt-1 text-[12px] opacity-60">' + esc(r.language) + ' &middot; ' + esc(r.format) + '</span>' +
+              '</span></a>';
+          }).join('') +
+        '</div></section>';
+    }).join('') +
+    '<div class="rounded-2xl border border-amber-400/40 bg-amber-50 dark:bg-amber-500/10 p-4 text-[13.5px] leading-relaxed">' +
+      icon('circle-info','mr-2 text-amber-600') +
+      esc(S.lang === 'es'
+        ? 'Algunos documentos todavía se sirven desde el sitio anterior mientras se migran los archivos. Si un enlace falla, escribe a webmaster@msca09aa.org.'
+        : 'Some documents are still served from the previous site while the archive is migrated. If a link fails, write to webmaster@msca09aa.org.') +
+    '</div>';
+  }
+  drawFilters(); draw();
+};
+
+/* ───────────────────────────────────────────────────────────── EVENTS ─── */
+VIEWS.events = function () {
+  const es = S.lang === 'es';
+  const now = new Date(); now.setHours(0,0,0,0);
+  const events = (S.data['events'] || [])
+    .filter(function (e) { return new Date(String(e.end || e.start).replace(' ', 'T')) >= now; })
+    .sort(function (a, b) { return String(a.start).localeCompare(String(b.start)); });
+  const area = (S.data['area-meetings'] || []);
+  const upcomingArea = area.filter(function (a) { return new Date(a.date + 'T00:00') >= now; });
+  const pastArea = area.filter(function (a) { return new Date(a.date + 'T00:00') < now; });
+
+  const KINDCOLOR = { Assembly:'fuchsia', ASC:'brand', Foro:'orange', Servathon:'emerald' };
+
+  function areaRow(a) {
+    const d = new Date(a.date + 'T00:00');
+    const title = es && a.title_es ? a.title_es : a.title;
+    const past = d < now;
+    return '<div class="flex items-start gap-4 p-4 rounded-2xl ' +
+      (past ? 'opacity-45' : 'card card-hover') + '">' +
+      '<span class="shrink-0 grid place-items-center w-14 h-14 rounded-2xl text-white bg-gradient-to-br ' +
+        M.grad(KINDCOLOR[a.kind] || 'slate') + '"><span class="block text-center leading-none">' +
+        '<span class="block text-[10px] uppercase tracking-wider opacity-80">' + esc(M.monName(d.getMonth()).slice(0,3)) + '</span>' +
+        '<span class="block text-xl font-display font-extrabold">' + d.getDate() + '</span></span></span>' +
+      '<div class="min-w-0">' +
+        '<p class="font-display font-bold text-[16px] leading-snug">' + esc(title) + '</p>' +
+        '<p class="mt-1 text-[13px] opacity-70">' + esc(M.dayName(d.getDay())) +
+          (a.time ? ' &middot; ' + esc(a.time.replace('-', ' – ')) : '') + '</p>' +
+        '<div class="mt-2 flex flex-wrap gap-1.5">' +
+          (a.host_district ? '<span class="chip ' + M.tone('brand') + '">' + icon('map-location-dot','text-[.7rem]') +
+            esc((es ? 'Anfitrión ' : 'Hosted by ') + a.host_district) + '</span>' : '') +
+          (a.location ? '<span class="chip ' + M.tone('slate') + '">' + icon('location-dot','text-[.7rem]') +
+            esc(a.location + (a.city ? ', ' + a.city : '')) + '</span>' : '') +
+        '</div>' +
+      '</div></div>';
+  }
+
+  return M.pageHead({
+    icon:'star',
+    kicker: es ? 'Eventos del Área 09' : 'Area 09 events',
+    title: es ? 'Asambleas, talleres<br>y celebraciones' : 'Assemblies, workshops<br>and celebrations',
+    lead: es
+      ? 'El calendario aprobado del Área para este panel, más los eventos que los distritos y comités han compartido con nosotros. Todos son bienvenidos.'
+      : 'The Area’s approved schedule for this panel, plus the events districts and committees have shared with us. Everyone is welcome.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    (events.length ? M.sectionTitle(es ? 'Próximos eventos' : 'Upcoming events',
+        es ? 'Enviado por distritos, comités y grupos del Área 09.'
+           : 'Submitted by Area 09 districts, committees and groups.') +
+      '<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">' + events.map(M.eventCard).join('') + '</div>'
+      : '') +
+
+    '<div class="mt-14" id="area">' +
+      M.sectionTitle(es ? 'Calendario del Área 2026' : '2026 Area calendar',
+        es ? 'Las reuniones del Comité de Servicio de Área (CSA) y las Asambleas, aprobadas por el Área.'
+           : 'The Area Service Committee (ASC) meetings and Assemblies, as approved by the Area.') +
+      '<div class="grid gap-3 md:grid-cols-2">' +
+        upcomingArea.map(areaRow).join('') +
+        (pastArea.length
+          ? '<details class="md:col-span-2 mt-2"><summary class="cursor-pointer text-[13.5px] font-semibold text-brand-700 dark:text-brand-300">' +
+            esc(es ? 'Ver las reuniones ya celebradas este año' : 'Show meetings already held this year') + '</summary>' +
+            '<div class="grid gap-3 md:grid-cols-2 mt-3">' + pastArea.map(areaRow).join('') + '</div></details>'
+          : '') +
+      '</div>' +
+    '</div>' +
+
+    '<div class="mt-14 rounded-3xl p-8 grad-hero text-white relative overflow-hidden">' +
+      '<div class="blob w-80 h-80 left-[-4rem] -bottom-24 bg-cyan-400/40 animate-drift" aria-hidden="true"></div>' +
+      '<div class="relative flex flex-col lg:flex-row lg:items-center gap-6">' +
+        '<div class="flex-1">' +
+          '<h2 class="font-display font-extrabold text-2xl">' + esc(es ? '¿Tu distrito tiene un evento?' : 'Does your district have an event?') + '</h2>' +
+          '<p class="mt-2 text-white/85 max-w-2xl leading-relaxed">' +
+            esc(es ? 'Envíanos la fecha, la hora, el lugar y un contacto de servicio y lo publicamos. Los volantes se convierten en texto de la página para que se puedan buscar y leer en el teléfono.'
+                   : 'Send us the date, time, place and a service contact and we will post it. Flyers get turned into page text so they are searchable and readable on a phone.') + '</p>' +
+        '</div>' +
+        '<a href="#/contact" class="shrink-0 inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
+          icon('paper-plane') + esc(es ? 'Enviar un evento' : 'Submit an event') + '</a>' +
+      '</div></div>' +
+  '</section>';
+};
+
+/* ───────────────────────────────────────────────────── 7TH TRADITION ─── */
+VIEWS.contribute = function () {
+  const es = S.lang === 'es';
+  return M.pageHead({
+    icon:'hand-holding-dollar',
+    kicker: es ? 'Séptima Tradición' : 'Seventh Tradition',
+    title: es ? 'Cada grupo debe<br>mantenerse a sí mismo' : 'Every group ought to be<br>fully self-supporting',
+    lead: es
+      ? '“…negándose a recibir contribuciones de afuera.” El dinero es secundario frente a la conexión espiritual que nos une con los grupos de A.A. de todo el mundo — pero el Área necesita esa contribución para llevar el mensaje.'
+      : '“…declining outside contributions.” The amount is secondary to the spiritual connection that joins us in unity with A.A. groups around the world — but the Area does need it to carry the message.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    '<div class="grid gap-6 lg:grid-cols-3">' +
+
+      /* --- Zelle --- */
+      '<article class="card rounded-3xl overflow-hidden lg:col-span-2">' +
+        '<div class="h-1.5 bg-gradient-to-r from-emerald-400 to-teal-500"></div>' +
+        '<div class="p-7">' +
+          '<div class="flex items-start gap-4">' +
+            '<span class="w-12 h-12 grid place-items-center rounded-2xl text-white text-lg bg-gradient-to-br from-emerald-500 to-teal-600">' +
+              icon('bolt') + '</span>' +
+            '<div><h2 class="font-display font-extrabold text-2xl">' + esc(es ? 'En línea — Zelle' : 'Online — Zelle') + '</h2>' +
+            '<p class="mt-1 text-[14px] opacity-70">' + esc(es ? 'La forma más rápida, directa desde tu banco.' : 'The fastest way, straight from your bank.') + '</p></div>' +
+          '</div>' +
+          '<dl class="mt-6 grid gap-4 sm:grid-cols-2">' +
+            '<div class="rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 p-4">' +
+              '<dt class="text-[11px] font-bold uppercase tracking-widest opacity-60">' + esc(es ? 'Nombre comercial' : 'Business name') + '</dt>' +
+              '<dd class="mt-1 font-semibold leading-snug">Mid-Southern California Area Assembly of Alcoholics Anonymous</dd></div>' +
+            '<div class="rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 p-4">' +
+              '<dt class="text-[11px] font-bold uppercase tracking-widest opacity-60">' + esc(es ? 'ID de correo de la cuenta' : 'Account e-mail ID') + '</dt>' +
+              '<dd class="mt-1"><a class="font-semibold text-emerald-700 dark:text-emerald-300 hover:underline break-all" href="' +
+                attr(M.mailto('contributions@msca09aa.org')) + '">contributions@msca09aa.org</a></dd></div>' +
+          '</dl>' +
+          '<div class="mt-6 flex flex-col sm:flex-row gap-5 items-start">' +
+            '<img src="contribute.png" alt="' + attr(es ? 'Código QR de Zelle para contribuciones al MSCA09' : 'Zelle QR code for MSCA09 contributions') + '" ' +
+              'class="w-44 rounded-2xl border border-black/10 dark:border-white/15 bg-white p-2" loading="lazy">' +
+            '<div class="text-[14px] leading-relaxed opacity-80">' +
+              '<p class="font-semibold mb-2">' + esc(es ? 'Escanea con la app de tu banco' : 'Scan with your banking app') + '</p>' +
+              '<p>' + esc(es ? 'O busca “Mid-Southern California Area Assembly of Alcoholics Anonymous” en Zelle y usa el correo de arriba.'
+                             : 'Or search “Mid-Southern California Area Assembly of Alcoholics Anonymous” in Zelle and use the e-mail above.') + '</p>' +
+            '</div></div>' +
+        '</div></article>' +
+
+      /* --- mail / in person --- */
+      '<article class="card rounded-3xl overflow-hidden">' +
+        '<div class="h-1.5 bg-gradient-to-r from-amber-400 to-orange-500"></div>' +
+        '<div class="p-7">' +
+          '<span class="w-12 h-12 grid place-items-center rounded-2xl text-white text-lg bg-gradient-to-br from-amber-400 to-orange-500">' +
+            icon('envelope') + '</span>' +
+          '<h2 class="mt-4 font-display font-extrabold text-2xl">' + esc(es ? 'Cheque, giro o efectivo' : 'Check, money order or cash') + '</h2>' +
+          '<div class="mt-4 space-y-4 text-[14.5px] leading-relaxed">' +
+            '<p><span class="font-semibold">' + esc(es ? 'En persona:' : 'In person:') + '</span> ' +
+              esc(es ? 'entregado directamente a nuestro Tesorero A/R, Martin J., durante una reunión de área.'
+                     : 'handed directly to our Treasurer A/R, Martin J., during an Area meeting.') + '</p>' +
+            '<div class="rounded-2xl bg-amber-50 dark:bg-amber-500/10 p-4">' +
+              '<p class="text-[11px] font-bold uppercase tracking-widest opacity-60">' + esc(es ? 'Por correo' : 'By mail') + '</p>' +
+              '<p class="mt-1.5 font-semibold leading-relaxed">MSCA09<br>P.O. Box 51446<br>Irvine, CA 92619-1446<br>' +
+                '<span class="font-normal opacity-70">' + esc(es ? 'Atte. Tesorero A/R' : 'Attn: Treasurer A/R') + '</span></p></div>' +
+          '</div>' +
+        '</div></article>' +
+    '</div>' +
+
+    /* --- what to include --- */
+    '<div class="mt-8 card rounded-3xl p-7">' +
+      '<h2 class="font-display font-extrabold text-2xl">' + esc(es ? 'Por favor incluye esta información' : 'Please include this information') + '</h2>' +
+      '<p class="mt-2 opacity-70 text-[14.5px]">' +
+        esc(es ? 'Sin ella, el Tesorero no puede acreditar la contribución al grupo o distrito correcto.'
+               : 'Without it the Treasurer cannot credit the contribution to the right group or district.') + '</p>' +
+      '<div class="mt-6 grid gap-4 md:grid-cols-3">' +
+        [['users','brand', es?'Grupo de reuniones':'Meeting group',
+          es?'“Nombre del grupo” y “Número OSG”. ¿No sabes el número? Escribe al Registrador y con gusto te lo da. ¿El grupo no está registrado con la OSG? Incluye día, hora, lugar y número de distrito.'
+            :'“Meeting group name” and “GSO number”. Don’t know the number? Write the Registrar and he will gladly provide it. Group not registered with G.S.O.? Include the day, time, location and district number.'],
+         ['map-location-dot','fuchsia', es?'Distrito':'District', es?'“Distrito #”.':'“District #”.'],
+         ['user','teal', es?'Individual':'Individual', es?'“Vida personal” — nombre y ciudad; para cumpleaños, añade los años de sobriedad.'
+            :'“Personal” — name and city; for a birthday contribution, add years of sobriety.']
+        ].map(function (b) {
+          return '<div class="rounded-2xl border border-black/5 dark:border-white/10 p-5">' +
+            '<span class="w-10 h-10 grid place-items-center rounded-xl text-white bg-gradient-to-br ' + M.grad(b[1]) + '">' +
+              icon(b[0],'text-sm') + '</span>' +
+            '<h3 class="mt-3 font-display font-bold">' + esc(b[2]) + '</h3>' +
+            '<p class="mt-1.5 text-[13.5px] leading-relaxed opacity-75">' + esc(b[3]) + '</p></div>';
+        }).join('') +
+      '</div>' +
+      '<div class="mt-6 flex flex-wrap gap-2">' +
+        '<a class="chip ' + M.tone('brand') + '" href="' + attr(M.mailto('registrar@msca09aa.org','GSO number for my group')) + '">' +
+          icon('envelope','text-[.7rem]') + 'registrar@msca09aa.org</a>' +
+        '<a class="chip ' + M.tone('emerald') + '" href="' + attr(M.mailto('treasurerar@msca09aa.org','7th Tradition question')) + '">' +
+          icon('envelope','text-[.7rem]') + 'treasurerar@msca09aa.org</a>' +
+        '<a class="chip ' + M.tone('teal') + '" href="' + attr(M.mailto('treasurerap@msca09aa.org','7th Tradition question')) + '">' +
+          icon('envelope','text-[.7rem]') + 'treasurerap@msca09aa.org</a>' +
+      '</div>' +
+    '</div>' +
+
+    /* --- self-support quote --- */
+    '<div class="mt-8 grid gap-6 lg:grid-cols-3">' +
+      '<div class="lg:col-span-2 rounded-3xl grad-hero text-white p-8 relative overflow-hidden">' +
+        '<div class="blob w-72 h-72 right-[-3rem] -top-16 bg-emerald-400/40 animate-drift" aria-hidden="true"></div>' +
+        '<div class="relative">' +
+          '<p class="text-3xl opacity-50">' + icon('quote-left') + '</p>' +
+          '<p class="mt-3 text-lg leading-relaxed">' +
+            esc(es ? 'La cantidad de cada contribución es secundaria frente a la conexión espiritual que nos une en unidad con los grupos de A.A. de todo el mundo.'
+                   : 'The monetary amount of each contribution is secondary to the spiritual connection that joins us in unity with A.A. groups around the world.') + '</p>' +
+          '<p class="mt-4 text-[13px] uppercase tracking-widest text-white/60">' +
+            esc(es ? 'Material de servicio de la Oficina de Servicios Generales' : 'Service material from the General Service Office') + '</p>' +
+        '</div></div>' +
+      '<div class="card rounded-3xl p-7">' +
+        '<h3 class="font-display font-bold text-lg">' + esc(es ? 'Leer más en aa.org' : 'Read more on aa.org') + '</h3>' +
+        '<ul class="mt-4 space-y-3 text-[14px]">' +
+          '<li>' + M.linkOut('https://www.aa.org/self-support-where-money-and-spirituality-mix',
+            es ? 'Automantenimiento: donde el dinero y la espiritualidad se mezclan' : 'Self-Support: Where Money and Spirituality Mix',
+            'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>' +
+          '<li>' + M.linkOut('https://www.aa.org/aa-contributions-self-support',
+            es ? 'Contribuciones y automantenimiento de A.A.' : 'A.A. Contributions & Self-Support',
+            'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>' +
+          '<li>' + M.linkOut('https://www.aa.org/the-twelve-traditions',
+            es ? 'Las Doce Tradiciones' : 'The Twelve Traditions',
+            'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>' +
+        '</ul>' +
+        '<a href="MSCA09%207th%20Trad%20Contributions_What%20Are%20The%20Ways_2026-06-18_EN%20&amp;%20SP%20(1).pdf" target="_blank" rel="noopener" ' +
+          'class="mt-6 inline-flex items-center gap-2 chip ' + M.tone('rose') + '">' + icon('file-pdf','text-[.7rem]') +
+          esc(es ? 'Volante EN / SP (PDF)' : 'Flyer EN / SP (PDF)') + '</a>' +
+      '</div>' +
+    '</div>' +
+
+    '<p class="mt-8 text-[13px] opacity-60 leading-relaxed max-w-3xl">' +
+      esc(es ? 'A.A. no acepta contribuciones de personas ajenas a la Comunidad, y hay un límite anual a lo que un miembro puede contribuir. El Área 09 no es una organización benéfica pública y no emite recibos deducibles de impuestos.'
+             : 'A.A. does not accept contributions from anyone outside the Fellowship, and there is an annual limit on what an individual member may contribute. Area 09 is not a public charity and does not issue tax-deductible receipts.') + '</p>' +
+  '</section>';
+};
+
+/* ─────────────────────────────────────────────────────────── NEWCOMER ─── */
+VIEWS.newcomers = function () {
+  const es = S.lang === 'es';
+  const steps = [
+    ['comments','rose', es?'Habla con alguien':'Talk to someone',
+      es?'Llama a la oficina central de tu zona. Contestan alcohólicos que han estado donde tú estás — no profesionales, no un guion.'
+        :'Call the central office nearest you. The people who answer are alcoholics who have been where you are — not professionals, not a script.'],
+    ['magnifying-glass-location','brand', es?'Encuentra una reunión':'Find a meeting',
+      es?'Hay reuniones todos los días en los cuatro condados, en persona y en línea, en inglés y en español.'
+        :'There are meetings every single day across the four counties, in person and online, in English and in Spanish.'],
+    ['door-open','amber', es?'Solo entra':'Just walk in',
+      es?'No hay cuotas ni honorarios. No firmas nada. El único requisito es el deseo de dejar de beber.'
+        :'There are no dues or fees. You sign nothing. The only requirement is a desire to stop drinking.']
+  ];
+  const offices = (S.data['resources'] || []).filter(function (r) { return r.group === 'Nearby Central Offices'; });
+
+  return M.pageHead({
+    icon:'hand-holding-heart',
+    kicker: es ? 'Nuevo en A.A.' : 'New to A.A.',
+    title: es ? 'Si quieres dejar de beber,<br>estás en el lugar correcto'
+              : 'If you want to stop drinking,<br>you are in the right place',
+    lead: es
+      ? 'A.A. es una comunidad de personas que comparten su experiencia, fortaleza y esperanza para resolver su problema común y ayudar a otros a recuperarse del alcoholismo. Nadie te va a pedir dinero, tu apellido, ni que te comprometas a nada.'
+      : 'A.A. is a fellowship of people who share their experience, strength and hope with each other so they may solve their common problem and help others recover from alcoholism. Nobody will ask you for money, for your last name, or for any commitment.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    '<div class="grid gap-5 md:grid-cols-3">' +
+      steps.map(function (s, i) {
+        return '<article data-aos="fade-up" data-aos-delay="' + (i * 80) + '" class="card card-hover rounded-3xl p-7">' +
+          '<span class="w-12 h-12 grid place-items-center rounded-2xl text-white text-lg bg-gradient-to-br ' + M.grad(s[1]) + '">' +
+            icon(s[0]) + '</span>' +
+          '<h2 class="mt-4 font-display font-bold text-xl">' + esc(s[2]) + '</h2>' +
+          '<p class="mt-2 text-[14.5px] leading-relaxed opacity-75">' + esc(s[3]) + '</p></article>';
+      }).join('') +
+    '</div>' +
+
+    '<div class="mt-10 rounded-3xl grad-hero text-white p-8 sm:p-10 relative overflow-hidden">' +
+      '<div class="blob w-96 h-96 right-[-6rem] -top-24 bg-rose-400/40 animate-drift" aria-hidden="true"></div>' +
+      '<div class="relative grid gap-6 lg:grid-cols-2 lg:items-center">' +
+        '<div>' +
+          '<h2 class="font-display font-extrabold text-3xl">' + esc(es ? 'Encuentra una reunión ahora' : 'Find a meeting right now') + '</h2>' +
+          '<p class="mt-3 text-white/85 leading-relaxed">' +
+            esc(es ? 'A.A. mantiene un buscador oficial para EE.UU. y Canadá, y una app gratuita. También hay reuniones en línea a toda hora del día y de la noche.'
+                   : 'A.A. keeps an official meeting finder for the U.S. and Canada, and a free app. There are also online meetings at every hour of the day and night.') + '</p>' +
+        '</div>' +
+        '<div class="flex flex-wrap gap-3">' +
+          '<a href="https://www.aa.org/find-aa" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-3 font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
+            icon('magnifying-glass-location') + 'aa.org/find-aa</a>' +
+          '<a href="https://www.aa.org/meeting-guide-app" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-3 font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
+            icon('mobile-screen') + 'Meeting Guide</a>' +
+          '<a href="https://aa-intergroup.org/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-3 font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
+            icon('globe') + (es ? 'Reuniones en línea' : 'Online meetings') + '</a>' +
+        '</div>' +
+      '</div></div>' +
+
+    (offices.length ? '<div class="mt-12">' +
+      M.sectionTitle(es ? 'Oficinas centrales cercanas' : 'Central offices near you',
+        es ? 'Las oficinas centrales e intergrupos contestan el teléfono y mantienen las listas locales de reuniones.'
+           : 'Central offices and intergroups answer the phone and keep the local meeting lists.') +
+      '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">' +
+        offices.map(function (o) {
+          return '<a href="' + attr(o.url) + '" target="_blank" rel="noopener" class="card card-hover rounded-2xl p-5 block">' +
+            '<span class="w-10 h-10 grid place-items-center rounded-xl text-white bg-gradient-to-br from-brand-500 to-fuchsia-500">' +
+              icon('building','text-sm') + '</span>' +
+            '<h3 class="mt-3 font-semibold leading-snug">' + esc(es && o.title_es ? o.title_es : o.title) + '</h3>' +
+            '<span class="mt-2 inline-block text-[12.5px] opacity-60">' + esc(o.url.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'')) +
+            ' <i class="fa-solid fa-arrow-up-right-from-square text-[.7em]" aria-hidden="true"></i></span></a>';
+        }).join('') +
+      '</div></div>' : '') +
+
+    '<div class="mt-12 card rounded-3xl p-8">' +
+      '<h2 class="font-display font-extrabold text-2xl">' + esc(es ? 'Lo que A.A. no hace' : 'What A.A. does not do') + '</h2>' +
+      '<ul class="mt-5 grid gap-3 sm:grid-cols-2 text-[14.5px] leading-relaxed">' +
+        (es
+          ? ['No solicita miembros; llegamos a quienes nos buscan.',
+             'No lleva registros de asistencia ni historiales.',
+             'No se afilia a ninguna agencia, causa, institución o secta.',
+             'No hace seguimiento ni intenta controlar a sus miembros.',
+             'No da diagnósticos médicos ni pronósticos.',
+             'No ofrece alojamiento, ropa, empleo ni dinero.']
+          : ['Solicit members; we reach out to those who ask.',
+             'Keep membership records or case histories.',
+             'Affiliate with any agency, cause, institution or sect.',
+             'Follow up or try to control its members.',
+             'Make medical diagnoses or prognoses.',
+             'Provide housing, clothing, jobs or money.']
+        ).map(function (li) {
+          return '<li class="flex gap-3"><span class="shrink-0 mt-1 w-5 h-5 rounded-full grid place-items-center bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-300 text-[10px]">' +
+            icon('xmark') + '</span><span>' + esc(li) + '</span></li>';
+        }).join('') +
+      '</ul>' +
+      '<p class="mt-6 text-[14px]">' + M.linkOut('https://www.aa.org/what-is-aa',
+        es ? '¿Qué es A.A.? — en aa.org' : 'What is A.A.? — on aa.org',
+        'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</p>' +
+    '</div>' +
+  '</section>';
+};
+
+/* ──────────────────────────────────────────────────────── RESOURCES ─── */
+VIEWS.resources = function () {
+  const es = S.lang === 'es';
+  const rows = (S.data['resources'] || []).filter(function (r) { return r.group !== 'Nearby Central Offices'; });
+  const offices = (S.data['resources'] || []).filter(function (r) { return r.group === 'Nearby Central Offices'; });
+  const GROUPS = {
+    'New to A.A.':        { es:'Nuevo en A.A.',        c:'rose',    i:'hand-holding-heart' },
+    'The Legacies':       { es:'Los Legados',          c:'fuchsia', i:'layer-group' },
+    'General Service':    { es:'Servicios Generales',  c:'brand',   i:'sitemap' },
+    'Anonymity & Safety': { es:'Anonimato y Seguridad',c:'violet',  i:'user-secret' },
+    'Self-Support':       { es:'Automantenimiento',    c:'emerald', i:'hand-holding-dollar' },
+    'Literature':         { es:'Literatura',           c:'amber',   i:'book' }
+  };
+  const order = Object.keys(GROUPS);
+  const grouped = {};
+  rows.forEach(function (r) { (grouped[r.group] = grouped[r.group] || []).push(r); });
+
+  return M.pageHead({
+    icon:'book-open',
+    kicker: es ? 'Recursos de A.A.' : 'A.A. resources',
+    title: es ? 'Directo a la fuente' : 'Straight to the source',
+    lead: es
+      ? 'En lugar de copiar la literatura de A.A., enlazamos con aa.org y con A.A. Grapevine, donde siempre está la versión actual y aprobada por la Conferencia.'
+      : 'Rather than copying A.A. literature, we link to aa.org and A.A. Grapevine, where the current, Conference-approved version always lives.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12 space-y-12">' +
+    order.filter(function (g) { return grouped[g]; }).map(function (g) {
+      const meta = GROUPS[g];
+      return '<div>' +
+        '<div class="flex items-center gap-3 mb-5">' +
+          '<span class="w-11 h-11 grid place-items-center rounded-2xl text-white bg-gradient-to-br ' + M.grad(meta.c) + '">' +
+            icon(meta.i) + '</span>' +
+          '<h2 class="font-display font-extrabold text-2xl tracking-tight">' + esc(es ? meta.es : g) + '</h2>' +
+        '</div>' +
+        '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">' +
+          grouped[g].map(function (r) {
+            return '<a href="' + attr(r.url) + '" target="_blank" rel="noopener" class="card card-hover rounded-2xl p-5 flex gap-4 group">' +
+              '<span class="shrink-0 w-10 h-10 grid place-items-center rounded-xl ' + M.tone(meta.c) + '">' + icon(r.icon || 'link','text-sm') + '</span>' +
+              '<span class="min-w-0">' +
+                '<span class="block font-semibold leading-snug group-hover:underline">' + esc(es && r.title_es ? r.title_es : r.title) + '</span>' +
+                ((es ? r.description_es : r.description)
+                  ? '<span class="block mt-1 text-[13px] opacity-70 leading-snug">' + esc(es ? r.description_es : r.description) + '</span>' : '') +
+                '<span class="block mt-1.5 text-[11.5px] opacity-50">' + esc(r.url.replace(/^https?:\/\/(www\.)?/,'').split('/')[0]) +
+                ' <i class="fa-solid fa-arrow-up-right-from-square text-[.7em]" aria-hidden="true"></i></span>' +
+              '</span></a>';
+          }).join('') +
+        '</div></div>';
+    }).join('') +
+    (offices.length ? '<div>' +
+      '<div class="flex items-center gap-3 mb-5">' +
+        '<span class="w-11 h-11 grid place-items-center rounded-2xl text-white bg-gradient-to-br ' + M.grad('teal') + '">' + icon('building') + '</span>' +
+        '<h2 class="font-display font-extrabold text-2xl tracking-tight">' +
+          esc(es ? 'Oficinas centrales e intergrupos' : 'Central offices & intergroups') + '</h2></div>' +
+      '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">' +
+        offices.map(function (o) {
+          return '<a href="' + attr(o.url) + '" target="_blank" rel="noopener" class="card card-hover rounded-2xl p-5 block">' +
+            '<h3 class="font-semibold leading-snug">' + esc(es && o.title_es ? o.title_es : o.title) + '</h3>' +
+            '<span class="mt-2 inline-block text-[12.5px] opacity-60">' + esc(o.url.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'')) +
+            ' <i class="fa-solid fa-arrow-up-right-from-square text-[.7em]" aria-hidden="true"></i></span></a>';
+        }).join('') +
+      '</div></div>' : '') +
+  '</section>';
+};
+
+/* ───────────────────────────────────────────────────────────── ABOUT ─── */
+VIEWS.about = function () {
+  const es = S.lang === 'es';
+  const districts = S.data['districts'] || [];
+  return M.pageHead({
+    icon:'landmark',
+    kicker: es ? 'Sobre el Área 09' : 'About Area 09',
+    title: es ? 'Una estructura de servicio<br>al revés' : 'A service structure<br>turned upside down',
+    lead: es
+      ? 'En A.A. la autoridad final descansa en la conciencia de grupo. El Área existe para llevar la voz del grupo a la Conferencia de Servicios Generales — y traer de vuelta lo que allí se decide.'
+      : 'In A.A., final authority rests with the group conscience. The Area exists to carry the group’s voice to the General Service Conference — and to bring back what is decided there.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    '<div class="grid gap-8 lg:grid-cols-3">' +
+      '<div class="lg:col-span-2 prose-aa text-[15.5px]">' +
+        '<h2 class="font-display font-extrabold text-2xl mb-4">' + esc(es ? '¿Quiénes somos?' : 'Who we are') + '</h2>' +
+        (es
+          ? '<p>El Área 09 del Medio-Sur de California es una de las 93 áreas de la Conferencia de Servicios Generales en Estados Unidos y Canadá. Servimos a los grupos de A.A. del condado de Orange, el condado de Riverside, el condado de San Bernardino y una parte del condado de Los Ángeles.</p>' +
+            '<p>El Área está formada por <strong>' + districts.length + ' distritos</strong>: distritos de habla inglesa organizados por geografía, y distritos de habla hispana que cubren varias de esas mismas zonas. Cada grupo elige un R.S.G.; los R.S.G. de un distrito eligen un M.C.D.; los distritos eligen un M.C.D.C.; y el Área elige a sus oficiales y a un Delegado que lleva nuestra conciencia a la Conferencia cada abril.</p>' +
+            '<p>Nada de esto es gobierno. Como dice la Segunda Tradición: <em>“Para el propósito de nuestro grupo sólo existe una autoridad fundamental — un Dios amoroso tal como se exprese en la conciencia de nuestro grupo. Nuestros líderes no son más que servidores de confianza; no gobiernan.”</em></p>'
+          : '<p>Mid-Southern California Area 09 is one of 93 General Service Conference areas in the United States and Canada. We serve A.A. groups in Orange County, Riverside County, San Bernardino County and a portion of Los Angeles County.</p>' +
+            '<p>The Area is made up of <strong>' + districts.length + ' districts</strong>: English-speaking districts organised by geography, and Spanish-speaking districts that cover several of those same territories. Each group elects a G.S.R.; the G.S.R.s in a district elect a D.C.M.; districts elect a D.C.M.C.; and the Area elects its officers and a Delegate who carries our conscience to the Conference each April.</p>' +
+            '<p>None of this is government. As the Second Tradition puts it: <em>“For our group purpose there is but one ultimate authority — a loving God as He may express Himself in our group conscience. Our leaders are but trusted servants; they do not govern.”</em></p>') +
+
+        '<h2 class="font-display font-extrabold text-2xl mt-10 mb-4">' + esc(es ? 'Cómo se reúne el Área' : 'How the Area meets') + '</h2>' +
+        (es
+          ? '<p>El Área se reúne una vez al mes, alternando entre el <strong>Comité de Servicio de Área (CSA)</strong> y la <strong>Asamblea de Servicio de Área (ASA)</strong>. Un distrito diferente es anfitrión cada mes, así que las reuniones viajan por los cuatro condados. Todos son bienvenidos — no hace falta tener un puesto de servicio para asistir.</p>'
+          : '<p>The Area meets once a month, alternating between the <strong>Area Service Committee (ASC)</strong> and the <strong>Area Service Assembly (ASA)</strong>. A different district hosts each month, so the meetings travel around the four counties. Everyone is welcome — you do not need a service position to attend.</p>') +
+        '<p><a class="font-semibold text-brand-700 dark:text-brand-300" href="#/events">' +
+          esc(es ? 'Ver el calendario del Área 2026 →' : 'See the 2026 Area calendar →') + '</a></p>' +
+
+        '<h2 class="font-display font-extrabold text-2xl mt-10 mb-4">' + esc(es ? 'Dos idiomas, una Área' : 'Two languages, one Area') + '</h2>' +
+        (es
+          ? '<p>El Área 09 sirve en inglés y en español. Los distritos hispanos 20 al 25 cubren el mismo territorio que los distritos de habla inglesa, y muchos comités del Área tienen coordinadores en ambos idiomas. Las actas, las mociones y las agendas se publican en los dos idiomas.</p>'
+          : '<p>Area 09 serves in English and in Spanish. Spanish-speaking districts 20 through 25 cover the same ground as the English-speaking districts, and many Area committees have chairs in both languages. Minutes, motions and agendas are published in both languages.</p>') +
+      '</div>' +
+
+      '<aside class="space-y-5">' +
+        '<div class="card rounded-3xl p-6">' +
+          '<h3 class="font-display font-bold text-lg">' + esc(es ? 'De un vistazo' : 'At a glance') + '</h3>' +
+          '<dl class="mt-4 space-y-3 text-[14px]">' +
+            [[es?'Panel':'Panel','76 · 2026–2027'],
+             [es?'Región':'Region', es?'Región del Pacífico':'Pacific Region'],
+             [es?'Distritos':'Districts', String(districts.length)],
+             [es?'Condados':'Counties','Orange · Riverside · San Bernardino · Los Angeles'],
+             [es?'Correo':'Mail','P.O. Box 51446, Irvine, CA 92619-1446']
+            ].map(function (r) {
+              return '<div class="flex gap-3"><dt class="w-24 shrink-0 text-[11px] font-bold uppercase tracking-widest opacity-55 pt-0.5">' +
+                esc(r[0]) + '</dt><dd class="font-medium">' + esc(r[1]) + '</dd></div>';
+            }).join('') +
+          '</dl></div>' +
+        '<div class="card rounded-3xl p-6">' +
+          '<h3 class="font-display font-bold text-lg">' + esc(es ? 'El Preámbulo' : 'The A.A. Preamble') + '</h3>' +
+          '<p class="mt-3 text-[14px] leading-relaxed opacity-80">' +
+            esc(es ? 'Se lee al inicio de casi toda reunión de A.A. Lo publica A.A. Grapevine, y puedes leerlo completo en aa.org.'
+                   : 'Read at the start of nearly every A.A. meeting. It is published by A.A. Grapevine, and you can read it in full on aa.org.') + '</p>' +
+          '<p class="mt-4">' + M.linkOut('https://www.aa.org/aa-preamble', es ? 'Leer el Preámbulo' : 'Read the Preamble',
+            'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</p></div>' +
+        '<div class="rounded-3xl grad-hero text-white p-6 relative overflow-hidden">' +
+          '<div class="blob w-56 h-56 right-[-3rem] -top-12 bg-amber-400/40 animate-drift" aria-hidden="true"></div>' +
+          '<div class="relative">' +
+            '<h3 class="font-display font-bold text-lg">' + esc(es ? '¿Nuevo en el servicio?' : 'New to service?') + '</h3>' +
+            '<p class="mt-2 text-[14px] text-white/85 leading-relaxed">' +
+              esc(es ? 'El Manual de Servicio de A.A. explica cada puesto, desde R.S.G. hasta Delegado. Es gratis en aa.org.'
+                     : 'The A.A. Service Manual explains every position, from G.S.R. to Delegate. It is free on aa.org.') + '</p>' +
+            '<a href="https://www.aa.org/aa-service-manualtwelve-concepts-world-services" target="_blank" rel="noopener" ' +
+              'class="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
+              icon('book-bookmark') + esc(es ? 'Manual de Servicio' : 'Service Manual') + '</a>' +
+          '</div></div>' +
+      '</aside>' +
+    '</div>' +
+  '</section>';
+};
+
+/* ─────────────────────────────────────────────────────── ANONYMITY ───── */
+VIEWS.anonymity = function () {
+  const es = S.lang === 'es';
+  const rules = es ? [
+    ['user-secret','fuchsia','Nombres','Publicamos solo el nombre de pila y la inicial del apellido de cualquier miembro — en cada página, en cada archivo de datos y en cada documento que subimos.'],
+    ['envelope','brand','Correo electrónico','El contacto siempre se hace por una dirección de servicio basada en el puesto (por ejemplo, registrar@msca09aa.org o d06dcmc@msca09aa.org). Nunca publicamos el correo personal de un miembro.'],
+    ['phone-slash','rose','Teléfonos','No publicamos números de teléfono personales. Si un distrito necesita una línea, debe ser un número de servicio, no el celular de alguien.'],
+    ['camera','amber','Fotos','No publicamos fotografías en las que se pueda reconocer el rostro de un miembro de A.A.'],
+    ['file-shield','teal','Documentos','Las actas, mociones y agendas se revisan antes de publicarlas para quitar apellidos y datos de contacto personales.'],
+    ['handshake-slash','violet','Sin afiliación','No enlazamos ni damos a entender afiliación con ninguna empresa, centro de tratamiento, iglesia o causa externa. Los enlaces salientes van a A.A. y a entidades de servicio de A.A.']
+  ] : [
+    ['user-secret','fuchsia','Names','We publish a member’s first name and last initial only — on every page, in every data file and in every document we upload.'],
+    ['envelope','brand','E-mail','Contact always runs through a role-based service address (for example registrar@msca09aa.org or d06dcmc@msca09aa.org). We never publish a member’s personal e-mail.'],
+    ['phone-slash','rose','Phone numbers','We do not publish personal phone numbers. If a district needs a line, it should be a service number, not somebody’s mobile.'],
+    ['camera','amber','Photographs','We do not publish photographs in which an A.A. member’s face can be recognised.'],
+    ['file-shield','teal','Documents','Minutes, motions and agendas are reviewed before posting to remove last names and personal contact details.'],
+    ['handshake-slash','violet','No affiliation','We do not link to, or imply affiliation with, any outside enterprise, treatment centre, church or cause. Outbound links go to A.A. and A.A. service entities.']
+  ];
+
+  return M.pageHead({
+    icon:'user-secret',
+    kicker: es ? 'Política del sitio web' : 'Website policy',
+    title: es ? 'El anonimato es la base<br>espiritual de todas<br>nuestras Tradiciones'
+              : 'Anonymity is the spiritual<br>foundation of all<br>our Traditions',
+    lead: es
+      ? 'Internet es prensa, radio y cine a la vez. La Undécima Tradición nos pide mantener el anonimato personal en ese nivel — y este sitio está construido para cumplirlo por diseño, no por buena voluntad.'
+      : 'The internet is press, radio and film all at once. The Eleventh Tradition asks us to maintain personal anonymity at that level — and this site is built to honour it by design, not by good intentions.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    '<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">' +
+      rules.map(function (r, i) {
+        return '<article data-aos="fade-up" data-aos-delay="' + ((i % 3) * 70) + '" class="card card-hover rounded-3xl p-6">' +
+          '<span class="w-11 h-11 grid place-items-center rounded-2xl text-white bg-gradient-to-br ' + M.grad(r[1]) + '">' +
+            icon(r[0]) + '</span>' +
+          '<h2 class="mt-4 font-display font-bold text-lg">' + esc(r[2]) + '</h2>' +
+          '<p class="mt-2 text-[14px] leading-relaxed opacity-75">' + esc(r[3]) + '</p></article>';
+      }).join('') +
+    '</div>' +
+
+    '<div class="mt-10 grid gap-6 lg:grid-cols-3">' +
+      '<div class="lg:col-span-2 card rounded-3xl p-7 prose-aa text-[15px]">' +
+        '<h2 class="font-display font-extrabold text-2xl mb-4">' + esc(es ? 'Si ves algo que no debería estar' : 'If you see something that should not be here') + '</h2>' +
+        (es
+          ? '<p>Nos equivocamos. Si encuentras un apellido, un correo personal, un teléfono o una foto que rompe el anonimato de alguien, escríbenos y lo quitamos — sin discusión y sin esperar a la próxima reunión.</p>'
+          : '<p>We get it wrong sometimes. If you find a last name, a personal e-mail, a phone number or a photograph that breaks somebody’s anonymity, write to us and it comes down — no debate, and no waiting for the next meeting.</p>') +
+        '<p><a class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-bold text-white bg-gradient-to-r from-fuchsia-600 to-rose-600 no-underline" href="' +
+          attr(M.mailto('webmaster@msca09aa.org','Anonymity concern on msca09aa.org')) + '">' + icon('triangle-exclamation') +
+          esc(es ? 'Reportar un problema de anonimato' : 'Report an anonymity problem') + '</a></p>' +
+
+        '<h2 class="font-display font-extrabold text-2xl mt-10 mb-4">' + esc(es ? 'Cómo se mantiene este sitio' : 'How this site is maintained') + '</h2>' +
+        (es
+          ? '<p>Todo el contenido que cambia — servidores de confianza, distritos, comités, documentos, eventos — vive en archivos CSV sencillos en el repositorio del sitio. Cualquier persona con acceso puede editarlos en un navegador; el sitio se actualiza solo. No hay base de datos, no hay plugins y no hay un único punto de fallo.</p>' +
+            '<p>El calendario de reuniones de servicio se alimenta del Google Calendar del Área. Si el servidor web añade una reunión allí, aparece aquí.</p>'
+          : '<p>Everything that changes — trusted servants, districts, committees, documents, events — lives in plain CSV files in the site’s repository. Anyone with access can edit them in a browser; the site updates itself. There is no database, no plugins and no single point of failure.</p>' +
+            '<p>The service meeting calendar is fed by the Area’s Google Calendar. If the web servant adds a meeting there, it shows up here.</p>') +
+      '</div>' +
+      '<aside class="space-y-4">' +
+        '<div class="card rounded-3xl p-6">' +
+          '<h3 class="font-display font-bold text-lg">' + esc(es ? 'Leer más en aa.org' : 'Read more on aa.org') + '</h3>' +
+          '<ul class="mt-4 space-y-3 text-[14px]">' +
+            '<li>' + M.linkOut('https://www.aa.org/aa-and-anonymity', es ? 'A.A. y el anonimato' : 'A.A. and Anonymity',
+              'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>' +
+            '<li>' + M.linkOut('https://www.aa.org/anonymity-letter-to-media', es ? 'Carta a los medios' : 'Anonymity letter to the media',
+              'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>' +
+            '<li>' + M.linkOut('https://www.aa.org/the-twelve-traditions', es ? 'Las Doce Tradiciones' : 'The Twelve Traditions',
+              'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>' +
+            '<li>' + M.linkOut('https://www.aa.org/safety-and-aa-flyer', es ? 'Seguridad y A.A.' : 'Safety and A.A.',
+              'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>' +
+          '</ul></div>' +
+        '<div class="rounded-3xl bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white p-6">' +
+          '<p class="text-2xl opacity-60">' + icon('quote-left') + '</p>' +
+          '<p class="mt-2 text-[15px] leading-relaxed">' +
+            esc(es ? 'El anonimato es la base espiritual de todas nuestras Tradiciones, recordándonos siempre anteponer los principios a las personalidades.'
+                   : 'Anonymity is the spiritual foundation of all our Traditions, ever reminding us to place principles before personalities.') + '</p>' +
+          '<p class="mt-3 text-[12px] uppercase tracking-widest text-white/70">' + esc(es ? 'Tradición Doce' : 'Tradition Twelve') + '</p></div>' +
+      '</aside>' +
+    '</div>' +
+  '</section>';
+};
+
+/* ───────────────────────────────────────────────────────────── CONTACT ── */
+VIEWS.contact = function () {
+  const es = S.lang === 'es';
+  const board = (S.data['trusted-servants'] || []).filter(function (r) { return r.level === 'Area'; });
+
+  const submit = es ? [
+    ['1','Reúne lo esencial','Fecha, hora, lugar, quién es anfitrión, y una dirección de servicio de contacto. Sin apellidos, sin correos personales, sin teléfonos personales.'],
+    ['2','Manda el texto, no solo el volante','Copia el texto del volante en el cuerpo del correo. Así podemos ponerlo en la página para que se pueda buscar y leer en un teléfono — y adjunta el volante también si quieres.'],
+    ['3','Envíalo a webmaster@msca09aa.org','Te confirmamos la recepción. Si no tienes respuesta en una semana, escribe al Coordinador del Área.']
+  ] : [
+    ['1','Gather the essentials','Date, time, place, who is hosting, and a service e-mail for questions. No last names, no personal e-mail addresses, no personal phone numbers.'],
+    ['2','Send the words, not just the flyer','Paste the flyer’s text into the body of the e-mail. That lets us put it on the page so it is searchable and readable on a phone — attach the flyer as well if you like.'],
+    ['3','Send it to webmaster@msca09aa.org','You will get an acknowledgement. If you have not heard back within a week, write the Area Chair.']
+  ];
+
+  return M.pageHead({
+    icon:'paper-plane',
+    kicker: es ? 'Contacto' : 'Get in touch',
+    title: es ? 'Escríbenos' : 'Write to us',
+    lead: es
+      ? 'Cada puesto de servicio del Área tiene una dirección basada en el puesto. Va a quien tiene ese trabajo hoy, y sigue funcionando cuando el panel cambia.'
+      : 'Every Area service position has a role-based address. It reaches whoever holds that job today, and it keeps working when the panel turns over.'
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12">' +
+    '<div class="grid gap-6 lg:grid-cols-3">' +
+      '<div class="lg:col-span-2">' +
+        M.sectionTitle(es ? 'Oficiales del Área — Panel 76' : 'Area officers — Panel 76') +
+        '<div class="grid gap-3 sm:grid-cols-2">' +
+          board.map(function (b) {
+            return '<a href="' + attr(M.mailto(b.email, b.position + ' — msca09aa.org')) + '" class="card card-hover rounded-2xl p-5 flex items-start gap-4">' +
+              '<span class="shrink-0 w-11 h-11 grid place-items-center rounded-xl text-white bg-gradient-to-br from-brand-500 to-fuchsia-500 font-display font-bold">' +
+                esc((b.name || '?').charAt(0)) + '</span>' +
+              '<span class="min-w-0">' +
+                '<span class="block font-display font-bold">' + esc(b.position) + '</span>' +
+                '<span class="block text-[13.5px] opacity-70">' + esc(b.name) + '</span>' +
+                '<span class="block mt-1 text-[13px] text-brand-700 dark:text-brand-300 break-all">' + esc(b.email) + '</span>' +
+              '</span></a>';
+          }).join('') +
+        '</div>' +
+
+        '<div class="mt-10">' +
+          M.sectionTitle(es ? 'Enviar algo para publicar' : 'Send us something to post',
+            es ? 'Un evento, un acta, una moción, un cambio de servidor de confianza — así llega a la página rápido.'
+               : 'An event, minutes, a motion, a change of trusted servant — this is how it gets on the page quickly.') +
+          '<ol class="space-y-3">' +
+            submit.map(function (s) {
+              return '<li class="card rounded-2xl p-5 flex gap-4">' +
+                '<span class="shrink-0 w-9 h-9 grid place-items-center rounded-full text-white font-display font-bold bg-gradient-to-br from-fuchsia-500 to-orange-500">' +
+                  esc(s[0]) + '</span>' +
+                '<span><span class="block font-display font-bold">' + esc(s[1]) + '</span>' +
+                '<span class="block mt-1 text-[14px] leading-relaxed opacity-75">' + esc(s[2]) + '</span></span></li>';
+            }).join('') +
+          '</ol>' +
+          '<a href="' + attr(M.mailto('webmaster@msca09aa.org', 'Content for msca09aa.org')) + '" ' +
+            'class="mt-5 inline-flex items-center gap-2 rounded-full px-6 py-3.5 font-bold text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop hover:from-brand-500 hover:to-fuchsia-500 transition">' +
+            icon('paper-plane') + 'webmaster@msca09aa.org</a>' +
+        '</div>' +
+      '</div>' +
+
+      '<aside class="space-y-5">' +
+        '<div class="card rounded-3xl p-6">' +
+          '<h3 class="font-display font-bold text-lg">' + esc(es ? 'Por correo postal' : 'By post') + '</h3>' +
+          '<p class="mt-3 font-semibold leading-relaxed">Mid-Southern California Area 09<br>P.O. Box 51446<br>Irvine, CA 92619-1446</p></div>' +
+        '<div class="card rounded-3xl p-6">' +
+          '<h3 class="font-display font-bold text-lg">' + esc(es ? 'Otras direcciones útiles' : 'Other useful addresses') + '</h3>' +
+          '<ul class="mt-4 space-y-2.5 text-[14px]">' +
+            [['registrar@msca09aa.org', es?'Registro de grupos y R.S.G.':'Group & G.S.R. records'],
+             ['contributions@msca09aa.org', es?'Séptima Tradición':'Seventh Tradition'],
+             ['webmaster@msca09aa.org', es?'Sitio web':'Website'],
+             ['technologychair@msca09aa.org', es?'Tecnología / Zoom':'Technology / Zoom'],
+             ['editor@msca09aa.org', es?'Boletín':'Newsletter']
+            ].map(function (r) {
+              return '<li><a class="font-semibold text-brand-700 dark:text-brand-300 hover:underline break-all" href="' +
+                attr(M.mailto(r[0])) + '">' + esc(r[0]) + '</a><span class="block text-[12.5px] opacity-60">' + esc(r[1]) + '</span></li>';
+            }).join('') +
+          '</ul></div>' +
+        '<div class="rounded-3xl bg-gradient-to-br from-amber-400 to-orange-500 text-ink-900 p-6">' +
+          '<h3 class="font-display font-bold text-lg">' + esc(es ? '¿Necesitas ayuda con la bebida?' : 'Need help with drinking?') + '</h3>' +
+          '<p class="mt-2 text-[14px] leading-relaxed">' +
+            esc(es ? 'Esta página es para asuntos de servicio. Si buscas una reunión ahora mismo, empieza aquí.'
+                   : 'This page is for service business. If you are looking for a meeting right now, start here.') + '</p>' +
+          '<a href="#/newcomers" class="mt-4 inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-bold bg-ink-900 text-white">' +
+            icon('hand-holding-heart') + esc(t('ctaNew')) + '</a></div>' +
+      '</aside>' +
+    '</div>' +
+  '</section>';
+};
+
+/* ─────────────────────────────────────────────────────────── NOT FOUND ── */
+VIEWS.notfound = function () {
+  const es = S.lang === 'es';
+  return '<section class="mx-auto max-w-3xl px-4 py-24 text-center">' +
+    '<p class="text-6xl">' + icon('compass','grad-text') + '</p>' +
+    '<h1 class="mt-6 font-display font-extrabold text-4xl tracking-tight">' +
+      esc(es ? 'Esa página no existe' : 'That page isn’t here') + '</h1>' +
+    '<p class="mt-3 opacity-70 leading-relaxed">' +
+      esc(es ? 'Puede que el enlace sea antiguo. Prueba desde el principio — o dinos qué enlace te trajo aquí y lo arreglamos.'
+             : 'The link may be an old one. Try starting from the top — or tell us which link brought you here and we will fix it.') + '</p>' +
+    '<div class="mt-8 flex flex-wrap gap-3 justify-center">' +
+      '<a href="#/" class="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop">' +
+        icon('house') + esc(t('navHome')) + '</a>' +
+      '<a href="' + attr(M.mailto('webmaster@msca09aa.org','Broken link on msca09aa.org')) + '" ' +
+        'class="inline-flex items-center gap-2 rounded-full px-6 py-3 font-bold border border-black/10 dark:border-white/15">' +
+        icon('link-slash') + esc(es ? 'Reportar el enlace' : 'Report the link') + '</a>' +
+    '</div></section>';
+};
+
+})();
+</script>
+
+<script>
+/* ══════════════════════════ ROUTER · CHROME · BOOT ═══════════════════════ */
+(function () {
+'use strict';
+const M = window.MSCA, S = M.state, t = M.t, esc = M.esc, icon = M.icon;
+const $ = M.$, $$ = M.$$, VIEWS = M.VIEWS;
+
+const ALIASES = {
+  '':'home', 'home':'home', 'inicio':'home',
+  'meetings':'meetings', 'calendar':'meetings', 'reuniones':'meetings', 'calendario':'meetings',
+  'districts':'districts', 'district':'districts', 'distritos':'districts',
+  'committees':'committees', 'committee':'committees', 'comites':'committees',
+  'servants':'servants', 'panel76':'servants', 'contacts':'servants', 'officers':'servants',
+  'documents':'documents', 'minutes':'documents', 'motions':'documents', 'actas':'documents',
+  'events':'events', 'eventos':'events',
+  'contribute':'contribute', 'contributions':'contribute', 'seventh-tradition':'contribute', 'contribuir':'contribute',
+  'newcomers':'newcomers', 'newcomer':'newcomers', 'new':'newcomers', 'nuevo':'newcomers',
+  'resources':'resources', 'recursos':'resources',
+  'about':'about', 'sobre':'about',
+  'anonymity':'anonymity', 'about-anonymity':'anonymity', 'website-policy':'anonymity', 'anonimato':'anonymity',
+  'contact':'contact', 'contacto':'contact'
+};
+
+const TITLES = {
+  home:{en:'Mid-Southern California Area 09 of Alcoholics Anonymous', es:'Área 09 del Medio-Sur de California de Alcohólicos Anónimos'},
+  meetings:{en:'Service Calendar', es:'Calendario de Servicio'},
+  districts:{en:'Districts', es:'Distritos'},
+  committees:{en:'Committees', es:'Comités'},
+  servants:{en:'Panel 76 Trusted Servants', es:'Servidores del Panel 76'},
+  documents:{en:'Minutes, Motions & Agendas', es:'Actas, Mociones y Agendas'},
+  events:{en:'Events', es:'Eventos'},
+  contribute:{en:'7th Tradition Contributions', es:'Contribuciones de la Séptima Tradición'},
+  newcomers:{en:'New to A.A.', es:'Nuevo en A.A.'},
+  resources:{en:'A.A. Resources', es:'Recursos de A.A.'},
+  about:{en:'About Area 09', es:'Sobre el Área 09'},
+  anonymity:{en:'Anonymity & Website Policy', es:'Anonimato y Política del Sitio'},
+  contact:{en:'Contact', es:'Contacto'},
+  notfound:{en:'Page not found', es:'Página no encontrada'}
+};
+
+function parseHash() {
+  let h = (location.hash || '#/').replace(/^#\/?/, '');
+  h = h.split('?')[0];
+  const parts = h.split('/').filter(function (p) { return p !== ''; });
+  const head = (parts.shift() || '').toLowerCase();
+  return { name: ALIASES[head] || (head ? 'notfound' : 'home'), params: parts, raw: head };
+}
+
+let booting = true;
+
+function render() {
+  const r = parseHash();
+  S.route = r.name + (r.params.length ? '/' + r.params.join('/') : '');
+
+  const main = $('#main');
+  if (!main) return;
+
+  if (!S.ready) {
+    main.innerHTML = skeleton();
+    return;
+  }
+
+  const view = VIEWS[r.name] || VIEWS.notfound;
+  main.innerHTML = '<div class="fade-in">' + view(r.params) + '</div>';
+
+  const title = (TITLES[r.name] && TITLES[r.name][S.lang]) || TITLES[r.name].en;
+  document.title = r.name === 'home' ? title : title + ' · MSCA09';
+
+  M.renderNav();
+
+  if (typeof view.mount === 'function') {
+    try { view.mount(r.params); } catch (e) { console.error('[MSCA09] mount failed', e); }
+  }
+
+  if (window.AOS) AOS.refreshHard();
+
+  if (!booting) {
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    main.focus({ preventScroll: true });
+  }
+  booting = false;
+
+  closeMobileNav();
+}
+M.render = render;
+
+function skeleton() {
+  return '<section class="mx-auto max-w-7xl px-4 py-24">' +
+    '<div class="animate-pulse space-y-6">' +
+      '<div class="h-10 w-2/3 rounded-2xl bg-black/[.07] dark:bg-white/10"></div>' +
+      '<div class="h-4 w-1/2 rounded-full bg-black/[.06] dark:bg-white/[.08]"></div>' +
+      '<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-4">' +
+        '<div class="h-40 rounded-3xl bg-black/[.05] dark:bg-white/[.06]"></div>' +
+        '<div class="h-40 rounded-3xl bg-black/[.05] dark:bg-white/[.06]"></div>' +
+        '<div class="h-40 rounded-3xl bg-black/[.05] dark:bg-white/[.06]"></div>' +
+      '</div></div>' +
+    '<p class="mt-8 text-center opacity-50 text-sm">' + esc(t('loading')) + '</p></section>';
+}
+
+/* ─────────────────────────────────────────────────── chrome behaviour ─── */
+function closeMobileNav() {
+  const nav = $('#mobileNav'), btn = $('#menuBtn');
+  if (!nav || !btn) return;
+  nav.style.maxHeight = '0px';
+  btn.setAttribute('aria-expanded', 'false');
+  const i = btn.querySelector('i');
+  if (i) i.className = 'fa-solid fa-bars';
+}
+
+function wireChrome() {
+  const btn = $('#menuBtn'), nav = $('#mobileNav');
+  if (btn && nav) {
+    btn.addEventListener('click', function () {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      nav.style.maxHeight = open ? '0px' : nav.scrollHeight + 'px';
+      const i = btn.querySelector('i');
+      if (i) i.className = 'fa-solid ' + (open ? 'fa-bars' : 'fa-xmark');
+    });
+  }
+
+  const themeBtn = $('#themeBtn');
+  if (themeBtn) themeBtn.addEventListener('click', function () {
+    M.applyTheme(!document.documentElement.classList.contains('dark'));
+  });
+  M.applyTheme(document.documentElement.classList.contains('dark'));
+
+  const langBtn = $('#langBtn');
+  if (langBtn) langBtn.addEventListener('click', function () {
+    S.lang = S.lang === 'en' ? 'es' : 'en';
+    try { localStorage.setItem('msca09.lang', S.lang); } catch (e) {}
+    M.applyStaticI18n();
+    M.renderNav();
+    booting = true;          // keep the scroll position on a language flip
+    render();
+  });
+
+  /* close any open desktop dropdown when clicking away or pressing Esc */
+  document.addEventListener('click', function (e) {
+    $$('details[data-menu]').forEach(function (d) {
+      if (!d.contains(e.target)) d.removeAttribute('open');
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      $$('details[data-menu]').forEach(function (d) { d.removeAttribute('open'); });
+      closeMobileNav();
+    }
+  });
+
+  const top = $('#toTop');
+  if (top) {
+    top.addEventListener('click', function () { window.scrollTo({ top:0, behavior:'smooth' }); });
+    let ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        const on = window.scrollY > 600;
+        top.style.opacity = on ? '1' : '0';
+        top.style.pointerEvents = on ? 'auto' : 'none';
+        ticking = false;
+      });
+    }, { passive:true });
+  }
+
+  const stamp = $('#buildStamp');
+  if (stamp) {
+    const d = new Date();
+    stamp.textContent = (S.lang === 'es' ? 'Sitio estático · sin servidor · ' : 'Static site · no server · ') +
+      d.getFullYear();
+  }
+}
+
+/* ───────────────────────────────────────────────────────────── boot ───── */
+async function boot() {
+  M.applyStaticI18n();
+  M.renderNav();
+  wireChrome();
+  render();                       // skeleton first
+
+  await M.loadAll();
+
+  const missing = ['districts','trusted-servants','committees'].filter(function (n) {
+    return !(S.data[n] && S.data[n].length);
+  });
+  if (missing.length) {
+    console.warn('[MSCA09] missing data files:', missing.join(', '));
+    const bar = document.createElement('div');
+    bar.className = 'mx-auto max-w-7xl px-4 pt-6';
+    bar.innerHTML = '<div class="rounded-2xl border border-amber-400/50 bg-amber-50 dark:bg-amber-500/10 p-4 text-[13.5px] leading-relaxed">' +
+      '<strong>' + esc(t('loadErr')) + '</strong> ' +
+      esc(S.lang === 'es'
+        ? 'Los archivos de datos (data/*.csv) no se cargaron. Si abriste este archivo directamente desde el disco, el navegador bloquea la lectura de archivos locales — súbelo a GitHub Pages o sírvelo con un servidor local (por ejemplo: python -m http.server).'
+        : 'The data files (data/*.csv) did not load. If you opened this file straight from disk, the browser blocks reading local files — publish it to GitHub Pages or serve it locally (for example: python -m http.server).') +
+      '</div>';
+    const main = $('#main');
+    if (main) main.parentNode.insertBefore(bar, main);
+  }
+
+  if (window.AOS) {
+    AOS.init({ duration:600, easing:'ease-out-cubic', once:true, offset:60,
+               disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches });
+  }
+
+  render();
+}
+
+window.addEventListener('hashchange', render);
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+else boot();
+
+})();
+</script>
+</body>
+</html>
