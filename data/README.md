@@ -14,7 +14,8 @@ site updates itself. Nothing is hard-coded in `index.html`.
 | `districts.csv` | the district directory and district modals |
 | `trusted-servants.csv` | Panel 76 officers, committee chairs, district officers |
 | `committees.csv` | the Area committees |
-| `documents.csv` | minutes, motions, agendas — each pointing at a file in `docs/` |
+| `documents.csv` | minutes, motions, agendas, and the whole archive — each pointing at a file in `docs/`. `collection` is `Current` or `Archive`. Set `publish` to anything but `yes` to withhold a file from the site. |
+| `archive-review.csv` | the archived documents that carry a personal e-mail address or phone number, for the Area to triage. The site does not read this file. |
 | `events.csv` | events and their flyers; `slug` becomes the shareable link |
 | `area-meetings.csv` | the approved ASC / Assembly schedule |
 | `resources.csv` | the aa.org links and central-office lists |

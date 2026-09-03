@@ -68,10 +68,11 @@ be rewritten.
 | `data/districts.csv` | The Districts page and district modals. `covers_cities` is a `;`-separated list and drives the city search. |
 | `data/trusted-servants.csv` | Panel 76 page, committee chair names, district officers. `body_sort` / `position_sort` control ordering. |
 | `data/committees.csv` | Committees page and modals. `color` picks the card gradient; `aa_url` links out to aa.org. |
-| `data/documents.csv` | Minutes, motions, agendas, reports. `url` points at a file in `docs/`. |
 | `data/events.csv` | Events page and event modals, including flyer images. |
 | `data/area-meetings.csv` | The approved ASC / Assembly schedule for the panel. |
 | `data/resources.csv` | A.A. Resources page and the central-office lists. |
+| `data/documents.csv` | Minutes, motions, agendas, reports — the current record *and* the whole archive. `collection` is `Current` or `Archive`; `publish` is `yes` or anything else to withhold a file. |
+| `data/archive-review.csv` | The 313 archived documents that carry a personal e-mail address or phone number, for the Area to triage. Not read by the site. |
 | `data/calendar.ics` | The Service Calendar. **Do not edit by hand** — see below. |
 
 Nothing on the page is written into `index.html` — the headings, the menu, the
@@ -100,6 +101,70 @@ There is no build step and nothing to install.
    `flyers` is a `;`-separated list of paths.
 3. Paste the flyer's text into `description` so it is searchable and readable
    on a phone. Strip last names, personal e-mails and personal phone numbers.
+
+### The archive
+
+`docs/archive/` holds everything recovered from the Area's two previous
+websites — **msca09aa.org** (the WordPress site) and **area09.org** (the older
+"blue site"). Both were crawled in full: 698 pages were walked, every document
+either site linked to was checked, and **1,580 files were downloaded**, sorted
+by kind and year, given a readable title and listed in `data/documents.csv`
+with `collection = Archive`. The record now runs from **1999 to today**.
+
+| | |
+|---|---|
+| Minutes | 468 |
+| G.S.C. conference material | 233 |
+| District records | 219 |
+| Newsletters | 165 |
+| Reports (incl. 29 Delegate's sharing sessions) | 129 |
+| Finances | 70 |
+| Guidelines & bylaws | 66 |
+| Event flyers | 83 |
+| PRAASA, workbooks, forms, calendars, archives committee | 96 |
+
+It is reachable at `#/archive`, from **Service → Archive**, and through the
+Documents page's search, category and year filters.
+
+Three things worth knowing:
+
+- **Some Area writing only ever existed as a web page** — the Delegate's
+  sharing sessions and G.S.O. announcement round-ups from 2020 to 2024. Those
+  58 posts were saved as standalone HTML in `docs/archive/pages/`. The Area's
+  *static* pages were deliberately not copied: this site replaces them, and
+  they carry the contact details the committee asked us to stop publishing.
+  Two pages the Area had put behind a login were left alone.
+- **Large scans were re-compressed** with Ghostscript (495 MB → 283 MB) so the
+  repository stays a workable size. The originals are still on the old sites;
+  if a particular scan is now too soft to read, fetch that one file again
+  before those sites are retired.
+- **Audio recordings were not brought across.** The WordPress site holds a set
+  of Spanish-language workshop recordings totalling roughly 780 MB — too much
+  for a git repository. They should be moved to the Area's Google Drive before
+  msca09aa.org is switched off.
+
+Only two files could not be recovered; both already 404 on the old site.
+
+### Reviewing the archive for anonymity
+
+These are historical records. They were public on both old sites for years,
+and many of them contain what the Ad Hoc Website Committee asked us to stop
+publishing: members' phone numbers and personal e-mail addresses.
+
+Every archived PDF was read and scanned. **313 documents contain a personal
+e-mail address or a phone number that is not an A.A. service line.** They are
+listed in **`data/archive-review.csv`**, with the file, its category and year,
+how many of each were found, and examples.
+
+Nothing has been withheld — these documents were already public, and it is the
+Area's conscience, not the webmaster's, that decides what stays up. But acting
+on that list is a one-cell edit:
+
+> Set the `publish` column in `data/documents.csv` to anything other than
+> `yes` and the file disappears from the site's listing on the next load.
+
+Use the `decision` and `notes` columns in `archive-review.csv` to record what
+the Area decides, so the next panel can see the reasoning.
 
 ### The service meeting calendar
 

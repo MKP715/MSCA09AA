@@ -1,4 +1,21 @@
 ﻿set,key,label_en,label_es,color,icon
+doc,Minutes,Minutes,Actas,brand,file-lines
+doc,Motions,Motions,Mociones,fuchsia,gavel
+doc,Conference,General Service Conference,Conferencia de Servicios Generales,emerald,landmark
+doc,Newsletters,Newsletters,Boletines,orange,newspaper
+doc,Finances,Finances,Finanzas,emerald,chart-pie
+doc,Reports,Reports,Informes,rose,file-contract
+doc,Guidelines,Guidelines & Bylaws,Guías y Estatutos,slate,scale-balanced
+doc,Workbooks,Workbooks,Cuadernos de Trabajo,lime,book-bookmark
+doc,Calendar,Calendars,Calendarios,amber,calendar-days
+doc,Contributions,Contributions,Contribuciones,teal,hand-holding-dollar
+doc,Forms,Forms,Formularios,cyan,clipboard-list
+doc,District,District records,Registros de distrito,brand,map-location-dot
+doc,Delegate,Delegate reports,Informes del Delegado,fuchsia,user-tie
+doc,PRAASA,PRAASA,PRAASA,violet,mountain-sun
+doc,Archives,Archives committee,Comité de Archivos,amber,box-archive
+doc,Flyers,Event flyers,Volantes de eventos,pink,image
+doc,Misc,Other material,Otro material,stone,folder-open
 meeting,District,District,Distrito,brand,map-location-dot
 meeting,H&I,H&I,H&I,rose,hospital
 meeting,Intergroup,Intergroup / Central Office,Intergrupo / Oficina Central,amber,building
@@ -17,12 +34,6 @@ area,Assembly,Assembly,Asamblea,fuchsia,people-roof
 area,ASC,Area Service Committee,Comité de Servicio de Área,brand,landmark
 area,Foro,Foro,Foro,orange,comments
 area,Servathon,Servathon,Servathon,emerald,hands-holding-circle
-doc,Minutes,Minutes,Actas,brand,folder-open
-doc,Motions,Motions,Mociones,fuchsia,folder-open
-doc,Conference,Conference,Conferencia,emerald,folder-open
-doc,Calendar,Calendars,Calendarios,amber,folder-open
-doc,Contributions,Contributions,Contribuciones,teal,folder-open
-doc,Reports,Reports,Informes,rose,folder-open
 resource,New to A.A.,New to A.A.,Nuevo en A.A.,rose,hand-holding-heart
 resource,The Legacies,The Legacies,Los Legados,fuchsia,layer-group
 resource,General Service,General Service,Servicios Generales,brand,sitemap

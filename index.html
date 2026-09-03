@@ -1678,50 +1678,110 @@ VIEWS.servants.mount = function () {
 function docLabel(k){ return M.kindText('doc', k); }
 function docColor(k){ return M.kindOf('doc', k).c; }
 
-VIEWS.documents = function () {
+function publishedDocs() {
+  return (S.data['documents'] || []).filter(function (r) {
+    return String(r.publish || 'yes').trim().toLowerCase() === 'yes';
+  });
+}
+
+VIEWS.documents = function (params) {
+  const rows = publishedDocs();
+  const arch = rows.filter(function (r) { return r.collection === 'Archive'; });
+  const years = M.uniq(rows.map(function (r) { return r.year; })).filter(Boolean).sort();
+
   return M.pageHead({
     icon:'file-lines', kicker:c('documents.kicker'),
     title:M.cTitle('documents.title'), lead:c('documents.lead'),
     extra:'<div class="mt-7 max-w-xl relative">' +
       '<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-ink-900/40" aria-hidden="true"></i>' +
       '<input id="docQ" type="search" autocomplete="off" placeholder="' + attr(c('documents.placeholder')) + '" ' +
-        'class="w-full rounded-full bg-white text-ink-900 pl-11 pr-4 py-3.5 font-medium shadow-lift placeholder:text-ink-900/40"></div>'
+        'class="w-full rounded-full bg-white text-ink-900 pl-11 pr-4 py-3.5 font-medium shadow-lift placeholder:text-ink-900/40"></div>' +
+      '<div class="mt-4 flex flex-wrap gap-2 text-[13px]">' +
+        '<span class="chip bg-white/15 text-white/90">' + icon('folder-open','text-[.7rem]') +
+          '<span>' + esc(rows.length + ' ' + t('filesTotal')) + '</span></span>' +
+        (years.length ? '<span class="chip bg-white/15 text-white/90">' + icon('clock-rotate-left','text-[.7rem]') +
+          '<span>' + esc(years[0] + ' – ' + years[years.length - 1]) + '</span></span>' : '') +
+        '<span class="chip bg-white/15 text-white/90">' + icon('hard-drive','text-[.7rem]') +
+          '<span>' + esc(t('filesOnSite')) + '</span></span>' +
+      '</div>'
   }) +
   '<section class="mx-auto max-w-7xl px-4 py-12">' +
     '<div id="docFilters"></div>' +
-    '<div id="docList" class="mt-8"></div>' +
-    '<div class="mt-8 rounded-2xl border border-amber-400/40 bg-amber-50 dark:bg-amber-500/10 p-4 text-[13.5px] leading-relaxed flex gap-3">' +
-      '<span class="shrink-0 w-8 h-8 rounded-lg grid place-items-center bg-amber-500 text-white">' + icon('circle-info','text-xs') + '</span>' +
-      '<p>' + esc(c('documents.gap_note')) + '</p></div>' +
+    '<div id="docSummary" class="mt-5"></div>' +
+    '<div id="docList" class="mt-6"></div>' +
+    '<div class="mt-10 grid gap-4 md:grid-cols-2">' +
+      '<div class="rounded-2xl border border-amber-400/40 bg-amber-50 dark:bg-amber-500/10 p-4 text-[13.5px] leading-relaxed flex gap-3">' +
+        '<span class="shrink-0 w-8 h-8 rounded-lg grid place-items-center bg-amber-500 text-white">' + icon('circle-info','text-xs') + '</span>' +
+        '<p>' + esc(c('documents.gap_note')) + '</p></div>' +
+      (arch.length ? '<div class="rounded-2xl border border-violet-400/40 bg-violet-50 dark:bg-violet-500/10 p-4 text-[13.5px] leading-relaxed flex gap-3">' +
+        '<span class="shrink-0 w-8 h-8 rounded-lg grid place-items-center bg-violet-500 text-white">' + icon('box-archive','text-xs') + '</span>' +
+        '<p>' + esc(c('documents.archive_note', { n: String(arch.length) })) + '</p></div>' : '') +
+    '</div>' +
   '</section>';
 };
 
-VIEWS.documents.mount = function () {
-  const rows = S.data['documents'] || [];
-  const st = { q:'', cat:'', year:'' };
-  const cats  = M.uniq(rows.map(function (r) { return r.category; })).filter(Boolean).sort();
-  const years = M.uniq(rows.map(function (r) { return r.year; })).filter(Boolean).sort().reverse();
+VIEWS.documents.mount = function (params) {
+  const rows = publishedDocs();
+  const CAT_ORDER = Object.keys(S.kinds['doc'] || {});
+  function catOrder(a, b) {
+    const ia = CAT_ORDER.indexOf(a), ib = CAT_ORDER.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || M.byText(a, b);
+  }
+  const preset = (params && params[0]) || '';
+  const st = { q:'', cat:'', year:'', coll: preset === 'archive' ? 'Archive' : '' };
 
   const q = $('#docQ');
   if (q) { let tm; q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { st.q = q.value; draw(); }, 150); }); }
 
-  function chipBtn(kind, val, label, on) {
+  function pool() {
+    return rows.filter(function (r) { return !st.coll || r.collection === st.coll; });
+  }
+  function chipBtn(kind, val, label, on, count) {
     return '<button type="button" data-' + kind + '="' + attr(val) + '" aria-pressed="' + on + '" ' +
       'class="fltbtn inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap ' +
       (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
-          : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' + esc(label) + '</button>';
+          : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+      esc(label) +
+      (count != null ? '<span class="text-[11px] font-bold ' + (on ? 'opacity-70' : 'opacity-45') + '">' + count + '</span>' : '') +
+      '</button>';
   }
+
   function drawFilters() {
     const f = $('#docFilters'); if (!f) return;
+    const inScope = pool();
+    const catCount = {}, yearCount = {};
+    inScope.forEach(function (r) {
+      catCount[r.category] = (catCount[r.category] || 0) + 1;
+      if (r.year) yearCount[r.year] = (yearCount[r.year] || 0) + 1;
+    });
+    const cats  = Object.keys(catCount).sort(catOrder);
+    const years = Object.keys(yearCount).sort().reverse();
+    const collCount = { '': rows.length };
+    rows.forEach(function (r) { collCount[r.collection] = (collCount[r.collection] || 0) + 1; });
+
     f.innerHTML =
-      '<div class="scroll-x -mx-1 px-1 pb-1"><div class="flex gap-2 w-max">' +
-        chipBtn('doccat','', t('all'), st.cat === '') +
-        cats.map(function (x) { return chipBtn('doccat', x, docLabel(x), st.cat === x); }).join('') +
+      '<div class="scroll-x -mx-1 px-1 pb-1"><div class="flex items-center gap-2 w-max">' +
+        [['', t('allFiles')], ['Current', t('collCurrent')], ['Archive', t('collArchive')]].map(function (cl) {
+          return chipBtn('doccoll', cl[0], cl[1], st.coll === cl[0], collCount[cl[0]] || 0);
+        }).join('') +
       '</div></div>' +
       '<div class="scroll-x -mx-1 px-1 pb-1 mt-2"><div class="flex gap-2 w-max">' +
-        chipBtn('docyear','', t('allYears'), st.year === '') +
-        years.map(function (y) { return chipBtn('docyear', y, y, st.year === y); }).join('') +
+        chipBtn('doccat', '', t('all'), st.cat === '') +
+        cats.map(function (x) { return chipBtn('doccat', x, docLabel(x), st.cat === x, catCount[x]); }).join('') +
+      '</div></div>' +
+      '<div class="scroll-x -mx-1 px-1 pb-1 mt-2"><div class="flex gap-2 w-max">' +
+        chipBtn('docyear', '', t('allYears'), st.year === '') +
+        years.map(function (y) { return chipBtn('docyear', y, y, st.year === y, yearCount[y]); }).join('') +
       '</div></div>';
+
+    $$('[data-doccoll]', f).forEach(function (b) {
+      b.addEventListener('click', function () {
+        st.coll = b.getAttribute('data-doccoll');
+        if (st.cat && !pool().some(function (r) { return r.category === st.cat; })) st.cat = '';
+        if (st.year && !pool().some(function (r) { return r.year === st.year; })) st.year = '';
+        drawFilters(); draw();
+      });
+    });
     $$('[data-doccat]', f).forEach(function (b) {
       b.addEventListener('click', function () { st.cat = b.getAttribute('data-doccat'); drawFilters(); draw(); });
     });
@@ -1730,45 +1790,80 @@ VIEWS.documents.mount = function () {
     });
   }
 
+  function docCard(r, col) {
+    const archived = r.collection === 'Archive';
+    return '<a href="' + attr(M.enc(r.url)) + '" target="_blank" rel="noopener" ' +
+      'class="card card-hover rounded-2xl p-4 flex items-start gap-3 group h-full">' +
+      '<span class="shrink-0 w-9 h-9 grid place-items-center rounded-lg ' + M.tone(col) + '">' +
+        icon(M.fileIcon(r.format),'text-sm') + '</span>' +
+      '<span class="min-w-0 flex-1">' +
+        '<span class="block font-semibold text-[14px] leading-snug group-hover:underline break-words">' + esc(r.title) + '</span>' +
+        '<span class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] opacity-60">' +
+          (r.year ? '<span class="font-semibold">' + esc(r.year) + '</span>' : '') +
+          '<span>' + esc(r.language) + '</span><span>' + esc(r.format) + '</span>' +
+          (r.size_kb ? '<span>' + esc(r.size_kb) + ' KB</span>' : '') +
+          (archived ? '<span class="chip ' + M.tone('violet') + '">' + icon('box-archive','text-[.65rem]') + esc(t('archived')) + '</span>' : '') +
+        '</span>' +
+      '</span>' +
+      '<span class="shrink-0 opacity-40 group-hover:opacity-80 transition">' + icon('download','text-xs') + '</span></a>';
+  }
+
   function draw() {
-    const list = $('#docList'); if (!list) return;
+    const list = $('#docList'), sum = $('#docSummary');
+    if (!list) return;
     const nq = M.norm(st.q);
-    const hits = rows.filter(function (r) {
+    const hits = pool().filter(function (r) {
       if (st.cat && r.category !== st.cat) return false;
       if (st.year && r.year !== st.year) return false;
       if (!nq) return true;
-      return M.norm([r.title, r.category, r.year, r.language, r.meeting_type].join(' ')).indexOf(nq) !== -1;
+      return M.norm([r.title, r.category, r.year, r.language, r.source, r.meeting_type].join(' ')).indexOf(nq) !== -1;
     });
+
+    if (sum) {
+      sum.innerHTML = '<p class="text-[13.5px] opacity-65">' +
+        esc(hits.length + ' ' + t(hits.length === 1 ? 'fileOne' : 'filesMany')) +
+        (st.q ? esc(' · \u201c' + st.q + '\u201d') : '') + '</p>';
+    }
     if (!hits.length) { list.innerHTML = M.emptyState(); return; }
 
     const groups = {};
     hits.forEach(function (r) { (groups[r.category] = groups[r.category] || []).push(r); });
+    const order = Object.keys(groups).sort(catOrder);
 
-    list.innerHTML = Object.keys(groups).sort().map(function (cat) {
-      const items = groups[cat].slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+    list.innerHTML = order.map(function (cat) {
       const col = docColor(cat);
-      return '<section class="mb-9">' +
+      // inside a category, break the list up by year so long runs stay readable
+      const byYear = {};
+      groups[cat].forEach(function (r) { (byYear[r.year || '—'] = byYear[r.year || '—'] || []).push(r); });
+      const yrs = Object.keys(byYear).sort().reverse();
+      const many = groups[cat].length > 14 && yrs.length > 1;
+
+      return '<section class="mb-10">' +
         '<div class="flex items-center gap-3 mb-4">' +
           '<span class="w-10 h-10 shrink-0 grid place-items-center rounded-xl text-white bg-gradient-to-br ' + M.grad(col) + '">' +
-            icon('folder-open','text-sm') + '</span>' +
+            icon(M.kindOf('doc', cat).fa || 'folder-open','text-sm') + '</span>' +
           '<h2 class="font-display font-extrabold text-xl tracking-tight">' + esc(docLabel(cat)) + '</h2>' +
-          '<span class="chip ' + M.tone('slate') + '">' + items.length + '</span></div>' +
-        '<div class="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 items-stretch">' +
-          items.map(function (r) {
-            return '<a href="' + attr(M.enc(r.url)) + '" target="_blank" rel="noopener" ' +
-              'class="card card-hover rounded-2xl p-4 flex items-start gap-3 group h-full">' +
-              '<span class="shrink-0 w-9 h-9 grid place-items-center rounded-lg ' + M.tone(col) + '">' +
-                icon(M.fileIcon(r.format),'text-sm') + '</span>' +
-              '<span class="min-w-0 flex-1">' +
-                '<span class="block font-semibold text-[14px] leading-snug group-hover:underline break-words">' + esc(r.title) + '</span>' +
-                '<span class="block mt-1 text-[12px] opacity-60">' + esc(r.language) + ' · ' + esc(r.format) +
-                  (r.size_kb ? ' · ' + esc(r.size_kb) + ' KB' : '') + '</span>' +
-              '</span>' +
-              '<span class="shrink-0 opacity-40 group-hover:opacity-80 transition">' + icon('download','text-xs') + '</span></a>';
-          }).join('') +
-        '</div></section>';
+          '<span class="chip ' + M.tone('slate') + '">' + groups[cat].length + '</span></div>' +
+        yrs.map(function (y, i) {
+          const items = byYear[y].slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)) || M.byText(a.title, b.title); });
+          const body =
+            '<div class="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 items-stretch">' +
+              items.map(function (r) { return docCard(r, col); }).join('') + '</div>';
+          if (!many) {
+            return (yrs.length > 1
+              ? '<h3 class="text-[12px] font-bold uppercase tracking-widest opacity-45 mb-2' + (i ? ' mt-5' : '') + '">' + esc(y) + '</h3>'
+              : '') + body;
+          }
+          return '<details class="mb-2"' + (i === 0 ? ' open' : '') + '>' +
+            '<summary class="cursor-pointer select-none py-2 flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest opacity-60 hover:opacity-100">' +
+              '<i class="fa-solid fa-chevron-right text-[10px] transition" aria-hidden="true"></i>' +
+              esc(y) + '<span class="opacity-50">(' + items.length + ')</span></summary>' +
+            '<div class="pt-2">' + body + '</div></details>';
+        }).join('') +
+      '</section>';
     }).join('');
   }
+
   drawFilters(); draw();
 };
 
@@ -2549,6 +2644,7 @@ const ALIASES = {
   'committees':'committees', 'committee':'committees', 'comites':'committees',
   'servants':'servants', 'panel76':'servants', 'contacts':'servants', 'officers':'servants',
   'documents':'documents', 'minutes':'documents', 'motions':'documents', 'actas':'documents',
+  'archive':'documents', 'archivo':'documents', 'archives':'documents',
   'events':'events', 'eventos':'events',
   'contribute':'contribute', 'contributions':'contribute', 'seventh-tradition':'contribute', 'contribuir':'contribute',
   'newcomers':'newcomers', 'newcomer':'newcomers', 'new':'newcomers', 'nuevo':'newcomers',
@@ -2561,6 +2657,8 @@ const ALIASES = {
 /* which page sits behind each modal route */
 const MODAL_PARENT = { events:'events', meetings:'meetings', districts:'districts',
                        committees:'committees', flyer:'events' };
+/* routes whose parameter selects a view rather than opening a modal */
+const PARAM_PAGES = { documents:true };
 
 const TITLES = {
   home:{en:'Mid-Southern California Area 09 of Alcoholics Anonymous', es:'Área 09 del Medio-Sur de California de Alcohólicos Anónimos'},
@@ -2577,13 +2675,17 @@ const TITLES = {
   anonymity:{en:'Anonymity & Website Policy', es:'Anonimato y Política del Sitio'},
   contact:{en:'Contact', es:'Contacto'},
   flyer:{en:'Flyer', es:'Volante'},
+  archive:{en:'Archive', es:'Archivo'},
   notfound:{en:'Page not found', es:'Página no encontrada'}
 };
+
+const ALIAS_PARAM = { archive:'archive', archives:'archive', archivo:'archive' };
 
 function parseHash() {
   let h = (location.hash || '#/').replace(/^#\/?/, '').split('?')[0];
   const parts = h.split('/').filter(function (p) { return p !== ''; });
   const head = (parts.shift() || '').toLowerCase();
+  if (ALIAS_PARAM[head] && !parts.length) parts.push(ALIAS_PARAM[head]);
   return { name: ALIASES[head] || (head ? 'notfound' : 'home'), params: parts };
 }
 
@@ -2597,28 +2699,30 @@ function render() {
 
   if (!S.ready) { main.innerHTML = skeleton(); return; }
 
-  const isModalRoute = r.params.length > 0 && MODAL_PARENT[r.name];
+  const isModalRoute = r.params.length > 0 && MODAL_PARENT[r.name] && !PARAM_PAGES[r.name];
   const baseName = isModalRoute ? MODAL_PARENT[r.name] : r.name;
   const baseView = VIEWS[baseName] || VIEWS.notfound;
 
   S.route = baseName;
   S.params = r.params;
 
-  const baseKey = baseName + '|' + S.lang;
+  const baseKey = baseName + '|' + S.lang + (PARAM_PAGES[baseName] ? '|' + r.params.join('/') : '');
   const baseChanged = renderedBase !== baseKey;
 
   if (baseChanged) {
     M.closeModal();
-    main.innerHTML = '<div class="fade-in">' + baseView() + '</div>';
+    main.innerHTML = '<div class="fade-in">' + baseView(r.params) + '</div>';
     renderedBase = baseKey;
     M.renderNav();
     if (typeof baseView.mount === 'function') {
-      try { baseView.mount(); } catch (e) { console.error('[MSCA09] mount failed', e); }
+      try { baseView.mount(r.params); } catch (e) { console.error('[MSCA09] mount failed', e); }
     }
     if (window.AOS) AOS.refreshHard();
   }
 
-  const title = (TITLES[r.name] && TITLES[r.name][S.lang]) || (TITLES[r.name] && TITLES[r.name].en) || '';
+  const typed = (location.hash || '').replace(/^#\/?/, '').split('/')[0].toLowerCase();
+  const tkey = TITLES[typed] ? typed : r.name;
+  const title = (TITLES[tkey] && TITLES[tkey][S.lang]) || (TITLES[tkey] && TITLES[tkey].en) || '';
   document.title = r.name === 'home' ? title : title + ' · MSCA09';
 
   if (isModalRoute) {

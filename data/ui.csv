@@ -70,3 +70,11 @@ matchOne,district matches,distrito coincide con
 matchMany,districts match,distritos coinciden con
 areaCommittee,Area committee,Comité de Área
 dataError,"The data files (data/*.csv) did not load. If you opened this file straight from disk, the browser blocks reading local files — publish it to GitHub Pages or serve it locally (for example: python -m http.server).","Los archivos de datos (data/*.csv) no se cargaron. Si abriste este archivo directamente desde el disco, el navegador bloquea la lectura de archivos locales — súbelo a GitHub Pages o sírvelo con un servidor local (por ejemplo: python -m http.server)."
+allFiles,All files,Todos los archivos
+collCurrent,Current record,Registro actual
+collArchive,Archive,Archivo
+archived,Archived,Archivado
+filesTotal,documents,documentos
+fileOne,document,documento
+filesMany,documents,documentos
+filesOnSite,stored on this site,alojado en este sitio

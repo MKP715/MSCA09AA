@@ -53,8 +53,8 @@ servants.group_area,Area officers,Oficiales del Área
 servants.group_committee,Committee chairs,Coordinadores de comité
 servants.group_district,Districts,Distritos
 documents.kicker,The Area’s record,El registro del Área
-documents.title,"Minutes, motions,|agendas and reports","Actas, mociones,|agendas e informes"
-documents.lead,"Everything the Assembly has approved, dated, and in both languages where we have them. Every file is stored on this site — nothing depends on the old website staying up.","Todo lo aprobado por la Asamblea, con fecha y en ambos idiomas cuando existe. Cada archivo está alojado en este sitio — nada depende de que el sitio anterior siga en línea."
+documents.title,"The Area’s record,|from 2003 to today","El registro del Área,|de 2003 a hoy"
+documents.lead,"Every minute, motion, agenda, newsletter and financial report the Area has published — including everything recovered from both previous websites. Each file is stored here, so nothing breaks when an old site is switched off.","Cada acta, moción, agenda, boletín e informe financiero que el Área ha publicado — incluido todo lo recuperado de los dos sitios anteriores. Cada archivo está alojado aquí, así que nada se rompe cuando se apaga un sitio antiguo."
 documents.placeholder,"Search minutes, motions…","Buscar actas, mociones…"
 documents.gap_note,Minutes are current through December 2024 and motions through August 2025. The Ad Hoc Website Committee flagged that gap; it is shown here rather than hidden.,Las actas llegan hasta diciembre de 2024 y las mociones hasta agosto de 2025. El Comité Ad Hoc señaló esa brecha; se muestra aquí en lugar de ocultarla.
 events.kicker,Area 09 events,Eventos del Área 09
@@ -149,3 +149,4 @@ notfound.title,That page isn’t here,Esa página no existe
 notfound.body,The link may be an old one. Try starting from the top — or tell us which link brought you here and we will fix it.,Puede que el enlace sea antiguo. Prueba desde el principio — o dinos qué enlace te trajo aquí y lo arreglamos.
 notfound.report,Report the link,Reportar el enlace
 note.anonymity,In keeping with our Eleventh and Twelfth Traditions this site publishes first names and last initials only. Contact always runs through a role-based service address — never a member’s personal e-mail or phone number.,"De acuerdo con nuestras Tradiciones Once y Doce, este sitio publica solo el nombre y la inicial del apellido. El contacto siempre se hace por una dirección de servicio — nunca el correo o teléfono personal de un miembro."
+documents.archive_note,{n} documents were recovered from the Area’s previous websites and are kept here so the record is not lost when those sites go away. Some are scans of paper originals.,Se recuperaron {n} documentos de los sitios web anteriores del Área y se conservan aquí para que el registro no se pierda cuando esos sitios desaparezcan. Algunos son escaneos de originales en papel.
