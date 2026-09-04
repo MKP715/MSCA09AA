@@ -36,6 +36,31 @@ Action.
 
 ---
 
+## `drive_links.py` — point the site at Google Drive
+
+```sh
+python tools/drive_links.py              # rewrite documents.csv and events.csv
+python tools/drive_links.py --dry-run    # just report
+```
+
+Reads every file id out of Google Drive for Desktop's local database and
+rewrites the CSVs to address each file by id. Nothing is downloaded and no API
+key is needed — Drive for Desktop just has to be signed in and synced.
+
+`docs/archive/pages/*.html` keeps its relative path: Drive hands an `.html`
+file over as a download rather than rendering it, so those stay in the repo.
+
+## `check_links.py` — fetch every address
+
+```sh
+python tools/check_links.py            # all ~1,860 (slow)
+python tools/check_links.py --sample   # 120, spread across the set
+```
+
+A 200 is not proof: Drive answers a request for a file nobody may see with a
+sign-in page. This checks the content type too, and fails an HTML answer where
+a PDF or an image was expected.
+
 ## `build_roster.py` — rebuild the trusted servants list
 
 ```sh

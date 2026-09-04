@@ -72,6 +72,7 @@ be rewritten.
 | `data/area-meetings.csv` | The approved ASC / Assembly schedule for the panel. |
 | `data/resources.csv` | A.A. Resources page and the central-office lists. |
 | `data/documents.csv` | Minutes, motions, agendas, reports — the current record *and* the whole archive. `collection` is `Current` or `Archive`; `publish` is `yes` or anything else to withhold a file. |
+| `data/files.csv` | The handful of files the page itself links to — the district calendar flyer, the contributions flyer, the Zelle QR code. `key` is what the page asks for; `url` is its Drive address. |
 | `data/archive-review.csv` | The 313 archived documents that carry a personal e-mail address or phone number, for the Area to triage. Not read by the site. |
 | `data/calendar.ics` | The Service Calendar. **Do not edit by hand** — see below. |
 
@@ -292,40 +293,80 @@ data.
 
 ---
 
+## Files live in Google Drive
+
+The documents and flyers are **not** in this repository. They live in the
+Area's Google Drive, in the shared folder
+[RowlettAATech/MSCA09AA](https://drive.google.com/drive/folders/1ZabOXfYv2wIcFiV1gPgGSvXd1b4Z917F),
+and the site addresses each one by its Drive file id:
+
+| kind | address |
+|---|---|
+| a document | `https://drive.google.com/file/d/<id>/view` |
+| an image | `https://lh3.googleusercontent.com/d/<id>` |
+
+1,659 documents and 112 flyer images are served that way. The repository is
+92 files instead of 1,857.
+
+**One exception.** `docs/archive/pages/` — 58 posts that only ever existed as
+web pages — stays here. Google Drive hands an `.html` file to the browser as a
+*download* rather than rendering it, and these are pages meant to be read.
+They come to about 2 MB.
+
+### Adding or replacing a file
+
+1. Put it in the right folder inside the shared Drive folder. Keep the same
+   layout the site expects — `docs/minutes/2026/…`, `docs/events/…`.
+2. Let Google Drive for Desktop finish syncing.
+3. Run:
+
+```sh
+python tools/drive_links.py     # rewrite the CSVs with the new file ids
+python tools/check_links.py     # fetch every address and confirm it answers
+```
+
+`drive_links.py` reads the file ids out of Drive for Desktop's local
+database, so nothing is downloaded and no API key is needed. Each row keeps
+its original path in a `drive_path` column, which is what the script matches
+on — so a file can move in Drive and still be found by name.
+
+### Three things to know about hosting on Drive
+
+- **Sharing has to stay "Anyone with the link".** If that is ever narrowed,
+  every document on the site stops working at once, not one at a time.
+- **Drive is not a content network.** It applies a daily download cap per
+  file. An Area site will not go near it, but a document that suddenly gets
+  passed around widely can start returning an error page instead of the file.
+- **`lh3.googleusercontent.com` is how Drive serves images inline.** It works
+  and is what Drive itself uses, but Google does not document it as a public
+  API. If images ever stop loading, that is the first thing to check —
+  `https://drive.google.com/thumbnail?id=<id>&sz=w1600` is the fallback.
+
+For what it is worth: the repository was 564 MB before this move, against
+GitHub Pages' 1 GB limit. It was not out of room. Moving to Drive gives
+plenty of headroom and keeps clones small.
+
 ## What is in the repository
 
 ```
 index.html                     the whole site — HTML, CSS and JS
 data/                          everything that changes, as CSV
-docs/                          every document and flyer, stored locally
-  minutes/<year>/                approved ASA / ASC minutes, EN + ES
-  motions/  conference/  calendars/  contributions/  reports/
-  events/                        event flyers (+ .thumb.jpg previews)
-  flyers/                        district calendar, contributions flyer, Zelle QR
-  archive/                       recovered from the two previous websites
-    minutes/ newsletters/ finances/ guidelines/ workbooks/ conference/
-    reports/ delegate/ praasa/ archives/ flyers/ forms/ calendars/
-    districts/d<n>/              documents that lived on a district's pages
-    pages/                       posts that only ever existed as web pages
-    misc/<year>/
+docs/archive/pages/            58 posts Drive cannot serve as pages
 tools/                         scripts a web servant re-runs; see tools/README.md
 .github/workflows/             keeps data/calendar.ics in step with Google
 ```
 
-Everything above the fold is deliberate: `index.html` is the site, `data/` is
-what you edit, `docs/` is what you link to, and `tools/` is how you check your
-work. Nothing else lives at the top level.
-
 **Before you push:**
 
 ```sh
-python tools/check_site.py
+python tools/check_site.py     # structure, anonymity, missing keys
+python tools/check_links.py --sample     # spot-check the Drive addresses
 ```
 
-It catches the failure that is hardest to spot by eye — a file that exists on
-your machine but is not committed, which works locally and 404s once
-published. It also checks for links back to the old sites, personal contact
-details, surnames in the roster, and missing `content.csv` / `ui.csv` keys.
+`check_site.py` catches a file named directly in `index.html` instead of
+through `data/files.csv`, a repo file that is not committed, links back to
+the old sites, personal contact details, surnames in the roster, and missing
+`content.csv` / `ui.csv` keys.
 
 Third-party libraries load from CDN and nothing is vendored: Tailwind CSS,
 Font Awesome, Google Fonts, PapaParse (CSV), ical.js (calendar) and AOS

@@ -30,24 +30,43 @@ def read(name):
 tracked = set(subprocess.run(['git', 'ls-files'], capture_output=True, text=True)
               .stdout.splitlines())
 
-# ── every published file must exist and be committed ──────────────────────
+# ── every address is either in Drive or committed here ────────────────────
+DRIVE = re.compile(r'^https://(drive\.google\.com/file/d/|lh3\.googleusercontent\.com/d/)')
+
+def check_target(url, where):
+    if not url:
+        problems.append(where + ': empty address')
+    elif url.startswith('http'):
+        if not DRIVE.match(url):
+            problems.append(where + ': not a Google Drive address — ' + url[:70])
+    elif not os.path.exists(url.replace('/', os.sep)):
+        problems.append(where + ': file missing on disk — ' + url)
+    elif url not in tracked:
+        problems.append(where + ': file is not committed, so it will 404 once '
+                                'published — ' + url)
+
 docs = read('documents.csv')
 for r in docs:
     if str(r.get('publish', 'yes')).strip().lower() != 'yes':
         continue
-    if not os.path.exists(r['url'].replace('/', os.sep)):
-        problems.append('documents.csv: file missing on disk — ' + r['url'])
-    elif r['url'] not in tracked:
-        problems.append('documents.csv: file is not committed, so it will 404 once '
-                        'published — ' + r['url'])
+    check_target(r['url'], 'documents.csv "%s"' % r['title'][:40])
 
 for e in read('events.csv'):
-    for f in [x.strip() for x in str(e.get('flyers') or '').split(';') if x.strip()]:
-        for path in (f, f.replace('.jpg', '.thumb.jpg')):
-            if not os.path.exists(path.replace('/', os.sep)):
-                problems.append('events.csv: flyer missing — ' + path)
-            elif path not in tracked:
-                problems.append('events.csv: flyer not committed — ' + path)
+    flyers = [x.strip() for x in str(e.get('flyers') or '').split(';') if x.strip()]
+    thumbs = [x.strip() for x in str(e.get('thumbs') or '').split(';') if x.strip()]
+    for u in flyers + thumbs:
+        check_target(u, 'events.csv "%s"' % e['slug'][:36])
+    if flyers and len(thumbs) != len(flyers):
+        problems.append('events.csv "%s": %d flyers but %d thumbnails'
+                        % (e['slug'][:36], len(flyers), len(thumbs)))
+
+for r in read('files.csv'):
+    check_target(r['url'], 'files.csv "%s"' % r['key'])
+
+# the page must not name a file directly; it asks files.csv for one
+html_early = io.open('index.html', encoding='utf-8').read()
+for m in re.finditer(r"""["'](docs/[^"']+)["']""", html_early):
+    problems.append('index.html names a file directly — use files.csv: ' + m.group(1))
 
 # ── nothing may point back at the sites this one replaces ─────────────────
 OLD = re.compile(r'(msca09aa\.org/(?!$)|(?<!district6)(?<!district30)\barea09\.org)', re.I)
@@ -113,6 +132,11 @@ for m in re.finditer(r'data-c="([^"]+)"', html):
     if m.group(1) not in content and m.group(1) != 'skip':
         problems.append('content.csv has no row for data-c="%s"' % m.group(1))
 
+files = {r['key'] for r in read('files.csv')}
+for m in re.finditer(r"M\.file\('([a-zA-Z0-9_]+)'\)", html):
+    if m.group(1) not in files:
+        problems.append("files.csv has no row for M.file('%s')" % m.group(1))
+
 # ── the menu must point somewhere real ────────────────────────────────────
 routes = set(re.findall(r"'([a-z0-9-]+)':'[a-z]+'", html))
 for r in read('nav.csv'):
@@ -122,7 +146,9 @@ for r in read('nav.csv'):
         if head and head not in routes:
             problems.append('nav.csv points at an unknown route: ' + href)
 
-print('documents %d | roster %d | tracked files %d' % (len(docs), len(roster), len(tracked)))
+drive = sum(1 for r in docs if r['url'].startswith('http'))
+print('documents %d (%d in Drive, %d here) | roster %d | tracked files %d'
+      % (len(docs), drive, len(docs) - drive, len(roster), len(tracked)))
 if problems:
     print('\n%d problem(s):' % len(problems))
     for p in problems:

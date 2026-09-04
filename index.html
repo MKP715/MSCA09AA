@@ -323,7 +323,11 @@ const slug = (v) => String(v||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').repla
 const norm = (v) => String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const uniq = (a) => Array.from(new Set(a));
 const byText = (a,b) => String(a).localeCompare(String(b), undefined, {numeric:true, sensitivity:'base'});
-const enc = (p) => String(p||'').split('/').map(encodeURIComponent).join('/');
+const enc = (p) => /^https?:\/\//i.test(String(p || ''))
+  ? String(p)                                   // already an address (Google Drive)
+  : String(p || '').split('/').map(encodeURIComponent).join('/');
+const isDrive = (u) => /^https:\/\/(drive\.google\.com|lh3\.googleusercontent\.com)\//.test(String(u || ''));
+const external = (u) => /^https?:\/\//i.test(String(u || ''));
 
 const DOW_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const DOW_ES = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
@@ -369,7 +373,7 @@ function fileIcon(fmt){
 /* ───────────────────────────────────────────────────────────── state ───── */
 const state = {
   lang: (function(){ try { return localStorage.getItem('msca09.lang') === 'es' ? 'es' : 'en'; } catch(e){ return 'en'; } })(),
-  data: {}, content: {}, ui: {}, nav: [], kinds: {}, ics: null, icsStamp: null,
+  data: {}, content: {}, ui: {}, nav: [], kinds: {}, files: {}, ics: null, icsStamp: null,
   route: 'home', params: [], ready: false
 };
 
@@ -396,6 +400,13 @@ function bBody(b){ return (state.lang === 'es' && b.body_es) ? b.body_es : b.bod
 /* ── interface labels (data/ui.csv) ─────────────────────────────────────
    Content lives in content.csv; these are the buttons, filters and column
    headings. Both are editable without touching this file.               */
+/* the address of a file the page itself links to (data/files.csv) */
+function file(k) {
+  const u = state.files[k];
+  if (!u && state.ready) console.warn('[MSCA09] no row in files.csv for:', k);
+  return u || '';
+}
+
 function t(k) {
   const row = state.ui[k];
   if (!row) { if (state.ready) console.warn('[MSCA09] missing ui key:', k); return k; }
@@ -533,7 +544,7 @@ function servants(panel) {
 
 /* ─────────────────────────────────────────────────────── data layer ────── */
 const CSV_FILES = ['content','ui','nav','kinds','blocks','districts','trusted-servants',
-                   'committees','documents','events','area-meetings','resources'];
+                   'committees','documents','events','area-meetings','resources','files'];
 
 function parseCSV(text) {
   const clean = text.replace(/^﻿/, '');
@@ -557,10 +568,24 @@ async function loadAll() {
   (state.data['ui'] || []).forEach(function (r) {
     if (r.key) state.ui[r.key] = { en:r.en, es:r.es };
   });
+  (state.data['events'] || []).forEach(function (e) {
+    const urls = String(e.flyers || '').split(';').map(function (x) { return x.trim(); }).filter(Boolean);
+    const names = String(e.flyer_paths || '').split(';').map(function (x) { return x.trim(); }).filter(Boolean);
+    urls.forEach(function (u, i) {
+      const nice = (names[i] || '').split('/').pop().replace(/\.(jpe?g|png)$/i, '').replace(/-/g, ' ');
+      flyerNames[u] = (e.title || nice) + (urls.length > 1 ? ' \u2014 ' + (i + 1) : '');
+    });
+  });
+  (state.data['documents'] || []).forEach(function (d) {
+    if (d.url && d.title) flyerNames[d.url] = d.title;
+  });
   (state.data['kinds'] || []).forEach(function (r) {
     if (!r.set || !r.key) return;
     (state.kinds[r.set] = state.kinds[r.set] || {})[r.key] =
       { en:r.label_en, es:r.label_es, c:r.color, fa:r.icon };
+  });
+  (state.data['files'] || []).forEach(function (r) {
+    if (r.key) state.files[r.key] = r.url;
   });
   state.nav = buildNav(state.data['nav'] || []);
   state.ready = true;
@@ -871,9 +896,12 @@ function shareThing(title, text, hash) {
   return copyLink(url);
 }
 
+/* a flyer is addressed by Drive id, so remember what it is called */
+const flyerNames = {};
+
 window.MSCA = {
-  state, t, c, cTitle, blocks, bTitle, bBody,
-  esc, attr, icon, fileIcon, mailto, slug, norm, uniq, byText, enc,
+  state, t, c, cTitle, file, blocks, bTitle, bBody, flyerNames,
+  esc, attr, icon, fileIcon, mailto, slug, norm, uniq, byText, enc, isDrive, external,
   fmtTime, fmtHHMM, fmtDate, fmtDateY, dayName, monName, ordinal, parseDT,
   DOW_EN, DOW_ES, MON_EN, MON_ES,
   expandOccurrences, calendarSeries, seriesById, latestStamp,
@@ -1061,7 +1089,15 @@ function pastEvents() {
 }
 function eventTitle(e){ return (S.lang === 'es' && e.title_es) ? e.title_es : e.title; }
 function flyerList(e){ return String(e.flyers||'').split(';').map(function(x){return x.trim();}).filter(Boolean); }
-function thumbOf(p){ return p.replace(/\.jpg$/i, '.thumb.jpg'); }
+function thumbList(e){ return String(e.thumbs||'').split(';').map(function(x){return x.trim();}).filter(Boolean); }
+/* the small preview that goes with flyer i — falls back to the full image */
+function thumbOf(e, i) {
+  const t = thumbList(e);
+  if (t.length) return t[i] || t[0];
+  const f = flyerList(e);
+  const one = f[i] || f[0] || '';
+  return one.replace(/\.jpg$/i, '.thumb.jpg');
+}
 
 function eventDateLabel(e) {
   const s = M.parseDT(e.start), en = M.parseDT(e.end || e.start);
@@ -1088,7 +1124,7 @@ function eventCard(e) {
   return '<a href="#/events/' + attr(e.slug) + '" class="card card-hover rounded-2xl overflow-hidden flex flex-col text-left group">' +
     (fl.length
       ? '<span class="block relative h-40 bg-white overflow-hidden">' +
-          '<img src="' + attr(M.enc(thumbOf(fl[0]))) + '" alt="" loading="lazy" ' +
+          '<img src="' + attr(M.enc(thumbOf(e, 0))) + '" alt="" loading="lazy" ' +
             'class="w-full h-full object-cover object-top opacity-95 group-hover:scale-[1.03] transition duration-300">' +
           '<span class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/55 to-transparent"></span>' +
           '<span class="absolute left-3 bottom-3 chip bg-white/90 text-ink-900">' + icon('image','text-[.7rem]') + esc(t('flyer')) + '</span>' +
@@ -1110,7 +1146,7 @@ function eventCard(e) {
 }
 M.occCard = occCard; M.eventCard = eventCard;
 M.upcomingEvents = upcomingEvents; M.pastEvents = pastEvents;
-M.eventTitle = eventTitle; M.flyerList = flyerList; M.thumbOf = thumbOf;
+M.eventTitle = eventTitle; M.flyerList = flyerList; M.thumbList = thumbList; M.thumbOf = thumbOf;
 M.eventDateLabel = eventDateLabel; M.eventTimeLabel = eventTimeLabel;
 
 /* ═══════════════════════════════════════════════════ SERVICE CALENDAR ─── */
@@ -1123,7 +1159,7 @@ VIEWS.meetings = function () {
     extra:'<div class="mt-7 flex flex-wrap gap-2.5">' +
       '<a href="' + attr(M.GCAL_ICS) + '" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
         icon('calendar-plus') + esc(t('subscribe')) + '</a>' +
-      '<a href="docs/flyers/msca09-service-meetings-calendar.pdf" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
+      '<a href="' + attr(M.file('district_calendar')) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
         icon('file-pdf') + esc(t('printable')) + '</a>' +
       (S.icsStamp
         ? '<span class="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/40">' +
@@ -2097,9 +2133,9 @@ VIEWS.contribute = function () {
                 attr(M.mailto(c('contribute.zelle_mail'))) + '">' + esc(c('contribute.zelle_mail')) + '</a></dd></div>' +
           '</dl>' +
           '<div class="mt-6 flex flex-col sm:flex-row gap-5 sm:items-start">' +
-            '<a href="#/flyer/docs%2Fflyers%2Fzelle-contribution-qr.png" class="shrink-0 self-start rounded-2xl border border-black/10 dark:border-white/15 bg-white p-2 hover:shadow-lift transition" ' +
+            '<a href="#/flyer/' + attr(encodeURIComponent(M.file('zelle_qr'))) + '" class="shrink-0 self-start rounded-2xl border border-black/10 dark:border-white/15 bg-white p-2 hover:shadow-lift transition" ' +
               'aria-label="' + attr(t('viewFlyer')) + '">' +
-              '<img src="docs/flyers/zelle-contribution-qr.png" alt="' +
+              '<img src="' + attr(M.file('zelle_qr')) + '" alt="' +
                 attr(S.lang === 'es' ? 'Código QR de Zelle para contribuciones al MSCA09' : 'Zelle QR code for MSCA09 contributions') +
                 '" class="w-40" loading="lazy"></a>' +
             '<div class="text-[14px] leading-relaxed opacity-80">' +
@@ -2156,7 +2192,7 @@ VIEWS.contribute = function () {
             return '<li>' + M.linkOut(b.url, M.bTitle(b), 'font-semibold text-brand-700 dark:text-brand-300 hover:underline') + '</li>';
           }).join('') +
         '</ul>' +
-        '<a href="docs/flyers/7th-tradition-contributions-en-sp.pdf" target="_blank" rel="noopener" class="mt-6 inline-flex chip ' +
+        '<a href="' + attr(M.file('contributions_flyer')) + '" target="_blank" rel="noopener" class="mt-6 inline-flex chip ' +
           M.tone('rose') + '">' + icon('file-pdf','text-[.7rem]') + esc(c('contribute.flyer')) + '</a></div>' +
     '</div>' +
     '<p class="mt-8 text-[13px] opacity-60 leading-relaxed max-w-3xl">' + esc(c('contribute.limits')) + '</p>' +
@@ -2536,7 +2572,7 @@ MODALS.events = function (idParts) {
       ? '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' + esc(t('flyer')) + '</p>' +
         '<div class="flex flex-wrap gap-3">' + fl.map(function (f, i) {
           return '<button type="button" data-flyer="' + attr(f) + '" class="rounded-xl overflow-hidden border border-black/10 dark:border-white/15 bg-white hover:shadow-lift transition">' +
-            '<img src="' + attr(M.enc(M.thumbOf(f))) + '" alt="' + attr(title + ' — ' + t('flyer') + ' ' + (i+1)) + '" class="h-28 w-auto" loading="lazy"></button>';
+            '<img src="' + attr(M.enc(M.thumbOf(e, i))) + '" alt="' + attr(title + ' — ' + t('flyer') + ' ' + (i+1)) + '" class="h-28 w-auto" loading="lazy"></button>';
         }).join('') + '</div></div>' : '');
 
   const actions =
@@ -2546,9 +2582,9 @@ MODALS.events = function (idParts) {
     (place ? '<a href="' + attr(M.mapLink(place)) + '" target="_blank" rel="noopener" ' +
       'class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 transition">' +
       icon('map-location-dot') + esc(t('map')) + '</a>' : '') +
-    (fl.length ? '<a href="' + attr(M.enc(fl[0])) + '" download ' +
+    (fl.length ? '<a href="' + attr(M.enc(fl[0])) + '" target="_blank" rel="noopener" ' +
       'class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 transition">' +
-      icon('download') + esc(t('flyer')) + '</a>' : '');
+      icon('image') + esc(t('flyer')) + '</a>' : '');
 
   return { html: modalShell({ hero:hero, icon:k.fa, color:k.c, kicker:M.evKindLabel(e.kind),
                               title:title, sub:M.eventDateLabel(e), chips:chips, body:body, actions:actions }),
@@ -2694,16 +2730,16 @@ MODALS.committees = function (idParts) {
 /* ── flyer / image viewer ──────────────────────────────────────────────── */
 MODALS.flyer = function (idParts) {
   const path = decodeURIComponent(idParts.join('/'));
-  if (!/^docs\//.test(path)) return null;
-  const name = path.split('/').pop().replace(/\.(jpg|png)$/i,'').replace(/-/g,' ');
+  // only our own files: a repository path, or the Area's Drive
+  if (!/^docs\//.test(path) && !M.isDrive(path)) return null;
+  const name = M.flyerNames[path] ||
+    path.split('/').pop().replace(/\.(jpg|png)$/i, '').replace(/-/g, ' ');
   return {
     html: modalShell({
       hero:'<div class="flyer-shot"><img src="' + attr(M.enc(path)) + '" alt="' + attr(name) + '" ' +
            'class="w-full max-h-[72vh] object-contain"></div>',
       icon:'image', color:'fuchsia', kicker:t('flyer'), title:name, body:'',
-      actions:'<a href="' + attr(M.enc(path)) + '" download class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 transition">' +
-        icon('download') + esc(t('download')) + '</a>' +
-      '<a href="' + attr(M.enc(path)) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 transition">' +
+      actions:'<a href="' + attr(M.enc(path)) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 transition">' +
         icon('up-right-from-square') + esc(t('open')) + '</a>'
     }),
     share: { title:name, text:name }
