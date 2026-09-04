@@ -14,6 +14,35 @@ Run them from the repository root, not from inside this folder.
 
 ---
 
+## `build_css.py` — rebuild `tailwind.css` after editing the page
+
+```sh
+python tools/build_css.py
+```
+
+**Run this whenever you add or remove a Tailwind class in `index.html`.** The
+stylesheet only contains the classes the page actually used at build time, so
+a new class does nothing until you rebuild.
+
+The site used to load Tailwind from the Play CDN, which downloads about 400 KB
+and then compiles the stylesheet in the visitor's browser on every visit — a
+first paint of nearly twelve seconds on a throttled phone. Building it here
+instead ships one cached 48 KB file and no compile step for the visitor.
+
+Needs Node and npm on PATH; the Tailwind binary is fetched with `npx` the
+first time and cached by npm after that. It writes nothing unless the build
+succeeds, so a failed run leaves the published stylesheet alone, and it
+refuses to write a suspiciously small file — that means the content path in
+`tools/css/tailwind.config.js` stopped matching `index.html`.
+
+The theme lives in `tools/css/tailwind.config.js`: the `ink` and `brand`
+palettes, the two font families, and the `floaty` / `drift` / `shimmer`
+animations. `tools/css/tailwind.input.css` is just the three `@tailwind`
+lines. Everything else the page needs is in the `<style>` block inside
+`index.html`.
+
+---
+
 ## `check_site.py` — run this before you push
 
 ```sh
@@ -60,6 +89,15 @@ python tools/check_links.py --sample   # 120, spread across the set
 A 200 is not proof: Drive answers a request for a file nobody may see with a
 sign-in page. This checks the content type too, and fails an HTML answer where
 a PDF or an image was expected.
+
+**`throttled` is not `failing`.** Drive starts answering 429 when one machine
+asks for a few hundred files in a row, and the throttle sticks to your IP for
+up to an hour — so a run right after a full check will report a pile of them.
+The script already backs off and retries four times; anything still throttled
+after that is counted and reported separately from real failures, and exits
+`2` rather than `1`. Wait an hour and re-run, or lower `WORKERS` at the top of
+the script. A file that has genuinely stopped being shared shows up as
+*needs sign-in*, not as a throttle.
 
 ## `build_roster.py` — rebuild the trusted servants list
 

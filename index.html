@@ -5,63 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MSCA09 &mdash; Mid-Southern California Area 09 of Alcoholics Anonymous</title>
 <meta name="description" content="Mid-Southern California Area 09 of Alcoholics Anonymous. District meetings, service calendar, committees, trusted servants, minutes and 7th Tradition contributions for Orange, Riverside, San Bernardino and part of Los Angeles counties.">
-<meta name="theme-color" content="#4338ca">
+<meta name="theme-color" content="#f7f7fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0c1a" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://msca09aa.org/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="MSCA09 &mdash; Mid-Southern California Area 09 of A.A.">
-<meta property="og:description" content="Service meetings, districts, committees and contributions for Mid-Southern California Area 09 of Alcoholics Anonymous.">
+<meta property="og:url" content="https://msca09aa.org/">
+<meta property="og:title" content="Mid-Southern California Area 09 of Alcoholics Anonymous">
+<meta property="og:description" content="Service meetings, districts, committees and 7th Tradition contributions for Orange, Riverside, San Bernardino and part of Los Angeles County &mdash; in English and Spanish.">
 <meta property="og:site_name" content="MSCA09">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_US">
+<meta property="og:image" content="https://msca09aa.org/social-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MSCA09 &mdash; Mid-Southern California Area 09 of Alcoholics Anonymous">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mid-Southern California Area 09 of Alcoholics Anonymous">
+<meta name="twitter:description" content="Service meetings, districts, committees and 7th Tradition contributions across four counties.">
+<meta name="twitter:image" content="https://msca09aa.org/social-card.png">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='.5' stop-color='%23d946ef'/%3E%3Cstop offset='1' stop-color='%23f97316'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-family='system-ui,sans-serif' font-size='26' font-weight='700' fill='%23fff' text-anchor='middle'%3E09%3C/text%3E%3C/svg%3E">
 
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: {
-    extend: {
-      fontFamily: {
-        display: ['"Bricolage Grotesque"', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'sans-serif'],
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif']
-      },
-      colors: {
-        ink:   { 50:'#f6f7fb', 100:'#eceef7', 700:'#2b2f45', 800:'#1c2033', 900:'#12152a', 950:'#0a0c1a' },
-        brand: { 50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',
-                 500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' }
-      },
-      boxShadow: {
-        pop:  '0 10px 30px -10px rgba(79,70,229,.35)',
-        lift: '0 18px 40px -14px rgba(15,23,42,.30)'
-      },
-      keyframes: {
-        floaty:  { '0%,100%':{transform:'translateY(0)'}, '50%':{transform:'translateY(-14px)'} },
-        drift:   { '0%,100%':{transform:'translate(0,0) scale(1)'}, '50%':{transform:'translate(24px,-16px) scale(1.06)'} },
-        shimmer: { '0%':{backgroundPosition:'0% 50%'}, '50%':{backgroundPosition:'100% 50%'}, '100%':{backgroundPosition:'0% 50%'} },
-        pulseRing:{ '0%':{transform:'scale(.9)',opacity:'.7'}, '70%':{transform:'scale(1.35)',opacity:'0'}, '100%':{opacity:'0'} },
-        popIn:   { from:{opacity:'0',transform:'translateY(14px) scale(.98)'}, to:{opacity:'1',transform:'none'} }
-      },
-      animation: {
-        floaty:'floaty 7s ease-in-out infinite',
-        drift:'drift 14s ease-in-out infinite',
-        shimmer:'shimmer 9s ease infinite',
-        pulseRing:'pulseRing 2.4s cubic-bezier(.24,.86,.5,1) infinite',
-        popIn:'popIn .28s cubic-bezier(.2,.8,.2,1) both'
-      }
-    }
-  }
-}
-</script>
+<!-- Fonts and icons must never hold up the first paint: they load in the
+     background and swap in. Only Tailwind is allowed to block. -->
+<link rel="stylesheet" media="print" onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</noscript>
+
+<!-- Tailwind, built ahead of time from tools/css/tailwind.config.js.
+     Rebuild after changing any class in this file:  python tools/build_css.py -->
+<link rel="stylesheet" href="tailwind.css">
 
 <style>
+  /* Drawn before Tailwind arrives, so the page is never a white screen. */
   :root{ --ring: 99 102 241; --page:#f7f7fb; }
+  html{ background:var(--page); }
+  body{ margin:0; min-height:100vh; color:#1c2033;
+        font:16px/1.5 Inter, ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif; }
+  #boot{ display:flex; align-items:center; gap:.75rem; justify-content:center;
+         padding:5rem 1rem; color:#5b6079; font-size:.9rem; }
+  #boot i{ width:1.1rem; height:1.1rem; border-radius:50%;
+           border:2px solid #c7d2fe; border-top-color:#4f46e5;
+           animation:bootspin .7s linear infinite; }
+  @keyframes bootspin{ to{ transform:rotate(360deg); } }
   html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
   body{ background:var(--page); overflow-x:hidden; }
   .dark body{ --page:#0a0c1a; }
@@ -138,12 +135,34 @@ tailwind.config = {
 
   .blob{ position:absolute; border-radius:9999px; filter:blur(46px); opacity:.55; pointer-events:none; }
   [hidden]{ display:none !important; }
+
+  /* the gentle rise cards make as they scroll in */
+  [data-rise]{ opacity:0; transform:translateY(14px);
+               transition:opacity .5s ease-out, transform .5s cubic-bezier(.2,.8,.2,1); }
+  [data-rise].shown{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ [data-rise]{ opacity:1; transform:none; } }
   .fade-in{ animation:fadeUp .4s cubic-bezier(.2,.8,.2,1) both; }
   @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
 
   /* every wide thing scrolls inside itself, never the page */
   .scroll-x{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
   table.grid-cal td, table.grid-cal th{ vertical-align:top; }
+
+  /* printing ------------------------------------------------------------- */
+  @media print{
+    header, footer, #toTop, #annbar, .grad-rule, #modal, #docFilters,
+    #svFilters, #calShell .card:first-child, [data-calview], .skip{ display:none !important; }
+    body{ background:#fff !important; color:#000 !important; }
+    .card, section{ break-inside:avoid; box-shadow:none !important; border-color:#ccc !important;
+                    background:#fff !important; }
+    .grad-hero{ background:#fff !important; color:#000 !important; }
+    .grad-hero *{ color:#000 !important; }
+    .blob{ display:none !important; }
+    details{ break-inside:avoid; }
+    details:not([open]) > div{ display:none; }
+    a[href^="http"]::after{ content:" (" attr(href) ")"; font-size:.75em; word-break:break-all; }
+    a[href^="#"]::after, a[href^="mailto"]::after{ content:""; }
+  }
 
   /* modal ---------------------------------------------------------------- */
   body.modal-open{ overflow:hidden; }
@@ -222,7 +241,41 @@ tailwind.config = {
   </nav>
 </header>
 
-<main id="main" tabindex="-1" class="min-h-[70vh]"></main>
+<main id="main" tabindex="-1" class="min-h-[70vh]">
+  <div id="boot"><i aria-hidden="true"></i><span>Loading the Area&rsquo;s pages&hellip;</span></div>
+</main>
+
+<noscript>
+  <div style="max-width:44rem;margin:0 auto;padding:2.5rem 1.25rem;line-height:1.7">
+    <h1 style="font-size:1.5rem;margin:0 0 .5rem">Mid-Southern California Area 09
+      of Alcoholics Anonymous</h1>
+    <p style="color:#5b6079;margin:0 0 1.5rem">This site needs JavaScript to show the
+      calendar, the district directory and the Area&rsquo;s records. Here is what
+      matters most without it.</p>
+
+    <h2 style="font-size:1.1rem;margin:1.5rem 0 .4rem">Looking for a meeting?</h2>
+    <p style="margin:0 0 .4rem"><a href="https://www.aa.org/find-aa">Find an A.A. meeting near you
+      (aa.org)</a> &mdash; the official meeting finder for the U.S. and Canada.</p>
+    <p style="margin:0 0 .4rem"><a href="https://aa-intergroup.org/">Online A.A. meetings</a>,
+      around the clock.</p>
+    <p style="margin:0 0 1.5rem"><a href="https://www.aa.org/es">A.A. en espa&ntilde;ol</a>.</p>
+
+    <h2 style="font-size:1.1rem;margin:1.5rem 0 .4rem">Reaching Area 09</h2>
+    <p style="margin:0 0 .3rem">Chairperson &mdash; <a href="mailto:chair@msca09aa.org">chair@msca09aa.org</a></p>
+    <p style="margin:0 0 .3rem">Registrar &mdash; <a href="mailto:registrar@msca09aa.org">registrar@msca09aa.org</a></p>
+    <p style="margin:0 0 .3rem">Website &mdash; <a href="mailto:webmaster@msca09aa.org">webmaster@msca09aa.org</a></p>
+    <p style="margin:0 0 1.5rem">By post &mdash; MSCA09, P.O.&nbsp;Box 51446, Irvine, CA 92619-1446</p>
+
+    <h2 style="font-size:1.1rem;margin:1.5rem 0 .4rem">Seventh Tradition</h2>
+    <p style="margin:0 0 1.5rem">Zelle to <a href="mailto:contributions@msca09aa.org">contributions@msca09aa.org</a>
+      (&ldquo;Mid-Southern California Area Assembly of Alcoholics Anonymous&rdquo;), or by post to the
+      address above, attention Treasurer&nbsp;A/R.</p>
+
+    <p style="color:#5b6079;font-size:.85rem">A.A.&reg; and Alcoholics Anonymous&reg; are registered
+      trademarks of A.A. World Services, Inc. This site is not affiliated with, endorsed by or
+      speaking for A.A. World Services, Inc.</p>
+  </div>
+</noscript>
 
 <!-- ═══════════════════════════════════════════════════════════ MODAL ──── -->
 <div id="modal" class="fixed inset-0 z-[60]" hidden>
@@ -297,7 +350,7 @@ tailwind.config = {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ical.js/1.5.0/ical.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
 
 <script>
 /* ══════════════════════════════════════════════════════════════════════════
@@ -374,7 +427,7 @@ function fileIcon(fmt){
 const state = {
   lang: (function(){ try { return localStorage.getItem('msca09.lang') === 'es' ? 'es' : 'en'; } catch(e){ return 'en'; } })(),
   data: {}, content: {}, ui: {}, nav: [], kinds: {}, files: {}, ics: null, icsStamp: null,
-  route: 'home', params: [], ready: false
+  route: 'home', params: [], ready: false, docsReady: false
 };
 
 /* ── content lookup ────────────────────────────────────────────────────── */
@@ -543,8 +596,12 @@ function servants(panel) {
 }
 
 /* ─────────────────────────────────────────────────────── data layer ────── */
+/* documents.csv is the whole archive — 1,700 rows, by far the largest file
+   here. Only the Documents page and the flyer modal read it, so it is not in
+   this list: making every other page wait on it cost about three seconds on a
+   phone. See needDocs() below.                                            */
 const CSV_FILES = ['content','ui','nav','kinds','blocks','districts','trusted-servants',
-                   'committees','documents','events','area-meetings','resources','files'];
+                   'committees','events','area-meetings','resources','files'];
 
 function parseCSV(text) {
   const clean = text.replace(/^﻿/, '');
@@ -576,9 +633,6 @@ async function loadAll() {
       flyerNames[u] = (e.title || nice) + (urls.length > 1 ? ' \u2014 ' + (i + 1) : '');
     });
   });
-  (state.data['documents'] || []).forEach(function (d) {
-    if (d.url && d.title) flyerNames[d.url] = d.title;
-  });
   (state.data['kinds'] || []).forEach(function (r) {
     if (!r.set || !r.key) return;
     (state.kinds[r.set] = state.kinds[r.set] || {})[r.key] =
@@ -589,6 +643,28 @@ async function loadAll() {
   });
   state.nav = buildNav(state.data['nav'] || []);
   state.ready = true;
+}
+
+/* ── the archive, fetched the first time somebody asks for it ────────────
+   Resolves immediately once loaded, so a view can call it on every render
+   without worrying about fetching twice.                                  */
+let docsPromise = null;
+function needDocs() {
+  if (docsPromise) return docsPromise;
+  docsPromise = fetch('data/documents.csv', { cache:'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(function (txt) { state.data['documents'] = parseCSV(txt); })
+    .catch(function (e) {
+      state.data['documents'] = [];
+      console.warn('[MSCA09] data/documents.csv:', e.message);
+    })
+    .then(function () {
+      (state.data['documents'] || []).forEach(function (d) {
+        if (d.url && d.title) flyerNames[d.url] = d.title;
+      });
+      state.docsReady = true;
+    });
+  return docsPromise;
 }
 
 /* ── calendar ───────────────────────────────────────────────────────────
@@ -910,7 +986,7 @@ window.MSCA = {
   CURRENT_PANEL, servants,
   gcalLink, gcalStamp, mapLink, absHash, toast, shareThing,
   GCAL_EMBED, GCAL_ICS, GCAL_ID, GCAL_PAGE,
-  renderNav, applyStaticContent, applyTheme, loadAll, buildNav, L, $, $$
+  renderNav, applyStaticContent, applyTheme, loadAll, needDocs, buildNav, L, $, $$
 };
 })();
 </script>
@@ -991,7 +1067,7 @@ VIEWS.home = function () {
     M.sectionTitle(c('home.quick_title')) +
     '<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">' +
       M.blocks('home','quicklinks').map(function (b, i) {
-        return '<a href="' + attr(b.url) + '" data-aos="fade-up" data-aos-delay="' + ((i % 3) * 60) + '" ' +
+        return '<a href="' + attr(b.url) + '" data-rise style="transition-delay:' + ((i % 3) * 60) + 'ms" ' +
           'class="card card-hover rounded-3xl p-6 flex flex-col hover:shadow-lift group">' +
           '<span class="w-12 h-12 grid place-items-center rounded-2xl text-white text-lg bg-gradient-to-br ' + M.grad(b.color) + '">' +
             icon(b.icon) + '</span>' +
@@ -1146,7 +1222,7 @@ function eventCard(e) {
 }
 M.occCard = occCard; M.eventCard = eventCard;
 M.upcomingEvents = upcomingEvents; M.pastEvents = pastEvents;
-M.eventTitle = eventTitle; M.flyerList = flyerList; M.thumbList = thumbList; M.thumbOf = thumbOf;
+M.eventTitle = eventTitle; M.flyerList = flyerList; M.thumbOf = thumbOf;
 M.eventDateLabel = eventDateLabel; M.eventTimeLabel = eventTimeLabel;
 
 /* ═══════════════════════════════════════════════════ SERVICE CALENDAR ─── */
@@ -1222,7 +1298,7 @@ function drawCalendar(shell) {
               esc(r[1]) + '</button>';
           }).join('')
         : '') +
-      '<button type="button" id="calClear" class="ml-auto text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+      '<button type="button" id="calClear" class="ml-auto py-1 text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
         icon('rotate-left','mr-1') + esc(t('clearFilters')) + '</button>' +
     '</div>' +
   '</div>' +
@@ -1336,7 +1412,7 @@ function upcomingHTML() {
           '<span class="block text-center leading-none">' +
             '<span class="block text-[10px] uppercase tracking-wider opacity-80">' + esc(M.monName(d.getMonth()).slice(0,3)) + '</span>' +
             '<span class="block text-xl font-display font-extrabold">' + d.getDate() + '</span></span></span>' +
-        '<div class="min-w-0"><p class="font-display font-bold text-lg leading-tight">' + esc(M.dayName(d.getDay())) + '</p>' +
+        '<div class="min-w-0"><h2 class="font-display font-bold text-lg leading-tight">' + esc(M.dayName(d.getDay())) + '</h2>' +
         '<p class="text-[13px] opacity-60">' + esc(M.monName(d.getMonth()) + ' ' + d.getDate() + ', ' + d.getFullYear()) +
         (isToday ? ' · <span class="font-bold text-fuchsia-600 dark:text-fuchsia-300">' + esc(t('today')) + '</span>' : '') + '</p></div>' +
       '</div>' +
@@ -1528,7 +1604,7 @@ function districtCard(r) {
     '<div class="p-6 flex flex-col flex-1">' +
       '<div class="flex items-start justify-between gap-3">' +
         '<div class="min-w-0">' +
-          '<h3 class="font-display font-extrabold text-2xl tracking-tight">' + esc(r.display_name) + '</h3>' +
+          '<h2 class="font-display font-extrabold text-2xl tracking-tight">' + esc(r.display_name) + '</h2>' +
           '<p class="mt-1 text-[14px] font-semibold text-brand-700 dark:text-brand-300">' +
             esc(patternLabel(r)) + ' · ' + esc(M.fmtHHMM(r.start_time)) + ' PT</p></div>' +
         '<span class="chip shrink-0 ' + M.tone(spanish ? 'orange' : 'brand') + '">' +
@@ -1598,7 +1674,7 @@ VIEWS.committees = function () {
         const chairs = chairsFor(cm);
         const nm = (S.lang === 'es' && cm.name_es) ? cm.name_es : cm.name;
         const sm = (S.lang === 'es' && cm.summary_es) ? cm.summary_es : cm.summary;
-        return '<a href="#/committees/' + attr(cm.slug) + '" data-aos="fade-up" data-aos-delay="' + ((i % 3) * 70) + '" ' +
+        return '<a href="#/committees/' + attr(cm.slug) + '" data-rise style="transition-delay:' + ((i % 3) * 70) + 'ms" ' +
           'class="card card-hover rounded-3xl overflow-hidden flex flex-col group">' +
           '<span class="block h-1.5 bg-gradient-to-r ' + M.grad(cm.color) + '"></span>' +
           '<span class="p-6 flex flex-col flex-1">' +
@@ -1735,16 +1811,16 @@ VIEWS.servants.mount = function () {
       '</div>' +
       '<div class="mt-3 pt-3 border-t border-black/5 dark:border-white/10 space-y-1.5">' +
         (p.email
-          ? '<a class="flex items-start gap-2 text-[13px] text-brand-700 dark:text-brand-300 hover:underline break-all" href="' +
+          ? '<a class="flex items-start gap-2 py-1 -my-0.5 text-[13px] text-brand-700 dark:text-brand-300 hover:underline break-all" href="' +
             attr(M.mailto(p.email, p.position)) + '"><span class="w-4 shrink-0 mt-0.5 opacity-70">' + icon('envelope','text-[.75rem]') + '</span>' +
             '<span class="min-w-0">' + esc(p.email) + '</span></a>'
           : '<span class="flex items-center gap-2 text-[13px] opacity-40"><span class="w-4 shrink-0">' + icon('envelope','text-[.75rem]') + '</span>—</span>') +
         (p.email_alt
-          ? '<a class="flex items-start gap-2 text-[12.5px] opacity-70 hover:underline break-all" href="' +
+          ? '<a class="flex items-start gap-2 py-1 -my-0.5 text-[12.5px] opacity-70 hover:underline break-all" href="' +
             attr(M.mailto(p.email_alt, p.position)) + '"><span class="w-4 shrink-0 mt-0.5">' + icon('envelope-open','text-[.7rem]') + '</span>' +
             '<span class="min-w-0">' + esc(p.email_alt) + '</span></a>' : '') +
         (p.website
-          ? '<a class="flex items-start gap-2 text-[12.5px] opacity-70 hover:underline break-all" target="_blank" rel="noopener" href="' +
+          ? '<a class="flex items-start gap-2 py-1 -my-0.5 text-[12.5px] opacity-70 hover:underline break-all" target="_blank" rel="noopener" href="' +
             attr(p.website) + '"><span class="w-4 shrink-0 mt-0.5">' + icon('globe','text-[.75rem]') + '</span>' +
             '<span class="min-w-0">' + esc(p.website.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'')) + '</span></a>' : '') +
         (p.notes ? '<p class="text-[12px] opacity-55 leading-snug">' + esc(p.notes) + '</p>' : '') +
@@ -1807,7 +1883,24 @@ function publishedDocs() {
   });
 }
 
+/* shown for the moment the archive is in flight */
+function docsLoading() {
+  return M.pageHead({
+    icon:'file-lines', kicker:c('documents.kicker'),
+    title:M.cTitle('documents.title'), lead:c('documents.lead')
+  }) +
+  '<section class="mx-auto max-w-7xl px-4 py-12"><div class="animate-pulse space-y-3">' +
+    new Array(7).join('x').split('x').map(function () {
+      return '<div class="h-14 rounded-2xl bg-black/[.05] dark:bg-white/[.06]"></div>';
+    }).join('') +
+  '</div><p class="mt-8 text-center opacity-50 text-sm">' + esc(t('loading')) + '</p></section>';
+}
+
 VIEWS.documents = function (params) {
+  // the archive is fetched on demand — show the page's own skeleton until it
+  // lands, rather than holding up every other page at boot
+  if (!S.docsReady) { M.needDocs().then(M.rerender); return docsLoading(); }
+
   const rows = publishedDocs();
   const arch = rows.filter(function (r) { return r.collection === 'Archive'; });
   const years = M.uniq(rows.map(function (r) { return r.year; })).filter(Boolean).sort();
@@ -1852,6 +1945,7 @@ VIEWS.documents = function (params) {
 };
 
 VIEWS.documents.mount = function (params) {
+  if (!S.docsReady) return;                       // still the skeleton
   const rows = publishedDocs();
   const CAT_ORDER = Object.keys(S.kinds['doc'] || {});
   function catOrder(a, b) {
@@ -1936,7 +2030,7 @@ VIEWS.documents.mount = function (params) {
           (archived ? '<span class="chip ' + M.tone('violet') + '">' + icon('box-archive','text-[.65rem]') + esc(t('archived')) + '</span>' : '') +
         '</span>' +
       '</span>' +
-      '<span class="shrink-0 opacity-40 group-hover:opacity-80 transition">' + icon('download','text-xs') + '</span></a>';
+      '<span class="shrink-0 opacity-40 group-hover:opacity-80 transition">' + icon('arrow-up-right-from-square','text-xs') + '</span></a>';
   }
 
   function draw() {
@@ -2209,7 +2303,7 @@ VIEWS.newcomers = function () {
   '<section class="mx-auto max-w-7xl px-4 py-12">' +
     '<div class="grid gap-5 md:grid-cols-3 items-stretch">' +
       M.blocks('newcomers','steps').map(function (b, i) {
-        return '<article data-aos="fade-up" data-aos-delay="' + (i * 80) + '" class="card card-hover rounded-3xl p-7 h-full">' +
+        return '<article data-rise style="transition-delay:' + (i * 80) + 'ms" class="card card-hover rounded-3xl p-7 h-full">' +
           '<span class="w-12 h-12 grid place-items-center rounded-2xl text-white text-lg bg-gradient-to-br ' + M.grad(b.color) + '">' +
             icon(b.icon) + '</span>' +
           '<h2 class="mt-4 font-display font-bold text-xl">' + esc(M.bTitle(b)) + '</h2>' +
@@ -2364,7 +2458,7 @@ VIEWS.anonymity = function () {
   '<section class="mx-auto max-w-7xl px-4 py-12">' +
     '<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch">' +
       M.blocks('anonymity','rules').map(function (b, i) {
-        return '<article data-aos="fade-up" data-aos-delay="' + ((i % 3) * 70) + '" class="card card-hover rounded-3xl p-6 h-full">' +
+        return '<article data-rise style="transition-delay:' + ((i % 3) * 70) + 'ms" class="card card-hover rounded-3xl p-6 h-full">' +
           '<span class="w-11 h-11 grid place-items-center rounded-2xl text-white bg-gradient-to-br ' + M.grad(b.color) + '">' + icon(b.icon) + '</span>' +
           '<h2 class="mt-4 font-display font-bold text-lg">' + esc(M.bTitle(b)) + '</h2>' +
           '<p class="mt-2 text-[14px] leading-relaxed opacity-75">' + esc(M.bBody(b)) + '</p></article>';
@@ -2732,6 +2826,10 @@ MODALS.flyer = function (idParts) {
   const path = decodeURIComponent(idParts.join('/'));
   // only our own files: a repository path, or the Area's Drive
   if (!/^docs\//.test(path) && !M.isDrive(path)) return null;
+  // A flyer that belongs to an archived document is named in documents.csv,
+  // which is only fetched when it is needed. Without it a Drive address has
+  // no readable title at all, so fetch it and draw the modal again.
+  if (!M.flyerNames[path] && !S.docsReady) M.needDocs().then(M.rerender);
   const name = M.flyerNames[path] ||
     path.split('/').pop().replace(/\.(jpg|png)$/i, '').replace(/-/g, ' ');
   return {
@@ -2866,12 +2964,16 @@ function parseHash() {
 let booting = true;
 let renderedBase = null;
 
+/* A view that had to wait for data calls this once the data arrives. The
+   cache key is cleared so the page is genuinely rebuilt, not skipped.   */
+M.rerender = function () { renderedBase = null; render(); };
+
 function render() {
   const r = parseHash();
   const main = $('#main');
   if (!main) return;
 
-  if (!S.ready) { main.innerHTML = skeleton(); return; }
+  if (!S.ready) { if (!$('#main .fade-in')) main.innerHTML = skeleton(); return; }
 
   const isModalRoute = r.params.length > 0 && MODAL_PARENT[r.name] && !PARAM_PAGES[r.name];
   const baseName = isModalRoute ? MODAL_PARENT[r.name] : r.name;
@@ -2891,7 +2993,7 @@ function render() {
     if (typeof baseView.mount === 'function') {
       try { baseView.mount(r.params); } catch (e) { console.error('[MSCA09] mount failed', e); }
     }
-    if (window.AOS) AOS.refreshHard();
+    rise();
   }
 
   const typed = (location.hash || '').replace(/^#\/?/, '').split('/')[0].toLowerCase();
@@ -2926,6 +3028,27 @@ M.dismissModal = function () {
   if (parent) location.hash = '#/' + (parent === 'home' ? '' : parent);
   else M.closeModal();
 };
+
+/* cards lift into place as they come into view — what AOS was for, without
+   the extra stylesheet and script                                        */
+let riseWatcher = null;
+function rise() {
+  const items = $$('#main [data-rise]:not(.shown)');
+  if (!items.length) return;
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach(function (el) { el.classList.add('shown'); });
+    return;
+  }
+  if (!riseWatcher) {
+    riseWatcher = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('shown'); riseWatcher.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -40px 0px' });
+  }
+  items.forEach(function (el) { riseWatcher.observe(el); });
+}
 
 function skeleton() {
   return '<section class="mx-auto max-w-7xl px-4 py-24">' +
@@ -3025,7 +3148,9 @@ async function boot() {
   M.renderNav();
   stamp();
 
-  const missing = ['content','blocks','districts','trusted-servants','committees','events','documents']
+  // 'documents' is not checked here — it is fetched on demand, and the
+  // Documents page reports its own trouble
+  const missing = ['content','blocks','districts','trusted-servants','committees','events']
     .filter(function (n) { return !(S.data[n] && S.data[n].length); });
   if (missing.length) {
     console.warn('[MSCA09] missing data files:', missing.join(', '));
@@ -3039,10 +3164,6 @@ async function boot() {
     if (main) main.parentNode.insertBefore(bar, main);
   }
 
-  if (window.AOS) {
-    AOS.init({ duration:600, easing:'ease-out-cubic', once:true, offset:60,
-               disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches });
-  }
   renderedBase = null;
   render();
 }

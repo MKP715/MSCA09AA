@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The site is one page; every section is a #/ route within it, which search
+     engines fold into this single URL. The archived pages under
+     docs/archive/pages/ are real pages and are listed by the crawler that
+     follows them from the Documents page. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://msca09aa.org/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

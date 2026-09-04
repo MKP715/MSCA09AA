@@ -108,7 +108,11 @@ headings rather than a wall of cards:
 2. Edit the row. Commit.
 3. Wait about a minute for Pages to rebuild, then hard-refresh.
 
-There is no build step and nothing to install.
+**Editing the data needs no build step and nothing installed** — which is the
+whole point of keeping the words in CSV. The one exception is `index.html`
+itself: if you add or remove a Tailwind class there, run
+`python tools/build_css.py` to rebuild `tailwind.css`, or the new class will
+have no effect. See [`tools/README.md`](tools/README.md).
 
 ### To add an event
 
@@ -350,15 +354,20 @@ plenty of headroom and keeps clones small.
 
 ```
 index.html                     the whole site — HTML, CSS and JS
+tailwind.css                   built from index.html by tools/build_css.py
+social-card.png                the preview image for links shared to chat apps
+robots.txt  sitemap.xml        for search engines
 data/                          everything that changes, as CSV
 docs/archive/pages/            58 posts Drive cannot serve as pages
 tools/                         scripts a web servant re-runs; see tools/README.md
+tools/css/                     the Tailwind config tailwind.css is built from
 .github/workflows/             keeps data/calendar.ics in step with Google
 ```
 
 **Before you push:**
 
 ```sh
+python tools/build_css.py      # only if you changed a class in index.html
 python tools/check_site.py     # structure, anonymity, missing keys
 python tools/check_links.py --sample     # spot-check the Drive addresses
 ```
@@ -368,10 +377,23 @@ through `data/files.csv`, a repo file that is not committed, links back to
 the old sites, personal contact details, surnames in the roster, and missing
 `content.csv` / `ui.csv` keys.
 
-Third-party libraries load from CDN and nothing is vendored: Tailwind CSS,
-Font Awesome, Google Fonts, PapaParse (CSV), ical.js (calendar) and AOS
-(scroll animations). The only run-time request to another website is the
-optional Google Calendar iframe on the calendar page.
+### What the page loads
+
+**Tailwind CSS is built ahead of time** into `tailwind.css` — about 48 KB
+holding only the classes `index.html` actually uses. It used to come from the
+Tailwind Play CDN, which downloads ~400 KB and then compiles the stylesheet in
+the visitor's browser on every visit; that alone was most of an eleven-second
+first paint on a throttled phone.
+
+From a CDN, and none of it blocking the first paint: Font Awesome and Google
+Fonts (both loaded with `media="print"` and swapped in on load, with a
+`<noscript>` fallback), PapaParse for the CSVs, and ical.js for the calendar.
+There is no animation library — the cards rise into view with about fifteen
+lines of `IntersectionObserver`, which respects
+`prefers-reduced-motion`.
+
+The only run-time request to another website is the optional Google Calendar
+iframe on the calendar page. Everything else is this repository and Drive.
 
 ---
 
