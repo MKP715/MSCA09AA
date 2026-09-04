@@ -119,6 +119,37 @@ There is no build step and nothing to install.
 3. Paste the flyer's text into `description` so it is searchable and readable
    on a phone. Strip last names, personal e-mails and personal phone numbers.
 
+### The trusted servants list
+
+`data/trusted-servants.csv` is built from every tab of the Panel workbook —
+the Area board, the D.C.M.C.s, the committee chairs, each district's own tab,
+YPAA, and the previous panel. 211 rows: 149 for Panel 76 and 62 for Panel 74,
+kept so the earlier panel's record is not lost.
+
+Two tabs are deliberately left out. *P76 — Get to know you!* holds the board's
+personal introductions, and *zoom schedule* is covered by the calendar. One
+person is left out too: the D15 tab lists a member under the heading
+"member" rather than as a trusted servant, so she is not published.
+
+The roster is written out inside `tools/build_roster.py` rather than read from
+the workbook at run time. That is on purpose — it keeps the workbook, with
+everyone's personal e-mail address, phone number and sobriety date, out of the
+repository. When the panel changes, edit that script and re-run it:
+
+```sh
+python tools/build_roster.py     # rewrite data/trusted-servants.csv
+python tools/verify_roster.py    # check nobody was dropped (needs openpyxl)
+```
+
+`verify_roster.py` reads the workbook where it sits beside the repository and
+reports anyone in it who is missing from the site, anyone on the site who is
+not in it, and any surname, personal address or phone number that slipped
+through.
+
+The **Panel 76** page shows the current panel by default, with a *Panel 74*
+chip beside the language filter. An earlier panel opens folded, because it is
+history rather than a directory.
+
 ### The archive
 
 `docs/archive/` holds everything recovered from the Area's two previous
@@ -264,19 +295,37 @@ data.
 ## What is in the repository
 
 ```
-index.html          the entire site — HTML, CSS and JS
-data/               everything that changes, as CSV
-docs/               every document and flyer, stored locally
-  minutes/<year>/     approved ASA / ASC minutes, EN + ES
-  motions/            motion backgrounds
-  conference/         General Service Conference material
-  calendars/          approved Area calendars
-  contributions/      7th Tradition material
-  reports/            Area committee reports
-  events/             event flyers (+ .thumb.jpg previews)
-  flyers/             the district calendar flyer, contributions flyer, Zelle QR
-.github/workflows/refresh-calendar.yml    keeps data/calendar.ics in sync
+index.html                     the whole site — HTML, CSS and JS
+data/                          everything that changes, as CSV
+docs/                          every document and flyer, stored locally
+  minutes/<year>/                approved ASA / ASC minutes, EN + ES
+  motions/  conference/  calendars/  contributions/  reports/
+  events/                        event flyers (+ .thumb.jpg previews)
+  flyers/                        district calendar, contributions flyer, Zelle QR
+  archive/                       recovered from the two previous websites
+    minutes/ newsletters/ finances/ guidelines/ workbooks/ conference/
+    reports/ delegate/ praasa/ archives/ flyers/ forms/ calendars/
+    districts/d<n>/              documents that lived on a district's pages
+    pages/                       posts that only ever existed as web pages
+    misc/<year>/
+tools/                         scripts a web servant re-runs; see tools/README.md
+.github/workflows/             keeps data/calendar.ics in step with Google
 ```
+
+Everything above the fold is deliberate: `index.html` is the site, `data/` is
+what you edit, `docs/` is what you link to, and `tools/` is how you check your
+work. Nothing else lives at the top level.
+
+**Before you push:**
+
+```sh
+python tools/check_site.py
+```
+
+It catches the failure that is hardest to spot by eye — a file that exists on
+your machine but is not committed, which works locally and 404s once
+published. It also checks for links back to the old sites, personal contact
+details, surnames in the roster, and missing `content.csv` / `ui.csv` keys.
 
 Third-party libraries load from CDN and nothing is vendored: Tailwind CSS,
 Font Awesome, Google Fonts, PapaParse (CSV), ical.js (calendar) and AOS

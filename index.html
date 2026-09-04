@@ -521,6 +521,16 @@ function applyStaticContent() {
   const ll = $('#langLabel'); if (ll) ll.textContent = state.lang === 'en' ? 'ES' : 'EN';
 }
 
+/* The panel now serving. Everything on the site means this panel unless the
+   reader asks for an earlier one on the Panel 76 page.                    */
+const CURRENT_PANEL = '76';
+function servants(panel) {
+  const want = panel || CURRENT_PANEL;
+  return (state.data['trusted-servants'] || []).filter(function (r) {
+    return String(r.panel || CURRENT_PANEL) === want;
+  });
+}
+
 /* ─────────────────────────────────────────────────────── data layer ────── */
 const CSV_FILES = ['content','ui','nav','kinds','blocks','districts','trusted-servants',
                    'committees','documents','events','area-meetings','resources'];
@@ -869,6 +879,7 @@ window.MSCA = {
   expandOccurrences, calendarSeries, seriesById, latestStamp,
   kindOf, kindText, meetKind, TONE, GRAD, tone, grad, kindLabel, evKind, evKindLabel, fmtLabel,
   pageHead, sectionTitle, emptyState, anonNote, linkOut, collapsible,
+  CURRENT_PANEL, servants,
   gcalLink, gcalStamp, mapLink, absHash, toast, shareThing,
   GCAL_EMBED, GCAL_ICS, GCAL_ID, GCAL_PAGE,
   renderNav, applyStaticContent, applyTheme, loadAll, buildNav, L, $, $$
@@ -1459,7 +1470,7 @@ VIEWS.districts.mount = function () {
 
 function districtServants(r) {
   const key = M.norm(r.display_name).replace(/[^0-9&]/g,'');
-  return (S.data['trusted-servants'] || []).filter(function (s) {
+  return M.servants().filter(function (s) {
     return s.level === 'District' && M.norm(s.body).replace(/[^0-9&]/g,'') === key;
   });
 }
@@ -1530,7 +1541,7 @@ const $ = M.$, $$ = M.$$, VIEWS = M.VIEWS;
 /* ═════════════════════════════════════════════════════════ COMMITTEES ─── */
 function chairsFor(cm) {
   const a = M.norm(cm.name), b = M.norm(cm.name_es);
-  return (S.data['trusted-servants'] || []).filter(function (s) {
+  return M.servants().filter(function (s) {
     if (s.level !== 'Area Committee') return false;
     const p = M.norm(s.position);
     return p === a || (b && p === b) || p.indexOf(a) === 0 || a.indexOf(p) === 0;
@@ -1608,8 +1619,13 @@ VIEWS.servants = function () {
 };
 
 VIEWS.servants.mount = function () {
-  const rows = S.data['trusted-servants'] || [];
-  const st = { q:'', level:'', lang:'' };
+  const all = S.data['trusted-servants'] || [];
+  const panels = M.uniq(all.map(function (r) { return r.panel || M.CURRENT_PANEL; }))
+    .sort().reverse();
+  const st = { q:'', level:'', lang:'', panel:M.CURRENT_PANEL };
+  function rowsFor() {
+    return all.filter(function (r) { return (r.panel || M.CURRENT_PANEL) === st.panel; });
+  }
   const LEVELS = [
     ['',               t('all'),                   'layer-group'],
     ['Area',           c('servants.group_area'),      'landmark'],
@@ -1643,12 +1659,26 @@ VIEWS.servants.mount = function () {
                 : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
             esc(lg[1]) + '</button>';
         }).join('') +
+        (panels.length > 1
+          ? '<span class="mx-1 w-px h-6 bg-black/10 dark:bg-white/15 shrink-0"></span>' +
+            panels.map(function (pn) {
+              const on = st.panel === pn;
+              return '<button type="button" data-svpanel="' + attr(pn) + '" aria-pressed="' + on + '" ' +
+                'class="fltbtn chip whitespace-nowrap ' +
+                (on ? 'text-white bg-gradient-to-r from-violet-600 to-fuchsia-600'
+                    : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+                esc(t('panel') + ' ' + pn) + '</button>';
+            }).join('')
+          : '') +
       '</div></div>';
     $$('[data-svlevel]', f).forEach(function (b) {
       b.addEventListener('click', function () { st.level = b.getAttribute('data-svlevel'); drawFilters(); draw(); });
     });
     $$('[data-svlang]', f).forEach(function (b) {
       b.addEventListener('click', function () { st.lang = b.getAttribute('data-svlang'); drawFilters(); draw(); });
+    });
+    $$('[data-svpanel]', f).forEach(function (b) {
+      b.addEventListener('click', function () { st.panel = b.getAttribute('data-svpanel'); drawFilters(); draw(); });
     });
   }
 
@@ -1673,6 +1703,10 @@ VIEWS.servants.mount = function () {
             attr(M.mailto(p.email, p.position)) + '"><span class="w-4 shrink-0 mt-0.5 opacity-70">' + icon('envelope','text-[.75rem]') + '</span>' +
             '<span class="min-w-0">' + esc(p.email) + '</span></a>'
           : '<span class="flex items-center gap-2 text-[13px] opacity-40"><span class="w-4 shrink-0">' + icon('envelope','text-[.75rem]') + '</span>—</span>') +
+        (p.email_alt
+          ? '<a class="flex items-start gap-2 text-[12.5px] opacity-70 hover:underline break-all" href="' +
+            attr(M.mailto(p.email_alt, p.position)) + '"><span class="w-4 shrink-0 mt-0.5">' + icon('envelope-open','text-[.7rem]') + '</span>' +
+            '<span class="min-w-0">' + esc(p.email_alt) + '</span></a>' : '') +
         (p.website
           ? '<a class="flex items-start gap-2 text-[12.5px] opacity-70 hover:underline break-all" target="_blank" rel="noopener" href="' +
             attr(p.website) + '"><span class="w-4 shrink-0 mt-0.5">' + icon('globe','text-[.75rem]') + '</span>' +
@@ -1684,11 +1718,11 @@ VIEWS.servants.mount = function () {
   function draw() {
     const list = $('#svList'); if (!list) return;
     const nq = M.norm(st.q);
-    const hits = rows.filter(function (r) {
+    const hits = rowsFor().filter(function (r) {
       if (st.level && r.level !== st.level) return false;
       if (st.lang && r.language !== st.lang) return false;
       if (!nq) return true;
-      return M.norm([r.position, r.name, r.body, r.email, r.level].join(' ')).indexOf(nq) !== -1;
+      return M.norm([r.position, r.name, r.body, r.email, r.email_alt, r.level].join(' ')).indexOf(nq) !== -1;
     });
     if (!hits.length) { list.innerHTML = M.emptyState(); return; }
 
@@ -1700,6 +1734,7 @@ VIEWS.servants.mount = function () {
     });
 
     const searching = !!nq || !!st.level || !!st.lang;
+    const isCurrent = st.panel === M.CURRENT_PANEL;
 
     list.innerHTML = order.map(function (body) {
       const people = groups[body].slice().sort(function (a, b) {
@@ -1718,7 +1753,7 @@ VIEWS.servants.mount = function () {
       return '<section class="mb-4 card rounded-2xl px-4 sm:px-5 py-1">' +
         M.collapsible({ label:body, count:people.length, body:cards, size:'lg', cls:'',
                         icon:LEVEL_ICON[lvl] || 'users', tone:LEVEL_COLOR[lvl] || 'brand',
-                        open: searching || lvl !== 'District' }) +
+                        open: searching || (isCurrent && lvl !== 'District') }) +
       '</section>';
     }).join('');
   }
@@ -2326,7 +2361,7 @@ VIEWS.anonymity = function () {
 
 /* ═════════════════════════════════════════════════════════════ CONTACT ── */
 VIEWS.contact = function () {
-  const board = (S.data['trusted-servants'] || []).filter(function (r) { return r.level === 'Area'; });
+  const board = M.servants().filter(function (r) { return r.level === 'Area'; });
   return M.pageHead({
     icon:'paper-plane', kicker:c('contact.kicker'),
     title:M.cTitle('contact.title'), lead:c('contact.lead')

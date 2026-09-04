@@ -12,11 +12,16 @@
 # data/trusted-servants.csv is the public, redacted view of that roster:
 # first name + last initial, role-based service addresses only.
 # ─────────────────────────────────────────────────────────────────────────
+# the panel workbook — personal e-mail, phone, sobriety date, home group
 *Teammates*.xlsx
 *Teammates*.xls
 *Teammates*.csv
-*roster*.xlsx
-*Roster*.xlsx
+
+# any other contact roster. NOTE: this also catches archived rosters pulled off
+# the old sites. If one is caught, it is because it is a contact list — decide
+# what to do with it in data/archive-review.csv rather than force-adding it.
+*roster*.xls*
+*Roster*.xls*
 *confidential*
 *Confidential*
 *CONFIDENTIAL*

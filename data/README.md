@@ -12,7 +12,7 @@ site updates itself. Nothing is hard-coded in `index.html`.
 | `kinds.csv` | colour, icon and bilingual label for every category |
 | `blocks.csv` | the repeating card lists, grouped by `page` + `section` |
 | `districts.csv` | the district directory and district modals |
-| `trusted-servants.csv` | Panel 76 officers, committee chairs, district officers |
+| `trusted-servants.csv` | every trusted servant, from all tabs of the panel workbook. `panel` is 76 or 74; `email_alt` is a second service address where the workbook lists one. Rebuild with `tools/build_roster.py`. |
 | `committees.csv` | the Area committees |
 | `documents.csv` | minutes, motions, agendas, and the whole archive — each pointing at a file in `docs/`. `collection` is `Current` or `Archive`. Set `publish` to anything but `yes` to withhold a file from the site. |
 | `archive-review.csv` | the archived documents that carry a personal e-mail address or phone number, for the Area to triage. The site does not read this file. |
