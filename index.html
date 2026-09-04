@@ -109,7 +109,9 @@ tailwind.config = {
   .navlink[aria-current="page"]{ color:#4338ca; }
   .dark .navlink[aria-current="page"]{ color:#c7d2fe; }
   details.menu > summary{ list-style:none; cursor:pointer; }
-  details.menu > summary::-webkit-details-marker{ display:none; }
+  details > summary{ list-style:none; }
+  details > summary::-webkit-details-marker{ display:none; }
+  details[open] > summary .fa-chevron-right{ transform:rotate(90deg); }
 
   /* ---- bits ----------------------------------------------------------- */
   .chip{
@@ -765,6 +767,31 @@ function anonNote() {
     '<span class="shrink-0 w-8 h-8 rounded-lg grid place-items-center bg-fuchsia-600 text-white">' + icon('user-secret','text-xs') + '</span>' +
     '<p class="leading-relaxed">' + esc(c('note.anonymity')) + '</p></div>';
 }
+/* One collapsible used across the site so every "show me more" looks the
+   same. Long lists are closed until asked for.                          */
+function collapsible(o) {
+  const size = o.size || 'md';
+  const head = size === 'lg'
+    ? 'py-3 gap-3 text-left'
+    : 'py-2 gap-2 text-[13px] font-bold uppercase tracking-widest opacity-60 hover:opacity-100';
+  return '<details class="' + (o.cls || 'mb-2') + '"' + (o.open ? ' open' : '') + (o.attrs || '') + '>' +
+    '<summary class="cursor-pointer select-none list-none flex items-center ' + head + '">' +
+      '<i class="fa-solid fa-chevron-right text-[11px] shrink-0 opacity-70 transition-transform duration-200" aria-hidden="true"></i>' +
+      (o.icon
+        ? '<span class="w-9 h-9 shrink-0 grid place-items-center rounded-xl text-white bg-gradient-to-br ' +
+          grad(o.tone || 'brand') + '">' + icon(o.icon, 'text-sm') + '</span>'
+        : '') +
+      (size === 'lg'
+        ? '<span class="font-display font-extrabold text-lg sm:text-xl tracking-tight normal-case">' + esc(o.label) + '</span>'
+        : '<span>' + esc(o.label) + '</span>') +
+      (o.count != null
+        ? '<span class="chip ' + tone('slate') + ' ml-1">' + esc(o.count) + '</span>'
+        : '') +
+      (o.hint ? '<span class="ml-auto text-[12px] font-normal normal-case tracking-normal opacity-55">' + esc(o.hint) + '</span>' : '') +
+    '</summary>' +
+    '<div class="pt-2"' + (o.bodyAttrs || '') + '>' + (o.body || '') + '</div></details>';
+}
+
 function linkOut(href, label, cls) {
   return '<a href="' + attr(href) + '" target="_blank" rel="noopener" class="' + (cls || '') + '">' +
     esc(label) + ' <i class="fa-solid fa-arrow-up-right-from-square text-[.7em] opacity-60" aria-hidden="true"></i>' +
@@ -841,7 +868,7 @@ window.MSCA = {
   DOW_EN, DOW_ES, MON_EN, MON_ES,
   expandOccurrences, calendarSeries, seriesById, latestStamp,
   kindOf, kindText, meetKind, TONE, GRAD, tone, grad, kindLabel, evKind, evKindLabel, fmtLabel,
-  pageHead, sectionTitle, emptyState, anonNote, linkOut,
+  pageHead, sectionTitle, emptyState, anonNote, linkOut, collapsible,
   gcalLink, gcalStamp, mapLink, absHash, toast, shareThing,
   GCAL_EMBED, GCAL_ICS, GCAL_ID, GCAL_PAGE,
   renderNav, applyStaticContent, applyTheme, loadAll, buildNav, L, $, $$
@@ -1076,7 +1103,7 @@ M.eventTitle = eventTitle; M.flyerList = flyerList; M.thumbOf = thumbOf;
 M.eventDateLabel = eventDateLabel; M.eventTimeLabel = eventTimeLabel;
 
 /* ═══════════════════════════════════════════════════ SERVICE CALENDAR ─── */
-const calState = { view:'upcoming', kind:'', fmt:'', lang:'', dow:'', q:'', month:null };
+const calState = { view:'upcoming', kind:'', fmt:'', lang:'', dow:'', q:'', month:null, days:30 };
 
 VIEWS.meetings = function () {
   return M.pageHead({
@@ -1090,8 +1117,8 @@ VIEWS.meetings = function () {
       (S.icsStamp
         ? '<span class="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/40">' +
           '<span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>' +
-          esc((S.lang === 'es' ? 'Sincronizado con Google Calendar · ' : 'Synced with Google Calendar · ') +
-              M.monName(S.icsStamp.getMonth()) + ' ' + S.icsStamp.getDate() + ', ' + S.icsStamp.getFullYear()) + '</span>'
+          esc(t('syncedWith') + ' ' + M.monName(S.icsStamp.getMonth()) + ' ' +
+              S.icsStamp.getDate() + ', ' + S.icsStamp.getFullYear()) + '</span>'
         : '') +
     '</div>'
   }) +
@@ -1137,6 +1164,17 @@ function drawCalendar(shell) {
     '</div>' +
     '<div class="mt-3 flex flex-wrap items-center gap-2">' +
       langChip('', t('all')) + langChip('English', t('english')) + langChip('Spanish', t('spanish')) +
+      (calState.view === 'upcoming'
+        ? '<span class="mx-1 w-px h-6 bg-black/10 dark:bg-white/15 shrink-0"></span>' +
+          [[30, t('next30')], [60, t('next60')], [90, t('next90')]].map(function (r) {
+            const on = calState.days === r[0];
+            return '<button type="button" data-caldays="' + r[0] + '" aria-pressed="' + on + '" ' +
+              'class="fltbtn chip whitespace-nowrap ' +
+              (on ? 'text-white bg-gradient-to-r from-teal-500 to-emerald-600'
+                  : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+              esc(r[1]) + '</button>';
+          }).join('')
+        : '') +
       '<button type="button" id="calClear" class="ml-auto text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
         icon('rotate-left','mr-1') + esc(t('clearFilters')) + '</button>' +
     '</div>' +
@@ -1153,9 +1191,16 @@ function drawCalendar(shell) {
   $$('[data-callang]', shell).forEach(function (b) {
     b.addEventListener('click', function () { calState.lang = b.getAttribute('data-callang'); drawCalendar(shell); });
   });
+  $$('[data-caldays]', shell).forEach(function (b) {
+    b.addEventListener('click', function () {
+      calState.days = parseInt(b.getAttribute('data-caldays'), 10);
+      drawCalendar(shell);
+    });
+  });
   const cl = $('#calClear', shell);
   if (cl) cl.addEventListener('click', function () {
     calState.kind = calState.fmt = calState.lang = calState.dow = calState.q = '';
+    calState.days = 30;
     drawCalendar(shell);
   });
 
@@ -1226,7 +1271,8 @@ function calBodyHTML() {
 
 function upcomingHTML() {
   const now = new Date(); now.setHours(0,0,0,0);
-  let occ = M.expandOccurrences(now, new Date(now.getTime() + 62 * 864e5)).filter(matches);
+  const to = new Date(now.getTime() + calState.days * 864e5);
+  let occ = M.expandOccurrences(now, to).filter(matches);
   if (calState.dow !== '') occ = occ.filter(function (o) { return String(o.date.getDay()) === calState.dow; });
   if (!occ.length) return M.emptyState();
 
@@ -1516,9 +1562,14 @@ VIEWS.committees = function () {
             '<span class="mt-4 flex flex-wrap gap-1.5">' +
               (chairs.length
                 ? chairs.map(function (s) {
+                    // a committee can have an English and a Spanish chair, so say which
+                    const tag = chairs.length > 1
+                      ? (s.language === 'Spanish' ? 'ES ' : 'EN ') : '';
                     return s.name
-                      ? '<span class="chip ' + M.tone('slate') + '">' + icon('user','text-[.7rem]') + '<span>' + esc(s.name) + '</span></span>'
-                      : '<span class="chip ' + M.tone('amber') + '">' + icon('hand','text-[.7rem]') + '<span>' + esc(t('vacant')) + '</span></span>';
+                      ? '<span class="chip ' + M.tone('slate') + '">' + icon('user','text-[.7rem]') +
+                        '<span>' + esc(tag + s.name) + '</span></span>'
+                      : '<span class="chip ' + M.tone('amber') + '">' + icon('hand','text-[.7rem]') +
+                        '<span>' + esc(tag + t('vacant')) + '</span></span>';
                   }).join('')
                 : '') +
             '</span>' +
@@ -1648,6 +1699,8 @@ VIEWS.servants.mount = function () {
       return sa !== sb ? sa - sb : M.byText(a, b);
     });
 
+    const searching = !!nq || !!st.level || !!st.lang;
+
     list.innerHTML = order.map(function (body) {
       const people = groups[body].slice().sort(function (a, b) {
         return (parseInt(a.position_sort || '99',10) - parseInt(b.position_sort || '99',10)) || M.byText(a.position, b.position);
@@ -1656,18 +1709,17 @@ VIEWS.servants.mount = function () {
       const dist = (S.data['districts'] || []).filter(function (d) {
         return M.norm(d.display_name).replace(/[^0-9&]/g,'') === M.norm(body).replace(/[^0-9&]/g,'');
       })[0];
-      return '<section class="mb-10">' +
-        '<div class="flex flex-wrap items-center gap-3 mb-4">' +
-          '<span class="w-10 h-10 shrink-0 grid place-items-center rounded-xl text-white bg-gradient-to-br ' +
-            M.grad(LEVEL_COLOR[lvl] || 'brand') + '">' + icon(LEVEL_ICON[lvl] || 'users','text-sm') + '</span>' +
-          '<h2 class="font-display font-extrabold text-xl tracking-tight">' + esc(body) + '</h2>' +
-          '<span class="chip ' + M.tone('slate') + '">' + people.length + '</span>' +
-          (dist ? '<a href="#/districts/' + attr(M.slug(dist.district)) + '" class="chip ' + M.tone('brand') + '">' +
-            icon('map-location-dot','text-[.7rem]') + esc(t('details')) + '</a>' : '') +
-        '</div>' +
-        '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch">' +
-          people.map(personCard).join('') +
-        '</div></section>';
+      const cards = '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-stretch pb-4">' +
+        people.map(personCard).join('') + '</div>' +
+        (dist ? '<p class="pb-4"><a href="#/districts/' + attr(M.slug(dist.district)) + '" class="chip ' +
+          M.tone('brand') + '">' + icon('map-location-dot','text-[.7rem]') + esc(t('details')) + '</a></p>' : '');
+
+      // the Area's own bodies stay open; the districts fold away until asked for
+      return '<section class="mb-4 card rounded-2xl px-4 sm:px-5 py-1">' +
+        M.collapsible({ label:body, count:people.length, body:cards, size:'lg', cls:'',
+                        icon:LEVEL_ICON[lvl] || 'users', tone:LEVEL_COLOR[lvl] || 'brand',
+                        open: searching || lvl !== 'District' }) +
+      '</section>';
     }).join('');
   }
 
@@ -1707,7 +1759,15 @@ VIEWS.documents = function (params) {
   }) +
   '<section class="mx-auto max-w-7xl px-4 py-12">' +
     '<div id="docFilters"></div>' +
-    '<div id="docSummary" class="mt-5"></div>' +
+    '<div class="mt-5 flex flex-wrap items-center gap-3">' +
+      '<div id="docSummary"></div>' +
+      '<div class="ml-auto flex gap-2">' +
+        '<button type="button" id="docOpenAll" class="text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+          icon('chevron-down','mr-1') + esc(t('expandAll')) + '</button>' +
+        '<button type="button" id="docShutAll" class="text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+          icon('chevron-up','mr-1') + esc(t('collapseAll')) + '</button>' +
+      '</div>' +
+    '</div>' +
     '<div id="docList" class="mt-6"></div>' +
     '<div class="mt-10 grid gap-4 md:grid-cols-2">' +
       '<div class="rounded-2xl border border-amber-400/40 bg-amber-50 dark:bg-amber-500/10 p-4 text-[13.5px] leading-relaxed flex gap-3">' +
@@ -1830,41 +1890,78 @@ VIEWS.documents.mount = function (params) {
     hits.forEach(function (r) { (groups[r.category] = groups[r.category] || []).push(r); });
     const order = Object.keys(groups).sort(catOrder);
 
+    // a search should show what it found, so it opens the panels it matched
+    shown = groups;
+    searching = !!nq;
     list.innerHTML = order.map(function (cat) {
-      const col = docColor(cat);
-      // inside a category, break the list up by year so long runs stay readable
-      const byYear = {};
-      groups[cat].forEach(function (r) { (byYear[r.year || '—'] = byYear[r.year || '—'] || []).push(r); });
-      const yrs = Object.keys(byYear).sort().reverse();
-      const many = groups[cat].length > 14 && yrs.length > 1;
-
-      return '<section class="mb-10">' +
-        '<div class="flex items-center gap-3 mb-4">' +
-          '<span class="w-10 h-10 shrink-0 grid place-items-center rounded-xl text-white bg-gradient-to-br ' + M.grad(col) + '">' +
-            icon(M.kindOf('doc', cat).fa || 'folder-open','text-sm') + '</span>' +
-          '<h2 class="font-display font-extrabold text-xl tracking-tight">' + esc(docLabel(cat)) + '</h2>' +
-          '<span class="chip ' + M.tone('slate') + '">' + groups[cat].length + '</span></div>' +
-        yrs.map(function (y, i) {
-          const items = byYear[y].slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)) || M.byText(a.title, b.title); });
-          const body =
-            '<div class="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 items-stretch">' +
-              items.map(function (r) { return docCard(r, col); }).join('') + '</div>';
-          if (!many) {
-            return (yrs.length > 1
-              ? '<h3 class="text-[12px] font-bold uppercase tracking-widest opacity-45 mb-2' + (i ? ' mt-5' : '') + '">' + esc(y) + '</h3>'
-              : '') + body;
-          }
-          return '<details class="mb-2"' + (i === 0 ? ' open' : '') + '>' +
-            '<summary class="cursor-pointer select-none py-2 flex items-center gap-2 text-[13px] font-bold uppercase tracking-widest opacity-60 hover:opacity-100">' +
-              '<i class="fa-solid fa-chevron-right text-[10px] transition" aria-hidden="true"></i>' +
-              esc(y) + '<span class="opacity-50">(' + items.length + ')</span></summary>' +
-            '<div class="pt-2">' + body + '</div></details>';
-        }).join('') +
+      const dated = M.uniq((groups[cat] || []).map(function (r) { return r.year; }))
+        .filter(function (y) { return /^\d{4}$/.test(y); }).sort();
+      const span = dated.length
+        ? (dated.length > 1 ? dated[0] + ' \u2013 ' + dated[dated.length - 1] : dated[0])
+        : '';
+      return '<section class="mb-4 card rounded-2xl px-4 sm:px-5 py-1">' +
+        M.collapsible({ label:docLabel(cat), count:groups[cat].length,
+                        body: searching ? yearsHTML(cat) : '',
+                        bodyAttrs:' data-catbody="' + attr(cat) + '"' + (searching ? ' data-filled="1"' : ''),
+                        icon:M.kindOf('doc', cat).fa || 'folder-open', tone:docColor(cat),
+                        size:'lg', open:searching, cls:'', hint:span,
+                        attrs:' data-cat="' + attr(cat) + '"' }) +
       '</section>';
+    }).join('');
+
+    fill();
+    $$('#docList details[data-cat]').forEach(function (d) {
+      d.addEventListener('toggle', fill);
+    });
+  }
+
+  /* What draw() last matched, so a panel can be filled in later. */
+  let shown = {}, searching = false;
+
+  function yearsHTML(cat) {
+    const col = docColor(cat);
+    const byYear = {};
+    (shown[cat] || []).forEach(function (r) {
+      const k = r.year || t('undated');
+      (byYear[k] = byYear[k] || []).push(r);
+    });
+    const dated = Object.keys(byYear).filter(function (y) { return /^\d{4}$/.test(y); }).sort().reverse();
+    const yrs = dated.concat(Object.keys(byYear).filter(function (y) { return !/^\d{4}$/.test(y); }));
+    return yrs.map(function (y) {
+      const items = byYear[y].slice().sort(function (a, b) {
+        return String(b.date).localeCompare(String(a.date)) || M.byText(a.title, b.title);
+      });
+      const body = '<div class="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3 items-stretch pb-4">' +
+        items.map(function (r) { return docCard(r, col); }).join('') + '</div>';
+      if (yrs.length === 1) return '<div class="pt-1">' + body + '</div>';
+      return M.collapsible({ label:y, count:items.length, body:body,
+                             open: searching, cls:'mb-1 pl-1' });
     }).join('');
   }
 
-  drawFilters(); draw();
+  /* a panel's cards are built the first time it is opened, so the page does
+     not carry twenty thousand nodes it may never show */
+  function fill() {
+    $$('#docList details[data-cat][open] > [data-catbody]').forEach(function (holder) {
+      if (holder.getAttribute('data-filled')) return;
+      holder.innerHTML = yearsHTML(holder.getAttribute('data-catbody'));
+      holder.setAttribute('data-filled', '1');
+    });
+  }
+
+  function bindAll() {
+    const o = $('#docOpenAll'), c2 = $('#docShutAll');
+    if (o) o.addEventListener('click', function () {
+      $$('#docList details[data-cat]').forEach(function (d) { d.open = true; });
+      fill();
+      $$('#docList details').forEach(function (d) { d.open = true; });
+    });
+    if (c2) c2.addEventListener('click', function () {
+      $$('#docList details').forEach(function (d) { d.open = false; });
+    });
+  }
+
+  drawFilters(); draw(); bindAll();
 };
 
 /* ═══════════════════════════════════════════════════════════════ EVENTS ── */
@@ -1911,14 +2008,20 @@ VIEWS.events = function () {
       M.sectionTitle(c('events.area_title'), c('events.area_sub')) +
       '<div class="grid gap-3 md:grid-cols-2 items-start">' + upArea.map(areaRow).join('') + '</div>' +
       (pastArea.length
-        ? '<details class="mt-4"><summary class="cursor-pointer text-[13.5px] font-semibold text-brand-700 dark:text-brand-300">' +
-          esc(t('showPast')) + '</summary>' +
-          '<div class="grid gap-3 md:grid-cols-2 mt-3 items-start">' + pastArea.map(areaRow).join('') + '</div></details>' : '') +
+        ? '<div class="mt-4 card rounded-2xl px-4 sm:px-5 py-1">' +
+          M.collapsible({ label:t('showPast'), count:pastArea.length, cls:'',
+                          body:'<div class="grid gap-3 md:grid-cols-2 items-start pb-4">' +
+                               pastArea.map(areaRow).join('') + '</div>' }) +
+          '</div>' : '') +
     '</div>' +
 
-    (past.length ? '<div class="mt-14">' +
-      M.sectionTitle(c('events.past')) +
-      '<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 items-stretch">' + past.slice(0, 12).map(M.eventCard).join('') + '</div>' +
+    (past.length ? '<div class="mt-10">' +
+      '<div class="card rounded-2xl px-4 sm:px-5 py-1">' +
+        M.collapsible({ label:c('events.past'), count:past.length, size:'lg', cls:'',
+                        icon:'clock-rotate-left', tone:'slate', open:false,
+                        body:'<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 items-stretch pb-4">' +
+                             past.map(M.eventCard).join('') + '</div>' }) +
+      '</div>' +
     '</div>' : '') +
 
     '<div class="mt-14 rounded-3xl p-8 grad-hero text-white relative overflow-hidden">' +

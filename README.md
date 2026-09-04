@@ -84,6 +84,23 @@ All CSVs are UTF-8 with a BOM, so Excel opens them correctly on a double-click.
 Keep the header row. If a value contains a comma, wrap it in double quotes —
 any spreadsheet does that for you on save.
 
+### How the long pages behave
+
+Anything that grows over time starts folded, so a page opens as a list of
+headings rather than a wall of cards:
+
+- **Documents / Archive** — every category is closed. Its cards are not even
+  built until you open it, which is why a page holding 1,717 documents loads
+  with a few hundred DOM nodes instead of twenty-five thousand. Inside a
+  category, each year is its own fold. Typing in the search box opens whatever
+  it matched, and *Expand all* / *Collapse all* sit above the list.
+- **Events** — the Area calendar shows what is still to come; meetings already
+  held this year and earlier events are folded away with a count.
+- **Panel 76** — the Area's own bodies are open, the twenty-two districts are
+  folded. Searching or filtering opens everything that matched.
+- **Service calendar** — opens on the next 30 days, with 60 and 90 day
+  options next to the language chips.
+
 ### To change something
 
 1. Open the file on github.com and press the pencil icon.

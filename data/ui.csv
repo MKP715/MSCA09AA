@@ -25,7 +25,6 @@ joinZoom,Join on Zoom,Entrar por Zoom
 covers,Covers,Cubre
 website,Website,Sitio web
 contact,Contact,Contacto
-position,Position,Puesto
 district,District,Distrito
 addToCal,Add to my calendar,Añadir a mi calendario
 subscribe,Subscribe to this calendar,Suscribirse a este calendario
@@ -78,3 +77,9 @@ filesTotal,documents,documentos
 fileOne,document,documento
 filesMany,documents,documentos
 filesOnSite,stored on this site,alojado en este sitio
+expandAll,Expand all,Expandir todo
+collapseAll,Collapse all,Contraer todo
+undated,Undated,Sin fecha
+next30,Next 30 days,Próximos 30 días
+next60,Next 60 days,Próximos 60 días
+next90,Next 90 days,Próximos 90 días
