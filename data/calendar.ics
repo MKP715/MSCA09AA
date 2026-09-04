@@ -24,30 +24,64 @@ RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260106T190000
-DTEND;TZID=America/Los_Angeles:20260106T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TU
-DTSTAMP:20260904T162628Z
-UID:msca09-d06@msca09.local
+DTSTART;TZID=America/Los_Angeles:20260112T183000
+DTEND;TZID=America/Los_Angeles:20260112T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2MO
+DTSTAMP:20260904T204856Z
+UID:msca09-d07@msca09.local
 CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 6\n1st Tuesday @ 7:00 PM
-  (Pacific)\nLocation: 6652 Heil Ave\, Huntington Beach\nZoom ID: 899 2638 0
- 668\nPasscode: Big6\nWeb: district6area09.org\nCovers: Balboa\, Corona Del 
- Mar\, Fountain Valley\, Huntington Beach\, Newport Beach\, Seal Beach\, Sun
- set Beach\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA
- 09 District Info flyer
+DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 7\n2nd Monday @ 6:30 P
+ M (Pacific)\nLocation: 9845 Belfast Dr.\, Garden Grove\nCovers: Garden Grov
+ e\, Midway City\, Stanton\, Westminster\nEnd time not listed in the flyer\;
+  1 hour assumed.\nSource: MSCA09 District Info flyer
 LAST-MODIFIED:20260902T160103Z
-LOCATION:6652 Heil Ave\, Huntington Beach
+LOCATION:9845 Belfast Dr.\, Garden Grove
 SEQUENCE:0
 STATUS:CONFIRMED
-SUMMARY:District 6
+SUMMARY:District 7
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T200000
+DTEND;TZID=America/Los_Angeles:20260107T210000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE,2WE,4WE
+DTSTAMP:20260904T204856Z
+UID:msca09-d21@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 21 (Spanish)\n1st\, 2n
+ d\, 4th Wednesday @ 8:00 PM (Pacific)\nSpanish-speaking district\nLocation:
+  8111 Rosecrans Ave\, #H\, Paramount\nCovers: Districts 1\, 2\, 3\, 4\nEnd 
+ time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Inf
+ o flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:8111 Rosecrans Ave\, #H\, Paramount
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 21 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260121T183000
+DTEND;TZID=America/Los_Angeles:20260121T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-oc-south@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nOrange County South H&I\n3rd Wednesday
+  @ 6:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed
+  Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA0
+ 9 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Orange County South H&I
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260101T191500
 DTEND;TZID=America/Los_Angeles:20260101T201500
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TH
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-d12@msca09.local
 CREATED:20260902T160059Z
 DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 12\n1st Thursday @ 7:1
@@ -66,500 +100,10 @@ SUMMARY:District 12
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260105T190000
-DTEND;TZID=America/Los_Angeles:20260105T200000
-RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=MO
-DTSTAMP:20260904T162628Z
-UID:msca09-d25@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 25 (Spanish)\nEvery Mo
- nday @ 7:00 PM (Pacific)\nSpanish-speaking district\nLocation: 222 E Highla
- nd Ave Ste #7\, San Bernardino\nCovers: Districts 8\, 19\nEnd time not list
- ed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:222 E Highland Ave Ste #7\, San Bernardino
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 25 (Spanish)
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260121T190000
-DTEND;TZID=America/Los_Angeles:20260121T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
-DTSTAMP:20260904T162628Z
-UID:msca09-d14@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 14\n3rd Wednesday @ 7:00
-  PM (Pacific)\nLocation: 120 South Harvard St.\, Hemet\nZoom ID: 896 007 66
- 90\nPasscode: district14\nCovers: Anza\, Aquanga\, Banning\, Beaumont\, Cab
- azon\, Hemet\, Homeland\, Juniper Flats\, Idyllwild\, Romoland\, San Jacint
- o\, Winchester\nEnd time not listed in the flyer\; 1 hour assumed.\nSource:
-  MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:120 South Harvard St.\, Hemet
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 14
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260121T200000
-DTEND;TZID=America/Los_Angeles:20260121T210000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-harbor-area@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nHarbor Area H&I\n3rd Wednesday @ 8:00 
- PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.
- \nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distri
- ct Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Harbor Area H&I
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260116T180000
-DTEND;TZID=America/Los_Angeles:20260116T190000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3FR
-DTSTAMP:20260904T162628Z
-UID:msca09-d30@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 30\n3rd Friday @ 6:00 PM
-  (Pacific)\nLocation: 57617 Yucca Trail\, Yucca Valley\nZoom ID: 812 5888 6
- 900\nPasscode: Sober2024\nWeb: district30area09.org\nCovers: Joshua Tree\, 
- Landers\, Morongo Valley\, Twentynine Palms\, Wonder Valley\, Yucca Valley\
- nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distric
- t Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:57617 Yucca Trail\, Yucca Valley
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 30
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260118T150000
-DTEND;TZID=America/Los_Angeles:20260118T170000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SU
-DTSTAMP:20260904T162628Z
-UID:msca09-d09@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 9\n3rd Sunday @ 3:00 PM 
- (Pacific)\nLocation: 35325 Date Palm Drive\, #107\, Cathedral City\nZoom ID
- : 928 8170 4093\nPasscode: 642408\nWeb: district9gs.com\nCovers: Bermuda Du
- nes\, Blythe\, Cathedral City\, Coachella\, Desert Center\, Desert Hot Spri
- ngs\, Eagle Mountain\, Indian Wells\, Indio\, La Quinta\, North Palm Spring
- s\, Palm Desert\, Palm Springs\, Rancho Mirage\, Whitewater\nNote: PDF grid
-  shows 4PM\; the district detail box says 3rd Sunday @ 3PM-5PM. 3PM-5PM use
- d.\nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:35325 Date Palm Drive\, #107\, Cathedral City
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 9
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260113T190000
-DTEND;TZID=America/Los_Angeles:20260113T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
-DTSTAMP:20260904T162628Z
-UID:msca09-d18@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 18\n2nd Tuesday @ 7:00 P
- M (Pacific)\nLocation: 183 East Bay Street\, Costa Mesa\nZoom ID: 817 8125 
- 1084\nPasscode: District18\nCovers: Costa Mesa\, Irvine\nEnd time not liste
- d in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:183 East Bay Street\, Costa Mesa
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 18
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260118T150000
-DTEND;TZID=America/Los_Angeles:20260118T160000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SU
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-inland-empire@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nInland Empire H&I\n3rd Sunday @ 3:00 P
- M (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\
- nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distric
- t Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Inland Empire H&I
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260114T193000
-DTEND;TZID=America/Los_Angeles:20260114T203000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2WE
-DTSTAMP:20260904T162628Z
-UID:msca09-ig-harbor-central@msca09.local
-CREATED:20260902T160100Z
-DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nHarbor Area Central Service\n2n
- d Wednesday @ 7:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; ve
- nue assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSo
- urce: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Harbor Area Central Service
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260121T183000
-DTEND;TZID=America/Los_Angeles:20260121T193000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-oc-south@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nOrange County South H&I\n3rd Wednesday
-  @ 6:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed
-  Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA0
- 9 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Orange County South H&I
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260111T090000
-DTEND;TZID=America/Los_Angeles:20260111T150000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
-DTSTAMP:20260904T162628Z
-UID:msca09-area-meeting@msca09.local
-CREATED:20260902T160058Z
-DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nMSCA09 Area Meeting\n2nd Sunday @ 9:0
- 0 AM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybri
- d.\nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:MSCA09 Area Meeting
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260115T180000
-DTEND;TZID=America/Los_Angeles:20260115T190000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TH
-DTSTAMP:20260904T162628Z
-UID:msca09-area-service-study@msca09.local
-CREATED:20260902T160058Z
-DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nService Study\n3rd Thursday @ 6:00 PM
-  (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\n
- End time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District
-  Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Service Study
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260112T183000
-DTEND;TZID=America/Los_Angeles:20260112T193000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2MO
-DTSTAMP:20260904T162628Z
-UID:msca09-d07@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 7\n2nd Monday @ 6:30 P
- M (Pacific)\nLocation: 9845 Belfast Dr.\, Garden Grove\nCovers: Garden Grov
- e\, Midway City\, Stanton\, Westminster\nEnd time not listed in the flyer\;
-  1 hour assumed.\nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:9845 Belfast Dr.\, Garden Grove
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 7
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260113T190000
-DTEND;TZID=America/Los_Angeles:20260113T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-south-bay@msca09.local
-CREATED:20260902T160100Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nSouth Bay H&I\n2nd Tuesday @ 7:00 PM (
- Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\nEn
- d time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District I
- nfo flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:South Bay H&I
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260101T190000
-DTEND;TZID=America/Los_Angeles:20260101T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TH
-DTSTAMP:20260904T162628Z
-UID:msca09-ig-desert@msca09.local
-CREATED:20260902T160100Z
-DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nCentral Office Desert Intergrou
- p\n1st Thursday @ 7:00 PM (Pacific)\nLocation/Zoom not listed in the flyer\
- ; venue assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.
- \nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Central Office Desert Intergroup
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260117T083000
-DTEND;TZID=America/Los_Angeles:20260117T093000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SA
-DTSTAMP:20260904T162628Z
-UID:msca09-ig-victor-valley@msca09.local
-CREATED:20260902T160100Z
-DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nVictor Valley Intergroup\n3rd S
- aturday @ 8:30 AM (Pacific)\nLocation/Zoom not listed in the flyer\; venue 
- assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource
- : MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Victor Valley Intergroup
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260113T183000
-DTEND;TZID=America/Los_Angeles:20260113T193000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
-DTSTAMP:20260904T162628Z
-UID:msca09-d17@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 17\n2nd Tuesday @ 6:30
-  PM (Pacific)\nLocation: 41743 Enterprise Cir. N. #102\, Temecula\, CA 9259
- 0\nWeb: aadistrict17.info\nCovers: Canyon Lake\, Lake Elsinore\, Menifee\, 
- Murrieta\, Perris\, Sun City\, Temecula\, Wildomar\nEnd time not listed in 
- the flyer\; 1 hour assumed.\nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:41743 Enterprise Cir. N. #102\, Temecula\, CA 92590
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 17
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260119T183000
-DTEND;TZID=America/Los_Angeles:20260119T193000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3MO
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-high-desert@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nHigh Desert H&I\n3rd Monday @ 6:30 PM 
- (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\nE
- nd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District 
- Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:High Desert H&I
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260115T184500
-DTEND;TZID=America/Los_Angeles:20260115T194500
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TH
-DTSTAMP:20260904T162628Z
-UID:msca09-area-sharing-session@msca09.local
-CREATED:20260902T160058Z
-DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nSharing Session\n3rd Thursday @ 6:45 
- PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.
- \nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distri
- ct Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Sharing Session
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260127T193000
-DTEND;TZID=America/Los_Angeles:20260127T203000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4TU
-DTSTAMP:20260904T162628Z
-UID:msca09-ig-south-bay@msca09.local
-CREATED:20260902T160100Z
-DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nSouth Bay Intergroup\n4th Tuesd
- ay @ 7:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assum
- ed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSC
- A09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:South Bay Intergroup
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260120T183000
-DTEND;TZID=America/Los_Angeles:20260120T193000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TU
-DTSTAMP:20260904T162628Z
-UID:msca09-ig-temecula@msca09.local
-CREATED:20260902T160100Z
-DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nTemecula Intergroup\n3rd Tuesda
- y @ 6:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assume
- d Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA
- 09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Temecula Intergroup
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260106T200000
-DTEND;TZID=America/Los_Angeles:20260106T210000
-RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=TU
-DTSTAMP:20260904T162628Z
-UID:msca09-d24@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 24 (Spanish)\nEvery Tu
- esday @ 8:00 PM (Pacific)\nSpanish-speaking district\nLocation: 12019 Garde
- n Grove\, #206\, Garden Grove\nCovers: Districts 5\, 7\, 10\, 15\nEnd time 
- not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info fly
- er
-LAST-MODIFIED:20260902T160103Z
-LOCATION:12019 Garden Grove\, #206\, Garden Grove
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 24 (Spanish)
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260111T180000
-DTEND;TZID=America/Los_Angeles:20260111T190000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-oc-6pm@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nOrange County H&I (6 PM)\n2nd Sunday @
-  6:00 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed H
- ybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nNote: PDF lists
-  "Orange County H&I @4PM & 6PM" on the 2nd Sunday\; split into two entries.
- \nSource: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Orange County H&I (6 PM)
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260120T190000
-DTEND;TZID=America/Los_Angeles:20260120T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TU
-DTSTAMP:20260904T162628Z
-UID:msca09-d08@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 8\n3rd Tuesday @ 7:00 PM
-  (Pacific)\nLocation: 6160 Riverside Dr.\, Riverside\nZoom ID: 909 951 1212
- \nPasscode: (no password)\nCovers: Norco\, Corona\, Mira Loma\, Rubidoux\, 
- Riverside\, Mentone\, Redlands\, Moreno Valley\, Yucaipa\, Calimesa\, Big B
- ear\, Bloomington\, Blue Jay\, Colton\, Crestline\, Fontana\, Grand Terrace
- \, Highland\, Lake Arrowhead\, Loma Linda\, Rialto\, Running Springs\, San 
- Bernardino\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSC
- A09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:6160 Riverside Dr.\, Riverside
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 8
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260128T190000
-DTEND;TZID=America/Los_Angeles:20260128T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4WE
-DTSTAMP:20260904T162628Z
-UID:msca09-d02@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 2\n4th Wednesday @ 7:0
- 0 PM (Pacific)\nLocation: Imperial Alano Club\, 8021 Rosecrans\, Paramount\
- nCovers: Artesia\, Bellflower\, Cerritos\, Compton\, Hawaiian Gardens\, Lak
- ewood (north of Carson)\, Long Beach (north of Carson)\, Norwalk\, Paramoun
- t\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distr
- ict Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:Imperial Alano Club\, 8021 Rosecrans\, Paramount
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 2
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260107T200000
-DTEND;TZID=America/Los_Angeles:20260107T210000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE,2WE,4WE
-DTSTAMP:20260904T162628Z
-UID:msca09-d21@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 21 (Spanish)\n1st\, 2n
- d\, 4th Wednesday @ 8:00 PM (Pacific)\nSpanish-speaking district\nLocation:
-  8111 Rosecrans Ave\, #H\, Paramount\nCovers: Districts 1\, 2\, 3\, 4\nEnd 
- time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Inf
- o flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:8111 Rosecrans Ave\, #H\, Paramount
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 21 (Spanish)
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260112T190000
-DTEND;TZID=America/Los_Angeles:20260112T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2MO
-DTSTAMP:20260904T162628Z
-UID:msca09-d05@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 5\n2nd Monday @ 7:00 PM 
- (Pacific)\nLocation: 19211 Dodge Ave\, Santa Ana\, CA 92705\nZoom ID: 897 0
- 37 1755\nPasscode: 06101935\nWeb: district5msca09.com\nCovers: Cowan Height
- s\, Lemon Heights\, Orange\, Orange Park\, Santa Ana\, Tustin\, Villa Park\
- nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distric
- t Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:19211 Dodge Ave\, Santa Ana\, CA 92705
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 5
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260114T173000
-DTEND;TZID=America/Los_Angeles:20260114T183000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2WE
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-coachella@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nCoachella Valley H&I\n2nd Wednesday @ 
- 5:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hy
- brid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 D
- istrict Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:Coachella Valley H&I
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260125T170000
 DTEND;TZID=America/Los_Angeles:20260125T180000
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4SU
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-d19@msca09.local
 CREATED:20260902T160059Z
 DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 19\n4th Sunday @ 5:00 PM
@@ -576,10 +120,132 @@ SUMMARY:District 19
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260119T183000
+DTEND;TZID=America/Los_Angeles:20260119T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3MO
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-high-desert@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nHigh Desert H&I\n3rd Monday @ 6:30 PM 
+ (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\nE
+ nd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District 
+ Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:High Desert H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260111T090000
+DTEND;TZID=America/Los_Angeles:20260111T150000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
+DTSTAMP:20260904T204856Z
+UID:msca09-area-meeting@msca09.local
+CREATED:20260902T160058Z
+DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nMSCA09 Area Meeting\n2nd Sunday @ 9:0
+ 0 AM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybri
+ d.\nSource: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:MSCA09 Area Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T190000
+DTEND;TZID=America/Los_Angeles:20260107T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
+DTSTAMP:20260904T204856Z
+UID:msca09-d04@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 4\n1st Wednesday @ 7:00 
+ PM (Pacific)\nLocation: Long Beach City College\nZoom ID: 996 5396 0080\nPa
+ sscode: 673617\nWeb: longbeachaa.org\nCovers: Avalon\, Belmont Shore\, Long
+  Beach\, Los Alamitos\, Naples\, Rossmoor\nEnd time not listed in the flyer
+ \; 1 hour assumed.\nSource: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:Long Beach City College
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 4
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260125T120000
+DTEND;TZID=America/Los_Angeles:20260125T130000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4SU
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-socal-intergroup@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nSo-Cal H&I Intergroup\n4th Sunday @ 12
+ :00 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hyb
+ rid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Di
+ strict Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:So-Cal H&I Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260106T190000
+DTEND;TZID=America/Los_Angeles:20260106T200000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=TU
+DTSTAMP:20260904T204856Z
+UID:msca09-d22@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 22 (Spanish)\nEvery Tu
+ esday @ 7:00 PM (Pacific)\nSpanish-speaking district\nLocation: 34116 Date 
+ Palm Dr. Suite #17\, Cathedral City\nCovers: Districts 9\, 30\, 31\nEnd tim
+ e not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info f
+ lyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:34116 Date Palm Dr. Suite #17\, Cathedral City
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 22 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260114T173000
+DTEND;TZID=America/Los_Angeles:20260114T183000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2WE
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-coachella@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nCoachella Valley H&I\n2nd Wednesday @ 
+ 5:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hy
+ brid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 D
+ istrict Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Coachella Valley H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260113T190000
+DTEND;TZID=America/Los_Angeles:20260113T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-south-bay@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nSouth Bay H&I\n2nd Tuesday @ 7:00 PM (
+ Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\nEn
+ d time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District I
+ nfo flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:South Bay H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260108T180000
 DTEND;TZID=America/Los_Angeles:20260108T190000
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TH
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-d01-03@msca09.local
 CREATED:20260902T160059Z
 DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 1 & 3\n2nd Thursday @ 6:
@@ -599,27 +265,45 @@ SUMMARY:District 1 & 3
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260107T190000
-DTEND;TZID=America/Los_Angeles:20260107T200000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
-DTSTAMP:20260904T162628Z
-UID:msca09-ig-inland-empire@msca09.local
-CREATED:20260902T160100Z
-DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nInland Empire Intergroup\n1st W
- ednesday @ 7:00 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue
-  assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSourc
- e: MSCA09 District Info flyer
+DTSTART;TZID=America/Los_Angeles:20260111T180000
+DTEND;TZID=America/Los_Angeles:20260111T190000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-oc-6pm@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nOrange County H&I (6 PM)\n2nd Sunday @
+  6:00 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed H
+ ybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nNote: PDF lists
+  "Orange County H&I @4PM & 6PM" on the 2nd Sunday\; split into two entries.
+ \nSource: MSCA09 District Info flyer
 LAST-MODIFIED:20260902T160103Z
 SEQUENCE:0
 STATUS:CONFIRMED
-SUMMARY:Inland Empire Intergroup
+SUMMARY:Orange County H&I (6 PM)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260121T200000
+DTEND;TZID=America/Los_Angeles:20260121T210000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-harbor-area@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nHarbor Area H&I\n3rd Wednesday @ 8:00 
+ PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.
+ \nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distri
+ ct Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Harbor Area H&I
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260105T193000
 DTEND;TZID=America/Los_Angeles:20260105T203000
 RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=MO
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-d20@msca09.local
 CREATED:20260902T160059Z
 DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 20 (Spanish)\nEvery Mo
@@ -635,10 +319,27 @@ SUMMARY:District 20 (Spanish)
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260118T150000
+DTEND;TZID=America/Los_Angeles:20260118T160000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SU
+DTSTAMP:20260904T204856Z
+UID:msca09-hi-inland-empire@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nInland Empire H&I\n3rd Sunday @ 3:00 P
+ M (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\
+ nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distric
+ t Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Inland Empire H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260111T160000
 DTEND;TZID=America/Los_Angeles:20260111T170000
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-hi-oc-4pm@msca09.local
 CREATED:20260902T160059Z
 DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nOrange County H&I (4 PM)\n2nd Sunday @
@@ -653,29 +354,46 @@ SUMMARY:Orange County H&I (4 PM)
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260106T190000
-DTEND;TZID=America/Los_Angeles:20260106T200000
-RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=TU
-DTSTAMP:20260904T162628Z
-UID:msca09-d22@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 22 (Spanish)\nEvery Tu
- esday @ 7:00 PM (Pacific)\nSpanish-speaking district\nLocation: 34116 Date 
- Palm Dr. Suite #17\, Cathedral City\nCovers: Districts 9\, 30\, 31\nEnd tim
- e not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info f
- lyer
+DTSTART;TZID=America/Los_Angeles:20260115T184500
+DTEND;TZID=America/Los_Angeles:20260115T194500
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TH
+DTSTAMP:20260904T204856Z
+UID:msca09-area-sharing-session@msca09.local
+CREATED:20260902T160058Z
+DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nSharing Session\n3rd Thursday @ 6:45 
+ PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.
+ \nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distri
+ ct Info flyer
 LAST-MODIFIED:20260902T160103Z
-LOCATION:34116 Date Palm Dr. Suite #17\, Cathedral City
 SEQUENCE:0
 STATUS:CONFIRMED
-SUMMARY:District 22 (Spanish)
+SUMMARY:Sharing Session
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T193000
+DTEND;TZID=America/Los_Angeles:20260107T203000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
+DTSTAMP:20260904T204856Z
+UID:msca09-d10@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 10\n1st Wednesday @ 7:30
+  PM (Pacific)\nLocation: Fullerton\nZoom ID: 844 6704 7381\nPasscode: 00134
+ 3\nCovers: Anaheim (South of 91\, West of 55)\, Buena Park\, Cypress\, Full
+ erton\, La Palma\nEnd time not listed in the flyer\; 1 hour assumed.\nSourc
+ e: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:Fullerton
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 10
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260105T190000
 DTEND;TZID=America/Los_Angeles:20260105T200000
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1MO
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-hi-temecula-valley@msca09.local
 CREATED:20260902T160100Z
 DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nTemecula Valley H&I\n1st Monday @ 7:00
@@ -692,7 +410,7 @@ BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260107T190000
 DTEND;TZID=America/Los_Angeles:20260107T200000
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-ig-oc@msca09.local
 CREATED:20260902T160100Z
 DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nOrange County Intergroup\n1st W
@@ -706,29 +424,236 @@ SUMMARY:Orange County Intergroup
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260128T190000
+DTEND;TZID=America/Los_Angeles:20260128T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4WE
+DTSTAMP:20260904T204856Z
+UID:msca09-d02@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 2\n4th Wednesday @ 7:0
+ 0 PM (Pacific)\nLocation: Imperial Alano Club\, 8021 Rosecrans\, Paramount\
+ nCovers: Artesia\, Bellflower\, Cerritos\, Compton\, Hawaiian Gardens\, Lak
+ ewood (north of Carson)\, Long Beach (north of Carson)\, Norwalk\, Paramoun
+ t\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distr
+ ict Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:Imperial Alano Club\, 8021 Rosecrans\, Paramount
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 2
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260101T190000
+DTEND;TZID=America/Los_Angeles:20260101T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TH
+DTSTAMP:20260904T204856Z
+UID:msca09-ig-desert@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nCentral Office Desert Intergrou
+ p\n1st Thursday @ 7:00 PM (Pacific)\nLocation/Zoom not listed in the flyer\
+ ; venue assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.
+ \nSource: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Central Office Desert Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260117T083000
+DTEND;TZID=America/Los_Angeles:20260117T093000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SA
+DTSTAMP:20260904T204856Z
+UID:msca09-ig-victor-valley@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nVictor Valley Intergroup\n3rd S
+ aturday @ 8:30 AM (Pacific)\nLocation/Zoom not listed in the flyer\; venue 
+ assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource
+ : MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Victor Valley Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260120T190000
+DTEND;TZID=America/Los_Angeles:20260120T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TU
+DTSTAMP:20260904T204856Z
+UID:msca09-d08@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 8\n3rd Tuesday @ 7:00 PM
+  (Pacific)\nLocation: 6160 Riverside Dr.\, Riverside\nZoom ID: 909 951 1212
+ \nPasscode: (no password)\nCovers: Norco\, Corona\, Mira Loma\, Rubidoux\, 
+ Riverside\, Mentone\, Redlands\, Moreno Valley\, Yucaipa\, Calimesa\, Big B
+ ear\, Bloomington\, Blue Jay\, Colton\, Crestline\, Fontana\, Grand Terrace
+ \, Highland\, Lake Arrowhead\, Loma Linda\, Rialto\, Running Springs\, San 
+ Bernardino\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSC
+ A09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:6160 Riverside Dr.\, Riverside
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 8
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260107T190000
 DTEND;TZID=America/Los_Angeles:20260107T200000
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
-DTSTAMP:20260904T162628Z
-UID:msca09-d04@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 4\n1st Wednesday @ 7:00 
- PM (Pacific)\nLocation: Long Beach City College\nZoom ID: 996 5396 0080\nPa
- sscode: 673617\nWeb: longbeachaa.org\nCovers: Avalon\, Belmont Shore\, Long
-  Beach\, Los Alamitos\, Naples\, Rossmoor\nEnd time not listed in the flyer
- \; 1 hour assumed.\nSource: MSCA09 District Info flyer
+DTSTAMP:20260904T204856Z
+UID:msca09-ig-inland-empire@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nInland Empire Intergroup\n1st W
+ ednesday @ 7:00 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue
+  assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSourc
+ e: MSCA09 District Info flyer
 LAST-MODIFIED:20260902T160103Z
-LOCATION:Long Beach City College
 SEQUENCE:0
 STATUS:CONFIRMED
-SUMMARY:District 4
+SUMMARY:Inland Empire Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260120T183000
+DTEND;TZID=America/Los_Angeles:20260120T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TU
+DTSTAMP:20260904T204856Z
+UID:msca09-ig-temecula@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nTemecula Intergroup\n3rd Tuesda
+ y @ 6:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assume
+ d Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA
+ 09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Temecula Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260127T193000
+DTEND;TZID=America/Los_Angeles:20260127T203000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4TU
+DTSTAMP:20260904T204856Z
+UID:msca09-ig-south-bay@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nSouth Bay Intergroup\n4th Tuesd
+ ay @ 7:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assum
+ ed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSC
+ A09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:South Bay Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260117T100000
+DTEND;TZID=America/Los_Angeles:20260117T110000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SA
+DTSTAMP:20260904T204856Z
+UID:msca09-area-archives@msca09.local
+CREATED:20260902T160058Z
+DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nArchives\n3rd Saturday @ 10:00 AM (Pa
+ cific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\nEnd 
+ time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Inf
+ o flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Archives
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260118T150000
+DTEND;TZID=America/Los_Angeles:20260118T170000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SU
+DTSTAMP:20260904T204856Z
+UID:msca09-d09@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 9\n3rd Sunday @ 3:00 PM 
+ (Pacific)\nLocation: 35325 Date Palm Drive\, #107\, Cathedral City\nZoom ID
+ : 928 8170 4093\nPasscode: 642408\nWeb: district9gs.com\nCovers: Bermuda Du
+ nes\, Blythe\, Cathedral City\, Coachella\, Desert Center\, Desert Hot Spri
+ ngs\, Eagle Mountain\, Indian Wells\, Indio\, La Quinta\, North Palm Spring
+ s\, Palm Desert\, Palm Springs\, Rancho Mirage\, Whitewater\nNote: PDF grid
+  shows 4PM\; the district detail box says 3rd Sunday @ 3PM-5PM. 3PM-5PM use
+ d.\nSource: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:35325 Date Palm Drive\, #107\, Cathedral City
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 9
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260112T190000
+DTEND;TZID=America/Los_Angeles:20260112T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2MO
+DTSTAMP:20260904T204856Z
+UID:msca09-d05@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 5\n2nd Monday @ 7:00 PM 
+ (Pacific)\nLocation: 19211 Dodge Ave\, Santa Ana\, CA 92705\nZoom ID: 897 0
+ 37 1755\nPasscode: 06101935\nWeb: district5msca09.com\nCovers: Cowan Height
+ s\, Lemon Heights\, Orange\, Orange Park\, Santa Ana\, Tustin\, Villa Park\
+ nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distric
+ t Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:19211 Dodge Ave\, Santa Ana\, CA 92705
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 5
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260116T180000
+DTEND;TZID=America/Los_Angeles:20260116T190000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3FR
+DTSTAMP:20260904T204856Z
+UID:msca09-d30@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 30\n3rd Friday @ 6:00 PM
+  (Pacific)\nLocation: 57617 Yucca Trail\, Yucca Valley\nZoom ID: 812 5888 6
+ 900\nPasscode: Sober2024\nWeb: district30area09.org\nCovers: Joshua Tree\, 
+ Landers\, Morongo Valley\, Twentynine Palms\, Wonder Valley\, Yucca Valley\
+ nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Distric
+ t Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:57617 Yucca Trail\, Yucca Valley
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 30
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260121T190000
+DTEND;TZID=America/Los_Angeles:20260121T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
+DTSTAMP:20260904T204856Z
+UID:msca09-d14@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 14\n3rd Wednesday @ 7:00
+  PM (Pacific)\nLocation: 120 South Harvard St.\, Hemet\nZoom ID: 896 007 66
+ 90\nPasscode: district14\nCovers: Anza\, Aquanga\, Banning\, Beaumont\, Cab
+ azon\, Hemet\, Homeland\, Juniper Flats\, Idyllwild\, Romoland\, San Jacint
+ o\, Winchester\nEnd time not listed in the flyer\; 1 hour assumed.\nSource:
+  MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:120 South Harvard St.\, Hemet
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 14
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260102T190000
 DTEND;TZID=America/Los_Angeles:20260102T200000
 RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=FR
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
 UID:msca09-d23@msca09.local
 CREATED:20260902T160059Z
 DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 23 (Spanish)\nEvery Fr
@@ -743,27 +668,138 @@ SUMMARY:District 23 (Spanish)
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260117T100000
-DTEND;TZID=America/Los_Angeles:20260117T110000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SA
-DTSTAMP:20260904T162628Z
-UID:msca09-area-archives@msca09.local
-CREATED:20260902T160058Z
-DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nArchives\n3rd Saturday @ 10:00 AM (Pa
- cific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\nEnd 
- time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Inf
- o flyer
+DTSTART;TZID=America/Los_Angeles:20260105T190000
+DTEND;TZID=America/Los_Angeles:20260105T200000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=MO
+DTSTAMP:20260904T204856Z
+UID:msca09-d25@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 25 (Spanish)\nEvery Mo
+ nday @ 7:00 PM (Pacific)\nSpanish-speaking district\nLocation: 222 E Highla
+ nd Ave Ste #7\, San Bernardino\nCovers: Districts 8\, 19\nEnd time not list
+ ed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info flyer
 LAST-MODIFIED:20260902T160103Z
+LOCATION:222 E Highland Ave Ste #7\, San Bernardino
 SEQUENCE:0
 STATUS:CONFIRMED
-SUMMARY:Archives
+SUMMARY:District 25 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260106T200000
+DTEND;TZID=America/Los_Angeles:20260106T210000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=TU
+DTSTAMP:20260904T204856Z
+UID:msca09-d24@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 24 (Spanish)\nEvery Tu
+ esday @ 8:00 PM (Pacific)\nSpanish-speaking district\nLocation: 12019 Garde
+ n Grove\, #206\, Garden Grove\nCovers: Districts 5\, 7\, 10\, 15\nEnd time 
+ not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info fly
+ er
+LAST-MODIFIED:20260902T160103Z
+LOCATION:12019 Garden Grove\, #206\, Garden Grove
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 24 (Spanish)
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 DTSTART;TZID=America/Los_Angeles:20260106T190000
 DTEND;TZID=America/Los_Angeles:20260106T200000
 RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TU
-DTSTAMP:20260904T162628Z
+DTSTAMP:20260904T204856Z
+UID:msca09-d06@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 6\n1st Tuesday @ 7:00 PM
+  (Pacific)\nLocation: 6652 Heil Ave\, Huntington Beach\nZoom ID: 899 2638 0
+ 668\nPasscode: Big6\nWeb: district6area09.org\nCovers: Balboa\, Corona Del 
+ Mar\, Fountain Valley\, Huntington Beach\, Newport Beach\, Seal Beach\, Sun
+ set Beach\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA
+ 09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:6652 Heil Ave\, Huntington Beach
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 6
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260114T193000
+DTEND;TZID=America/Los_Angeles:20260114T203000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2WE
+DTSTAMP:20260904T204856Z
+UID:msca09-ig-harbor-central@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\n\n--\nHarbor Area Central Service\n2n
+ d Wednesday @ 7:30 PM (Pacific)\nLocation/Zoom not listed in the flyer\; ve
+ nue assumed Hybrid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSo
+ urce: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Harbor Area Central Service
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260115T180000
+DTEND;TZID=America/Los_Angeles:20260115T190000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TH
+DTSTAMP:20260904T204856Z
+UID:msca09-area-service-study@msca09.local
+CREATED:20260902T160058Z
+DESCRIPTION:MSCA09|Area|Hybrid\n\n--\nService Study\n3rd Thursday @ 6:00 PM
+  (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hybrid.\n
+ End time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 District
+  Info flyer
+LAST-MODIFIED:20260902T160103Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Service Study
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260113T183000
+DTEND;TZID=America/Los_Angeles:20260113T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
+DTSTAMP:20260904T204856Z
+UID:msca09-d17@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Physical\n\n--\nDistrict 17\n2nd Tuesday @ 6:30
+  PM (Pacific)\nLocation: 41743 Enterprise Cir. N. #102\, Temecula\, CA 9259
+ 0\nWeb: aadistrict17.info\nCovers: Canyon Lake\, Lake Elsinore\, Menifee\, 
+ Murrieta\, Perris\, Sun City\, Temecula\, Wildomar\nEnd time not listed in 
+ the flyer\; 1 hour assumed.\nSource: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:41743 Enterprise Cir. N. #102\, Temecula\, CA 92590
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 17
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260113T190000
+DTEND;TZID=America/Los_Angeles:20260113T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
+DTSTAMP:20260904T204856Z
+UID:msca09-d18@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 18\n2nd Tuesday @ 7:00 P
+ M (Pacific)\nLocation: 183 East Bay Street\, Costa Mesa\nZoom ID: 817 8125 
+ 1084\nPasscode: District18\nCovers: Costa Mesa\, Irvine\nEnd time not liste
+ d in the flyer\; 1 hour assumed.\nSource: MSCA09 District Info flyer
+LAST-MODIFIED:20260902T160103Z
+LOCATION:183 East Bay Street\, Costa Mesa
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 18
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260106T190000
+DTEND;TZID=America/Los_Angeles:20260106T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TU
+DTSTAMP:20260904T204856Z
 UID:msca09-d15@msca09.local
 CREATED:20260902T160059Z
 DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 15\n1st Tuesday @ 7:00 P
@@ -776,42 +812,6 @@ LOCATION:6550 Fairmont Blvd.\, Yorba Linda
 SEQUENCE:0
 STATUS:CONFIRMED
 SUMMARY:District 15
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260125T120000
-DTEND;TZID=America/Los_Angeles:20260125T130000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4SU
-DTSTAMP:20260904T162628Z
-UID:msca09-hi-socal-intergroup@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|H&I|Hybrid\n\n--\nSo-Cal H&I Intergroup\n4th Sunday @ 12
- :00 PM (Pacific)\nLocation/Zoom not listed in the flyer\; venue assumed Hyb
- rid.\nEnd time not listed in the flyer\; 1 hour assumed.\nSource: MSCA09 Di
- strict Info flyer
-LAST-MODIFIED:20260902T160103Z
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:So-Cal H&I Intergroup
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-DTSTART;TZID=America/Los_Angeles:20260107T193000
-DTEND;TZID=America/Los_Angeles:20260107T203000
-RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
-DTSTAMP:20260904T162628Z
-UID:msca09-d10@msca09.local
-CREATED:20260902T160059Z
-DESCRIPTION:MSCA09|District|Hybrid\n\n--\nDistrict 10\n1st Wednesday @ 7:30
-  PM (Pacific)\nLocation: Fullerton\nZoom ID: 844 6704 7381\nPasscode: 00134
- 3\nCovers: Anaheim (South of 91\, West of 55)\, Buena Park\, Cypress\, Full
- erton\, La Palma\nEnd time not listed in the flyer\; 1 hour assumed.\nSourc
- e: MSCA09 District Info flyer
-LAST-MODIFIED:20260902T160103Z
-LOCATION:Fullerton
-SEQUENCE:0
-STATUS:CONFIRMED
-SUMMARY:District 10
 TRANSP:OPAQUE
 END:VEVENT
 END:VCALENDAR
