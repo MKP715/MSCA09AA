@@ -43,10 +43,26 @@ def drive_ids():
     if not db:
         raise SystemExit('Google Drive for Desktop metadata not found under ' + DRIVEFS)
 
+    # Drive for Desktop keeps this database open, and locks part of it while it
+    # is uploading. That is exactly when this script tends to be run -- right
+    # after dropping new files in -- so wait for the sync to settle rather than
+    # failing with a Windows sharing error.
     tmp = os.path.join(tempfile.gettempdir(), 'msca09_drivefs.db')
-    for suffix in ('', '-wal', '-shm'):
-        if os.path.exists(db + suffix):
-            shutil.copy2(db + suffix, tmp + suffix)
+    for attempt in range(8):
+        try:
+            for suffix in ('', '-wal', '-shm'):
+                if os.path.exists(db + suffix):
+                    shutil.copy2(db + suffix, tmp + suffix)
+            break
+        except (IOError, OSError) as e:
+            if attempt == 7:
+                raise SystemExit(
+                    'Google Drive for Desktop still has its database locked:\n  %s\n'
+                    'It is probably still uploading. Wait for the Drive icon to stop\n'
+                    'showing activity, then run this again.' % e)
+            wait = 10 * (attempt + 1)
+            print('  Drive is busy syncing; waiting %ds ...' % wait, flush=True)
+            time.sleep(wait)
 
     con = sqlite3.connect(tmp)
     cur = con.cursor()

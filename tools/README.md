@@ -43,6 +43,48 @@ lines. Everything else the page needs is in the `<style>` block inside
 
 ---
 
+## `fetch_events.py` — refresh the events from msca09aa.org
+
+```sh
+python tools/fetch_events.py --dry-run   # report, change nothing
+python tools/fetch_events.py             # rewrite data/events.csv
+python tools/fetch_events.py --images    # also download new flyers to Drive
+```
+
+Reads the events out of The Events Calendar's REST feed on msca09aa.org and
+rewrites `data/events.csv`. Three things it does that are worth knowing:
+
+**It folds a repeating event back into one row.** The feed lists every
+occurrence separately — the ACYPAA business meeting alone is fourteen entries.
+The dates are grouped by title and time, the rule behind them is worked out,
+and the row gets an `rrule` such as `FREQ=MONTHLY;BYDAY=1SU,3SU`. Dates the
+rule would produce but the Area did not actually schedule go in `exdates`, so
+the series still reproduces the published dates *exactly* — no meeting appears
+that nobody agreed to, and none is lost. Each series ends at its last
+published date; re-run this when the Area schedules more.
+
+Area business meetings are never folded: `data/area-meetings.csv` is the
+authority for those and the real pattern is irregular.
+
+**It removes members' phone numbers.** Flyers routinely say "contact Andrew at
+562-507-6618". That must not go on a public website, and doing it here rather
+than by hand means a later refresh cannot quietly put it back. Toll-free
+numbers are kept — those are hotels and offices, not members. Anything removed
+is listed in the run's output.
+
+**It rebuilds unusable slugs.** A slug is the shareable `#/events/…` link. One
+of WordPress's was `d09-gsr-school-virtual-only-id-928-8170-4093-pc634401-…`,
+which puts a Zoom ID and passcode in a public URL. Slugs that carry
+credentials, are bare post numbers, or say nothing about the event are rebuilt
+from the title; everything else is left alone so shared links keep working.
+
+With `--images` it downloads any new flyer into the Drive folder as
+`<slug>-1.jpg` plus the `.thumb.jpg` the cards use, both re-encoded down from
+the multi-megabyte originals. Run `tools/drive_links.py` afterwards to turn
+them into Drive addresses.
+
+---
+
 ## `build_social_card.py` — the picture chat apps show for a shared link
 
 ```sh

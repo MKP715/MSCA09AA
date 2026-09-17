@@ -116,6 +116,11 @@ for name in ('trusted-servants.csv', 'districts.csv', 'committees.csv', 'events.
                 before = v[max(0, m.start() - 24):m.start()]
                 if re.search(r'(?i)zoom|meeting id|\bid\b|passcode|password', before):
                     continue
+                # A toll-free number belongs to a hotel or an office, never to a
+                # member — a convention's room-booking line is meant to be called.
+                if re.match(r'(?:\+?1[\s.-]?)?\(?(800|833|844|855|866|877|888)\b',
+                            m.group(0)):
+                    continue
                 problems.append('%s row %d: %s looks like a phone number — %s'
                                 % (name, i, k, m.group(0)))
 

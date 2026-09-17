@@ -467,6 +467,89 @@ function parseDT(s){                       // "2026-09-13 08:00:00" -> Date (loc
   if (!m) return null;
   return new Date(+m[1], +m[2]-1, +m[3], +(m[4]||0), +(m[5]||0));
 }
+function ymd(d){
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') +
+         '-' + String(d.getDate()).padStart(2,'0');
+}
+
+/* ── events that repeat ──────────────────────────────────────────────────
+   An event that happens every month is one row in events.csv carrying an
+   iCalendar RRULE, not one row per occurrence — the ACYPAA business meeting
+   alone would otherwise be fourteen rows to keep in step. `exdates` lists the
+   dates the rule would produce that the Area did not actually schedule (a
+   month skipped for the General Service Conference, say), so the series
+   reproduces the published dates exactly.
+
+   Times are kept as written, in Pacific, the same as the service calendar. */
+const RECUR_CAP = 400;
+function eventOccurrences(e, from, to) {
+  const start = parseDT(e.start);
+  if (!start) return [];
+  if (!e.rrule) return (start >= from && start <= to) ? [start] : [];
+  if (typeof ICAL === 'undefined') return [start];      // no library: show the first
+
+  const skip = {};
+  String(e.exdates || '').split(';').forEach(function (s) {
+    s = s.trim(); if (s) skip[s] = true;
+  });
+
+  const out = [];
+  try {
+    const it = ICAL.Recur.fromString(e.rrule).iterator(ICAL.Time.fromData({
+      year:start.getFullYear(), month:start.getMonth()+1, day:start.getDate(),
+      hour:start.getHours(), minute:start.getMinutes(), second:0, isDate:false
+    }));
+    let t, n = 0;
+    while ((t = it.next()) && n++ < RECUR_CAP) {
+      const d = new Date(t.year, t.month-1, t.day, t.hour||0, t.minute||0);
+      if (d > to) break;
+      if (d >= from && !skip[ymd(d)]) out.push(d);
+    }
+  } catch (err) {
+    console.warn('[MSCA09] rrule for "' + (e.slug||'') + '":', err.message);
+    return (start >= from && start <= to) ? [start] : [];
+  }
+  return out;
+}
+
+/* how long an event runs, so an occurrence can be given the same length */
+function eventSpanMs(e) {
+  const a = parseDT(e.start), b = parseDT(e.end);
+  return (a && b && b > a) ? (b - a) : 0;
+}
+
+const FAR_PAST = new Date(1990, 0, 1);
+const FAR_OFF  = new Date(2100, 0, 1);
+function nextOccurrence(e, from) {
+  return eventOccurrences(e, from || new Date(), FAR_OFF)[0] || null;
+}
+function lastOccurrence(e) {
+  const all = eventOccurrences(e, FAR_PAST, FAR_OFF);
+  return all.length ? all[all.length-1] : parseDT(e.start);
+}
+
+/* "1st & 3rd Sunday", "every Wednesday", "3rd Thursday of the month" */
+function recurLabel(e) {
+  if (!e.rrule) return '';
+  const rule = String(e.rrule);
+  const byday = (rule.match(/BYDAY=([^;]+)/) || [])[1] || '';
+  const codes = ['SU','MO','TU','WE','TH','FR','SA'];
+  const parts = byday.split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+  if (!parts.length) return t('repeats');
+
+  const dayOf = function (p) { return codes.indexOf(p.slice(-2)); };
+  if (/FREQ=WEEKLY/.test(rule)) {
+    return t('everyWeek').replace('{day}', dayName(dayOf(parts[0])));
+  }
+  const nths = parts.map(function (p) {
+    const n = parseInt(p, 10);
+    return isNaN(n) ? '' : ordinal(n);
+  }).filter(Boolean);
+  const day = dayName(dayOf(parts[0]));
+  if (!nths.length) return t('everyMonth').replace('{day}', day);
+  return t('everyMonthNth').replace('{nth}', nths.join(' & ')).replace('{day}', day);
+}
+
 function mailto(addr, subj){ return 'mailto:' + addr + (subj ? '?subject=' + encodeURIComponent(subj) : ''); }
 function icon(name, cls){ return '<i class="fa-solid fa-' + attr(name) + (cls ? ' ' + attr(cls) : '') + '" aria-hidden="true"></i>'; }
 function fileIcon(fmt){
@@ -1061,6 +1144,7 @@ window.MSCA = {
   fmtTime, fmtHHMM, fmtDate, fmtDateY, dayName, monName, ordinal, parseDT,
   DOW_EN, DOW_ES, MON_EN, MON_ES,
   expandOccurrences, calendarSeries, seriesById, latestStamp,
+  eventOccurrences, nextOccurrence, lastOccurrence, recurLabel, eventSpanMs, ymd,
   kindOf, kindText, meetKind, TONE, GRAD, tone, grad, kindLabel, evKind, evKindLabel, fmtLabel,
   pageHead, sectionTitle, emptyState, anonNote, linkOut, collapsible,
   CURRENT_PANEL, servants,
@@ -1242,19 +1326,25 @@ function occCard(o) {
     '</div></a>';
 }
 
-function upcomingEvents() {
+/* A repeating event is one row, so "is it still to come?" is a question about
+   its occurrences rather than about a single date. nextDate is attached here
+   so the cards and the sort can use it without expanding the rule again. */
+function datedEvents() {
   const today = new Date(); today.setHours(0,0,0,0);
-  return (S.data['events'] || []).filter(function (e) {
-    const end = M.parseDT(e.end || e.start);
-    return end && end >= today;
-  }).sort(function (a,b) { return String(a.start).localeCompare(String(b.start)); });
+  const span = M.eventSpanMs;
+  return (S.data['events'] || []).map(function (e) {
+    const next = M.nextOccurrence(e, new Date(today.getTime() - span(e)));
+    const last = M.lastOccurrence(e);
+    return Object.assign({}, e, { nextDate: next, lastDate: last });
+  });
+}
+function upcomingEvents() {
+  return datedEvents().filter(function (e) { return !!e.nextDate; })
+    .sort(function (a,b) { return a.nextDate - b.nextDate; });
 }
 function pastEvents() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  return (S.data['events'] || []).filter(function (e) {
-    const end = M.parseDT(e.end || e.start);
-    return end && end < today;
-  }).sort(function (a,b) { return String(b.start).localeCompare(String(a.start)); });
+  return datedEvents().filter(function (e) { return !e.nextDate; })
+    .sort(function (a,b) { return (b.lastDate||0) - (a.lastDate||0); });
 }
 function eventTitle(e){ return (S.lang === 'es' && e.title_es) ? e.title_es : e.title; }
 function flyerList(e){ return String(e.flyers||'').split(';').map(function(x){return x.trim();}).filter(Boolean); }
@@ -1269,7 +1359,10 @@ function thumbOf(e, i) {
 }
 
 function eventDateLabel(e) {
-  const s = M.parseDT(e.start), en = M.parseDT(e.end || e.start);
+  // a repeating event shows the date it next happens; nextDate is put on the
+  // row by datedEvents(), so a card in a list needs no extra work here
+  const s = e.nextDate || e.lastDate || M.parseDT(e.start);
+  const en = new Date((s ? s.getTime() : 0) + M.eventSpanMs(e));
   if (!s) return '';
   const same = !en || s.toDateString() === en.toDateString();
   const base = M.monName(s.getMonth()) + ' ' + s.getDate();
@@ -1303,6 +1396,8 @@ function eventCard(e) {
       '<span class="flex items-center gap-2 flex-wrap">' +
         '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.evKindLabel(e.kind)) + '</span></span>' +
         (e.language === 'Spanish' ? '<span class="chip ' + M.tone('orange') + '">ES</span>' : '') +
+        (e.rrule ? '<span class="chip ' + M.tone('violet') + '">' +
+           icon('repeat','text-[.7rem]') + '<span>' + esc(M.recurLabel(e)) + '</span></span>' : '') +
       '</span>' +
       '<span class="mt-2.5 block text-[13px] font-bold text-fuchsia-700 dark:text-fuchsia-300">' + esc(eventDateLabel(e)) + '</span>' +
       '<span class="mt-1 block font-display font-bold text-[17px] leading-snug">' + esc(eventTitle(e)) + '</span>' +
@@ -2726,7 +2821,15 @@ MODALS.events = function (idParts) {
 
   const k = M.evKind(e.kind);
   const fl = M.flyerList(e);
-  const start = M.parseDT(e.start), end = M.parseDT(e.end || e.start);
+  // a repeating event opens on the next date it happens, and "add to calendar"
+  // adds that one rather than the first of the series
+  const today = new Date(); today.setHours(0,0,0,0);
+  const span = M.eventSpanMs(e);
+  const upcoming = M.eventOccurrences(e, new Date(today.getTime() - span),
+                                      new Date(today.getTime() + 400 * 864e5));
+  const start = upcoming[0] || M.lastOccurrence(e) || M.parseDT(e.start);
+  const end = start ? new Date(start.getTime() + span) : null;
+  const shown = Object.assign({}, e, { nextDate: start });
   const place = [e.venue, e.address, e.city, e.region, e.postal].filter(Boolean).join(', ');
   const title = M.eventTitle(e);
 
@@ -2742,13 +2845,25 @@ MODALS.events = function (idParts) {
   const chips =
     '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.evKindLabel(e.kind)) + '</span></span>' +
     (e.language === 'Spanish' ? '<span class="chip ' + M.tone('orange') + '">' + esc(t('spanish')) + '</span>' : '') +
+    (e.rrule ? '<span class="chip ' + M.tone('violet') + '">' + icon('repeat','text-[.7rem]') +
+       '<span>' + esc(M.recurLabel(e)) + '</span></span>' : '') +
     (e.cost ? '<span class="chip ' + M.tone('emerald') + '">' + esc(e.cost) + '</span>' : '');
 
   const body =
     '<div class="grid gap-3 sm:grid-cols-2">' +
-      defRow('calendar-day', t('when'), M.eventDateLabel(e) + (M.eventTimeLabel(e) ? ' · ' + M.eventTimeLabel(e) : '')) +
+      defRow('calendar-day', t('when'), M.eventDateLabel(shown) + (M.eventTimeLabel(e) ? ' · ' + M.eventTimeLabel(e) : '')) +
       defRow('location-dot', t('where'), place || '—', place ? M.mapLink(place) : '', true) +
     '</div>' +
+    // every date in the series, so nobody has to work the rule out themselves
+    (upcoming.length > 1
+      ? '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' +
+          esc(t('alsoOn')) + '</p><div class="flex flex-wrap gap-2">' +
+          upcoming.slice(1, 13).map(function (d) {
+            return '<span class="chip ' + M.tone('slate') + '">' + esc(M.fmtDateY(d)) + '</span>';
+          }).join('') +
+          (upcoming.length > 13 ? '<span class="chip ' + M.tone('slate') + '">+' +
+             esc(upcoming.length - 13) + '</span>' : '') +
+        '</div></div>' : '') +
     (e.description
       ? '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' + esc(t('about')) + '</p>' +
         '<div class="text-[14.5px] leading-relaxed opacity-85 whitespace-pre-line break-words max-h-72 overflow-y-auto pr-1">' +

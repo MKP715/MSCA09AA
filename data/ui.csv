@@ -83,3 +83,8 @@ next30,Next 30 days,Próximos 30 días
 next60,Next 60 days,Próximos 60 días
 next90,Next 90 days,Próximos 90 días
 panel,Panel,Panel
+repeats,Repeats,Se repite
+everyWeek,Every {day},Cada {day}
+everyMonth,Monthly on {day},Mensual el {day}
+everyMonthNth,"{nth} {day} of the month","{nth} {day} del mes"
+alsoOn,Also on,También el

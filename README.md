@@ -68,7 +68,7 @@ be rewritten.
 | `data/districts.csv` | The Districts page and district modals. `covers_cities` is a `;`-separated list and drives the city search. |
 | `data/trusted-servants.csv` | Panel 76 page, committee chair names, district officers. `body_sort` / `position_sort` control ordering. |
 | `data/committees.csv` | Committees page and modals. `color` picks the card gradient; `aa_url` links out to aa.org. |
-| `data/events.csv` | Events page and event modals, including flyer images. |
+| `data/events.csv` | Events page and event modals, including flyer images. A repeating event is **one row with an `rrule`**, not one row per date — see "Events that repeat" below. |
 | `data/area-meetings.csv` | The approved ASC / Assembly schedule for the panel. |
 | `data/resources.csv` | A.A. Resources page and the central-office lists. |
 | `data/documents.csv` | Minutes, motions, agendas, reports — the current record *and* the whole archive. `collection` is `Current` or `Archive`; `publish` is `yes` or anything else to withhold a file. |
@@ -123,6 +123,36 @@ have no effect. See [`tools/README.md`](tools/README.md).
    `flyers` is a `;`-separated list of paths.
 3. Paste the flyer's text into `description` so it is searchable and readable
    on a phone. Strip last names, personal e-mails and personal phone numbers.
+
+### Events that repeat
+
+An event that happens every month is **one row** in `data/events.csv`, not one
+row per occurrence. Two columns carry the repeat:
+
+| column | example | meaning |
+|---|---|---|
+| `rrule` | `FREQ=MONTHLY;BYDAY=1SU,3SU;UNTIL=20270404T160000` | an iCalendar recurrence rule — the same thing Google Calendar writes |
+| `exdates` | `2026-07-16` | dates the rule produces that are **not** happening, separated by `;` |
+
+`start` is the first occurrence and sets the time of day; `end` sets how long
+it runs. The page expands the rule and shows the next date, a chip saying how
+it repeats, and every remaining date inside the event's own window.
+
+Common rules:
+
+```
+FREQ=WEEKLY;BYDAY=WE                every Wednesday
+FREQ=MONTHLY;BYDAY=3TH              3rd Thursday of the month
+FREQ=MONTHLY;BYDAY=1SU,3SU          1st and 3rd Sunday
+FREQ=WEEKLY;BYDAY=FR;UNTIL=20260925 every Friday, ending 25 September
+```
+
+**Always set `UNTIL`** unless the Area really has committed to the event
+continuing forever. Without it the site will keep printing dates that nobody
+has scheduled. `tools/fetch_events.py` sets it to the last published date.
+
+To stop a series, change `UNTIL`. To skip one month, add that date to
+`exdates` — do not split the row.
 
 ### The home page banner
 
