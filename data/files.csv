@@ -2,3 +2,5 @@
 district_calendar,https://drive.google.com/file/d/14BEJqa90-kHXYeVKfvSbXtGvVDfg2glM/view,docs/flyers/msca09-service-meetings-calendar.pdf,The printable district meeting calendar flyer
 contributions_flyer,https://drive.google.com/file/d/1JHwv90iIs1rb5X2alE4d27UOdQDY12MJ/view,docs/flyers/7th-tradition-contributions-en-sp.pdf,"7th Tradition contributions flyer, English and Spanish"
 zelle_qr,https://lh3.googleusercontent.com/d/1N360xOvQLAdttYCeMwQIpd9cR1d_K5y8,docs/flyers/zelle-contribution-qr.png,Zelle QR code for contributions to MSCA09
+home_hero,hero.jpg,,"The home page banner photo. Served from this repository rather than Drive because it is the first thing a visitor sees - swap in a new file, or point this at a Drive image, and the home page follows."
+home_hero_small,hero-small.jpg,,"The same banner at 900px, used on phones."

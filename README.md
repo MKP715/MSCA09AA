@@ -124,6 +124,37 @@ have no effect. See [`tools/README.md`](tools/README.md).
 3. Paste the flyer's text into `description` so it is searchable and readable
    on a phone. Strip last names, personal e-mails and personal phone numbers.
 
+### The home page banner
+
+The banner is the Area's own coastline photo, carried over from the old site.
+It lives in the repository rather than Drive, because it is the first thing a
+visitor sees and Drive's image host is the one part of this setup that is not
+a documented API.
+
+To change it, replace **`hero.jpg`** (about 1600px wide) and
+**`hero-small.jpg`** (about 900px, what phones load), then run:
+
+```sh
+python tools/build_social_card.py   # rebuilds the link preview to match
+```
+
+Both files are registered in `data/files.csv` as `home_hero` and
+`home_hero_small`, so you can also point those rows at a Drive image instead
+and the page will follow without touching `index.html`.
+
+Two things to check before you use a photograph here:
+
+- **No recognisable A.A. member.** Tradition Eleven applies to the front page
+  more than anywhere else on the site. The current photo shows two people from
+  behind, too far away to identify.
+- **Contrast.** The Area's name sits on top of the photo in white. A bright
+  or busy picture can push that below the readable threshold — the scrim in
+  `index.html` (`.hero-scrim`) is what keeps it legible, and it may need
+  darkening for a lighter photo.
+
+The wording over it comes from `data/content.csv`: `home.title` is the big
+line, `home.tagline` the gold line under it, `home.kicker` the small chip.
+
 ### The trusted servants list
 
 `data/trusted-servants.csv` is built from every tab of the Panel workbook —
@@ -355,7 +386,8 @@ plenty of headroom and keeps clones small.
 ```
 index.html                     the whole site — HTML, CSS and JS
 tailwind.css                   built from index.html by tools/build_css.py
-social-card.png                the preview image for links shared to chat apps
+social-card.jpg                the preview image for links shared to chat apps
+hero.jpg  hero-small.jpg       the home page banner photo
 robots.txt  sitemap.xml        for search engines
 data/                          everything that changes, as CSV
 docs/archive/pages/            58 posts Drive cannot serve as pages

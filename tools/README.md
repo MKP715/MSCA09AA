@@ -43,6 +43,19 @@ lines. Everything else the page needs is in the `<style>` block inside
 
 ---
 
+## `build_social_card.py` — the picture chat apps show for a shared link
+
+```sh
+pip install pillow
+python tools/build_social_card.py
+```
+
+Draws `social-card.jpg` (1200×630) from `hero.jpg` and the Area's name, read
+straight out of `data/content.csv` so the card cannot drift from the page.
+Re-run it after changing the banner photo or `home.title`.
+
+---
+
 ## `check_site.py` — run this before you push
 
 ```sh
