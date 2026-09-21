@@ -68,6 +68,7 @@ be rewritten.
 | `data/districts.csv` | The Districts page and district modals. `covers_cities` is a `;`-separated list and drives the city search. |
 | `data/trusted-servants.csv` | Panel 76 page, committee chair names, district officers. `body_sort` / `position_sort` control ordering. |
 | `data/committees.csv` | Committees page and modals. `color` picks the card gradient; `aa_url` links out to aa.org. |
+| `data/committee-guidelines.csv` | Each committee's written guidelines, one row per document: `committee` (the slug in committees.csv), `language` (`en`/`es`), `title`, `title_es`, `approved`, `url` (Drive) and `drive_path`. A committee can have several — English, Spanish, extras. Files live in `docs/Committee Guidelines/` in Drive; `tools/drive_links.py` keeps the `url` column current. Superseded versions go in that folder's `OLD/` subfolder and are not listed. |
 | `data/events.csv` | Events page and event modals, including flyer images. A repeating event is **one row with an `rrule`**, not one row per date — see "Events that repeat" below. |
 | `data/area-meetings.csv` | The approved ASC / Assembly schedule for the panel. |
 | `data/resources.csv` | A.A. Resources page and the central-office lists. |

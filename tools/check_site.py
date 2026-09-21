@@ -63,6 +63,13 @@ for e in read('events.csv'):
 for r in read('files.csv'):
     check_target(r['url'], 'files.csv "%s"' % r['key'])
 
+committee_slugs = {r['slug'] for r in read('committees.csv')}
+for r in read('committee-guidelines.csv'):
+    check_target(r['url'], 'committee-guidelines.csv "%s"' % r['title'][:40])
+    if r['committee'] not in committee_slugs:
+        problems.append('committee-guidelines.csv: no committee "%s" in committees.csv'
+                        % r['committee'])
+
 # the page must not name a file directly; it asks files.csv for one
 html_early = io.open('index.html', encoding='utf-8').read()
 for m in re.finditer(r"""["'](docs/[^"']+)["']""", html_early):

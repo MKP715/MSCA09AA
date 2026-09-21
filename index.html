@@ -739,7 +739,8 @@ function servants(panel) {
    this list: making every other page wait on it cost about three seconds on a
    phone. See needDocs() below.                                            */
 const CSV_FILES = ['content','ui','nav','kinds','blocks','districts','trusted-servants',
-                   'committees','events','area-meetings','resources','files'];
+                   'committees','committee-guidelines','events','area-meetings',
+                   'resources','files'];
 
 function parseCSV(text) {
   const clean = text.replace(/^﻿/, '');
@@ -1849,6 +1850,20 @@ function chairsFor(cm) {
 }
 M.chairsFor = chairsFor;
 
+/* a committee's written guidelines, from data/committee-guidelines.csv —
+   the reader's own language first, then the other */
+function guidelinesFor(cm) {
+  const mine = S.lang === 'es' ? 'es' : 'en';
+  return (S.data['committee-guidelines'] || [])
+    .filter(function (g) { return g.committee === cm.slug && g.url; })
+    .map(function (g, i) { return { g:g, i:i }; })
+    .sort(function (a, b) {
+      return ((a.g.language === mine) ? 0 : 1) - ((b.g.language === mine) ? 0 : 1) || a.i - b.i;
+    })
+    .map(function (x) { return x.g; });
+}
+M.guidelinesFor = guidelinesFor;
+
 VIEWS.committees = function () {
   const rows = S.data['committees'] || [];
   return M.pageHead({
@@ -1883,6 +1898,9 @@ VIEWS.committees = function () {
                         '<span>' + esc(tag + t('vacant')) + '</span></span>';
                   }).join('')
                 : '') +
+              (guidelinesFor(cm).length
+                ? '<span class="chip ' + M.tone('sky') + '">' + icon('file-lines','text-[.7rem]') +
+                  '<span>' + esc(t('guidelines')) + '</span></span>' : '') +
             '</span>' +
             '<span class="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand-700 dark:text-brand-300">' +
               esc(t('details')) + ' <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1" aria-hidden="true"></i></span>' +
@@ -3003,6 +3021,38 @@ MODALS.committees = function (idParts) {
   const nm = (S.lang === 'es' && cm.name_es) ? cm.name_es : cm.name;
   const sm = (S.lang === 'es' && cm.summary_es) ? cm.summary_es : cm.summary;
   const chairs = M.chairsFor(cm);
+  const guides = M.guidelinesFor(cm);
+  // "June 2024" is written in English in the CSV; say the month in the reader's language
+  const EN_MONTHS = ['january','february','march','april','may','june','july','august',
+                     'september','october','november','december'];
+  function localMonth(txt) {
+    return String(txt).replace(/[A-Za-z]+/, function (w) {
+      const i = EN_MONTHS.indexOf(w.toLowerCase());
+      return i < 0 ? w : M.monName(i);
+    });
+  }
+
+  const guideBlock =
+    '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' + esc(t('guidelines')) + '</p>' +
+    (guides.length
+      ? '<div class="grid gap-2">' + guides.map(function (g) {
+          const title = (S.lang === 'es' && g.title_es) ? g.title_es : g.title;
+          return '<a href="' + attr(g.url) + '" target="_blank" rel="noopener" ' +
+            'class="flex items-center gap-3 rounded-xl border border-black/5 dark:border-white/10 px-3 py-2.5 hover:bg-black/[.03] dark:hover:bg-white/5 transition group">' +
+            '<span class="w-9 h-9 shrink-0 grid place-items-center rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-300">' +
+              icon('file-pdf') + '</span>' +
+            '<span class="min-w-0 flex-1">' +
+              '<span class="block text-[13.5px] font-semibold leading-snug break-words">' + esc(title) + '</span>' +
+              (g.approved ? '<span class="block text-[12px] opacity-60">' + esc(localMonth(g.approved)) + '</span>' : '') +
+            '</span>' +
+            '<span class="chip ' + M.tone(g.language === 'es' ? 'orange' : 'slate') + '">' +
+              esc(g.language === 'es' ? 'ES' : 'EN') + '</span>' +
+            '<i class="fa-solid fa-arrow-up-right-from-square text-[12px] opacity-40 group-hover:opacity-80" aria-hidden="true"></i>' +
+          '</a>';
+        }).join('') + '</div>' +
+        '<p class="mt-2 text-[12px] opacity-55">' + esc(t('guidelinesNote')) + '</p>'
+      : '<p class="text-[13.5px] opacity-60">' + esc(t('noGuidelines')) + '</p>') +
+    '</div>';
 
   const body =
     '<p class="text-[15px] leading-relaxed">' + esc(sm) + '</p>' +
@@ -3016,7 +3066,8 @@ MODALS.committees = function (idParts) {
           return '<div class="rounded-xl border border-black/5 dark:border-white/10 px-3 py-2">' +
             '<p class="text-[13.5px] font-semibold break-words">' + esc(p.position) + '</p>' +
             '<p class="text-[13px] ' + (p.name ? 'opacity-70' : 'opacity-55 italic') + '">' + esc(p.name || t('vacant')) + '</p></div>';
-        }).join('') + '</div></div>' : '');
+        }).join('') + '</div></div>' : '') +
+    guideBlock;
 
   const actions =
     (cm.email ? '<a href="' + attr(M.mailto(cm.email, nm)) + '" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 transition">' +

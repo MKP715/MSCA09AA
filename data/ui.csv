@@ -88,3 +88,6 @@ everyWeek,Every {day},Cada {day}
 everyMonth,Monthly on {day},Mensual el {day}
 everyMonthNth,"{nth} {day} of the month","{nth} {day} del mes"
 alsoOn,Also on,También el
+guidelines,Guidelines,Guías
+noGuidelines,"No written guidelines have been posted for this committee yet.","Todavía no se han publicado guías escritas para este comité."
+guidelinesNote,"Each opens as a PDF in Google Drive.","Cada una se abre como PDF en Google Drive."

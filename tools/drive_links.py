@@ -149,6 +149,23 @@ def main():
     save(p, rows, hdr)
     print('documents.csv: %d of %d rows repointed' % (changed, len(rows)))
 
+    # ── committee guidelines: same idea, matched on drive_path ────────────
+    p, rows, hdr = load('committee-guidelines.csv')
+    changed = 0
+    for r in rows:
+        key = r.get('drive_path', '')
+        if not key:
+            continue
+        u = url_for(key, ids)
+        if not u:
+            missing.append(key)
+            continue
+        if r['url'] != u:
+            r['url'] = u
+            changed += 1
+    save(p, rows, hdr)
+    print('committee-guidelines.csv: %d of %d rows repointed' % (changed, len(rows)))
+
     # ── events: flyers, and a matching column of thumbnails ───────────────
     p, rows, hdr = load('events.csv')
     for extra in ('flyers', 'thumbs'):
