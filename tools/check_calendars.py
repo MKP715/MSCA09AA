@@ -50,6 +50,17 @@ def kinds():
             for r in csv.DictReader(io.open(p, encoding='utf-8-sig')) if r['set'] == 'calendar'}
 
 
+_topics = []
+def topic_keys():
+    """The topics an entry's "Topic:" line may name — data/kinds.csv, set "topic"."""
+    if not _topics:
+        p = os.path.join(ROOT, 'data', 'kinds.csv')
+        if not os.path.exists(p):
+            return None
+        _topics.extend(r['key'] for r in csv.DictReader(io.open(p, encoding='utf-8-sig')) if r['set'] == 'topic')
+    return _topics
+
+
 def still_running(rrule):
     """A repeating entry whose last date has not passed."""
     m = re.search(r'UNTIL=(\d{8})', rrule)
@@ -122,6 +133,16 @@ def check_event(e, types):
         found.append('no "Language:" line')
     elif m.group(1).strip() not in LANGS:
         found.append('Language "%s" is not English, Spanish or Bilingual' % m.group(1).strip())
+    # the columns the website filters on are only useful when they agree
+    head = desc.split('\n--')[0]
+    for m in re.finditer(r'(?im)^host\s*:\s*(.+)$', head):
+        if not re.match(r'^D\d+( & D\d+)*$', m.group(1).strip()):
+            found.append('Host "%s" is not written "D5" or "D6 & D12"' % m.group(1).strip())
+    topics = topic_keys()
+    for m in re.finditer(r'(?im)^topic\s*:\s*(.+)$', head):
+        for x in re.split(r'\s*[,;]\s*', m.group(1).strip()):
+            if topics is not None and x and x not in topics:
+                found.append('Topic "%s" is not one of the topics in data/kinds.csv (%s)' % (x, ', '.join(topics)))
     for m in re.finditer(r'(?im)^(img|link)\s*:\s*.*?(https?://\S+)', desc):
         if not DRIVE.match(m.group(2)):
             found.append('%s is not a Google Drive address — %s' % (m.group(1).upper(), m.group(2)[:70]))

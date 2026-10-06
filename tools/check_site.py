@@ -172,6 +172,19 @@ for r in read('nav.csv'):
         if head and head not in routes:
             problems.append('nav.csv points at an unknown route: ' + href)
 
+# ── the calendar's filters ────────────────────────────────────────────────
+RESERVED = {'view', 'q', 'days', 'week', 'month', 'when', 'layout', 'sort', 'show', 'host'}
+SOURCES = {'type', 'format', 'day', 'time', 'district', 'city', 'has', 'year'}
+seen = set()
+for r in read('filters.csv'):
+    k, src = (r.get('key') or '').strip(), (r.get('source') or '').strip()
+    if not k or k in RESERVED or k in seen or not re.match(r'^[a-z][a-z0-9]*$', k):
+        problems.append('filters.csv: key "%s" is empty, repeated, reserved or not lower-case letters' % k)
+    seen.add(k)
+    if src not in SOURCES and not re.match(r'^field:[A-Za-z][A-Za-z -]*$', src):
+        problems.append('filters.csv: "%s" has source "%s" — use one of %s, or field:<Name>'
+                        % (k, src, ', '.join(sorted(SOURCES))))
+
 drive = sum(1 for r in docs if r['url'].startswith('http'))
 print('documents %d (%d in Drive, %d here) | roster %d | tracked files %d'
       % (len(docs), drive, len(docs) - drive, len(roster), len(tracked)))

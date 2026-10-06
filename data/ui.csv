@@ -94,7 +94,6 @@ documents,Agendas & documents,Agendas y documentos
 flyers,Flyers,Volantes
 everyMonthLast,Last {day} of the month,Último {day} del mes
 weekView,Week,Semana
-timeOfDay,Time of day,Hora del día
 morning,Morning (before noon),Mañana (antes del mediodía)
 afternoon,Afternoon (noon–5 PM),Tarde (mediodía–5 PM)
 evening,Evening (after 5 PM),Noche (después de las 5 PM)
@@ -110,20 +109,39 @@ addGoogle,Add to Google Calendar,Añadir a Google Calendar
 downloadIcs,Download .ics,Descargar .ics
 year,Year,Año
 agendaView,Agenda,Agenda
-areaView,Area business,Asuntos del Área
-pastView,Past,Anteriores
-show,Show,Mostrar
-showAll,Everything,Todo
-showMeetings,Meetings,Reuniones
-showEvents,Events,Eventos
 searchCalendar,"Meeting, event, city, district…","Reunión, evento, ciudad, distrito…"
 next365,Next 12 months,Próximos 12 meses
 tomorrow,Tomorrow,Mañana
 inDays,In {n} days,En {n} días
 nextArea,Next Area meeting,Próxima reunión del Área
-comingUp,Coming up,Próximamente
-allEvents,All upcoming events,Todos los próximos eventos
-glanceTitle,The next seven days,Los próximos siete días
-glanceAll,Service meetings,Reuniones de servicio
-onlineOnly,Online only,Solo en línea
-inSpanish,In Spanish,En español
+listView,List,Lista
+filters,Filters,Filtros
+quickViews,Quick views,Vistas rápidas
+only,only,solo
+onlyThis,Show only,Mostrar solo
+selectAll,All,Todos
+selectNone,None,Ninguno
+showAllN,Show all {n},Ver los {n}
+showFewer,Show fewer,Ver menos
+showResults,Show {n} results,Ver {n} resultados
+allBut,all but,todo menos
+nothing,nothing,nada
+removeFilter,Remove filter,Quitar filtro
+entryOne,entry,entrada
+entryMany,entries,entradas
+upcomingOnly,Upcoming,Próximas
+pastOnly,Past,Anteriores
+everything,All,Todas
+cards,Cards,Tarjetas
+table,Table,Tabla
+date,Date,Fecha
+title,Title,Título
+category,Category,Categoría
+city,City,Ciudad
+saveView,Save as my view,Guardar como mi vista
+forgetView,Forget my view,Olvidar mi vista
+saveViewNote,"Your view is kept in this browser only, and opens whenever you come to the calendar.",Tu vista se guarda solo en este navegador y se abre cada vez que vuelvas al calendario.
+usingSaved,Showing your saved view.,Mostrando tu vista guardada.
+viewSaved,Saved — the calendar will open like this on this device,Guardado — el calendario se abrirá así en este dispositivo
+viewNotSaved,This browser does not allow saving,Este navegador no permite guardar
+viewForgotten,Your saved view is forgotten,Se olvidó tu vista guardada

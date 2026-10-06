@@ -1,44 +1,70 @@
-﻿set,key,label_en,label_es,color,icon,pages
-doc,Minutes,Minutes,Actas,brand,file-lines,
-doc,Motions,Motions,Mociones,fuchsia,gavel,
-doc,Conference,General Service Conference,Conferencia de Servicios Generales,emerald,landmark,
-doc,Newsletters,Newsletters,Boletines,orange,newspaper,
-doc,Finances,Finances,Finanzas,emerald,chart-pie,
-doc,Reports,Reports,Informes,rose,file-contract,
-doc,Guidelines,Guidelines & Bylaws,Guías y Estatutos,slate,scale-balanced,
-doc,Workbooks,Workbooks,Cuadernos de Trabajo,lime,book-bookmark,
-doc,Calendar,Calendars,Calendarios,amber,calendar-days,
-doc,Contributions,Contributions,Contribuciones,teal,hand-holding-dollar,
-doc,Forms,Forms,Formularios,cyan,clipboard-list,
-doc,District,District records,Registros de distrito,brand,map-location-dot,
-doc,Delegate,Delegate reports,Informes del Delegado,fuchsia,user-tie,
-doc,PRAASA,PRAASA,PRAASA,violet,mountain-sun,
-doc,Archives,Archives committee,Comité de Archivos,amber,box-archive,
-doc,Flyers,Event flyers,Volantes de eventos,pink,image,
-doc,Misc,Other material,Otro material,stone,folder-open,
-calendar,District,District,Distrito,brand,map-location-dot,meetings
-calendar,H&I,H&I,H&I,rose,hospital,meetings
-calendar,Intergroup,Intergroup / Central Office,Intergrupo / Oficina Central,amber,building,meetings
-calendar,Area,Area meeting,Reunión de Área,emerald,landmark,meetings
-calendar,Committee,Area committee,Comité de Área,violet,users,meetings
-calendar,Assembly,Assembly,Asamblea,fuchsia,people-roof,meetings;events
-calendar,Area Committee,Area Service Committee,Comité de Servicio de Área,indigo,landmark,meetings;events
-calendar,Foro,Foro,Foro,orange,comments,events
-calendar,Servathon,Servathon,Servathon,pink,hands-holding-circle,events
-calendar,Workshop,Workshop,Taller,teal,screwdriver-wrench,events
-calendar,Service School,Service School,Escuela de Servicio,lime,graduation-cap,events
-calendar,Forum,Forum,Foro regional,cyan,comments,events
-calendar,Convention,Convention,Convención,purple,star,events
-calendar,YPAA,YPAA,YPAA,red,fire,events
-calendar,Event,Event,Evento,sky,calendar-day,events
-calendar,Other,Other,Otro,slate,calendar,meetings;events
-resource,New to A.A.,New to A.A.,Nuevo en A.A.,rose,hand-holding-heart,
-resource,The Legacies,The Legacies,Los Legados,fuchsia,layer-group,
-resource,General Service,General Service,Servicios Generales,brand,sitemap,
-resource,Anonymity & Safety,Anonymity & Safety,Anonimato y Seguridad,violet,user-secret,
-resource,Self-Support,Self-Support,Automantenimiento,emerald,hand-holding-dollar,
-resource,Literature,Literature,Literatura,amber,book,
-resource,Nearby Central Offices,Central offices & intergroups,Oficinas centrales e intergrupos,teal,building,
-meeting,Committee,Area committee,Comité de Área,violet,users,
-event,Foro,Foro,Foro,orange,comments,
-event,Committee,Committee meeting,Reunión de comité,violet,users,
+﻿set,key,label_en,label_es,color,icon,pages,group
+doc,Minutes,Minutes,Actas,brand,file-lines,,
+doc,Motions,Motions,Mociones,fuchsia,gavel,,
+doc,Conference,General Service Conference,Conferencia de Servicios Generales,emerald,landmark,,
+doc,Newsletters,Newsletters,Boletines,orange,newspaper,,
+doc,Finances,Finances,Finanzas,emerald,chart-pie,,
+doc,Reports,Reports,Informes,rose,file-contract,,
+doc,Guidelines,Guidelines & Bylaws,Guías y Estatutos,slate,scale-balanced,,
+doc,Workbooks,Workbooks,Cuadernos de Trabajo,lime,book-bookmark,,
+doc,Calendar,Calendars,Calendarios,amber,calendar-days,,
+doc,Contributions,Contributions,Contribuciones,teal,hand-holding-dollar,,
+doc,Forms,Forms,Formularios,cyan,clipboard-list,,
+doc,District,District records,Registros de distrito,brand,map-location-dot,,
+doc,Delegate,Delegate reports,Informes del Delegado,fuchsia,user-tie,,
+doc,PRAASA,PRAASA,PRAASA,violet,mountain-sun,,
+doc,Archives,Archives committee,Comité de Archivos,amber,box-archive,,
+doc,Flyers,Event flyers,Volantes de eventos,pink,image,,
+doc,Misc,Other material,Otro material,stone,folder-open,,
+calendar,Area,Area meeting,Reunión del Área,emerald,landmark,meetings,area
+calendar,Area Committee,Area Service Committee (ASC),Comité de Servicio de Área (CSA),indigo,landmark,meetings;events,area
+calendar,Assembly,Area Assembly (ASA),Asamblea de Área (ASA),fuchsia,people-roof,meetings;events,area
+calendar,Conference,Conference & delegate,Conferencia y delegado,blue,earth-americas,events,area
+calendar,Foro,Foro,Foro,orange,comments,events,area
+calendar,Servathon,Servathon,Servathon,pink,hands-holding-circle,events,area
+calendar,District,District meeting,Reunión de distrito,brand,map-location-dot,meetings,meetings
+calendar,Committee,Area committee,Comité de Área,violet,users,meetings,meetings
+calendar,H&I,H&I committee,Comité de H&I,rose,hospital,meetings,meetings
+calendar,Intergroup,Intergroup / central office,Intergrupo / oficina central,amber,building,meetings,meetings
+calendar,Service School,Service school & study,Escuela y estudio de servicio,lime,graduation-cap,meetings;events,learning
+calendar,Workshop,Workshop,Taller,teal,screwdriver-wrench,events,learning
+calendar,History,Archives & history,Archivos e historia,stone,box-archive,events,learning
+calendar,Convention,Convention & conference,Convención y conferencia,purple,star,events,events
+calendar,Forum,Forum & PRAASA,Foro regional y PRAASA,cyan,comments,events,events
+calendar,YPAA,Young people (YPAA),Jóvenes (YPAA),red,fire,events,events
+calendar,Social,Fellowship & celebration,Convivencia y celebración,amber,champagne-glasses,events,events
+calendar,Event,Other event,Otro evento,sky,calendar-day,events,events
+calendar,Other,Other,Otro,slate,calendar,meetings;events,events
+calgroup,area,Area business,Asuntos del Área,fuchsia,landmark,,
+calgroup,meetings,Service meetings,Reuniones de servicio,brand,users,,
+calgroup,learning,Learning & sharing,Aprendizaje y servicio,teal,graduation-cap,,
+calgroup,events,Gatherings,Eventos y convivencias,purple,star,,
+format,In person,In person,Presencial,slate,people-group,,
+format,Hybrid,Hybrid,Híbrida,sky,house-laptop,,
+format,Virtual,Online,En línea,sky,video,,
+language,English,English,Inglés,brand,language,,
+language,Spanish,Spanish,Español,orange,language,,
+language,Bilingual,English & Spanish,Inglés y español,orange,language,,
+topic,Steps,The Steps,Los Pasos,emerald,stairs,,
+topic,Traditions,The Traditions,Las Tradiciones,blue,scroll,,
+topic,Concepts,The Concepts,Los Conceptos,indigo,sitemap,,
+topic,Sponsorship,Sponsorship,Apadrinamiento,teal,handshake,,
+topic,Group service,"Group service (GSR, secretary, treasurer)","Servicio de grupo (RSG, secretario, tesorero)",brand,people-group,,
+topic,Literature,Literature,Literatura,lime,book,,
+topic,Grapevine & La Viña,Grapevine & La Viña,Grapevine y La Viña,rose,book-open,,
+topic,H&I & corrections,"H&I, corrections & treatment","H&I, correccionales y tratamiento",orange,hospital,,
+topic,Public information,Public information & CPC,Información pública y CCP,sky,bullhorn,,
+topic,Accessibility,Accessibility & remote communities,Accesibilidad y comunidades remotas,cyan,universal-access,,
+topic,Women,Women in A.A.,Mujeres en A.A.,pink,venus,,
+topic,Technology,Technology,Tecnología,slate,laptop,,
+topic,Archives & history,Archives & history,Archivos e historia,stone,box-archive,,
+has,flyer,A flyer,Un volante,fuchsia,image,,
+has,docs,An agenda or documents,Agenda o documentos,blue,file-lines,,
+has,zoom,Zoom details,Datos de Zoom,sky,video,,
+resource,New to A.A.,New to A.A.,Nuevo en A.A.,rose,hand-holding-heart,,
+resource,The Legacies,The Legacies,Los Legados,fuchsia,layer-group,,
+resource,General Service,General Service,Servicios Generales,brand,sitemap,,
+resource,Anonymity & Safety,Anonymity & Safety,Anonimato y Seguridad,violet,user-secret,,
+resource,Self-Support,Self-Support,Automantenimiento,emerald,hand-holding-dollar,,
+resource,Literature,Literature,Literatura,amber,book,,
+resource,Nearby Central Offices,Central offices & intergroups,Oficinas centrales e intergrupos,teal,building,,

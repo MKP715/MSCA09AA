@@ -60,6 +60,8 @@ This reports any entry that:
 - has no `MSCA09|…|…` first line, or a type `data/kinds.csv` does not know,
   or a format other than In person / Hybrid / Virtual
 - has no `--` line, or no `Language:` line
+- has a `Host:` not written `D5` / `D6 & D12`, or a `Topic:` that is not one
+  of the topics in `data/kinds.csv` — the calendar page filters on both
 - links a flyer or document that is not in Google Drive, or links back to
   msca09aa.org
 - carries a personal e-mail address or a phone number (toll-free numbers and
@@ -103,7 +105,8 @@ Checks the things that quietly break a static site:
 - no personal e-mail address or phone number in any data file
 - every name in the roster is in `First L.` form
 - every `content.csv` / `ui.csv` key the page asks for has a row
-- every menu entry in `nav.csv` points at a route that exists
+- every menu entry in `nav.csv` points at a route that exists, and every row
+  of `filters.csv` has a usable key and source
 - the calendar mirror is committed, and no calendar event carries a
   personal address or phone number (`check_calendars.py`); incomplete
   calendar entries are listed as notes to fix in Google Calendar

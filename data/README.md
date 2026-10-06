@@ -9,7 +9,8 @@ site updates itself. Nothing is hard-coded in `index.html`.
 | `content.csv` | every heading, sentence and paragraph (`key`, `en`, `es`) |
 | `ui.csv` | every interface label — buttons, filters, headings, toasts |
 | `nav.csv` | the menu; empty `parent` = top-level item, otherwise a dropdown entry |
-| `kinds.csv` | colour, icon and bilingual label for every category |
+| `kinds.csv` | colour, icon and bilingual label for every category — and, for the calendar, the group each category is listed under and the labels of the filter values (`format`, `language`, `topic`, `has`, `calgroup`) |
+| `filters.csv` | which columns of the calendar are filters on the calendar page, in what order, with what labels — see "Adding a filter" in the repository README |
 | `blocks.csv` | the repeating card lists, grouped by `page` + `section` |
 | `districts.csv` | the district directory and district modals |
 | `trusted-servants.csv` | every trusted servant, from all tabs of the panel workbook. `panel` is 76 or 74; `email_alt` is a second service address where the workbook lists one. Rebuild with `tools/build_roster.py`. |

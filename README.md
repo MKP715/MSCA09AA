@@ -95,28 +95,27 @@ headings rather than a wall of cards:
   with a few hundred DOM nodes instead of twenty-five thousand. Inside a
   category, each year is its own fold. Typing in the search box opens whatever
   it matched, and *Expand all* / *Collapse all* sit above the list.
-- **Area calendar** (`#/calendar`) — every meeting and every event on one
-  page. At the top: the next Area meeting with its flyer and a countdown,
-  the next three events, and the coming week in numbers (meetings today,
-  this week, online only, in Spanish, events), each a link that filters the
-  explorer below. The explorer has seven views: *Agenda* (day by day, from
-  today only to twelve months ahead; an event is a card with its flyer, a
-  meeting one line), *Week*, *Month* (a three-day convention shows on each
-  of its days), *Area business* (every ASC, Assembly, Foro and Servathon of
-  the panel with its host district, or of any year), *Monthly pattern* (the
-  printed flyer's grid, built from the meetings still running), *Past* (one
-  fold per year back to 2020, built only when opened) and the live *Google
-  Calendar*. *Everything / Meetings / Events* narrows the dated views. The
-  filters — search, type, day, time of day, format, host district, year,
-  language — appear only on the views where they mean something.
+- **Area calendar** (`#/calendar`) — every meeting and every event, used as
+  a database. At the top, the next Area meeting. On the left (a *Filters*
+  drawer on a phone), a checkbox for every value of every filter —
+  category, format, language, day, time of day, district, city, topic, and
+  whether it comes with a flyer, an agenda or Zoom — each with how many
+  entries it would leave, and *only* to pick just one. The categories are
+  grouped (Area business, Service meetings, Learning & sharing, Gatherings),
+  and a group's box ticks or unticks all of it. *Quick views* above them are
+  one-click starting points. Six views: *Agenda* (day by day, today to
+  twelve months ahead), *Week*, *Month*, *List* (every entry once —
+  upcoming, past or all — as cards or a sortable table), *Monthly pattern*
+  and the live *Google Calendar*. *Save as my view* keeps the choices in
+  that browser, so the calendar opens that way next time.
 - **Panel 76** — the Area's own bodies are open, the twenty-two districts are
   folded. Searching or filtering opens everything that matched.
 
 On the calendar the view and the filters are kept in the address —
-`#/calendar?view=month&type=District&lang=Spanish`,
-`#/calendar?view=past&show=events&year=2023&type=Workshop` — so a filtered
-view can be bookmarked or sent to someone, and the Back button steps through
-them. The calendar used to be two pages, `#/meetings` and `#/events`; their
+`#/calendar?view=month&type=District,H%26I&lang=Spanish,Bilingual`
+(only these), `#/calendar?type=!Workshop,Social` (everything but these),
+`#/calendar?view=list&when=past&topic=Concepts` — so a filtered view can be
+bookmarked or sent to someone, and the Back button steps through them. The calendar used to be two pages, `#/meetings` and `#/events`; their
 addresses, and every entry link under them, still open the same thing on
 `#/calendar`.
 
@@ -286,19 +285,35 @@ The page cannot fetch the Google feed in the browser — Google sends no
 a static site stays in sync; the "Google Calendar" tabs embed the live
 calendar in an iframe, which is never affected.
 
-**Meeting or event.** The calendar page shows everything; whether an entry
-counts as a meeting, an event or both — for the *Meetings / Events* switch,
-the home page and the Districts page — depends on its type, through the
-`pages` column of `data/kinds.csv` (set `calendar`):
+**The categories.** Every entry has exactly one, the *type* on its first
+line. They are rows of `data/kinds.csv` (set `calendar`), which gives each a
+label in both languages, a colour, an icon, the group it is listed under on
+the calendar (`group`), and whether the home page treats it as a meeting, an
+event or both (`pages`):
 
-| type | meeting | event |
-|---|:-:|:-:|
-| `District`, `H&I`, `Intergroup`, `Area`, `Committee` | ✓ | |
-| `Assembly`, `Area Committee` | ✓ | ✓ |
-| `Foro`, `Servathon`, `Workshop`, `Service School`, `Forum`, `Convention`, `YPAA`, `Event` | | ✓ |
+| group | type | use it for |
+|---|---|---|
+| Area business | `Area` | the repeating 2nd-Sunday Area meeting |
+| | `Area Committee` | an ASC |
+| | `Assembly` | an Assembly (ASA), including elections and sharebacks |
+| | `Conference` | the General Service Conference cycle: Pre-Conference boot camps and sharing sessions, agenda-item reviews, mock conference, delegate report-backs |
+| | `Foro` · `Servathon` | the Area's Foro and Servathon |
+| Service meetings | `District` | a district business meeting, or an inter-district one |
+| | `Committee` | an Area committee's meeting |
+| | `H&I` | an H&I committee |
+| | `Intergroup` | an intergroup or central office |
+| Learning & sharing | `Service School` | GSR and DCM schools, the monthly service study, DCM sharing sessions |
+| | `Workshop` | workshops, panels and presentations |
+| | `History` | Heritage Days, Archives open houses, A.A. history |
+| Gatherings | `Convention` | conventions, roundups, H&I conferences |
+| | `Forum` | PRAASA and the regional forums |
+| | `YPAA` | young people's events and committees |
+| | `Social` | picnics, dinners, dances, anniversaries, alcathons |
+| | `Event` | anything that fits none of these |
 
 The home page "Up next" and the district times on the Districts page come
-from the meetings, "Upcoming Area events" from the events. A district's meeting time, place and Zoom therefore live only in its
+from the entries counted as meetings, "Upcoming Area events" from the
+one-off entries counted as events. A district's meeting time, place and Zoom therefore live only in its
 calendar entry; the meeting columns in `data/districts.csv` are just the
 fallback if the calendar cannot be loaded.
 
@@ -333,9 +348,9 @@ Anything under the line is free text for people.
 
 **The first line** is `MSCA09|<type>|<format>`.
 
-- *type*: one of the types in the table above. They are rows in
-  `data/kinds.csv` (set `calendar`); add a row there to create a new one and
-  say which pages it belongs on.
+- *type*: one of the categories in the table above, spelled exactly. To
+  create a new one, add a row to `data/kinds.csv` (set `calendar`) with its
+  group.
 - *format*: `In person`, `Hybrid` or `Virtual`.
 
 **The fields** come next, one per line, above the `--`. Leave out any that do
@@ -349,7 +364,8 @@ not apply.
 | `Web:` | a website, with or without `https://` |
 | `Email:` | a **service** address (`…@msca09aa.org`), never a personal one |
 | `Covers:` | the cities a district serves |
-| `Host:` | the hosting district on an Area event, e.g. `D5` |
+| `Host:` | the district or districts hosting it, written `D5` or `D6 & D12` — not for a district's own meeting |
+| `Topic:` | what a workshop, school or committee is about, one or more of the topics in `data/kinds.csv` (set `topic`), e.g. `Topic: Concepts` or `Topic: Steps, Sponsorship` |
 | `Title-ES:` | the Spanish title, shown when the page is in Spanish |
 | `Cost:` | e.g. `$15 suggested contribution` |
 | `IMG:` | a flyer's Drive share link — one line per flyer, the first is the cover |
@@ -359,6 +375,24 @@ not apply.
 **Location** is the street address whenever people can go in person (venue
 name first — `Imperial Alano Club, 8021 Rosecrans Ave, Paramount, CA 90723`);
 for an online-only meeting it is the Zoom join link.
+
+**Adding a filter.** The calendar treats each entry as a row and each
+`Key: value` line above its `--` as a column. `data/filters.csv` says which
+columns are filters on the calendar page: one row per filter, in `sort`
+order, with its labels, an icon, `open` (`yes` to start unfolded), `views`
+(empty for every view), and the label for entries that have no value
+(`none_en`, `none_es`). `source` is either a column the page works out
+itself — `type`, `format`, `day`, `time`, `district`, `city`, `has`, `year`
+— or `field:<Name>` for any line in the descriptions. So to filter by, say,
+who an event is for: write `Audience: GSRs` in the entries it applies to,
+add `audience,Audience,Público,field:Audience,…` to `filters.csv`, and,
+optionally, rows of set `audience` to `data/kinds.csv` to translate and
+colour its values. Nothing in `index.html` changes. Several values on one
+line are separated by commas.
+
+**Quick views** are rows of `data/blocks.csv` with page `calendar` and
+section `presets`: a title, an icon, a colour and the address it opens.
+`{panel}` in the address becomes the current panel's two years.
 
 **Under the `--`** is free text. The website shows it as an event's "About";
 for a meeting it is for people reading Google Calendar, and only the `Note:`

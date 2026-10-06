@@ -1,0 +1,11 @@
+﻿sort,key,label_en,label_es,source,icon,open,views,none_en,none_es
+10,type,Category,Categoría,type,layer-group,yes,,,
+20,fmt,Format,Formato,format,video,yes,,,
+30,lang,Language,Idioma,field:Language,language,yes,,,
+40,day,Day of the week,Día de la semana,day,calendar-week,,,,
+50,time,Time of day,Hora del día,time,clock,,,,
+60,district,District,Distrito,district,map-location-dot,,,No district named,Sin distrito
+70,city,City,Ciudad,city,city,,,Online or no address,En línea o sin dirección
+80,topic,Topic,Tema,field:Topic,tag,,,No topic,Sin tema
+90,has,Comes with,Incluye,has,paperclip,,,,
+100,year,Year,Año,year,clock-rotate-left,,list,,

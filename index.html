@@ -689,7 +689,7 @@ function servants(panel) {
    this list: making every other page wait on it cost about three seconds on a
    phone. See needDocs() below.                                            */
 const CSV_FILES = ['content','ui','nav','kinds','blocks','districts','trusted-servants',
-                   'committees','committee-guidelines','resources','files'];
+                   'committees','committee-guidelines','resources','files','filters'];
 
 function parseCSV(text) {
   const clean = text.replace(/^﻿/, '');
@@ -741,7 +741,7 @@ async function loadAll() {
   (state.data['kinds'] || []).forEach(function (r) {
     if (!r.set || !r.key) return;
     (state.kinds[r.set] = state.kinds[r.set] || {})[r.key] =
-      { en:r.label_en, es:r.label_es, c:r.color, fa:r.icon, pages:r.pages || '' };
+      { en:r.label_en, es:r.label_es, c:r.color, fa:r.icon, pages:r.pages || '', group:r.group || '' };
   });
   (state.data['files'] || []).forEach(function (r) {
     if (r.key) state.files[r.key] = r.url;
@@ -885,7 +885,7 @@ function addField(d, key, val) {
 
 function parseDesc(raw) {
   const lines = descText(raw).split('\n').map(function (l) { return l.trim(); });
-  const d = { type:'', format:'', f:{}, images:[], links:[], notes:[], body:'' };
+  const d = { type:'', format:'', f:{}, all:{}, images:[], links:[], notes:[], body:'' };
   let i = 0;
   while (i < lines.length && !lines[i]) i++;
   const tag = (lines[i] || '').split('|').map(function (x) { return x.trim(); });
@@ -899,8 +899,14 @@ function parseDesc(raw) {
     const m = l.match(/^([^:]{1,24}?)\s*:\s*(\S.*)$/);
     const key = m ? FIELD[norm(m[1]).replace(/[^a-z]/g, '')] : null;
     if (!ruled) {
-      if (key) addField(d, key, m[2]);
-      else if (l) loose.push(l);
+      // every "Key: value" line above the rule is a column of the entry,
+      // known to the page or not — data/filters.csv can make any of them
+      // a filter without a change here
+      if (m && !/^\/\//.test(m[2])) {
+        const nk = norm(m[1]).replace(/[^a-z]/g, '');
+        (d.all[nk] = d.all[nk] || []).push(m[2].trim());
+        if (key) addField(d, key, m[2]);
+      } else if (l) loose.push(l);
       continue;
     }
     // under the line is for people. A flyer or a note still counts; any
@@ -1031,6 +1037,27 @@ function ruleOf(ev) {
 }
 
 /* ── one entry ───────────────────────────────────────────────────────── */
+/* "Concepts, Traditions" -> ['Concepts', 'Traditions'] */
+function listOf(vals) {
+  const out = [];
+  (vals || []).forEach(function (v) {
+    String(v).split(/\s*[,;]\s*/).forEach(function (x) { x = x.trim(); if (x && out.indexOf(x) < 0) out.push(x); });
+  });
+  return out;
+}
+/* the town in an address: "Venue, 702 11th Place, Hermosa Beach, CA 90254"
+   -> "Hermosa Beach". A place that is only a town name is the town.       */
+function cityOf(place) {
+  const parts = String(place || '').split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+  for (let i = 1; i < parts.length; i++) {
+    if (/^(?:[A-Z]{2}|California)(?:\s+\d{5}(?:-\d{4})?)?$/.test(parts[i]) && !/\d/.test(parts[i - 1])) {
+      const c = parts[i - 1];
+      return c === c.toUpperCase() ? c.toLowerCase().replace(/\b[a-z]/g, function (x) { return x.toUpperCase(); }) : c;
+    }
+  }
+  return parts.length === 1 && /^[A-Za-z .'-]{3,30}$/.test(parts[0]) ? parts[0] : '';
+}
+
 const entryMemo = new WeakMap();
 function entryOf(ev) {
   const hit = entryMemo.get(ev);
@@ -1063,6 +1090,14 @@ function entryOf(ev) {
   };
   const dm = title.match(/District\s+([0-9]+(?:\s*&\s*[0-9]+)?)/i) || title.match(/Distrito\s+([0-9]+)/i);
   if (dm) e.districtNo = dm[1].replace(/\s+/g, ' ');
+  // the columns the calendar filters on
+  e.fields = d.all;
+  e.topics = listOf(d.all.topic);
+  e.city = cityOf(place);
+  e.districts = uniq(((e.kind === 'District' && e.districtNo.match(/\d+/g)) || [])
+    .concat(String(e.host).match(/\d+/g) || []).map(function (n) { return 'D' + parseInt(n, 10); }));
+  e.has = [e.images.length ? 'flyer' : '', e.links.length ? 'docs' : '',
+           (e.zoomId || e.zoomLink) ? 'zoom' : ''].filter(Boolean);
   e.images.forEach(function (u, i) {
     flyerNames[imgSrc(u)] = title + (e.images.length > 1 ? ' — ' + (i + 1) : '');
   });
@@ -1373,6 +1408,7 @@ window.MSCA = {
   expandOccurrences, calendarSeries, seriesById, latestStamp, districtMeeting,
   allEvents, eventById, eventOccurrences, nextOccurrence, lastOccurrence, AREA_KINDS,
   entries, meetingsList, eventsList, occurrences, entryById, onPage, readQuery, writeQuery, lastQuery,
+  listOf, cityOf,
   calKind, calKindLabel,
   ruleLabel, recurLabel, andList, ymd, parseDesc, imgSrc, fileHref, driveId, isUrl, linkify,
   kindOf, kindText, meetKind, TONE, GRAD, tone, grad, kindLabel, evKind, evKindLabel, fmtLabel,
@@ -1400,7 +1436,7 @@ VIEWS.home = function () {
   const series    = M.currentSeries();
   const now = new Date();
   const soon = M.expandOccurrences(now, new Date(now.getTime() + 14 * 864e5)).slice(0, 8);
-  const events = upcomingEvents().slice(0, 3);
+  const events = upcomingEvents().filter(function (e) { return !e.recurring; }).slice(0, 3);
 
   const stats = [
     [districts.length, c('stat.districts')],
@@ -1789,94 +1825,167 @@ Object.assign(M, { selectField:selectField, searchField:searchField, chipButton:
   monthGrid:monthGrid, stepMonth:stepMonth, monthOf:monthOf, BTN_SMALL:BTN_SMALL, BTN_ROUND:BTN_ROUND });
 
 /* ══════════════════════════════════════════════════════ AREA CALENDAR ─── */
-/* One page for everything in the Area's calendar: the business meetings a
-   G.S.R. goes to every month and the events everyone is invited to.
+/* Every meeting and event in the Area's calendar, used as a database.
 
-   At the top, what most visitors came for: the next Area meeting, the next
-   few events, and the coming week in numbers — each number a link into
-   the explorer below. The explorer has seven views and shows only the
-   filters that mean something on the view on screen. Its state lives in
-   the address (#/calendar?view=month&type=District), so any view can be
-   bookmarked or sent to someone; the old #/meetings and #/events links
-   are sent to the matching view by the router.                           */
-const CAL_DEFAULTS = { view:'agenda', show:'', q:'', type:'', day:'', time:'', fmt:'', lang:'', host:'',
-                       days:'', week:'', month:'', year:'' };
-const calState = Object.assign({}, CAL_DEFAULTS);
+   Each entry's first line gives its category and format
+   (MSCA09|Workshop|Hybrid); every "Key: value" line above its "--" is a
+   column. data/filters.csv says which of those columns are filters, in
+   what order, and with what labels — a new field line in the calendar
+   and one row there make a new filter, with nothing to change here.
+   data/kinds.csv labels the values, and groups the categories.
+
+   The filters are checkboxes in a sidebar (a drawer on a phone): untick
+   what you do not want, or "only" for one thing. Each value shows how
+   many entries it would leave. Six views, quick views from blocks.csv,
+   and the whole state in the address, so a view can be bookmarked or
+   sent; "Save as my view" keeps it on this device.                    */
 const PANEL_YEARS = [1950 + (+M.CURRENT_PANEL), 1951 + (+M.CURRENT_PANEL)];   // Panel 76 = 2026-27
-/* the views, in three groups: by date · lists · the live Google Calendar */
-const CAL_VIEWS = [['agenda','agendaView','list-ul'], ['week','weekView','calendar-week'], ['month','monthView','calendar'], null,
-                   ['area','areaView','landmark'], ['pattern','patternView','table-cells'], ['past','pastView','clock-rotate-left'], null,
-                   ['gcal','gcalView','calendar-day']];
-/* which filters mean something on which view; search and language go
-   everywhere but the Google Calendar                                     */
-const CAL_FIELDS = {
-  agenda:  ['type','day','time','fmt','host'],
-  week:    ['type','time','fmt','host'],
-  month:   ['type','time','fmt','host'],
-  area:    ['type','fmt','host','year'],
-  pattern: ['type','day','time','fmt'],
-  past:    ['type','fmt','host','year'],
-  gcal:    []
-};
-const SHOW_VIEWS = { agenda:1, week:1, month:1, past:1 };      // where "meetings / events" applies
-const GRID_COLS = { 5:'lg:grid-cols-5', 6:'lg:grid-cols-6', 7:'lg:grid-cols-7' };
+const VIEW_TABS = [['agenda','agendaView','list-ul'], ['week','weekView','calendar-week'], ['month','monthView','calendar'],
+                   ['list','listView','table-list'], ['pattern','patternView','table-cells'], ['gcal','gcalView','calendar-day']];
 const RANGES = [['1','today'], ['7','next7'], ['30','next30'], ['90','next90'], ['365','next365']];
+const BASE = { view:'agenda', q:'', days:'30', week:'', month:'', when:'upcoming', layout:'cards', sort:'' };
+const DOWI = { SU:0, MO:1, TU:2, WE:3, TH:4, FR:5, SA:6 };
+const SAVE_KEY = 'msca09.calendar.view';
+const LABEL = 'text-[11px] font-bold uppercase tracking-[.16em] opacity-55';
+const cal = Object.assign({}, BASE, { sel:{}, open:{}, more:{}, drawer:false, saved:false });
 
+function midnight(d) { const x = d ? new Date(d) : new Date(); x.setHours(0,0,0,0); return x; }
 function isEvent(e) { return M.onPage(e, 'events'); }
 function isMeeting(e) { return M.onPage(e, 'meetings'); }
-/* the Area's own business days, and the 2nd-Sunday series that stands in
-   for them until each one is announced                                   */
 function isAreaSeries(e) { return e.kind === 'Area' && /area meeting/i.test(e.title); }
-function isAreaBusiness(e) { return M.AREA_KINDS.indexOf(e.kind) !== -1 || isAreaSeries(e); }
 function isAreaMeeting(e) { return e.kind === 'Assembly' || e.kind === 'Area Committee' || isAreaSeries(e); }
-/* "D30 & D9" is hosted by both */
-function hostsOf(e) {
-  return String(e.host || '').split(/\s*(?:&|,|\band\b|\/)\s*/i)
-    .map(function (h) { const n = h.match(/\d+/); return n ? 'D' + parseInt(n[0], 10) : ''; })
-    .filter(Boolean);
-}
 /* a repeating entry by its calendar id, which never changes; a one-off by
    its name and date, which reads well in a shared link                   */
 function calHref(e) { return '#/calendar/' + (e.recurring ? e.id : e.slug); }
-function midnight(d) { const x = d ? new Date(d) : new Date(); x.setHours(0,0,0,0); return x; }
+function kindsIn(set) { return Object.keys(S.kinds[set] || {}); }
+function catsOf(group) { return kindsIn('calendar').filter(function (k) { return M.kindOf('calendar', k).group === group; }); }
 
-/* a filter only counts on a view it is offered on — switching views keeps
-   it, so switching back brings it back                                   */
-function val(k) {
-  if (calState.view === 'gcal') return '';
-  if (k === 'q' || k === 'lang') return calState[k];
-  return (CAL_FIELDS[calState.view] || []).indexOf(k) !== -1 ? calState[k] : '';
+/* ── the filters, from data/filters.csv ───────────────────────────────── */
+function facets() {
+  return (S.data['filters'] || []).filter(function (r) { return r.key && r.source && !BASE.hasOwnProperty(r.key); })
+    .sort(function (a, b) { return (+a.sort || 0) - (+b.sort || 0); })
+    .map(function (r) {
+      const es = S.lang === 'es';
+      return { key:r.key, source:String(r.source).trim(), icon:r.icon || 'filter',
+               label:(es && r.label_es) || r.label_en || r.key, open:/^y/i.test(r.open || ''),
+               views:String(r.views || '').split(/[;,\s]+/).filter(Boolean),
+               none:(es && r.none_es) || r.none_en || '' };
+    });
 }
-function showing() { return SHOW_VIEWS[calState.view] ? calState.show : ''; }
-/* events are few, so on their own they are listed a year ahead */
-function rangeDays() { return calState.days || (showing() === 'events' ? '365' : '30'); }
+let FACETS = [];
+function facetOn(f) { return cal.view !== 'gcal' && (!f.views.length || f.views.indexOf(cal.view) !== -1); }
 
-function inScope(e) {
-  const v = calState.view;
-  if (v === 'pattern') return isMeeting(e) && e.recurring;
-  if (v === 'area') return isAreaBusiness(e);
-  const s = showing();
-  return !s || (s === 'events' ? isEvent(e) : isMeeting(e));
+/* the values an entry (or one date of it) has in a filter's column */
+function valuesOf(o, f) {
+  const s = f.source;
+  if (s === 'type') return [o.kind];
+  if (s === 'format') return o.format ? [o.format] : [];
+  if (s === 'day') {
+    if (o.date) return [String(o.date.getDay())];
+    const d = (o.byday || []).map(function (b) { return DOWI[String(b).slice(-2)]; }).filter(function (x) { return x != null; });
+    return (d.length ? d : [o.start.getDay()]).map(String);
+  }
+  if (s === 'time') return [o.allDay ? 'allday' : o.hour < 12 ? 'morning' : o.hour < 17 ? 'afternoon' : 'evening'];
+  if (s === 'district') return o.districts || [];
+  if (s === 'city') return o.city ? [o.city] : [];
+  if (s === 'has') return o.has || [];
+  if (s === 'year') return [String((o.date || o.shownDate || o.start).getFullYear())];
+  if (s.indexOf('field:') === 0) return M.listOf((o.fields || {})[M.norm(s.slice(6)).replace(/[^a-z]/g, '')]);
+  return [];
 }
-/* everything but the date; `when` adds the day-of-week filter */
-function matches(o, when) {
-  if (val('type') && o.kind !== val('type')) return false;
-  if (val('fmt') && o.format !== val('fmt')) return false;
-  if (!langMatch(val('lang'), o.language)) return false;
-  if (!timeMatch(val('time'), o)) return false;
-  if (val('host') && hostsOf(o).indexOf(val('host')) === -1) return false;
-  if (when && val('day') !== '' && String(when.getDay()) !== val('day')) return false;
-  if (val('q')) {
-    const hay = M.norm([o.title, o.title_es, o.place, o.covers, o.web, o.host, o.notes.join(' '),
-                        o.description, M.calKindLabel(o.kind), o.kind,
-                        o.districtNo ? 'district distrito ' + o.districtNo : ''].join(' '));
-    if (hay.indexOf(M.norm(val('q'))) === -1) return false;
+/* by object, not as a property — a date of an entry is a copy of it, and
+   must not inherit the entry's answers                                  */
+const fvCache = new WeakMap();
+function cached(o, f) {
+  let c = fvCache.get(o);
+  if (!c) { c = {}; fvCache.set(o, c); }
+  if (!c[f.key]) { const v = valuesOf(o, f); c[f.key] = v.length ? v : ['']; }
+  return c[f.key];
+}
+/* the label of one value: kinds.csv first (the set named after the
+   source's column), then what the value is                              */
+function valueLabel(f, v) {
+  if (v === '') return f.none || '—';
+  const set = f.source === 'type' ? 'calendar' : f.source.indexOf('field:') === 0 ? M.norm(f.source.slice(6)) : f.source;
+  const k = (S.kinds[set] || {})[v];
+  if (k) return (S.lang === 'es' && k.es) || k.en || v;
+  if (f.source === 'day') return M.dayName(+v);
+  if (f.source === 'time') return t(v === 'allday' ? 'allDay' : v);
+  if (f.source === 'district') return t('district') + ' ' + v.slice(1);
+  return v;
+}
+function valueColor(f, v) {
+  const set = f.source === 'type' ? 'calendar' : f.source.indexOf('field:') === 0 ? M.norm(f.source.slice(6)) : f.source;
+  const k = (S.kinds[set] || {})[v];
+  return k && k.c ? k.c : '';
+}
+/* the order values are listed in: kinds.csv's, or the natural one */
+function orderValues(f, vals) {
+  const set = f.source === 'type' ? 'calendar' : f.source.indexOf('field:') === 0 ? M.norm(f.source.slice(6)) : f.source;
+  const known = kindsIn(set);
+  return vals.slice().sort(function (a, b) {
+    if (a === '') return 1;
+    if (b === '') return -1;
+    const ia = known.indexOf(a), ib = known.indexOf(b);
+    if (ia !== -1 || ib !== -1) return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+    if (f.source === 'day') return ((+a + 6) % 7) - ((+b + 6) % 7);       // Monday first
+    if (f.source === 'time') return ['morning','afternoon','evening','allday'].indexOf(a) - ['morning','afternoon','evening','allday'].indexOf(b);
+    if (f.source === 'district') return parseInt(a.slice(1), 10) - parseInt(b.slice(1), 10);
+    if (f.source === 'year') return b - a;
+    return M.byText(a, b);
+  });
+}
+
+/* ── what is ticked: nothing stored means everything ─────────────────────
+   sel[key] is null (all), or {ex:true, vals} — everything but these — or
+   {ex:false, vals} — only these. Unticking starts an "everything but",
+   which keeps a new category visible to someone who saved their view;
+   "only" starts an "only these".                                       */
+function ticked(f, v) { const s = cal.sel[f.key]; return !s || (s.ex ? !s.vals.has(v) : s.vals.has(v)); }
+function allowed(f, vals) {
+  const s = cal.sel[f.key];
+  if (!s) return true;
+  return s.ex ? vals.some(function (v) { return !s.vals.has(v); }) : vals.some(function (v) { return s.vals.has(v); });
+}
+function tidy(key, universe) {
+  const s = cal.sel[key];
+  if (!s) return;
+  if (s.ex ? !s.vals.size : universe.every(function (v) { return s.vals.has(v); })) cal.sel[key] = null;
+}
+function setTick(f, v, on, universe) {
+  let s = cal.sel[f.key] || (cal.sel[f.key] = { ex:true, vals:new Set() });
+  if (s.ex) { if (on) s.vals.delete(v); else s.vals.add(v); }
+  else { if (on) s.vals.add(v); else s.vals.delete(v); }
+  tidy(f.key, universe);
+}
+function encodeSel(s) {
+  const vals = Array.from(s.vals).map(function (v) { return v === '' ? '~' : v; });
+  return (s.ex ? '!' : '') + vals.join(',');
+}
+function decodeSel(str) {
+  if (str == null || str === '') return null;
+  const ex = str.charAt(0) === '!';
+  const vals = (ex ? str.slice(1) : str).split(',').map(function (v) { v = v.trim(); return v === '~' ? '' : v; });
+  return { ex:ex, vals:new Set(vals) };
+}
+
+function textOf(o) {
+  return o._tx || (o._tx = M.norm([o.title, o.title_es, o.place, o.covers, o.web, o.host, o.notes.join(' '),
+    o.description, M.calKindLabel(o.kind), o.kind, (o.topics || []).join(' '), o.city,
+    o.districtNo ? 'district distrito ' + o.districtNo : ''].join(' ')));
+}
+/* does o pass every filter — but `skip`, when counting that one */
+function passes(o, skip) {
+  if (cal.q && textOf(o).indexOf(M.norm(cal.q)) === -1) return false;
+  for (let i = 0; i < FACETS.length; i++) {
+    const f = FACETS[i];
+    if (f.key === skip || !facetOn(f)) continue;
+    if (!allowed(f, cached(o, f))) return false;
   }
   return true;
 }
-function pool() { return M.entries().filter(function (e) { return inScope(e) && matches(e); }); }
 function filtering() {
-  return ['q','type','day','time','fmt','lang','host','year'].some(function (k) { return !!val(k); }) || !!showing();
+  return !!cal.q || FACETS.some(function (f) { return facetOn(f) && cal.sel[f.key]; });
 }
 
 /* next and last date of an entry, worked out once a day */
@@ -1890,6 +1999,13 @@ function dated(e) {
   }
   return hit;
 }
+function tally(list) {
+  const ev = list.filter(isEvent).length, mt = list.length - ev;
+  const parts = [];
+  if (mt) parts.push(mt + ' ' + t(mt === 1 ? 'meetingOne' : 'meetingMany'));
+  if (ev) parts.push(ev + ' ' + t(ev === 1 ? 'eventOne' : 'eventMany'));
+  return parts.join(' · ');
+}
 
 /* ── the page ──────────────────────────────────────────────────────────── */
 VIEWS.calendar = function () {
@@ -1900,9 +2016,8 @@ VIEWS.calendar = function () {
       '<a href="' + attr(M.file('district_calendar')) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
         icon('file-pdf') + esc(t('printable')) + '</a>')
   }) +
-  '<section class="mx-auto max-w-7xl px-4 pt-10">' + spotlightHTML() + '</section>' +
-  '<section class="mx-auto max-w-7xl px-4 py-10">' +
-    '<div id="calShell"></div>' +
+  '<section class="mx-auto max-w-7xl px-4 pt-8">' + nextAreaStrip() + '</section>' +
+  '<section class="mx-auto max-w-7xl px-4 pt-6 pb-10"><div id="calApp"></div>' +
     '<div class="mt-14 rounded-3xl p-8 grad-hero text-white relative overflow-hidden">' +
       '<div class="blob w-80 h-80 left-[-4rem] -bottom-24 bg-cyan-400/40 animate-drift" aria-hidden="true"></div>' +
       '<div class="relative flex flex-col lg:flex-row lg:items-center gap-6">' +
@@ -1915,27 +2030,6 @@ VIEWS.calendar = function () {
   '</section>';
 };
 
-/* the address is the filter: whatever it does not say is the default */
-VIEWS.calendar.mount = function () {
-  const q = M.readQuery();
-  Object.keys(CAL_DEFAULTS).forEach(function (k) { calState[k] = q[k] != null ? q[k] : CAL_DEFAULTS[k]; });
-  if (!CAL_FIELDS[calState.view]) calState.view = CAL_DEFAULTS.view;
-  const shell = $('#calShell');
-  if (shell) drawCalendar(shell);
-  // a number at the top filters the explorer, then brings it into view
-  $$('[data-jump]').forEach(function (a) {
-    if (a._wired) return;
-    a._wired = true;
-    a.addEventListener('click', function () {
-      setTimeout(function () {
-        const x = $('#calExplorer');
-        if (x && x.scrollIntoView) x.scrollIntoView({ behavior:'smooth', block:'start' });
-      }, 60);
-    });
-  });
-};
-
-/* ── at the top: the next Area meeting, the next events, the week ahead ── */
 function dateTile(d, gradient) {
   return '<span class="shrink-0 grid place-items-center w-14 h-14 rounded-2xl text-white bg-gradient-to-br ' + gradient + '">' +
     '<span class="block text-center leading-none">' +
@@ -1946,246 +2040,502 @@ function countdown(d) {
   const n = Math.round((midnight(d) - midnight()) / 864e5);
   return n <= 0 ? t('today') : n === 1 ? t('tomorrow') : t('inDays').replace('{n}', n);
 }
-const LABEL = 'text-[11px] font-bold uppercase tracking-[.16em] opacity-55';
-
-function spotlightHTML() {
-  const today = midnight();
+/* the one thing most visitors came for */
+function nextAreaStrip() {
   const next = M.entries().filter(isAreaMeeting)
     .map(function (e) { return { e:e, d:dated(e).next }; })
     .filter(function (x) { return x.d; })
     .sort(function (a, b) { return a.d - b.d; })[0];
-  const events = upcomingEvents().filter(function (e) { return !next || e.uid !== next.e.uid; }).slice(0, 3);
-  return '<div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 items-start">' +
-    (next ? areaCard(next.e, next.d) : '') + eventsCard(events) + glanceCard(today) + '</div>';
+  if (!next) return '';
+  const e = next.e, d = next.d, k = M.calKind(e.kind);
+  return '<a href="' + attr(calHref(e)) + '" class="card card-hover rounded-2xl p-3 sm:p-4 flex items-center gap-4 group">' +
+    dateTile(d, M.grad(k.c)) +
+    '<span class="min-w-0 flex-1">' +
+      '<span class="block ' + LABEL + '">' + esc(t('nextArea') + ' · ' + countdown(d)) + '</span>' +
+      '<span class="block mt-0.5 font-display font-bold text-[17px] leading-snug">' + esc(eventTitle(e)) + '</span>' +
+      '<span class="block text-[13px] opacity-70 truncate">' +
+        esc(M.dayName(d.getDay()) + (e.allDay ? '' : ' · ' + M.fmtTime(d.getHours(), d.getMinutes()) + ' PT') +
+            (e.place ? ' · ' + e.place : '')) + '</span></span>' +
+    (e.images.length ? '<img src="' + attr(M.imgSrc(e.images[0], 160)) + '" alt="" loading="lazy" decoding="async" ' +
+       'class="hidden sm:block w-12 h-16 shrink-0 rounded-lg object-cover object-top bg-white border border-black/5">' : '') +
+    '<i class="fa-solid fa-chevron-right text-xs opacity-30 group-hover:opacity-70" aria-hidden="true"></i></a>';
 }
 
-function areaCard(e, d) {
-  const k = M.calKind(e.kind);
-  return '<a href="' + attr(calHref(e)) + '" class="card card-hover rounded-3xl overflow-hidden flex flex-col group">' +
-    (e.images.length
-      ? '<span class="block relative h-44 bg-white overflow-hidden">' +
-          '<img src="' + attr(thumbOf(e, 0)) + '" alt="" loading="lazy" decoding="async" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition duration-300">' +
-          '<span class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent"></span>' +
-          '<span class="absolute left-4 bottom-3 chip bg-white/95 text-ink-900">' + icon('hourglass-half','text-[.7rem]') + esc(countdown(d)) + '</span>' +
-        '</span>'
-      : '<span class="block h-1.5 bg-gradient-to-r ' + M.grad(k.c) + '"></span>') +
-    '<span class="p-5 flex flex-col flex-1">' +
-      '<span class="' + LABEL + '">' + esc(t('nextArea')) + '</span>' +
-      '<span class="mt-3 flex items-start gap-3">' + dateTile(d, M.grad(k.c)) +
-        '<span class="min-w-0"><span class="block font-display font-bold text-[18px] leading-snug">' + esc(eventTitle(e)) + '</span>' +
-          '<span class="block mt-0.5 text-[13px] opacity-70">' +
-            esc(M.dayName(d.getDay()) + (e.allDay ? '' : ' · ' + M.fmtTime(d.getHours(), d.getMinutes()) + ' PT') +
-                (e.images.length ? '' : ' · ' + countdown(d))) + '</span></span>' +
-      '</span>' +
-      '<span class="mt-3 flex flex-wrap gap-1.5">' +
-        '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(e.kind)) + '</span></span>' +
-        (e.host ? '<span class="chip ' + M.tone('brand') + '">' + esc(t('hostedBy') + ' ' + e.host) + '</span>' : '') +
-        (e.format && e.format !== 'In person' ? '<span class="chip ' + M.tone('sky') + '">' + esc(M.fmtLabel(e.format)) + '</span>' : '') +
-      '</span>' +
-      (e.place ? '<span class="mt-2.5 block text-[13px] opacity-70 leading-snug">' + icon('location-dot','mr-1 opacity-60') + esc(e.place) + '</span>' : '') +
-    '</span></a>';
+/* ── the address is the state; with nothing in it, the saved view ─────── */
+function parseQS(qs) {
+  const out = {};
+  String(qs || '').split('&').forEach(function (p) {
+    if (!p) return;
+    const kv = p.split('=');
+    try { out[decodeURIComponent(kv[0])] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' ')); } catch (e) {}
+  });
+  return out;
+}
+function loadSaved() { try { return localStorage.getItem(SAVE_KEY) || ''; } catch (e) { return ''; } }
+function storeSaved(qs) {
+  try { if (qs) localStorage.setItem(SAVE_KEY, qs); else localStorage.removeItem(SAVE_KEY); return true; }
+  catch (e) { return false; }
+}
+/* the addresses of the pages and views this one replaced */
+function legacy(q) {
+  if (q.view === 'upcoming') delete q.view;
+  if (q.view === 'past') { q.view = 'list'; q.when = 'past'; }
+  if (q.view === 'area') {
+    q.view = 'list'; q.when = q.when || 'all';
+    q.type = q.type || 'Area,Area Committee,Assembly,Foro,Servathon';
+    q.year = q.year || PANEL_YEARS.join(',');
+  }
+  if (q.host && !q.district) q.district = q.host;
+  if (q.days === '60') q.days = '90';
 }
 
-function eventsCard(events) {
-  return '<div class="card rounded-3xl p-5 flex flex-col">' +
-    '<p class="' + LABEL + '">' + esc(t('comingUp')) + '</p>' +
-    (events.length
-      ? '<ul class="mt-3 space-y-2 flex-1">' + events.map(function (e) {
-          const k = M.calKind(e.kind);
-          return '<li><a href="' + attr(calHref(e)) + '" class="flex gap-3 rounded-2xl -mx-2 p-2 hover:bg-black/[.03] dark:hover:bg-white/5 transition">' +
-            (e.images.length
-              ? '<img src="' + attr(M.imgSrc(e.images[0], 160)) + '" alt="" loading="lazy" decoding="async" class="w-14 h-[4.5rem] shrink-0 rounded-lg object-cover object-top bg-white border border-black/5">'
-              : '<span class="w-14 h-[4.5rem] shrink-0 rounded-lg grid place-items-center text-white bg-gradient-to-br ' + M.grad(k.c) + '">' + icon(k.fa) + '</span>') +
-            '<span class="min-w-0"><span class="block text-[12px] font-bold text-fuchsia-700 dark:text-fuchsia-300">' + esc(eventDateLabel(e)) + '</span>' +
-              '<span class="block font-semibold leading-snug">' + esc(eventTitle(e)) + '</span>' +
-              '<span class="block text-[12.5px] opacity-65 truncate">' + esc(M.calKindLabel(e.kind) + (e.place ? ' · ' + e.place : '')) + '</span></span>' +
-          '</a></li>';
-        }).join('') + '</ul>'
-      : '<p class="mt-3 text-[14px] opacity-60 flex-1">' + esc(t('noEvents')) + '</p>') +
-    '<a href="#/calendar?show=events" data-jump class="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
-      esc(t('allEvents')) + ' ' + icon('arrow-right') + '</a>' +
+VIEWS.calendar.mount = function () {
+  FACETS = facets();
+  let q = M.readQuery();
+  cal.saved = false;
+  if (!Object.keys(q).length && loadSaved()) { q = parseQS(loadSaved()); cal.saved = true; }
+  legacy(q);
+  Object.keys(BASE).forEach(function (k) { cal[k] = q[k] != null && q[k] !== '' ? q[k] : BASE[k]; });
+  if (!VIEW_TABS.some(function (v) { return v[0] === cal.view; })) cal.view = BASE.view;
+  cal.sel = {};
+  FACETS.forEach(function (f) { cal.sel[f.key] = decodeSel(q[f.key]); });
+  // the old Service Calendar / Events switch, when no category is named
+  if (q.show && !q.type) {
+    const present = M.uniq(M.entries().map(function (e) { return e.kind; }));
+    cal.sel.type = { ex:false, vals:new Set(kindsIn('calendar').filter(function (k) {
+      return present.indexOf(k) !== -1 &&
+        String(M.kindOf('calendar', k).pages || '').split(/[;,\s]+/).indexOf(q.show) !== -1;
+    })) };
+  }
+  cal.drawer = false;
+  document.body.classList.remove('modal-open');
+  const app = $('#calApp');
+  if (!app) return;
+  shell(app);
+  refresh();
+};
+
+/* ── the frame: drawn once, filled by refresh() ───────────────────────── */
+function shell(app) {
+  const presets = M.blocks('calendar', 'presets');
+  app.innerHTML =
+  '<div class="lg:grid lg:grid-cols-[18.5rem_minmax(0,1fr)] lg:gap-8 lg:items-start">' +
+    '<aside id="calSide" aria-label="' + attr(t('filters')) + '"></aside>' +
+    '<div class="min-w-0">' +
+      '<div id="calTools"></div>' +
+      '<div id="calChips" class="mt-3"></div>' +
+      '<div id="calBody" class="mt-5"></div>' +
+      '<p id="calPT" class="mt-6 text-[12.5px] opacity-60">' + icon('clock','mr-1.5') + esc(t('allTimesPT')) + '</p>' +
+    '</div>' +
+  '</div>';
+  const side = $('#calSide', app);
+  side.innerHTML =
+    '<div class="lg:hidden flex items-center justify-between gap-3 mb-4">' +
+      '<h2 class="font-display font-extrabold text-xl">' + esc(t('filters')) + '</h2>' +
+      '<button type="button" data-drawer-close class="' + BTN_ROUND + '" aria-label="' + attr(t('close')) + '">' + icon('xmark') + '</button></div>' +
+    '<label class="block"><span class="sr-only">' + esc(t('search')) + '</span><span class="relative block">' +
+      '<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40 text-sm" aria-hidden="true"></i>' +
+      '<input id="calQ" type="search" value="' + attr(cal.q) + '" placeholder="' + attr(t('searchCalendar')) + '" ' +
+        'class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 pl-10 pr-3 py-2.5 text-sm"></span></label>' +
+    (presets.length
+      ? '<div class="mt-5"><p class="' + LABEL + ' mb-2">' + esc(t('quickViews')) + '</p><div class="flex flex-wrap gap-1.5">' +
+          presets.map(function (b) {
+            return '<a href="' + attr(String(b.url).replace('{panel}', PANEL_YEARS.join(','))) + '" title="' + attr(M.bBody(b)) + '" ' +
+              'class="chip ' + M.tone(b.color) + ' hover:brightness-95">' + icon(b.icon, 'text-[.7rem]') + '<span>' + esc(M.bTitle(b)) + '</span></a>';
+          }).join('') + '</div></div>'
+      : '') +
+    '<div id="calSaved"></div>' +
+    '<div id="calFacets" class="mt-4"></div>' +
+    '<div id="calFoot" class="mt-4 pt-4 border-t border-black/5 dark:border-white/10"></div>' +
+    '<div class="lg:hidden sticky bottom-0 -mx-5 mt-6 px-5 py-3 bg-white/95 dark:bg-ink-950/95 backdrop-blur border-t border-black/10 dark:border-white/10">' +
+      '<button type="button" data-drawer-close id="calShowN" class="w-full rounded-full px-5 py-3 font-bold text-white bg-gradient-to-r from-brand-600 to-fuchsia-600"></button></div>';
+  drawer(false);
+  wire(app);
+}
+const SIDE_DOCKED = 'hidden lg:block lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pr-2 lg:-mr-2';
+const SIDE_DRAWER = 'fixed inset-0 z-[70] overflow-y-auto overscroll-contain bg-white dark:bg-ink-950 px-5 pt-5 ' +
+                    'lg:inset-auto lg:z-auto lg:bg-transparent lg:dark:bg-transparent lg:p-0 ' + SIDE_DOCKED.replace('hidden ', '');
+function drawer(open) {
+  cal.drawer = open;
+  const side = $('#calSide');
+  if (side) side.className = open ? SIDE_DRAWER : SIDE_DOCKED;
+  document.body.classList.toggle('modal-open', open);
+}
+
+/* ── refresh: the sidebar's counts, the toolbar, the results ──────────── */
+function refresh() {
+  FACETS = facets();
+  const base = baseItems();
+  const shown = base.items.filter(function (o) { return passes(o); });
+  const active = document.activeElement;
+  const focusKey = active && active.getAttribute && (active.getAttribute('data-fk') || active.getAttribute('data-group') ?
+    [active.getAttribute('data-fk'), active.getAttribute('data-fv'), active.getAttribute('data-group'), active.hasAttribute('data-only')].join('|') : '');
+
+  $('#calFacets').innerHTML = facetsHTML(base.items);
+  $$('input[data-indet]', $('#calFacets')).forEach(function (el) { el.indeterminate = true; });
+  $('#calTools').innerHTML = toolsHTML();
+  $('#calChips').innerHTML = chipsHTML(shown, base);
+  $('#calSaved').innerHTML = cal.saved
+    ? '<p class="mt-4 rounded-xl px-3 py-2 text-[12.5px] bg-emerald-500/10 text-emerald-800 dark:text-emerald-200">' +
+        icon('bookmark','mr-1.5') + esc(t('usingSaved')) + '</p>' : '';
+  const saved = loadSaved();
+  $('#calFoot').innerHTML =
+    '<div class="flex flex-wrap gap-2">' +
+      (filtering() ? '<button type="button" data-clear class="' + BTN_SMALL + '">' + icon('rotate-left') + esc(t('clearFilters')) + '</button>' : '') +
+      '<button type="button" data-save class="' + BTN_SMALL + '">' + icon('bookmark') + esc(t('saveView')) + '</button>' +
+      (saved ? '<button type="button" data-forget class="' + BTN_SMALL + '">' + icon('trash-can') + esc(t('forgetView')) + '</button>' : '') +
+    '</div>' +
+    '<p class="mt-2 text-[12px] opacity-55 leading-snug">' + esc(t('saveViewNote')) + '</p>';
+  $('#calShowN').textContent = t('showResults').replace('{n}', shown.length);
+  const side = $('#calSide');
+  if (side) side.classList.toggle('lg:hidden', cal.view === 'gcal');
+  $('#calPT').hidden = cal.view === 'gcal';
+
+  const b = $('#calBody');
+  b.innerHTML = bodyHTML(base, shown);
+  if (cal.view === 'list' && cal.layout === 'cards') wireFolds(b);
+  writeState();
+
+  if (focusKey) {
+    const p = focusKey.split('|');
+    const el = $$('[data-fk],[data-group]', $('#calApp')).filter(function (x) {
+      return (x.getAttribute('data-fk') || '') === p[0] && (x.getAttribute('data-fv') || '') === p[1] &&
+             (x.getAttribute('data-group') || '') === p[2] && String(x.hasAttribute('data-only')) === p[3];
+    })[0];
+    if (el) el.focus();
+  }
+}
+
+function writeState() {
+  const obj = { view:cal.view, q:cal.q };
+  if (cal.view === 'agenda') obj.days = cal.days;
+  if (cal.view === 'week') obj.week = cal.week;
+  if (cal.view === 'month') obj.month = cal.month;
+  if (cal.view === 'list') { obj.when = cal.when; obj.layout = cal.layout; obj.sort = cal.sort; }
+  FACETS.forEach(function (f) { if (facetOn(f) && cal.sel[f.key]) obj[f.key] = encodeSel(cal.sel[f.key]); });
+  M.writeQuery('calendar', obj, BASE);
+}
+
+/* ── the sidebar: one fold per filter, a checkbox per value ───────────── */
+const FIXED = { day:['1','2','3','4','5','6','0'], time:['morning','afternoon','evening','allday'] };
+let UNIVERSE = {};
+function universeOf(f, items) {
+  if (FIXED[f.source]) return FIXED[f.source];
+  const seen = {};
+  const from = f.source === 'year' ? items : M.entries();
+  from.forEach(function (o) { cached(o, f).forEach(function (v) { seen[v] = 1; }); });
+  const s = cal.sel[f.key];
+  if (s) s.vals.forEach(function (v) { seen[v] = 1; });
+  if (!f.none) delete seen[''];
+  return orderValues(f, Object.keys(seen));
+}
+function counts(f, items) {
+  const n = {};
+  items.forEach(function (o) {
+    if (!passes(o, f.key)) return;
+    cached(o, f).forEach(function (v) { n[v] = (n[v] || 0) + 1; });
+  });
+  return n;
+}
+function checkRow(f, v, n, indent) {
+  const col = valueColor(f, v);
+  return '<div class="group flex items-center gap-1 rounded-lg pr-1 hover:bg-black/[.04] dark:hover:bg-white/5' +
+      (indent ? ' pl-5' : ' pl-1.5') + (n ? '' : ' opacity-50') + '">' +
+    '<label class="flex items-center gap-2.5 flex-1 min-w-0 py-1.5 cursor-pointer">' +
+      '<input type="checkbox" class="w-4 h-4 shrink-0 accent-brand-600" data-fk="' + attr(f.key) + '" data-fv="' + attr(v) + '"' +
+        (ticked(f, v) ? ' checked' : '') + '>' +
+      (col ? '<span class="w-2.5 h-2.5 shrink-0 rounded-full bg-gradient-to-br ' + M.grad(col) + '" aria-hidden="true"></span>' : '') +
+      '<span class="flex-1 min-w-0 break-words leading-snug text-[13.5px]">' + esc(valueLabel(f, v)) + '</span></label>' +
+    '<button type="button" data-only data-fk="' + attr(f.key) + '" data-fv="' + attr(v) + '" ' +
+      'class="px-1.5 py-0.5 rounded text-[11px] font-semibold text-brand-700 dark:text-brand-300 hover:underline lg:opacity-0 lg:group-hover:opacity-100 focus:opacity-100" ' +
+      'aria-label="' + attr(t('onlyThis') + ': ' + valueLabel(f, v)) + '">' + esc(t('only')) + '</button>' +
+    '<span class="w-8 shrink-0 text-right text-[12px] tabular-nums opacity-60">' + n + '</span></div>';
+}
+function facetsHTML(items) {
+  UNIVERSE = {};
+  return FACETS.filter(facetOn).map(function (f) {
+    const uni = UNIVERSE[f.key] = universeOf(f, items);
+    if (!uni.length) return '';
+    const n = counts(f, items);
+    const s = cal.sel[f.key];
+    const open = cal.open[f.key] != null ? cal.open[f.key] : (f.open || !!s);
+    const on = uni.filter(function (v) { return ticked(f, v); }).length;
+    let rows;
+    if (f.source === 'type') {
+      // the categories, under the groups kinds.csv puts them in
+      const groups = kindsIn('calgroup');
+      const loose = uni.filter(function (v) { return groups.indexOf(M.kindOf('calendar', v).group) === -1; });
+      rows = groups.map(function (g) {
+        const mem = uni.filter(function (v) { return M.kindOf('calendar', v).group === g; });
+        if (!mem.length) return '';
+        const k = mem.filter(function (v) { return ticked(f, v); }).length;
+        return '<div class="mt-1.5">' +
+          '<label class="flex items-center gap-2.5 pl-1.5 py-1 cursor-pointer">' +
+            '<input type="checkbox" class="w-4 h-4 shrink-0 accent-brand-600" data-group="' + attr(g) + '" data-fk="' + attr(f.key) + '"' +
+              (k === mem.length ? ' checked' : '') + (k && k < mem.length ? ' data-indet' : '') + '>' +
+            '<span class="text-[11px] font-bold uppercase tracking-widest opacity-65">' + esc(M.kindText('calgroup', g)) + '</span></label>' +
+          mem.map(function (v) { return checkRow(f, v, n[v] || 0, true); }).join('') + '</div>';
+      }).join('') + loose.map(function (v) { return checkRow(f, v, n[v] || 0); }).join('');
+    } else {
+      // a long list shows its busiest values until asked for all of them
+      let list = uni;
+      const long = uni.length > 8 && !cal.more[f.key];
+      if (long) list = uni.slice().sort(function (a, b) { return (n[b] || 0) - (n[a] || 0); }).slice(0, 6)
+        .concat(uni.filter(function (v) { return !ticked(f, v); }))
+        .filter(function (v, i, a) { return a.indexOf(v) === i; });
+      if (long) list = orderValues(f, list);
+      rows = list.map(function (v) { return checkRow(f, v, n[v] || 0); }).join('') +
+        (uni.length > 8
+          ? '<button type="button" data-more="' + attr(f.key) + '" class="mt-1 ml-1.5 text-[12.5px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+              esc(cal.more[f.key] ? t('showFewer') : t('showAllN').replace('{n}', uni.length)) + '</button>'
+          : '');
+    }
+    return '<section class="border-t border-black/5 dark:border-white/10 py-2.5">' +
+      '<button type="button" data-fold="' + attr(f.key) + '" aria-expanded="' + open + '" class="w-full flex items-center gap-2 py-1 text-left">' +
+        '<span class="w-6 text-center opacity-60">' + icon(f.icon, 'text-[.8rem]') + '</span>' +
+        '<span class="flex-1 font-semibold text-[14px]">' + esc(f.label) + '</span>' +
+        '<span class="text-[12px] ' + (s ? 'font-bold text-fuchsia-700 dark:text-fuchsia-300' : 'opacity-55') + '">' +
+          esc(s ? on + ' / ' + uni.length : t('all')) + '</span>' +
+        '<i class="fa-solid fa-chevron-' + (open ? 'up' : 'down') + ' text-[10px] opacity-40 ml-1" aria-hidden="true"></i></button>' +
+      (open
+        ? '<div class="mt-1">' +
+            '<div class="flex gap-3 pl-8 pb-1 text-[12px] font-semibold text-brand-700 dark:text-brand-300">' +
+              '<button type="button" data-all="' + attr(f.key) + '" class="hover:underline">' + esc(t('selectAll')) + '</button>' +
+              '<button type="button" data-none="' + attr(f.key) + '" class="hover:underline">' + esc(t('selectNone')) + '</button></div>' +
+            rows + '</div>'
+        : '') +
+    '</section>';
+  }).join('');
+}
+
+/* ── the toolbar over the results ─────────────────────────────────────── */
+function segment(attrName, current, opts) {
+  return '<div class="inline-flex rounded-full p-1 bg-black/[.05] dark:bg-white/10" role="group">' +
+    opts.map(function (o) {
+      const on = current === o[0];
+      return '<button type="button" ' + attrName + '="' + attr(o[0]) + '" aria-pressed="' + on + '" ' +
+        'class="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap transition ' +
+        (on ? 'bg-white dark:bg-ink-900 shadow text-brand-700 dark:text-brand-300' : 'opacity-70 hover:opacity-100') + '">' +
+        (o[2] ? icon(o[2], 'text-[.75rem]') : '') + esc(o[1]) + '</button>';
+    }).join('') + '</div>';
+}
+function activeCount() { return FACETS.filter(function (f) { return facetOn(f) && cal.sel[f.key]; }).length + (cal.q ? 1 : 0); }
+function toolsHTML() {
+  const n = activeCount();
+  const tabs = VIEW_TABS.map(function (tb) {
+    const on = cal.view === tb[0];
+    return '<button type="button" role="tab" data-calview="' + attr(tb[0]) + '" aria-selected="' + on + '" ' +
+      'class="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold whitespace-nowrap ' +
+      (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
+          : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+      icon(tb[2]) + esc(t(tb[1])) + '</button>';
+  }).join('');
+  const controls =
+    cal.view === 'agenda'
+      ? '<div class="flex flex-wrap gap-1.5">' + RANGES.map(function (r) {
+          return chipButton('data-days', r[0], t(r[1]), cal.days === r[0], 'from-teal-500 to-emerald-600');
+        }).join('') + '</div>'
+    : cal.view === 'list'
+      ? segment('data-when', cal.when, [['upcoming', t('upcomingOnly'), 'forward'], ['past', t('pastOnly'), 'clock-rotate-left'], ['all', t('everything'), 'infinity']]) +
+        segment('data-layout', cal.layout, [['cards', t('cards'), 'grip'], ['table', t('table'), 'table-list']])
+    : '';
+  return '<div class="card rounded-2xl p-2 flex items-center gap-2">' +
+      (cal.view === 'gcal' ? '' :
+        '<button type="button" data-drawer-open class="lg:hidden shrink-0 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-bold border border-black/10 dark:border-white/15">' +
+          icon('sliders') + esc(t('filters')) +
+          (n ? '<span class="grid place-items-center min-w-[1.25rem] h-5 px-1 rounded-full text-[11px] text-white bg-fuchsia-600">' + n + '</span>' : '') + '</button>') +
+      '<div class="scroll-x min-w-0 flex-1"><div class="flex items-center gap-1.5 w-max" role="tablist">' + tabs + '</div></div>' +
+    '</div>' +
+    (controls ? '<div class="mt-3 flex flex-wrap items-center gap-2">' + controls + '</div>' : '');
+}
+
+/* the filters that are on, each one a chip that turns it off */
+function chipsHTML(shown, base) {
+  if (cal.view === 'gcal') return '';
+  const chips = [];
+  if (cal.q) chips.push(['q', '“' + cal.q + '”']);
+  FACETS.forEach(function (f) {
+    const s = cal.sel[f.key];
+    if (!facetOn(f) || !s) return;
+    const uni = UNIVERSE[f.key] || [];
+    const on = uni.filter(function (v) { return ticked(f, v); });
+    const off = uni.filter(function (v) { return !ticked(f, v); });
+    const names = function (l) { return l.map(function (v) { return valueLabel(f, v); }).join(', '); };
+    const txt = !on.length ? t('nothing')
+      : on.length <= 2 ? names(on)
+      : off.length <= 2 ? t('allBut') + ' ' + names(off)
+      : on.length + ' / ' + uni.length;
+    chips.push([f.key, f.label + ': ' + txt]);
+  });
+  const count = cal.view === 'list' || cal.view === 'pattern'
+    ? shown.length + ' ' + t(shown.length === 1 ? 'entryOne' : 'entryMany')
+    : (tally(shown) || '0 ' + t('entryMany'));
+  return '<div class="flex flex-wrap items-center gap-2" aria-live="polite">' +
+    '<span class="text-[13px] font-bold opacity-75 mr-1">' + esc(count) + '</span>' +
+    chips.map(function (ch) {
+      return '<button type="button" data-unset="' + attr(ch[0]) + '" class="chip ' + M.tone('fuchsia') + ' hover:brightness-95" ' +
+        'aria-label="' + attr(t('removeFilter') + ': ' + ch[1]) + '"><span class="max-w-[16rem] truncate">' + esc(ch[1]) + '</span>' +
+        icon('xmark', 'text-[.7rem] opacity-70') + '</button>';
+    }).join('') +
+    (chips.length > 1 ? '<button type="button" data-clear class="text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+      esc(t('clearFilters')) + '</button>' : '') +
   '</div>';
 }
 
-function glanceCard(today) {
-  const week = M.occurrences(M.entries(), today, new Date(today.getTime() + 7 * 864e5 - 1));
-  const meets = week.filter(isMeeting);
-  const n = {
-    today:   meets.filter(function (o) { return o.date.toDateString() === today.toDateString(); }).length,
-    all:     meets.length,
-    online:  meets.filter(function (o) { return o.format === 'Virtual'; }).length,
-    spanish: meets.filter(function (o) { return o.language === 'Spanish' || o.language === 'Bilingual'; }).length,
-    events:  week.filter(isEvent).length
-  };
-  function row(href, ic, label, count, unit) {
-    return '<a href="' + attr(href) + '" data-jump class="flex items-center gap-3 rounded-2xl px-2 py-2 hover:bg-black/[.04] dark:hover:bg-white/5 transition group">' +
-      '<span class="w-9 h-9 shrink-0 grid place-items-center rounded-xl bg-brand-500/10 text-brand-700 dark:text-brand-300">' + icon(ic, 'text-sm') + '</span>' +
-      '<span class="flex-1 min-w-0 text-[14px] font-semibold">' + esc(label) + '</span>' +
-      '<span class="font-display font-extrabold text-xl tabular-nums">' + count + '</span>' +
-      '<span class="text-[12px] opacity-55 w-[4.5rem]">' + esc(t(unit + (count === 1 ? 'One' : 'Many'))) + '</span>' +
-      '<i class="fa-solid fa-chevron-right text-[11px] opacity-30 group-hover:opacity-70" aria-hidden="true"></i></a>';
+/* ── one listener for the whole calendar ──────────────────────────────── */
+function wire(app) {
+  if (app._wired) return;
+  app._wired = true;
+  app.addEventListener('click', function (ev) {
+    const el = ev.target.closest('button,[data-drawer-close]');
+    if (!el || !app.contains(el)) return;
+    const a = function (n) { return el.getAttribute(n); };
+    const f = FACETS.filter(function (x) { return x.key === a('data-fk') || x.key === a('data-all') || x.key === a('data-none'); })[0];
+    if (el.hasAttribute('data-calview')) { cal.view = a('data-calview'); refresh(); }
+    else if (el.hasAttribute('data-days')) { cal.days = a('data-days'); refresh(); }
+    else if (el.hasAttribute('data-when')) { cal.when = a('data-when'); refresh(); }
+    else if (el.hasAttribute('data-layout')) { cal.layout = a('data-layout'); refresh(); }
+    else if (el.hasAttribute('data-sort')) {
+      const k = a('data-sort');
+      cal.sort = cal.sort === k ? '-' + k : k;
+      refresh();
+    }
+    else if (el.hasAttribute('data-only') && f) { cal.sel[f.key] = { ex:false, vals:new Set([a('data-fv')]) }; refresh(); }
+    else if (el.hasAttribute('data-all') && f) { cal.sel[f.key] = null; refresh(); }
+    else if (el.hasAttribute('data-none') && f) { cal.sel[f.key] = { ex:false, vals:new Set() }; refresh(); }
+    else if (el.hasAttribute('data-fold')) {
+      const k = a('data-fold'), fx = FACETS.filter(function (x) { return x.key === k; })[0];
+      const now = cal.open[k] != null ? cal.open[k] : (fx.open || !!cal.sel[k]);
+      cal.open[k] = !now;
+      refresh();
+    }
+    else if (el.hasAttribute('data-more')) { cal.more[a('data-more')] = !cal.more[a('data-more')]; refresh(); }
+    else if (el.hasAttribute('data-unset')) {
+      const k = a('data-unset');
+      if (k === 'q') { cal.q = ''; const qi = $('#calQ'); if (qi) qi.value = ''; } else cal.sel[k] = null;
+      refresh();
+    }
+    else if (el.hasAttribute('data-clear')) {
+      cal.q = ''; cal.sel = {};
+      const qi = $('#calQ'); if (qi) qi.value = '';
+      refresh();
+    }
+    else if (el.hasAttribute('data-save')) {
+      M.toast(storeSaved(M.lastQuery.calendar || 'view=' + cal.view) ? t('viewSaved') : t('viewNotSaved'));
+      refresh();
+    }
+    else if (el.hasAttribute('data-forget')) { storeSaved(''); cal.saved = false; M.toast(t('viewForgotten')); refresh(); }
+    else if (el.hasAttribute('data-drawer-open')) { drawer(true); const side = $('#calSide'); if (side) side.scrollTop = 0; }
+    else if (el.hasAttribute('data-drawer-close')) {
+      drawer(false);
+      const x = $('#calTools'); if (x && x.scrollIntoView) x.scrollIntoView({ block:'start' });
+    }
+    else if (el.hasAttribute('data-monthstep')) { cal.month = stepMonth(cal.month, parseInt(a('data-monthstep'), 10)); refresh(); }
+    else if (el.hasAttribute('data-weekstep')) {
+      const n = parseInt(a('data-weekstep'), 10);
+      const b = n ? weekStart(cal.week) : weekStart('');
+      cal.week = M.ymd(new Date(b.getFullYear(), b.getMonth(), b.getDate() + 7 * n));
+      refresh();
+    }
+  });
+  app.addEventListener('change', function (ev) {
+    const el = ev.target;
+    if (!el.matches || !el.matches('input[type=checkbox][data-fk]')) return;
+    const f = FACETS.filter(function (x) { return x.key === el.getAttribute('data-fk'); })[0];
+    if (!f) return;
+    const uni = UNIVERSE[f.key] || [];
+    if (el.hasAttribute('data-group')) {
+      const g = el.getAttribute('data-group');
+      const mem = uni.filter(function (v) { return M.kindOf('calendar', v).group === g; });
+      const all = mem.every(function (v) { return ticked(f, v); });
+      mem.forEach(function (v) { setTick(f, v, !all, uni); });
+    } else setTick(f, el.getAttribute('data-fv'), el.checked, uni);
+    refresh();
+  });
+  let tm;
+  app.addEventListener('input', function (ev) {
+    if (ev.target.id !== 'calQ') return;
+    clearTimeout(tm);
+    tm = setTimeout(function () { cal.q = ev.target.value.trim(); refresh(); }, 200);
+  });
+  if (!escWired) {
+    escWired = true;
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && cal.drawer) drawer(false); });
   }
-  return '<div class="card rounded-3xl p-5">' +
-    '<p class="' + LABEL + '">' + esc(t('glanceTitle')) + '</p>' +
-    '<div class="mt-2 -mx-1">' +
-      row('#/calendar?show=meetings&days=1', 'sun', t('today'), n.today, 'meeting') +
-      row('#/calendar?show=meetings&days=7', 'users', t('glanceAll'), n.all, 'meeting') +
-      row('#/calendar?show=meetings&days=7&fmt=Virtual', 'video', t('onlineOnly'), n.online, 'meeting') +
-      row('#/calendar?show=meetings&days=7&lang=Spanish', 'language', t('inSpanish'), n.spanish, 'meeting') +
-      row('#/calendar?show=events&days=7', 'star', t('showEvents'), n.events, 'event') +
-    '</div></div>';
 }
+let escWired = false;
 
-/* ── the explorer ──────────────────────────────────────────────────────── */
-function drawCalendar(shell) {
-  const v = calState.view;
-  const fields = CAL_FIELDS[v];
-  const has = function (f) { return fields.indexOf(f) !== -1; };
-  const scope = M.entries().filter(inScope);
-  const kinds = M.uniq(scope.map(function (e) { return e.kind; }).concat(calState.type ? [calState.type] : []))
-    .sort(function (a, b) { return M.calKindLabel(a).localeCompare(M.calKindLabel(b)); });
-  const fmts = M.uniq(scope.map(function (e) { return e.format; }).filter(Boolean)).sort();
-  const hosts = M.uniq([].concat.apply([], scope.map(hostsOf)))
-    .sort(function (a, b) { return parseInt(a.slice(1), 10) - parseInt(b.slice(1), 10); });
-  const years = M.uniq(scope.map(function (e) { return e.start.getFullYear(); })).sort().reverse();
-
-  const tabs = '<div class="scroll-x -mx-1 px-1 pb-1 min-w-0"><div class="flex items-center gap-2 w-max" role="tablist">' +
-    CAL_VIEWS.map(function (tb) {
-      if (!tb) return '<span class="mx-0.5 w-px h-6 bg-black/10 dark:bg-white/15" aria-hidden="true"></span>';
-      const on = v === tb[0];
-      return '<button type="button" role="tab" data-calview="' + attr(tb[0]) + '" aria-selected="' + on + '" ' +
-        'class="fltbtn inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-semibold whitespace-nowrap ' +
-        (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
-            : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
-        icon(tb[2]) + esc(t(tb[1])) + '</button>';
-    }).join('') + '</div></div>';
-
-  const segment = SHOW_VIEWS[v]
-    ? '<div class="inline-flex self-start shrink-0 rounded-full p-1 bg-black/[.05] dark:bg-white/10" role="group" aria-label="' + attr(t('show')) + '">' +
-        [['', 'showAll', 'layer-group'], ['meetings', 'showMeetings', 'users'], ['events', 'showEvents', 'star']].map(function (s) {
-          const on = calState.show === s[0];
-          return '<button type="button" data-calshow="' + attr(s[0]) + '" aria-pressed="' + on + '" ' +
-            'class="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap transition ' +
-            (on ? 'bg-white dark:bg-ink-900 shadow text-brand-700 dark:text-brand-300' : 'opacity-70 hover:opacity-100') + '">' +
-            icon(s[2], 'text-[.75rem]') + esc(t(s[1])) + '</button>';
-        }).join('') + '</div>'
-    : '';
-
-  const cols = fields.length + 2;                       // the search box is two wide
-  const filterGrid = v === 'gcal' ? '' :
-    '<div class="mt-5 grid grid-cols-2 gap-3 ' + (GRID_COLS[cols] || 'lg:grid-cols-6') + '">' +
-      searchField('calQ', t('search'), t('searchCalendar'), calState.q) +
-      (has('type') ? selectField('calType', t('type'), kinds.map(function (k) { return [k, M.calKindLabel(k)]; }), calState.type) : '') +
-      (has('day') ? selectField('calDay', t('day'), M.DOW_EN.map(function (d, i) { return [String(i), M.dayName(i)]; }), calState.day) : '') +
-      (has('time') ? selectField('calTime', t('timeOfDay'), [['morning', t('morning')], ['afternoon', t('afternoon')], ['evening', t('evening')]], calState.time) : '') +
-      (has('fmt') ? selectField('calFmt', t('format'), fmts.map(function (f) { return [f, M.fmtLabel(f)]; }), calState.fmt) : '') +
-      (has('host') ? selectField('calHost', t('hostedBy'), hosts.map(function (h) { return [h, t('district') + ' ' + h.slice(1)]; }), calState.host) : '') +
-      (has('year') ? selectField('calYear', t('year'), years.map(function (y) { return [String(y), String(y)]; }), calState.year) : '') +
-    '</div>' +
-    '<div class="mt-3 flex flex-wrap items-center gap-2">' +
-      [['', t('all')], ['English', t('english')], ['Spanish', t('spanish')]].map(function (l) {
-        return chipButton('data-callang', l[0], l[1], calState.lang === l[0]);
-      }).join('') +
-      (v === 'agenda'
-        ? '<span class="mx-1 w-px h-6 bg-black/10 dark:bg-white/15 shrink-0"></span>' +
-          RANGES.map(function (r) {
-            return chipButton('data-caldays', r[0], t(r[1]), rangeDays() === r[0], 'from-teal-500 to-emerald-600');
-          }).join('')
-        : '') +
-      '<button type="button" id="calClear" class="ml-auto py-1 text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
-        icon('rotate-left','mr-1') + esc(t('clearFilters')) + '</button>' +
-    '</div>';
-
-  shell.innerHTML =
-  '<div id="calExplorer" class="card rounded-3xl p-4 sm:p-6 mb-6 scroll-mt-24">' +
-    '<div class="flex flex-col gap-3 min-w-0">' + tabs + segment + '</div>' +
-    filterGrid +
-  '</div>' +
-  '<div id="calBody"></div>' +
-  (v === 'gcal' ? '' : '<p class="mt-6 text-[12.5px] opacity-60">' + icon('clock','mr-1.5') + esc(t('allTimesPT')) + '</p>');
-
-  $$('[data-calview]', shell).forEach(function (b) {
-    b.addEventListener('click', function () {
-      calState.view = b.getAttribute('data-calview');
-      // a type or a host the new view does not have would only empty it
-      const there = M.entries().filter(inScope);
-      if (!there.some(function (e) { return e.kind === calState.type; })) calState.type = '';
-      if (!there.some(function (e) { return hostsOf(e).indexOf(calState.host) !== -1; })) calState.host = '';
-      drawCalendar(shell);
-    });
-  });
-  $$('[data-calshow]', shell).forEach(function (b) {
-    // a type picked under "meetings" may not exist under "events"
-    b.addEventListener('click', function () { calState.show = b.getAttribute('data-calshow'); calState.type = ''; drawCalendar(shell); });
-  });
-  $$('[data-callang]', shell).forEach(function (b) {
-    b.addEventListener('click', function () { calState.lang = b.getAttribute('data-callang'); drawCalendar(shell); });
-  });
-  $$('[data-caldays]', shell).forEach(function (b) {
-    b.addEventListener('click', function () { calState.days = b.getAttribute('data-caldays'); drawCalendar(shell); });
-  });
-  const q = $('#calQ', shell);
-  if (q) { let tm; q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { calState.q = q.value; body(); }, 180); }); }
-  [['calType','type'], ['calDay','day'], ['calTime','time'], ['calFmt','fmt'], ['calHost','host'], ['calYear','year']].forEach(function (p) {
-    const el = $('#' + p[0], shell);
-    if (el) el.addEventListener('change', function () { calState[p[1]] = el.value; body(); });
-  });
-  const cl = $('#calClear', shell);
-  if (cl) cl.addEventListener('click', function () {
-    Object.assign(calState, CAL_DEFAULTS, { view:calState.view, week:calState.week, month:calState.month });
-    drawCalendar(shell);
-  });
-
-  function body() {
-    const b = $('#calBody', shell);
-    if (!b) return;
-    // the address says only what applies to the view on screen
-    const shown = { view:calState.view, show:showing(), q:val('q'), lang:val('lang') };
-    ['type','day','time','fmt','host','year'].forEach(function (k) { shown[k] = val(k); });
-    shown.days = calState.view === 'agenda' ? calState.days : '';
-    shown.week = calState.view === 'week' ? calState.week : '';
-    shown.month = calState.view === 'month' ? calState.month : '';
-    M.writeQuery('calendar', shown, CAL_DEFAULTS);
-
-    b.innerHTML = ({ agenda:agendaHTML, week:weekHTML, month:monthHTML, area:areaHTML,
-                     pattern:patternHTML, past:pastHTML, gcal:gcalHTML })[calState.view]();
-    if (calState.view === 'past') wirePast(b);
-    $$('[data-monthstep]', b).forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        calState.month = stepMonth(calState.month, parseInt(btn.getAttribute('data-monthstep'), 10));
-        body();
-      });
-    });
-    $$('[data-weekstep]', b).forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const n = parseInt(btn.getAttribute('data-weekstep'), 10);
-        const base = n ? weekStart(calState.week) : weekStart('');
-        calState.week = M.ymd(new Date(base.getFullYear(), base.getMonth(), base.getDate() + 7 * n));
-        body();
-      });
-    });
+/* ── what each view lists, before the filters ─────────────────────────── */
+function lastDay(o) { return new Date(o.date.getTime() + Math.max(0, o.span - (o.allDay ? 60000 : 0))); }
+function baseItems() {
+  const today = midnight();
+  if (cal.view === 'agenda') {
+    const to = new Date(today.getTime() + (parseInt(cal.days, 10) || 30) * 864e5 - 1);
+    // a convention that began yesterday is still on today
+    return { items: M.occurrences(M.entries(), new Date(today.getTime() - 14 * 864e5), to)
+      .filter(function (o) { return o.date >= today || (o.span > 864e5 && lastDay(o) >= today); }) };
   }
-  body();
+  if (cal.view === 'week') {
+    const from = weekStart(cal.week);
+    const res = spanItems(M.entries(), from, new Date(from.getFullYear(), from.getMonth(), from.getDate() + 6, 23, 59));
+    return { items:res.occ, grid:res.items, from:from };
+  }
+  if (cal.view === 'month') {
+    const mo = monthOf(cal.month);
+    const res = spanItems(M.entries(), new Date(mo.y, mo.m, 1), new Date(mo.y, mo.m + 1, 0, 23, 59));
+    return { items:res.occ, grid:res.items, mo:mo };
+  }
+  if (cal.view === 'list') {
+    return { items: M.entries().map(function (e) {
+      const d = dated(e);
+      return Object.assign({}, e, { nextDate:d.next, lastDate:d.last, shownDate:d.next || d.last });
+    }).filter(function (e) { return cal.when === 'all' || (cal.when === 'past' ? !e.nextDate : !!e.nextDate); }) };
+  }
+  if (cal.view === 'pattern') return { items: M.entries().filter(function (e) { return e.recurring && dated(e).next; }) };
+  return { items: [] };
 }
 
-/* "12 meetings · 2 events" — an ASC is both, so it is counted as whatever
-   is being shown                                                         */
-function tally(list) {
-  const s = showing();
-  const ev = s === 'events' ? list.length : s === 'meetings' ? 0 : list.filter(isEvent).length;
-  const mt = list.length - ev;
-  const parts = [];
-  if (mt) parts.push(mt + ' ' + t(mt === 1 ? 'meetingOne' : 'meetingMany'));
-  if (ev) parts.push(ev + ' ' + t(ev === 1 ? 'eventOne' : 'eventMany'));
-  return parts.join(' · ');
+/* One item per day an entry touches, so a three-day convention fills
+   three days of the week or the month; `occ` is one per date, to count. */
+function spanItems(list, from, to) {
+  const items = [], occ = [];
+  list.forEach(function (e) {
+    const ev = isEvent(e);
+    M.eventOccurrences(e, new Date(from.getTime() - 31 * 864e5), to).forEach(function (s) {
+      const last = new Date(s.getTime() + Math.max(0, e.span - (e.allDay ? 60000 : 0)));
+      let one = null;
+      for (let d = midnight(s); d <= last; d.setDate(d.getDate() + 1)) {
+        if (d < midnight(from) || d > to) continue;
+        if (!one) { one = Object.assign({}, e, { date:new Date(s), hour:s.getHours(), minute:s.getMinutes() }); occ.push(one); }
+        items.push(Object.assign({}, e, { date:new Date(d), href:calHref(e), feature:ev, of:one,
+          title:(ev ? '★ ' : '') + eventTitle(e),
+          hour:s.getHours(), minute:s.getMinutes(), allDay:e.allDay || d.toDateString() !== s.toDateString() }));
+      }
+    });
+  });
+  return { items:items, occ:occ };
 }
-function countBar(text) {
-  return text ? '<p class="mb-4 text-[13px] font-semibold opacity-60" aria-live="polite">' + esc(text) + '</p>' : '';
+function byTime(a, b) { return (a.allDay ? -1 : a.hour * 60 + a.minute) - (b.allDay ? -1 : b.hour * 60 + b.minute); }
+/* the Sunday that starts the week holding `ymd` (today if empty) */
+function weekStart(ymd) {
+  const d = ymd ? M.parseDT(ymd) : new Date();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay());
 }
-function gcalHTML() { return gcalPanel(c('calendar.gcal_note'), 'MONTH'); }
+
+function bodyHTML(base, shown) {
+  if (cal.view === 'gcal') return gcalPanel(c('calendar.gcal_note'), 'MONTH');
+  if (cal.view === 'week' || cal.view === 'month') {
+    const keep = new Set(shown);
+    const grid = base.grid.filter(function (o) { return keep.has(o.of); });
+    return cal.view === 'week' ? weekHTML(base.from, grid) : monthGrid(base.mo.y, base.mo.m, grid);
+  }
+  if (!shown.length) return M.emptyState(filtering() ? '' : t('noEvents'));
+  if (cal.view === 'agenda') return agendaHTML(shown);
+  if (cal.view === 'list') return cal.layout === 'table' ? tableHTML(shown) : cardsHTML(shown);
+  return patternHTML(shown);
+}
 
 /* ── agenda: day by day — an event is a card with its flyer, a meeting a line */
-function lastDay(o) { return new Date(o.date.getTime() + Math.max(0, o.span - (o.allDay ? 60000 : 0))); }
 function eventRow(o) {
   const k = M.calKind(o.kind);
   const multi = lastDay(o).toDateString() !== o.date.toDateString();
@@ -2231,16 +2581,8 @@ function meetingRow(o) {
     '<span class="hidden sm:flex shrink-0 flex-wrap justify-end gap-1.5">' + rowChips(o) + '</span>' +
     '<i class="hidden sm:block fa-solid fa-chevron-right text-[11px] opacity-30" aria-hidden="true"></i></a>';
 }
-
-function agendaHTML() {
+function agendaHTML(occ) {
   const from = midnight();
-  const to = new Date(from.getTime() + (parseInt(rangeDays(), 10) || 30) * 864e5 - 1);
-  // a convention that began yesterday is still on today
-  const occ = M.occurrences(pool(), new Date(from.getTime() - 14 * 864e5), to)
-    .filter(function (o) { return o.date >= from || (isEvent(o) && lastDay(o) >= from); })
-    .filter(function (o) { return matches(o, o.date); });
-  if (!occ.length) return M.emptyState(filtering() ? '' : t('noEvents'));
-
   const groups = {}, order = [];
   occ.forEach(function (o) {
     const k = (o.date < from ? from : o.date).toDateString();
@@ -2248,9 +2590,10 @@ function agendaHTML() {
     groups[k].push(o);
   });
   const todayStr = from.toDateString();
-  return countBar(tally(occ)) + '<div class="space-y-9">' + order.map(function (k) {
+  return '<div class="space-y-9">' + order.map(function (k) {
     const d = new Date(k), list = groups[k];
-    const evs = list.filter(isEvent), meets = list.filter(function (o) { return !isEvent(o); });
+    const evs = list.filter(function (o) { return !o.recurring || !isMeeting(o); });
+    const meets = list.filter(function (o) { return evs.indexOf(o) === -1; });
     const isToday = k === todayStr;
     return '<section aria-label="' + attr(M.fmtDateY(d)) + '">' +
       '<div class="flex items-center gap-3 mb-3">' +
@@ -2259,62 +2602,32 @@ function agendaHTML() {
           (isToday ? ' <span class="chip ' + M.tone('fuchsia') + ' align-middle ml-1">' + esc(t('today')) + '</span>' : '') + '</h2>' +
         '<p class="text-[13px] opacity-60">' + esc(M.monName(d.getMonth()) + ' ' + d.getDate() + ', ' + d.getFullYear() + ' · ' + tally(list)) + '</p></div>' +
       '</div>' +
-      (evs.length ? '<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3' + (meets.length ? ' mb-3' : '') + '">' + evs.map(eventRow).join('') + '</div>' : '') +
+      (evs.length ? '<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3' + (meets.length ? ' mb-3' : '') + '">' + evs.map(eventRow).join('') + '</div>' : '') +
       (meets.length ? '<div class="card rounded-2xl overflow-hidden divide-y divide-black/5 dark:divide-white/10">' + meets.map(meetingRow).join('') + '</div>' : '') +
     '</section>';
   }).join('') + '</div>';
 }
 
-/* One item per day an entry touches, so a three-day convention fills three
-   days of the week or the month. `occ` is one per occurrence, for counting. */
-function spanItems(list, from, to) {
-  const items = [], occ = [];
-  list.forEach(function (e) {
-    const ev = isEvent(e);
-    M.eventOccurrences(e, new Date(from.getTime() - 31 * 864e5), to).forEach(function (s) {
-      const last = new Date(s.getTime() + Math.max(0, e.span - (e.allDay ? 60000 : 0)));
-      let counted = false;
-      for (let d = midnight(s); d <= last; d.setDate(d.getDate() + 1)) {
-        if (d < midnight(from) || d > to) continue;
-        items.push(Object.assign({}, e, { date:new Date(d), href:calHref(e), feature:ev,
-          title:(ev ? '★ ' : '') + eventTitle(e),
-          hour:s.getHours(), minute:s.getMinutes(), allDay:e.allDay || d.toDateString() !== s.toDateString() }));
-        if (!counted) { occ.push(e); counted = true; }
-      }
-    });
-  });
-  return { items:items, occ:occ };
-}
-function byTime(a, b) { return (a.allDay ? -1 : a.hour * 60 + a.minute) - (b.allDay ? -1 : b.hour * 60 + b.minute); }
-
-/* the Sunday that starts the week holding `ymd` (today if empty) */
-function weekStart(ymd) {
-  const d = ymd ? M.parseDT(ymd) : new Date();
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay());
-}
-function weekHTML() {
-  const from = weekStart(calState.week);
-  const to = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 6, 23, 59);
-  const res = spanItems(pool(), from, to);
+/* ── week ──────────────────────────────────────────────────────────────── */
+function weekHTML(from, grid) {
+  const to = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 6);
   const days = [0,1,2,3,4,5,6].map(function (i) { return new Date(from.getFullYear(), from.getMonth(), from.getDate() + i); });
   const todayStr = new Date().toDateString();
   const label = M.monName(from.getMonth()) + ' ' + from.getDate() + ' – ' +
     (to.getMonth() !== from.getMonth() ? M.monName(to.getMonth()) + ' ' : '') + to.getDate() + ', ' + to.getFullYear();
-
   return '<div class="card rounded-3xl p-4 sm:p-6">' +
     '<div class="flex items-center justify-between gap-3 mb-5">' +
       '<button type="button" data-weekstep="-1" class="' + BTN_ROUND + '" aria-label="' + attr(t('previous')) + '">' + icon('chevron-left') + '</button>' +
       '<div class="text-center"><h3 class="font-display font-extrabold text-lg sm:text-2xl">' + esc(label) + '</h3>' +
-        '<p class="text-[12.5px] opacity-60">' + esc(tally(res.occ) || '—') + ' · ' +
-        '<button type="button" data-weekstep="0" class="font-semibold text-brand-700 dark:text-brand-300 hover:underline">' + esc(t('thisWeek')) + '</button></p></div>' +
+        '<button type="button" data-weekstep="0" class="text-[12.5px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' + esc(t('thisWeek')) + '</button></div>' +
       '<button type="button" data-weekstep="1" class="' + BTN_ROUND + '" aria-label="' + attr(t('next')) + '">' + icon('chevron-right') + '</button>' +
     '</div>' +
     '<div class="grid gap-2 md:grid-cols-7">' +
       days.map(function (d) {
         const isToday = d.toDateString() === todayStr;
-        const list = res.items.filter(function (o) { return o.date.toDateString() === d.toDateString(); }).sort(byTime);
+        const list = grid.filter(function (o) { return o.date.toDateString() === d.toDateString(); }).sort(byTime);
         return '<div class="rounded-2xl border ' + (isToday ? 'border-fuchsia-400 ring-2 ring-fuchsia-300/40' : 'border-black/5 dark:border-white/10') +
-          ' bg-white/70 dark:bg-white/[.04] p-2.5 min-h-[120px]">' +
+          ' bg-white/70 dark:bg-white/[.04] p-2.5 min-h-[120px] min-w-0">' +
           '<p class="flex md:block items-baseline gap-2 pb-1.5 mb-1.5 border-b border-black/5 dark:border-white/10">' +
             '<span class="text-[11px] font-bold uppercase tracking-widest ' + (isToday ? 'text-fuchsia-600 dark:text-fuchsia-300' : 'opacity-60') + '">' +
               esc(M.dayName(d.getDay()).slice(0, 3)) + '</span> ' +
@@ -2322,7 +2635,7 @@ function weekHTML() {
           (list.length
             ? '<div class="space-y-1.5">' + list.map(function (o) {
                 const st = M.calKind(o.kind);
-                return '<a href="' + attr(o.href) + '" class="block rounded-lg px-2 py-1.5 text-[11.5px] leading-snug font-semibold ' +
+                return '<a href="' + attr(o.href) + '" class="block rounded-lg px-2 py-1.5 text-[11.5px] leading-snug font-semibold break-words ' +
                   M.tone(st.c) + (o.feature ? ' ring-1 ring-inset ring-black/10 dark:ring-white/20' : '') + ' hover:brightness-95">' +
                   '<span class="block font-bold">' + esc(o.allDay ? t('allDay') : M.fmtTime(o.hour, o.minute)) + '</span>' +
                   esc(o.title) +
@@ -2334,75 +2647,117 @@ function weekHTML() {
     '</div></div>';
 }
 
-function monthHTML() {
-  const mo = monthOf(calState.month);
-  const res = spanItems(pool(), new Date(mo.y, mo.m, 1), new Date(mo.y, mo.m + 1, 0, 23, 59));
-  return countBar(tally(res.occ)) + monthGrid(mo.y, mo.m, res.items);
-}
-
-/* ── the Area's business days: this panel's, or any year on request ───── */
-function areaHTML() {
-  const today = midnight();
-  const y0 = calState.year ? +calState.year : PANEL_YEARS[0];
-  const y1 = calState.year ? +calState.year : PANEL_YEARS[1];
-  const rows = [];
-  pool().forEach(function (e) {
-    M.eventOccurrences(e, new Date(y0, 0, 1), new Date(y1, 11, 31, 23, 59)).forEach(function (d) { rows.push({ e:e, d:d }); });
+/* ── list: every entry once — as cards, or as a table to sort ─────────── */
+function sortList(list) {
+  const key = (cal.sort || '').replace(/^-/, '') || 'date';
+  const dir = cal.sort.charAt(0) === '-' ? -1 : 1;
+  // what is coming soonest first; what is over, the latest first
+  const natural = cal.when === 'past' ? -1 : 1;
+  const val = function (e) {
+    if (key === 'title') return M.norm(eventTitle(e));
+    if (key === 'type') return M.norm(M.calKindLabel(e.kind));
+    if (key === 'city') return M.norm(e.city || '~');
+    return e.shownDate ? e.shownDate.getTime() : 0;
+  };
+  return list.slice().sort(function (a, b) {
+    const x = val(a), y = val(b);
+    const r = x < y ? -1 : x > y ? 1 : 0;
+    return (key === 'date' && !cal.sort ? natural : dir) * r || (a.shownDate - b.shownDate);
   });
-  rows.sort(function (a, b) { return a.d - b.d; });
-  let next = -1;
-  rows.some(function (r, i) { if (r.d >= today) { next = i; return true; } return false; });
-  const heading = calState.year
-    ? c('calendar.area_title_year').replace('{year}', calState.year)
-    : c('calendar.area_title').replace('{panel}', M.CURRENT_PANEL);
-  return '<div class="mb-6"><h2 class="font-display font-extrabold text-2xl tracking-tight">' + esc(heading) + '</h2>' +
-      '<p class="mt-2 text-[14.5px] opacity-75 max-w-3xl leading-relaxed">' + esc(c('calendar.area_sub')) + '</p></div>' +
-    (rows.length
-      ? countBar(rows.length + ' ' + t(rows.length === 1 ? 'meetingOne' : 'meetingMany')) +
-        '<div class="grid grid-cols-1 gap-3 md:grid-cols-2 items-start">' +
-          rows.map(function (r, i) { return areaRow(r.e, r.d, i === next, r.d < today); }).join('') + '</div>'
-      : M.emptyState());
 }
-function areaRow(e, d, isNext, isPast) {
-  const k = M.calKind(e.kind);
-  return '<a href="' + attr(calHref(e)) + '" class="flex items-start gap-4 p-4 rounded-2xl transition ' +
-      (isPast ? 'opacity-55 hover:opacity-90 border border-black/5 dark:border-white/10' : 'card card-hover') +
-      (isNext ? ' ring-2 ring-fuchsia-400/70' : '') + '">' +
-    dateTile(d, M.grad(k.c)) +
-    '<span class="min-w-0 flex-1">' +
-      '<span class="flex flex-wrap items-center gap-1.5">' +
-        '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(e.kind)) + '</span></span>' +
-        (isNext ? '<span class="chip ' + M.tone('fuchsia') + '">' + esc(t('nextUp')) + '</span>' : '') +
-        (e.images.length ? '<span class="chip ' + M.tone('slate') + '">' + icon('image','text-[.7rem]') + esc(t('flyer')) + '</span>' : '') +
-      '</span>' +
-      '<span class="mt-1.5 block font-display font-bold text-[16px] leading-snug break-words">' + esc(eventTitle(e)) + '</span>' +
-      '<span class="mt-1 block text-[13px] opacity-70">' + esc(M.fmtDateY(d)) +
-        (e.allDay ? '' : ' · ' + esc(eventTimeLabel(e))) + '</span>' +
-      '<span class="mt-2 flex flex-wrap gap-1.5">' +
-        (e.host ? '<span class="chip ' + M.tone('brand') + '">' + icon('map-location-dot','text-[.7rem]') +
-          '<span>' + esc(t('hostedBy') + ' ' + e.host) + '</span></span>' : '') +
-        (e.place ? '<span class="chip chip-wrap ' + M.tone('slate') + '">' + icon('location-dot','text-[.7rem]') +
-          '<span>' + esc(e.place) + '</span></span>' : '') +
-        (e.format && !/person|physical/i.test(e.format) ? '<span class="chip ' + M.tone('sky') + '">' +
-          icon('video','text-[.7rem]') + '<span>' + esc(M.fmtLabel(e.format)) + '</span></span>' : '') +
-      '</span></span></a>';
+let foldCache = {};
+function cardsHTML(list) {
+  list = sortList(list);
+  // the months ahead, a heading each; anything older, a fold per year whose
+  // cards are only built when it is opened
+  const upcoming = cal.when === 'upcoming';
+  const groups = [], by = {};
+  list.forEach(function (e) {
+    const d = e.shownDate || e.start;
+    const k = upcoming ? d.getFullYear() + '-' + d.getMonth() : String(d.getFullYear());
+    if (!by[k]) { by[k] = { d:d, items:[] }; groups.push(by[k]); }
+    by[k].items.push(e);
+  });
+  if (upcoming) {
+    return groups.map(function (g) {
+      return '<section class="mb-10 last:mb-0">' +
+        '<h2 class="mb-4 flex items-center gap-3 font-display font-extrabold text-xl tracking-tight">' +
+          '<span class="w-1.5 h-7 rounded-full grad-rule"></span>' + esc(M.monName(g.d.getMonth()) + ' ' + g.d.getFullYear()) +
+          '<span class="chip ' + M.tone('slate') + '">' + g.items.length + '</span></h2>' +
+        '<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 items-stretch">' + g.items.map(eventCard).join('') + '</div>' +
+      '</section>';
+    }).join('');
+  }
+  foldCache = {};
+  const thisYear = String(new Date().getFullYear());
+  const openAt = Math.max(0, groups.findIndex(function (g) { return String(g.d.getFullYear()) === thisYear; }));
+  return '<div class="card rounded-2xl px-4 sm:px-5 py-1">' + groups.map(function (g, i) {
+    const y = String(g.d.getFullYear());
+    foldCache[y] = g.items;
+    return M.collapsible({
+      label:y, count:g.items.length, size:'lg', cls:'border-b border-black/5 dark:border-white/10 last:border-0',
+      icon:'calendar', tone:'slate', open:i === openAt || filtering(), attrs:' data-foldyear="' + y + '"',
+      body:'<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 items-stretch pb-4" data-foldbody="' + y + '"></div>'
+    });
+  }).join('') + '</div>';
+}
+function wireFolds(root) {
+  $$('details[data-foldyear]', root).forEach(function (d) {
+    const fill = function () {
+      const box = $('[data-foldbody]', d);
+      if (!box || box.childElementCount) return;
+      box.innerHTML = (foldCache[d.getAttribute('data-foldyear')] || []).map(eventCard).join('');
+    };
+    if (d.open) fill();
+    d.addEventListener('toggle', function () { if (d.open) fill(); });
+  });
+}
+function tableHTML(list) {
+  list = sortList(list);
+  const head = function (key, label) {
+    const on = (cal.sort || 'date').replace(/^-/, '') === key;
+    const arrow = on ? (cal.sort.charAt(0) === '-' ? 'arrow-up-wide-short' : 'arrow-down-short-wide') : 'sort';
+    return '<th scope="col" class="px-3 py-2.5 text-left">' +
+      '<button type="button" data-sort="' + key + '" class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest ' +
+        (on ? 'text-brand-700 dark:text-brand-300' : 'opacity-60 hover:opacity-100') + '">' + esc(label) + icon(arrow, 'text-[.7rem]') + '</button></th>';
+  };
+  return '<div class="card rounded-2xl overflow-hidden"><div class="scroll-x">' +
+    '<table class="w-full min-w-[900px] text-[13.5px]">' +
+      '<thead class="bg-black/[.03] dark:bg-white/[.04]"><tr>' +
+        head('date', t('date')) + head('title', t('title')) + head('type', t('category')) +
+        '<th scope="col" class="px-3 py-2.5 text-left text-[11px] font-bold uppercase tracking-widest opacity-60">' + esc(t('format')) + '</th>' +
+        '<th scope="col" class="px-3 py-2.5 text-left text-[11px] font-bold uppercase tracking-widest opacity-60">' + esc(t('district')) + '</th>' +
+        head('city', t('city')) +
+      '</tr></thead><tbody class="divide-y divide-black/5 dark:divide-white/10">' +
+      list.map(function (e) {
+        const k = M.calKind(e.kind), d = e.shownDate || e.start;
+        return '<tr class="hover:bg-black/[.02] dark:hover:bg-white/[.03] align-top">' +
+          '<td class="px-3 py-2.5 whitespace-nowrap tabular-nums">' + esc(M.monName(d.getMonth()).slice(0, 3) + ' ' + d.getDate() + ', ' + d.getFullYear()) +
+            (e.recurring ? '<span class="block text-[11.5px] opacity-60">' + esc(M.recurLabel(e)) + '</span>' : '') + '</td>' +
+          '<td class="px-3 py-2.5 min-w-[15rem]"><a href="' + attr(calHref(e)) + '" class="font-semibold hover:underline">' + esc(eventTitle(e)) + '</a>' +
+            ((e.topics || []).length ? '<span class="block text-[11.5px] opacity-60">' + esc(e.topics.map(function (x) { return M.kindText('topic', x); }).join(' · ')) + '</span>' : '') + '</td>' +
+          '<td class="px-3 py-2.5 whitespace-nowrap"><span class="chip ' + M.tone(k.c) + '">' + icon(k.fa, 'text-[.7rem]') + '<span>' + esc(M.calKindLabel(e.kind)) + '</span></span></td>' +
+          '<td class="px-3 py-2.5 whitespace-nowrap">' + esc(M.fmtLabel(e.format)) + (e.language !== 'English' ? ' · ' + esc(M.kindText('language', e.language)) : '') + '</td>' +
+          '<td class="px-3 py-2.5 whitespace-nowrap">' + esc((e.districts || []).map(function (x) { return x.slice(1); }).join(', ') || '—') + '</td>' +
+          '<td class="px-3 py-2.5">' + esc(e.city || (online(e.format) ? t('online') : '—')) + '</td>' +
+        '</tr>';
+      }).join('') +
+    '</tbody></table></div></div>';
 }
 
 /* The same grid as the printed flyer — which week of the month, which day —
-   generated from the meetings that still happen, so the two never drift.  */
-function patternHTML() {
-  const series = pool().filter(function (s) { return dated(s).next; });
+   generated from what still repeats, so the two never drift apart.       */
+function patternHTML(series) {
   const weeks = [1,2,3,4,5];
   const grid = {};
   weeks.forEach(function (w) { grid[w] = [[],[],[],[],[],[],[]]; });
-  const DOWI = { SU:0, MO:1, TU:2, WE:3, TH:4, FR:5, SA:6 };
+  const dayF = FACETS.filter(function (f) { return f.source === 'day'; })[0];
   series.forEach(function (s) {
     s.byday.forEach(function (bd) {
       const mm = String(bd).match(/^([+-]?\d)?([A-Z]{2})$/);
       if (!mm) return;
       const di = DOWI[mm[2]];
-      if (di === undefined) return;
-      if (val('day') !== '' && String(di) !== val('day')) return;
+      if (di === undefined || (dayF && !ticked(dayF, String(di)))) return;
       if (mm[1]) {
         const w = parseInt(mm[1], 10);
         const row = w < 0 ? 5 : w;                 // "last" goes on the bottom row
@@ -2411,7 +2766,6 @@ function patternHTML() {
     });
   });
   if (!weeks.some(function (w) { return grid[w].some(function (cc) { return cc.length; }); })) return M.emptyState();
-
   return '<div class="card rounded-3xl p-4 sm:p-6">' +
     '<p class="text-[13.5px] opacity-70 mb-4">' + esc(c('calendar.pattern_note')) + '</p>' +
     '<div class="scroll-x -mx-2 px-2">' +
@@ -2434,55 +2788,7 @@ function patternHTML() {
               }).join('') + '</td>';
           }).join('') + '</tr>';
       }).join('') +
-    '</tbody></table></div>' +
-    '<div class="mt-5 flex flex-wrap gap-2">' +
-      M.uniq(series.map(function (s) { return s.kind; })).map(function (k) {
-        const st = M.calKind(k);
-        return '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(k)) + '</span></span>';
-      }).join('') +
-    '</div></div>';
-}
-
-/* Everything already held, a fold per year — the events, and the meetings
-   that have stopped. The cards are only built when a year is opened, so
-   five years of flyers cost nothing until someone asks for them.        */
-let pastCache = {};
-function pastHTML() {
-  const list = pool().filter(function (e) { return !dated(e).next; })
-    .map(function (e) { return Object.assign({}, e, { nextDate:null, lastDate:dated(e).last }); })
-    .filter(function (e) { return !val('year') || String(e.lastDate.getFullYear()) === val('year'); })
-    .sort(function (a, b) { return b.lastDate - a.lastDate; });
-  if (!list.length) return M.emptyState();
-  const years = [], byY = {};
-  list.forEach(function (e) {
-    const y = e.lastDate.getFullYear();
-    if (!byY[y]) { byY[y] = []; years.push(y); }
-    byY[y].push(e);
-  });
-  pastCache = byY;
-  const open = filtering();
-  return '<p class="mb-4 text-[14.5px] opacity-75 max-w-3xl leading-relaxed">' + esc(c('calendar.past_sub')) + '</p>' +
-    countBar(tally(list)) +
-    '<div class="card rounded-2xl px-4 sm:px-5 py-1">' +
-      years.map(function (y) {
-        return M.collapsible({
-          label:String(y), count:byY[y].length, size:'lg', cls:'border-b border-black/5 dark:border-white/10 last:border-0',
-          icon:'clock-rotate-left', tone:'slate', open:open, attrs:' data-pastyear="' + y + '"',
-          body:'<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 items-stretch pb-4" data-pastbody="' + y + '"></div>'
-        });
-      }).join('') +
-    '</div>';
-}
-function wirePast(root) {
-  $$('details[data-pastyear]', root).forEach(function (d) {
-    const fill = function () {
-      const box = $('[data-pastbody]', d);
-      if (!box || box.childElementCount) return;
-      box.innerHTML = (pastCache[d.getAttribute('data-pastyear')] || []).map(eventCard).join('');
-    };
-    if (d.open) fill();
-    d.addEventListener('toggle', function () { if (d.open) fill(); });
-  });
+    '</tbody></table></div></div>';
 }
 M.calHref = calHref;
 
@@ -3645,6 +3951,10 @@ function entryModal(id) {
     M.langChip2(e.language, true) +
     (pattern ? '<span class="chip ' + M.tone('violet') + '">' + icon('repeat','text-[.7rem]') + '<span>' + esc(pattern) + '</span></span>' : '') +
     (e.host ? '<span class="chip ' + M.tone('brand') + '">' + esc(t('hostedBy') + ' ' + e.host) + '</span>' : '') +
+    (e.topics || []).map(function (x) {
+      const tk = M.kindOf('topic', x);
+      return '<span class="chip ' + M.tone(tk.c) + '">' + icon(tk.fa || 'tag', 'text-[.7rem]') + '<span>' + esc(M.kindText('topic', x)) + '</span></span>';
+    }).join('') +
     (e.cost ? '<span class="chip ' + M.tone('emerald') + '">' + esc(e.cost) + '</span>' : '');
 
   const dates = e.recurring ? ahead.slice(1, 9) : [];
