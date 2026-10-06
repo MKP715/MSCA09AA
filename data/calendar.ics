@@ -1,0 +1,1016 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:MSCA09
+X-WR-TIMEZONE:America/Los_Angeles
+BEGIN:VTIMEZONE
+TZID:America/Los_Angeles
+X-LIC-LOCATION:America/Los_Angeles
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0800
+TZOFFSETTO:-0700
+TZNAME:PDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0700
+TZOFFSETTO:-0800
+TZNAME:PST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T190000
+DTEND;TZID=America/Los_Angeles:20260107T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
+DTSTAMP:20261006T004642Z
+UID:msca09-ig-oc@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\nLanguage: English\nWeb: oc-aa.org\nNo
+ te: The meeting place and Zoom details are on the intergroup’s website.\n--
+ \nOrange County Intergroup\n1st Wednesday of the month\, 7:00 PM to 8:00 PM
+  (Pacific)\nPlace and Zoom details: check with the intergroup.\nSource: 202
+ 6 MSCA09 District Info flyer\; time only (checked October 2026)
+LAST-MODIFIED:20261006T004500Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Orange County Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260116T180000
+DTEND;TZID=America/Los_Angeles:20260116T190000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3FR
+DTSTAMP:20261006T004642Z
+UID:msca09-d30@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 812 5888 690
+ 0\nPasscode: Sober2024\nZoomLink: https://zoom.us/j/81258886900\nWeb: distr
+ ict30area09.org\nEmail: d30dcmc@msca09aa.org\nCovers: Joshua Tree\, Landers
+ \, Morongo Valley\, Twentynine Palms\, Wonder Valley\, Yucca Valley\n--\nDi
+ strict 30\n3rd Friday of the month\, 6:00 PM to 7:00 PM (Pacific)\nIn perso
+ n and on Zoom.\nSource: msca09aa.org/district-30 (checked October 2026)
+LAST-MODIFIED:20261006T004344Z
+LOCATION:Yucca Valley Alano Club\, 57617 Yucca Trail\, Yucca Valley\, CA 92
+ 284
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 30
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260111T160000
+DTEND;TZID=America/Los_Angeles:20260111T170000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-oc-4pm@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\nWeb: ochandi.org\nNote
+ : Orientations at 3:15 PM and 5:15 PM. The Hospitals meeting follows at 6:0
+ 0 PM.\n--\nOrange County H&I – Corrections\n2nd Sunday of the month\, 4:00 
+ PM to 5:00 PM (Pacific)\nIn person.\nSource: msca09aa.org/hospitals-institu
+ tions (checked October 2026)
+LAST-MODIFIED:20261006T004436Z
+LOCATION:Garden Grove Alano Club\, 9845 Belfast Dr\, Garden Grove\, CA
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Orange County H&I – Corrections
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260115T180000
+DTEND;TZID=America/Los_Angeles:20260115T183000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TH
+DTSTAMP:20261006T004642Z
+UID:msca09-area-service-study@msca09.local
+CREATED:20260902T160058Z
+DESCRIPTION:MSCA09|Area|Virtual\nLanguage: English\nZoomID: 859 8955 7002\n
+ Passcode: Panel76\nIMG: https://drive.google.com/file/d/1FgFMqDJfXoOi35NiHq
+ Br3u3TG5Px455e/view?usp=sharing\nNote: Followed by the Sharing Session at 6
+ :30 PM in the same Zoom room.\n--\nService Study\n3rd Thursday of the month
+ \, 6:00 PM to 6:30 PM (Pacific)\nOnline only\, on Zoom.\nSource: msca09aa.o
+ rg home page and the Monthly Service Study & Sharing Session flyer (checked
+  October 2026)
+LAST-MODIFIED:20261006T004147Z
+LOCATION:https://us06web.zoom.us/j/85989557002
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Service Study
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20261022T190000
+DTEND;TZID=America/Los_Angeles:20261022T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4TH
+DTSTAMP:20261006T004642Z
+UID:mi7quknve8k13jglc03b4q2vac@google.com
+CREATED:20261006T004220Z
+DESCRIPTION:MSCA09|Committee|Virtual\nLanguage: English\nWeb: area9btg.org\
+ nEmail: treatmentchair@msca09aa.org\nNote: E-mail the Treatment chair for t
+ he Zoom invitation.\nNote: The committee also meets during the Area meeting
+ .\n--\nTreatment Committee\n4th Thursday of the month\, 7:00 PM to 8:00 PM 
+ (Pacific)\nOnline only\, on Zoom.\nTreatment Facilities and Bridging the Ga
+ p.\nSource: msca09aa.org/treatment (checked October 2026)
+LAST-MODIFIED:20261006T004221Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Treatment Committee
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260118T160000
+DTEND;TZID=America/Los_Angeles:20260118T170000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SU
+DTSTAMP:20261006T004642Z
+UID:msca09-d09@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Virtual\nLanguage: English\nZoomID: 928 8170 40
+ 93\nPasscode: 642408\nWeb: district9gs.com\nEmail: d09dcmc@msca09aa.org\nCo
+ vers: Bermuda Dunes\, Blythe\, Cathedral City\, Coachella\, Desert Center\,
+  Desert Hot Springs\, Eagle Mountain\, Indian Wells\, Indio\, La Quinta\, N
+ orth Palm Springs\, Palm Desert\, Palm Springs\, Rancho Mirage\, Whitewater
+ \nNote: Monthly GSR meeting. The Zoom room opens at 3:30 PM.\nNote: The Dis
+ trict 9 GSR School meets at 3:00 PM in the same room.\n--\nDistrict 9\n3rd 
+ Sunday of the month\, 4:00 PM to 5:00 PM (Pacific)\nOnline only\, on Zoom.\
+ nSource: msca09aa.org/district-9 (checked October 2026)
+LAST-MODIFIED:20261006T004308Z
+LOCATION:https://zoom.us/j/92881704093?pwd=SlB2K2FZT3ZRWm1JSWp4VGVDQVBQZz09
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:District 9
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260120T190000
+DTEND;TZID=America/Los_Angeles:20260120T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TU
+DTSTAMP:20261006T004642Z
+UID:msca09-d08@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 909 951 1212
+ \nZoomLink: https://zoom.us/j/9099511212\nEmail: d08dcmc@msca09aa.org\nCove
+ rs: Norco\, Corona\, Mira Loma\, Rubidoux\, Riverside\, Mentone\, Redlands\
+ , Moreno Valley\, Yucaipa\, Calimesa\, Big Bear\, Bloomington\, Blue Jay\, 
+ Colton\, Crestline\, Fontana\, Grand Terrace\, Highland\, Lake Arrowhead\, 
+ Loma Linda\, Rialto\, Running Springs\, San Bernardino\nNote: The Zoom room
+  has no passcode.\n--\nDistrict 8\n3rd Tuesday of the month\, 7:00 PM to 8:
+ 00 PM (Pacific)\nIn person and on Zoom.\nSource: msca09aa.org/district-8 (c
+ hecked October 2026)
+LAST-MODIFIED:20261006T004303Z
+LOCATION:Magnolia Center Church of Christ\, 6160 Riverside Ave\, Riverside\
+ , CA 92506
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 8
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260121T183000
+DTEND;TZID=America/Los_Angeles:20260121T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-oc-south@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\nNote: Orientation at 6
+ :00 PM.\n--\nSouth Orange County H&I\n3rd Wednesday of the month\, 6:30 PM 
+ to 7:30 PM (Pacific)\nIn person.\nSource: msca09aa.org/hospitals-institutio
+ ns (checked October 2026)
+LAST-MODIFIED:20261006T004444Z
+LOCATION:Laguna Canyon Club\, 20456 Laguna Canyon Rd\, Laguna Beach\, CA 92
+ 651
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:South Orange County H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T190000
+DTEND;TZID=America/Los_Angeles:20260107T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
+DTSTAMP:20261006T004642Z
+UID:msca09-d04@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Virtual\nLanguage: English\nZoomID: 996 5396 00
+ 80\nPasscode: 673617\nWeb: longbeachaa.org\nEmail: d04dcmc@msca09aa.org\nCo
+ vers: Avalon\, Belmont Shore\, Long Beach\, Los Alamitos\, Naples\, Rossmoo
+ r\n--\nDistrict 4\n1st Wednesday of the month\, 7:00 PM to 8:00 PM (Pacific
+ )\nOnline only\, on Zoom.\nSource: msca09aa.org/district-4 (checked October
+  2026)
+LAST-MODIFIED:20261006T004238Z
+LOCATION:https://us06web.zoom.us/j/99653960080
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 4
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260108T193000
+DTEND;TZID=America/Los_Angeles:20260108T210000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TH
+DTSTAMP:20261006T004642Z
+UID:msca09-d01-03@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 884 2975 134
+ 1\nPasscode: Panel76\nZoomLink: https://zoom.us/j/88429751341\nWeb: mscadis
+ trict1.org\nEmail: d01dcmc@msca09aa.org\nCovers: Gardena\, Hermosa Beach\, 
+ Lawndale\, Manhattan Beach\, Palos Verdes Estates\, Rancho Palos Verdes\, R
+ edondo Beach\, Rolling Hills\, Rolling Hills Estates\, Torrance\, Carson\, 
+ Dominguez\, Harbor City\, Lomita\, San Pedro\, Wilmington\n--\nDistrict 1 &
+  3\n2nd Thursday of the month\, 7:30 PM to 9:00 PM (Pacific)\nIn person and
+  on Zoom.\nSource: msca09aa.org/district-1-and-3 (checked October 2026)
+LAST-MODIFIED:20261006T004230Z
+LOCATION:South Bay Alano Club\, 702 11th Place\, Hermosa Beach\, CA 90254
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:District 1 & 3
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260112T183000
+DTEND;TZID=America/Los_Angeles:20260112T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2MO
+DTSTAMP:20261006T004642Z
+UID:msca09-d07@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: English\nEmail: d07dcmc@ms
+ ca09aa.org\nCovers: Garden Grove\, Midway City\, Stanton\, Westminster\nNot
+ e: GSR orientation at 6:00 PM.\n--\nDistrict 7\n2nd Monday of the month\, 6
+ :30 PM to 7:30 PM (Pacific)\nIn person.\nSource: msca09aa.org/district-7 (c
+ hecked October 2026)
+LAST-MODIFIED:20261006T004249Z
+LOCATION:Garden Grove Alano Club\, 9845 Belfast Dr\, Garden Grove\, CA
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 7
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260127T193000
+DTEND;TZID=America/Los_Angeles:20260127T203000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4TU
+DTSTAMP:20261006T004642Z
+UID:msca09-ig-south-bay@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\nLanguage: English\nWeb: asbco.org\nNo
+ te: The meeting place and Zoom details are on the intergroup’s website.\n--
+ \nSouth Bay Intergroup\n4th Tuesday of the month\, 7:30 PM to 8:30 PM (Paci
+ fic)\nPlace and Zoom details: check with the intergroup.\nSource: 2026 MSCA
+ 09 District Info flyer\; time only (checked October 2026)
+LAST-MODIFIED:20261006T004523Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:South Bay Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20261005T190000
+DTEND;TZID=America/Los_Angeles:20261005T203000
+RRULE:FREQ=MONTHLY;UNTIL=20271207T075959Z;BYDAY=1MO
+DTSTAMP:20261006T004642Z
+UID:1qpha5a0oib0q73pvmepr90peb@google.com
+CLASS:PUBLIC
+CREATED:20261005T041822Z
+DESCRIPTION:MSCA09|Committee|Virtual\nLanguage: English\nZoomID: 885 6624 3
+ 556\nPasscode: Panel76\nEmail: correctionschair@msca09aa.org\nIMG: https://
+ drive.google.com/file/d/1RIXj_NtiBtUZu9qFJ2XUy_3nfbVtzrlK/view?usp=sharing\
+ nNote: Also meets in person on the 2nd Sunday\, during the Area meeting.\n-
+ -\nCorrections Committee\n1st Monday of the month\, 7:00 PM to 8:30 PM (Pac
+ ific)\nOnline only\, on Zoom.\nSource: msca09aa.org/corrections and the com
+ mittee flyer (checked October 2026)
+LAST-MODIFIED:20261006T004213Z
+LOCATION:https://us06web.zoom.us/j/88566243556?pwd=RG189g79XVysbw35N6fgO93L
+ q9p6Fd.1
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Corrections Committee
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260106T190000
+DTEND;TZID=America/Los_Angeles:20260106T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TU
+DTSTAMP:20261006T004642Z
+UID:msca09-d06@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 899 2638 066
+ 8\nPasscode: big6\nZoomLink: https://zoom.us/j/89926380668\nWeb: district6a
+ rea09.org\nEmail: d06dcmc@msca09aa.org\nCovers: Balboa\, Corona Del Mar\, F
+ ountain Valley\, Huntington Beach\, Newport Beach\, Seal Beach\, Sunset Bea
+ ch\nNote: GSR School at 6:30 PM.\n--\nDistrict 6\n1st Tuesday of the month\
+ , 7:00 PM to 8:00 PM (Pacific)\nIn person and on Zoom.\nSource: msca09aa.or
+ g/district-6 (checked October 2026)
+LAST-MODIFIED:20261006T004246Z
+LOCATION:Community United Methodist Church\, 6652 Heil Ave\, Huntington Bea
+ ch\, CA 92647
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 6
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260102T190000
+DTEND;TZID=America/Los_Angeles:20260102T200000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=FR
+DTSTAMP:20261006T004642Z
+UID:msca09-d23@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: Spanish\nEmail: d23dcmc@ms
+ ca09aa.org\nCovers: Districts 8\, 11\, 14\, 17 and 19\n--\nDistrict 23 (Spa
+ nish)\nEvery Friday\, 7:00 PM to 8:00 PM (Pacific)\nIn person.\nSource: msc
+ a09aa.org/district-23 (checked October 2026)
+LAST-MODIFIED:20261006T004401Z
+LOCATION:10838 Hole Ave\, Riverside\, CA 92505
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 23 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260117T083000
+DTEND;TZID=America/Los_Angeles:20260117T093000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SA
+DTSTAMP:20261006T004642Z
+UID:msca09-ig-victor-valley@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\nLanguage: English\nWeb: victorvalleya
+ a.org\nNote: The meeting place and Zoom details are on the intergroup’s web
+ site.\n--\nVictor Valley Intergroup\n3rd Saturday of the month\, 8:30 AM to
+  9:30 AM (Pacific)\nPlace and Zoom details: check with the intergroup.\nSou
+ rce: 2026 MSCA09 District Info flyer\; time only (checked October 2026)
+LAST-MODIFIED:20261006T004516Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Victor Valley Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260105T190000
+DTEND;TZID=America/Los_Angeles:20260105T200000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=MO
+DTSTAMP:20261006T004642Z
+UID:msca09-d25@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: Spanish\nEmail: d25dcmc@ms
+ ca09aa.org\nCovers: Districts 8\, 19\n--\nDistrict 25 (Spanish)\nEvery Mond
+ ay\, 7:00 PM to 8:00 PM (Pacific)\nIn person.\nSource: 2026 MSCA09 District
+  Info flyer\; msca09aa.org/district-25 (March 2025) lists an older Zoom (ch
+ ecked October 2026)
+LAST-MODIFIED:20261006T004409Z
+LOCATION:222 E Highland Ave\, Ste 7\, San Bernardino\, CA 92404
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 25 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260117T100000
+DTEND;TZID=America/Los_Angeles:20260117T130000
+RRULE:FREQ=MONTHLY;UNTIL=20280201T055959Z;BYDAY=3SA
+DTSTAMP:20261006T004642Z
+UID:1r8sqvllql86qcs2ts6qitpe42@google.com
+CLASS:PUBLIC
+CREATED:20261002T191136Z
+DESCRIPTION:MSCA09|Committee|Hybrid\nLanguage: English\nZoomID: 823 2056 37
+ 91\nPasscode: archives\nZoomLink: https://us06web.zoom.us/j/82320563791\nWe
+ b: msca09aa-archives.org\nEmail: archiveschair@msca09aa.org\nIMG: https://d
+ rive.google.com/file/d/1xZ1zRuRB9_pGZD8t8h7oPzbH7Wet-4jg/view?usp=sharing\n
+ Note: The Archives repository is open Saturdays\, 10 AM to 1 PM.\n--\nArchi
+ ves Committee\n3rd Saturday of the month\, 10:00 AM to 1:00 PM (Pacific)\nI
+ n person and on Zoom.\nSource: msca09aa.org/archives and the committee flye
+ r (checked October 2026)
+LAST-MODIFIED:20261006T004204Z
+LOCATION:MSCA09 Archives Repository\, 7111 Arlington Ave\, Suite B\, Rivers
+ ide\, CA 92503
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Archives Committee
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20261002T110000
+DTEND;TZID=America/Los_Angeles:20261002T120000
+RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20280101T075959Z;BYDAY=FR
+DTSTAMP:20261006T004642Z
+UID:0u869ij0rd1qnqhqaqdov0mmgn@google.com
+CLASS:PUBLIC
+CREATED:20261002T193039Z
+DESCRIPTION:MSCA09|Committee|Virtual\nLanguage: English\nZoomID: 870 3165 0
+ 032\nPasscode: a9tech\nEmail: technologychair@msca09aa.org\nIMG: https://dr
+ ive.google.com/file/d/1gakE4Bo3PQelAYoaYM-ZbEE94oQrIHCf/view?usp=sharing\n-
+ -\nTechnology Committee\nEvery Friday\, 11:00 AM to 12:00 PM (Pacific)\nOnl
+ ine only\, on Zoom.\nWeekly maintenance meeting and office hours: get your 
+ committee or district information and events onto the website\, get tech he
+ lp\, and give feedback on the new site.\nSource: msca09aa.org/technology an
+ d the committee flyer (checked October 2026)
+LAST-MODIFIED:20261006T004159Z
+LOCATION:https://us06web.zoom.us/j/87031650032?pwd=E9E8yGa2ZPSucLHwh33w2Uy1
+ aOdkGB.1
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Technology Committee
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20261007T190000
+DTEND;TZID=America/Los_Angeles:20261007T200000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=WE
+DTSTAMP:20261006T004642Z
+UID:7t9cfrsvvuh9rdh0l14hqkq4f4@google.com
+CREATED:20261006T004225Z
+DESCRIPTION:MSCA09|Committee|Virtual\nLanguage: English\nZoomID: 884 2975 1
+ 341\nPasscode: Panel76\nEmail: gsrschoolchair@msca09aa.org\nIMG: https://dr
+ ive.google.com/file/d/1_MT7GomC4suFVrMoOoR5EvrUJwghUNbP/view?usp=sharing\nN
+ ote: Service Manual study\, presented with Districts 1 & 3.\n--\nGSR School
+ \nEvery Wednesday\, 7:00 PM to 8:00 PM (Pacific)\nOnline only\, on Zoom.\nS
+ ource: msca09aa.org/general-service-representative-gsr-school and the 2026 
+ GSR School flyer (checked October 2026)
+LAST-MODIFIED:20261006T004225Z
+LOCATION:https://zoom.us/j/88429751341
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:GSR School
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260119T183000
+DTEND;TZID=America/Los_Angeles:20260119T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3MO
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-high-desert@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\n--\nHigh Desert H&I\n3
+ rd Monday of the month\, 6:30 PM to 7:30 PM (Pacific)\nIn person.\nSource: 
+ msca09aa.org/hospitals-institutions (checked October 2026)
+LAST-MODIFIED:20261006T004428Z
+LOCATION:Apple Valley Alano Club\, 11085 Central Rd\, Apple Valley\, CA 923
+ 08
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:High Desert H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260113T190000
+DTEND;TZID=America/Los_Angeles:20260113T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
+DTSTAMP:20261006T004642Z
+UID:msca09-d18@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 818 2990 389
+ 2\nPasscode: District18\nZoomLink: https://zoom.us/j/81829903892\nEmail: d1
+ 8dcmc@msca09aa.org\nCovers: Costa Mesa\, Irvine\nNote: GSR School at 6:30 P
+ M.\n--\nDistrict 18\n2nd Tuesday of the month\, 7:00 PM to 8:00 PM (Pacific
+ )\nIn person and on Zoom.\nSource: msca09aa.org/district-18 (checked Octobe
+ r 2026)
+LAST-MODIFIED:20261006T004333Z
+LOCATION:183 East Bay Street\, Costa Mesa\, CA
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 18
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260121T190000
+DTEND;TZID=America/Los_Angeles:20260121T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-harbor-area@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\n--\nHarbor Area H&I\n3
+ rd Wednesday of the month\, 7:00 PM to 8:00 PM (Pacific)\nIn person.\nSourc
+ e: msca09aa.org/hospitals-institutions (checked October 2026)
+LAST-MODIFIED:20261006T004424Z
+LOCATION:Resurrection Lutheran Church\, 1900 E Carson St\, Long Beach\, CA 
+ 90807
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Harbor Area H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260121T190000
+DTEND;TZID=America/Los_Angeles:20260121T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3WE
+DTSTAMP:20261006T004642Z
+UID:msca09-d14@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 896 007 6690
+ \nPasscode: district14\nZoomLink: https://zoom.us/j/8960076690\nEmail: d14d
+ cmc@msca09aa.org\nCovers: Anza\, Aquanga\, Banning\, Beaumont\, Cabazon\, H
+ emet\, Homeland\, Juniper Flats\, Idyllwild\, Romoland\, San Jacinto\, Winc
+ hester\n--\nDistrict 14\n3rd Wednesday of the month\, 7:00 PM to 8:00 PM (P
+ acific)\nIn person and on Zoom.\nSource: msca09aa.org/district-14 (checked 
+ October 2026)
+LAST-MODIFIED:20261006T004321Z
+LOCATION:Arrid Club\, 120 South Harvard St\, Hemet\, CA 92543
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 14
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260113T190000
+DTEND;TZID=America/Los_Angeles:20260113T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-south-bay@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\nWeb: southbayhandi.com
+ \nNote: Orientation at 6:30 PM.\n--\nSouth Bay H&I\n2nd Tuesday of the mont
+ h\, 7:00 PM to 8:00 PM (Pacific)\nIn person.\nSource: msca09aa.org/hospital
+ s-institutions (checked October 2026)
+LAST-MODIFIED:20261006T004448Z
+LOCATION:South Bay Alano Club\, 702 11th Place\, Hermosa Beach\, CA 90254
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:South Bay H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T190000
+DTEND;TZID=America/Los_Angeles:20260107T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
+DTSTAMP:20261006T004642Z
+UID:msca09-ig-inland-empire@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\nLanguage: English\nWeb: aainlandempir
+ e.org\nNote: The meeting place and Zoom details are on the intergroup’s web
+ site.\n--\nInland Empire Intergroup\n1st Wednesday of the month\, 7:00 PM t
+ o 8:00 PM (Pacific)\nPlace and Zoom details: check with the intergroup.\nSo
+ urce: 2026 MSCA09 District Info flyer\; time only (checked October 2026)
+LAST-MODIFIED:20261006T004504Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Inland Empire Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260101T191500
+DTEND;TZID=America/Los_Angeles:20260101T201500
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TH
+DTSTAMP:20261006T004642Z
+UID:msca09-d12@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: English\nWeb: mscadistrict
+ 12.org\nEmail: d12dcmc@msca09aa.org\nCovers: Aliso Viejo\, Capistrano Beach
+ \, Dana Point\, Laguna Beach\, Laguna Hills\, Laguna Woods\, Laguna Niguel\
+ , Lake Forest\, Mission Viejo\, Mojeska Canyon\, Rancho Santa Margarita\, S
+ an Clemente\, San Juan Capistrano\, Silverado Canyon\, South Laguna\, Coto 
+ de Caza and Ladera Ranch\nNote: GSR School at 6:45 PM. No longer meets on Z
+ oom.\n--\nDistrict 12\n1st Thursday of the month\, 7:15 PM to 8:15 PM (Paci
+ fic)\nIn person.\nSource: msca09aa.org/district-12 (checked October 2026)
+LAST-MODIFIED:20261006T004317Z
+LOCATION:30071 Ivy Glenn Dr\, Laguna Niguel\, CA
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 12
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260111T180000
+DTEND;TZID=America/Los_Angeles:20260111T190000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-oc-6pm@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\nWeb: ochandi.org\nNote
+ : Orientations at 3:15 PM and 5:15 PM. The Corrections meeting is at 4:00 P
+ M.\n--\nOrange County H&I – Hospitals\n2nd Sunday of the month\, 6:00 PM to
+  7:00 PM (Pacific)\nIn person.\nSource: msca09aa.org/hospitals-institutions
+  (checked October 2026)
+LAST-MODIFIED:20261006T004440Z
+LOCATION:Garden Grove Alano Club\, 9845 Belfast Dr\, Garden Grove\, CA
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Orange County H&I – Hospitals
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20261022T101500
+DTEND;TZID=America/Los_Angeles:20261022T114500
+RRULE:FREQ=MONTHLY;UNTIL=20271224T075959Z;BYDAY=4TH
+DTSTAMP:20261006T004642Z
+UID:4vsjjfur1bbovv9487ivvg06ui@google.com
+CLASS:PUBLIC
+CREATED:20261005T041038Z
+DESCRIPTION:MSCA09|Committee|Virtual\nLanguage: English\nZoomID: 851 7562 5
+ 116\nPasscode: CEC76\nEmail: cecchair@msca09aa.org\nIMG: https://drive.goog
+ le.com/file/d/1AhGCh5roLXOLA3NjZP0pHCKkmLLDfuK8/view?usp=sharing\n--\nCEC C
+ ommittee\n4th Thursday of the month\, 10:15 AM to 11:45 AM (Pacific)\nOnlin
+ e only\, on Zoom.\nCooperation with the Elder Community.\nSource: msca09aa.
+ org/cooperation-with-elder-community and the committee flyer (checked Octob
+ er 2026)
+LAST-MODIFIED:20261006T004208Z
+LOCATION:https://us06web.zoom.us/j/85175625116?pwd=YaxNfobpEqo7UPAWjrpaAhaQ
+ 7t8cxj.1
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:CEC Committee
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T200000
+DTEND;TZID=America/Los_Angeles:20260107T213000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE,2WE,4WE
+DTSTAMP:20261006T004642Z
+UID:msca09-d21@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: Spanish\nEmail: d21dcmc@ms
+ ca09aa.org\nCovers: Districts 1\, 2\, 3\, 4\n--\nDistrict 21 (Spanish)\n1st
+ \, 2nd & 4th Wednesday of the month\, 8:00 PM to 9:30 PM (Pacific)\nIn pers
+ on.\nSource: msca09aa.org/district-21 (checked October 2026)
+LAST-MODIFIED:20261006T004353Z
+LOCATION:8111 Rosecrans Ave\, Suite H\, Paramount\, CA 90723
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 21 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260111T090000
+DTEND;TZID=America/Los_Angeles:20260111T150000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2SU
+EXDATE;TZID=America/Los_Angeles:20260510T090000
+EXDATE;TZID=America/Los_Angeles:20260712T090000
+EXDATE;TZID=America/Los_Angeles:20261108T090000
+DTSTAMP:20261006T004642Z
+UID:pn3emhelo65bg7ja1t7mlmfh1g@google.com
+CREATED:20261006T004531Z
+DESCRIPTION:MSCA09|Area|Hybrid\nLanguage: Bilingual\nZoomID: 896 6166 6203\
+ nPasscode: Panel76\nNote: Meets at a different district each month. The pla
+ ce\, host district\, agenda and flyer for each date are on the Events calen
+ dar under Area business.\nNote: Registration opens at 8:00 AM.\nNote: DCM S
+ chool (10:15-11:30 AM)\, Guidelines & Policies\, Corrections and Treatment 
+ also meet during the committee break-out.\n--\nMSCA09 Area Meeting\n2nd Sun
+ day of the month\, 9:00 AM to 3:00 PM (Pacific)\nIn person and on Zoom.\n20
+ 26: May 17 (3rd Sunday) instead of May 10. July 12 is the Foro and November
+  is the Servathon (Saturday\, November 14)\, so neither is listed here. 202
+ 7 dates follow the 2nd Sunday until the Area approves its 2027 calendar.\nS
+ ource: msca09aa.org events and the 2026 approved MSCA09 calendar (checked O
+ ctober 2026)
+LAST-MODIFIED:20261006T004532Z
+LOCATION:https://us06web.zoom.us/j/89661666203
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:MSCA09 Area Meeting
+TRANSP:OPAQUE
+RDATE;TZID=America/Los_Angeles:20260517T090000
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260115T183000
+DTEND;TZID=America/Los_Angeles:20260115T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TH
+DTSTAMP:20261006T004642Z
+UID:msca09-area-sharing-session@msca09.local
+CREATED:20260902T160058Z
+DESCRIPTION:MSCA09|Area|Virtual\nLanguage: English\nZoomID: 859 8955 7002\n
+ Passcode: Panel76\nIMG: https://drive.google.com/file/d/1FgFMqDJfXoOi35NiHq
+ Br3u3TG5Px455e/view?usp=sharing\nNote: Follows the Service Study (6:00 PM) 
+ in the same Zoom room.\n--\nSharing Session\n3rd Thursday of the month\, 6:
+ 30 PM to 7:30 PM (Pacific)\nOnline only\, on Zoom.\nSource: msca09aa.org ho
+ me page and the Monthly Service Study & Sharing Session flyer (checked Octo
+ ber 2026)
+LAST-MODIFIED:20261006T004155Z
+LOCATION:https://us06web.zoom.us/j/85989557002
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Sharing Session
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260113T183000
+DTEND;TZID=America/Los_Angeles:20260113T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TU
+DTSTAMP:20261006T004642Z
+UID:msca09-d17@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: English\nWeb: aadistrict17
+ .info\nEmail: d17dcmc@msca09aa.org\nCovers: Canyon Lake\, Lake Elsinore\, M
+ enifee\, Murrieta\, Perris\, Sun City\, Temecula\, Wildomar\nNote: Enter at
+  the rear. New GSR orientation and standing committees at 6:00 PM.\n--\nDis
+ trict 17\n2nd Tuesday of the month\, 6:30 PM to 7:30 PM (Pacific)\nIn perso
+ n.\nSource: msca09aa.org/district-17 (checked October 2026)
+LAST-MODIFIED:20261006T004329Z
+LOCATION:Del Rio Survivors Hall\, 41743 Enterprise Cir N #102\, Temecula\, 
+ CA 92590
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 17
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260106T200000
+DTEND;TZID=America/Los_Angeles:20260106T210000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=TU
+DTSTAMP:20261006T004642Z
+UID:msca09-d24@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: Spanish\nEmail: d24dcmc@ms
+ ca09aa.org\nCovers: Districts 5\, 7\, 10\, 15\n--\nDistrict 24 (Spanish)\nE
+ very Tuesday\, 8:00 PM to 9:00 PM (Pacific)\nIn person.\nSource: msca09aa.o
+ rg/district-24 (checked October 2026)
+LAST-MODIFIED:20261006T004405Z
+LOCATION:12019 Garden Grove Blvd\, Suite 206\, Garden Grove\, CA 92843
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 24 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260125T120000
+DTEND;TZID=America/Los_Angeles:20260125T140000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4SU
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-socal-intergroup@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|Hybrid\nLanguage: English\nZoomID: 290 755 6393\nPas
+ scode: 2025\nWeb: handisocal.org\nNote: Meets in person at a different plac
+ e in Southern California each month\, and on Zoom.\n--\nSo-Cal H&I Intergro
+ up\n4th Sunday of the month\, 12:00 PM to 2:00 PM (Pacific)\nIn person and 
+ on Zoom.\nSource: msca09aa.org/hospitals-institutions (checked October 2026
+ )
+LAST-MODIFIED:20261006T004456Z
+LOCATION:https://zoom.us/j/2907556393
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:So-Cal H&I Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260120T183000
+DTEND;TZID=America/Los_Angeles:20260120T193000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3TU
+DTSTAMP:20261006T004642Z
+UID:msca09-ig-temecula@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\nLanguage: English\nNote: Ask the inte
+ rgroup for the meeting place and Zoom details.\n--\nTemecula Intergroup\n3r
+ d Tuesday of the month\, 6:30 PM to 7:30 PM (Pacific)\nPlace and Zoom detai
+ ls: check with the intergroup.\nSource: 2026 MSCA09 District Info flyer\; t
+ ime only (checked October 2026)
+LAST-MODIFIED:20261006T004519Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Temecula Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260114T173000
+DTEND;TZID=America/Los_Angeles:20260114T183000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2WE
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-coachella@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\nWeb: coachellavalleyha
+ ndi.org\n--\nCoachella Valley H&I\n2nd Wednesday of the month\, 5:30 PM to 
+ 6:30 PM (Pacific)\nIn person.\nSource: msca09aa.org/hospitals-institutions 
+ (checked October 2026)
+LAST-MODIFIED:20261006T004420Z
+LOCATION:Fellowship Hall\, 45940 Portola Ave\, Palm Desert\, CA 92260
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Coachella Valley H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260112T190000
+DTEND;TZID=America/Los_Angeles:20260112T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2MO
+DTSTAMP:20261006T004642Z
+UID:msca09-d05@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 897 037 1755
+ \nPasscode: 06101935\nZoomLink: https://zoom.us/j/8970371755\nWeb: district
+ 5msca09.com\nEmail: d05dcmc@msca09aa.org\nCovers: Cowan Heights\, Lemon Hei
+ ghts\, Orange\, Orange Park\, Santa Ana\, Tustin\, Villa Park\nNote: GSR or
+ ientation at 6:45 PM (in person only).\n--\nDistrict 5\n2nd Monday of the m
+ onth\, 7:00 PM to 8:00 PM (Pacific)\nIn person and on Zoom.\nSource: msca09
+ aa.org/district-5 (checked October 2026)
+LAST-MODIFIED:20261006T004242Z
+LOCATION:19211 Dodge Ave\, Santa Ana\, CA 92705
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 5
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260101T190000
+DTEND;TZID=America/Los_Angeles:20260101T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TH
+DTSTAMP:20261006T004642Z
+UID:msca09-ig-desert@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\nLanguage: English\nWeb: aainthedesert
+ .org\nNote: The meeting place and Zoom details are on the intergroup’s webs
+ ite.\n--\nCentral Office Desert Intergroup\n1st Thursday of the month\, 7:0
+ 0 PM to 8:00 PM (Pacific)\nPlace and Zoom details: check with the intergrou
+ p.\nSource: 2026 MSCA09 District Info flyer\; time only (checked October 20
+ 26)
+LAST-MODIFIED:20261006T004508Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Central Office Desert Intergroup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260114T193000
+DTEND;TZID=America/Los_Angeles:20260114T203000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2WE
+DTSTAMP:20261006T004642Z
+UID:msca09-ig-harbor-central@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|Intergroup|Hybrid\nLanguage: English\nWeb: hacoaa.org\nN
+ ote: The meeting place and Zoom details are on the intergroup’s website.\n-
+ -\nHarbor Area Central Service\n2nd Wednesday of the month\, 7:30 PM to 8:3
+ 0 PM (Pacific)\nPlace and Zoom details: check with the intergroup.\nSource:
+  2026 MSCA09 District Info flyer\; time only (checked October 2026)
+LAST-MODIFIED:20261006T004512Z
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Harbor Area Central Service
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260107T193000
+DTEND;TZID=America/Los_Angeles:20260107T203000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1WE
+DTSTAMP:20261006T004642Z
+UID:msca09-d10@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 844 6704 738
+ 1\nPasscode: 001343\nZoomLink: https://zoom.us/j/84467047381\nEmail: d10dcm
+ c@msca09aa.org\nCovers: Anaheim (South of 91\, West of 55)\, Buena Park\, C
+ ypress\, Fullerton\, La Palma\n--\nDistrict 10\n1st Wednesday of the month\
+ , 7:30 PM to 8:30 PM (Pacific)\nIn person and on Zoom.\nSource: 2026 MSCA09
+  District Info flyer\; msca09aa.org/district-10 (August 2025) lists it as Z
+ oom only (checked October 2026)
+LAST-MODIFIED:20261006T004312Z
+LOCATION:Fullerton
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 10
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20261008T190000
+DTEND;TZID=America/Los_Angeles:20261008T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=2TH
+DTSTAMP:20261006T004642Z
+UID:d0124i10kj857nksbpl4ghaavg@google.com
+CREATED:20261006T004217Z
+DESCRIPTION:MSCA09|Committee|Virtual\nLanguage: English\nZoomID: 882 5080 9
+ 048\nPasscode: Panel76\nEmail: accessibilitieschair@msca09aa.org\nIMG: http
+ s://drive.google.com/file/d/1PP9Cj2DPp0q5KCkUpR-rI7RTVCpZXLMz/view?usp=shar
+ ing\n--\nAccessibilities Committee\n2nd Thursday of the month\, 7:00 PM to 
+ 8:00 PM (Pacific)\nOnline only\, on Zoom.\nSource: msca09aa.org/accessibili
+ ties and the committee flyer (checked October 2026)
+LAST-MODIFIED:20261006T004217Z
+LOCATION:https://zoom.us/j/88250809048
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Accessibilities Committee
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260128T190000
+DTEND;TZID=America/Los_Angeles:20260128T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4WE
+DTSTAMP:20261006T004642Z
+UID:msca09-d02@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 817 8326 898
+ 9\nPasscode: d2a9gsr\nZoomLink: https://zoom.us/j/81783268989\nEmail: d02dc
+ mc@msca09aa.org\nCovers: Artesia\, Bellflower\, Cerritos\, Compton\, Hawaii
+ an Gardens\, Lakewood (north of Carson)\, Long Beach (north of Carson)\, No
+ rwalk\, Paramount\nNote: GSR orientation at 6:30 PM (in person only).\n--\n
+ District 2\n4th Wednesday of the month\, 7:00 PM to 8:00 PM (Pacific)\nIn p
+ erson and on Zoom.\nSource: msca09aa.org/district-2 (checked October 2026)
+LAST-MODIFIED:20261006T004234Z
+LOCATION:Imperial Alano Club\, 8021 Rosecrans Ave\, Paramount\, CA 90723
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 2
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260125T170000
+DTEND;TZID=America/Los_Angeles:20260125T180000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=4SU
+EXDATE;TZID=America/Los_Angeles:20270627T170000
+DTSTAMP:20261006T004642Z
+UID:ehtg8kl7ssbf7a0h3347quc8l8@google.com
+CREATED:20261006T004339Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 827 9127 769
+ 2\nPasscode: 768560\nZoomLink: https://zoom.us/j/82791277692\nEmail: d19dcm
+ c@msca09aa.org\nCovers: Adelanto\, Apple Valley\, Barstow\, Hesperia\, Luce
+ rne Valley\, Newberry Springs\, Phelan\, Trona\, Victorville\, Wrightwood\,
+  Yermo\nNote: No meeting in June: the district is at the Sunshine of the Sp
+ irit High Desert Convention.\n--\nDistrict 19\n4th Sunday of the month\, 5:
+ 00 PM to 6:00 PM (Pacific)\nIn person and on Zoom.\nSource: msca09aa.org/di
+ strict-19 (checked October 2026)
+LAST-MODIFIED:20261006T004340Z
+LOCATION:15885 Main St\, Ste 310\, Hesperia\, CA 92311
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 19
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260105T193000
+DTEND;TZID=America/Los_Angeles:20260105T213000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=MO
+DTSTAMP:20261006T004642Z
+UID:msca09-d20@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: Spanish\nEmail: d20dcmc@ms
+ ca09aa.org\nCovers: Spanish-speaking groups in Districts 6\, 10\, 12\, 15 a
+ nd 18\, and parts of 5 and 7\n--\nDistrict 20 (Spanish)\nEvery Monday\, 7:3
+ 0 PM to 9:30 PM (Pacific)\nIn person.\nSource: msca09aa.org/district-20 (ch
+ ecked October 2026)
+LAST-MODIFIED:20261006T004349Z
+LOCATION:205 W. 1st St\, Suite 206\, Tustin\, CA 92680
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 20 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260105T193000
+DTEND;TZID=America/Los_Angeles:20260105T203000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1MO
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-temecula-valley@msca09.local
+CREATED:20260902T160100Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\nWeb: temeculahi.com\n-
+ -\nTemecula Valley H&I\n1st Monday of the month\, 7:30 PM to 8:30 PM (Pacif
+ ic)\nIn person.\nSource: msca09aa.org/hospitals-institutions (checked Octob
+ er 2026)
+LAST-MODIFIED:20261006T004452Z
+LOCATION:Temecula Valley Alano Club\, 27470 Commerce Center Dr\, Temecula\,
+  CA 92591
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Temecula Valley H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260106T190000
+DTEND;TZID=America/Los_Angeles:20260106T200000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=1TU
+DTSTAMP:20261006T004642Z
+UID:msca09-d15@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|Hybrid\nLanguage: English\nZoomID: 857 4032 332
+ 4\nPasscode: sober\nZoomLink: https://zoom.us/j/85740323324\nWeb: aadistric
+ t15.com\nEmail: d15dcmc@msca09aa.org\nCovers: Anaheim\, Anaheim Hills\, Bre
+ a\, La Habra\, Placentia\, Yorba Linda\n--\nDistrict 15\n1st Tuesday of the
+  month\, 7:00 PM to 8:00 PM (Pacific)\nIn person and on Zoom.\nSource: msca
+ 09aa.org/district-15 (checked October 2026)
+LAST-MODIFIED:20261006T004325Z
+LOCATION:Grace Lutheran Church\, 6550 Fairmont Blvd\, Yorba Linda\, CA
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 15
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260118T150000
+DTEND;TZID=America/Los_Angeles:20260118T160000
+RRULE:FREQ=MONTHLY;UNTIL=20280101T075959Z;BYDAY=3SU
+DTSTAMP:20261006T004642Z
+UID:msca09-hi-inland-empire@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|H&I|In person\nLanguage: English\nWeb: iehandi.org\n--\n
+ Inland Empire H&I\n3rd Sunday of the month\, 3:00 PM to 4:00 PM (Pacific)\n
+ In person.\nSource: msca09aa.org/hospitals-institutions (checked October 20
+ 26)
+LAST-MODIFIED:20261006T004432Z
+LOCATION:Unity Club\, 1307 Brookside Ave\, Redlands\, CA 92373
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Inland Empire H&I
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/Los_Angeles:20260106T190000
+DTEND;TZID=America/Los_Angeles:20260106T210000
+RRULE:FREQ=WEEKLY;UNTIL=20280101T075959Z;BYDAY=TU
+DTSTAMP:20261006T004642Z
+UID:msca09-d22@msca09.local
+CREATED:20260902T160059Z
+DESCRIPTION:MSCA09|District|In person\nLanguage: Spanish\nEmail: d22dcmc@ms
+ ca09aa.org\nCovers: Districts 9\, 30\, 31\n--\nDistrict 22 (Spanish)\nEvery
+  Tuesday\, 7:00 PM to 9:00 PM (Pacific)\nIn person.\nSource: msca09aa.org/d
+ istrict-22 (checked October 2026)
+LAST-MODIFIED:20261006T004357Z
+LOCATION:34116 Date Palm Dr\, Suite 17\, Cathedral City\, CA 92234
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:District 22 (Spanish)
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

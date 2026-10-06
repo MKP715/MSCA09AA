@@ -1,0 +1,38 @@
+# ─────────────────────────────────────────────────────────────────────────
+# ANONYMITY GUARD
+#
+# This repository is published to the public internet by GitHub Pages.
+# Anything committed here is downloadable by anyone, forever, and is
+# indexed by search engines.
+#
+# The Panel roster spreadsheet holds personal e-mail addresses, personal
+# phone numbers, sobriety dates and home groups. It must NEVER be committed.
+# Keep it in the Area's private Google Drive.
+#
+# data/trusted-servants.csv is the public, redacted view of that roster:
+# first name + last initial, role-based service addresses only.
+# ─────────────────────────────────────────────────────────────────────────
+# the panel workbook — personal e-mail, phone, sobriety date, home group
+*Teammates*.xlsx
+*Teammates*.xls
+*Teammates*.csv
+
+# any other contact roster. NOTE: this also catches archived rosters pulled off
+# the old sites. If one is caught, it is because it is a contact list — decide
+# what to do with it in data/archive-review.csv rather than force-adding it.
+*roster*.xls*
+*Roster*.xls*
+*confidential*
+*Confidential*
+*CONFIDENTIAL*
+
+# Local scratch
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+~$*
+
+# Python leaves these behind when a tool is imported
+__pycache__/
+*.pyc
