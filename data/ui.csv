@@ -6,7 +6,6 @@ noResults,Nothing matches those filters yet.,Nada coincide con esos filtros toda
 clearFilters,Clear filters,Limpiar filtros
 search,Search,Buscar
 all,All,Todos
-upcoming,Upcoming,Próximas
 monthView,Month,Mes
 patternView,Monthly pattern,Patrón mensual
 gcalView,Google Calendar,Google Calendar
@@ -63,7 +62,6 @@ aaLinks,A.A. Links,Enlaces de A.A.
 staticSite,Static site · no server ·,Sitio estático · sin servidor ·
 syncedWith,Synced with Google Calendar ·,Sincronizado con Google Calendar ·
 openInGcal,Open in Google Calendar,Abrir en Google Calendar
-searchMeetings,"District, city, committee…","Distrito, ciudad, comité…"
 matchOne,district matches,distrito coincide con
 matchMany,districts match,distritos coinciden con
 areaCommittee,Area committee,Comité de Área
@@ -80,7 +78,6 @@ expandAll,Expand all,Expandir todo
 collapseAll,Collapse all,Contraer todo
 undated,Undated,Sin fecha
 next30,Next 30 days,Próximos 30 días
-next60,Next 60 days,Próximos 60 días
 next90,Next 90 days,Próximos 90 días
 panel,Panel,Panel
 repeats,Repeats,Se repite
@@ -92,8 +89,6 @@ guidelines,Guidelines,Guías
 noGuidelines,No written guidelines have been posted for this committee yet.,Todavía no se han publicado guías escritas para este comité.
 guidelinesNote,Each opens as a PDF in Google Drive.,Cada una se abre como PDF en Google Drive.
 bilingual,English & Spanish,Inglés y español
-pastEvents,Past events,Eventos anteriores
-searchEvents,"Event, city, district…","Evento, ciudad, distrito…"
 nextUp,Next,Próxima
 documents,Agendas & documents,Agendas y documentos
 flyers,Flyers,Volantes
@@ -114,3 +109,21 @@ thisWeek,This week,Esta semana
 addGoogle,Add to Google Calendar,Añadir a Google Calendar
 downloadIcs,Download .ics,Descargar .ics
 year,Year,Año
+agendaView,Agenda,Agenda
+areaView,Area business,Asuntos del Área
+pastView,Past,Anteriores
+show,Show,Mostrar
+showAll,Everything,Todo
+showMeetings,Meetings,Reuniones
+showEvents,Events,Eventos
+searchCalendar,"Meeting, event, city, district…","Reunión, evento, ciudad, distrito…"
+next365,Next 12 months,Próximos 12 meses
+tomorrow,Tomorrow,Mañana
+inDays,In {n} days,En {n} días
+nextArea,Next Area meeting,Próxima reunión del Área
+comingUp,Coming up,Próximamente
+allEvents,All upcoming events,Todos los próximos eventos
+glanceTitle,The next seven days,Los próximos siete días
+glanceAll,Service meetings,Reuniones de servicio
+onlineOnly,Online only,Solo en línea
+inSpanish,In Spanish,En español

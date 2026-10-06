@@ -104,7 +104,7 @@ Checks the things that quietly break a static site:
 - every name in the roster is in `First L.` form
 - every `content.csv` / `ui.csv` key the page asks for has a row
 - every menu entry in `nav.csv` points at a route that exists
-- both calendar mirrors are committed, and no calendar event carries a
+- the calendar mirror is committed, and no calendar event carries a
   personal address or phone number (`check_calendars.py`); incomplete
   calendar entries are listed as notes to fix in Google Calendar
 
@@ -125,7 +125,7 @@ Reads every file id out of Google Drive for Desktop's local database and
 rewrites the CSVs to address each file by id. Nothing is downloaded and no API
 key is needed — Drive for Desktop just has to be signed in and synced.
 
-`--links <folder>` is for the calendars: drop a flyer into, say,
+`--links <folder>` is for the calendar: drop a flyer into, say,
 `docs/events/2026/` in Drive, wait for it to sync, and this prints
 
 ```
@@ -145,7 +145,7 @@ python tools/check_links.py --sample   # 120, spread across the set
 ```
 
 It collects every address in `data/documents.csv` and `data/files.csv`, and
-every `IMG:` and `Link:` in the two calendar mirrors.
+every `IMG:` and `Link:` in the calendar mirror.
 
 A 200 is not proof: Drive answers a request for a file nobody may see with a
 sign-in page. This checks the content type too, and fails an HTML answer where

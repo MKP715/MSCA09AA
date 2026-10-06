@@ -24,8 +24,9 @@ Change meetings and events in Google Calendar, never in `calendar.ics` —
 the next refresh would overwrite the edit. How to write a calendar event so
 the site can read it is in the repository README, "Writing a calendar event".
 A district's meeting time, place and Zoom come from the calendar; the matching
-columns in `districts.csv` are only the fallback. Which page an entry is listed
-on is the `pages` column of `kinds.csv` (set `calendar`).
+columns in `districts.csv` are only the fallback. Whether an entry counts as a
+meeting, an event or both is the `pages` column of `kinds.csv` (set
+`calendar`).
 
 `documents.csv`, `committee-guidelines.csv` and `files.csv` address files in
 the Area's Google Drive by file id. `drive_path` keeps the original folder

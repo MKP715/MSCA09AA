@@ -12,12 +12,12 @@ home.title,Mid-Southern California Area 09,Área 09 del Medio-Sur de California
 home.tagline,Service is how we stay sober together,El servicio es cómo nos mantenemos sobrios juntos
 home.lead,"District meetings, Area assemblies, committees and the people who serve them — for Orange, Riverside, San Bernardino and part of Los Angeles County. Everything here is one click away, in English and Spanish.","Reuniones de distrito, asambleas de área, comités y las personas que sirven — para Orange, Riverside, San Bernardino y parte del condado de Los Ángeles. Todo a un clic, en inglés y español."
 home.cta1,Find your district,Encuentra tu distrito
-home.cta2,See the service calendar,Ver el calendario de servicio
+home.cta2,See the calendar,Ver el calendario
 home.upnext,Up next,A continuación
 home.open_cal,Open the calendar,Ver el calendario
 home.next_title,Happening next,Lo que sigue
 home.next_sub,The next service meetings across the Area. All times Pacific.,Las próximas reuniones de servicio del Área. Hora del Pacífico.
-home.see_all,See the full service calendar,Ver el calendario de servicio completo
+home.see_all,See every service meeting,Ver todas las reuniones de servicio
 home.quick_title,Where would you like to start?,¿Por dónde quieres empezar?
 home.events_title,Upcoming Area events,Próximos eventos del Área
 home.events_sub,"Assemblies, workshops and gatherings open to all of A.A.","Asambleas, talleres y eventos abiertos a todo A.A."
@@ -28,11 +28,18 @@ stat.districts,Districts,Distritos
 stat.spanish,Spanish-speaking districts,Distritos de habla hispana
 stat.meetings,Service meetings a month,Reuniones de servicio al mes
 stat.counties,Counties served,Condados servidos
-meetings.kicker,Area 09 service calendar,Calendario de servicio del Área 09
-meetings.title,"Every service meeting,|in one place","Cada reunión de servicio,|en un solo lugar"
-meetings.lead,"Districts, H&I committees, intergroups and central offices, Area committees and the Area's own meetings — all in the Area's one calendar. Filter by type, day, time, format or language. All times are Pacific.","Distritos, comités de H&I, intergrupos y oficinas centrales, comités del Área y las reuniones del Área, todo en el calendario del Área. Filtra por tipo, día, hora, formato o idioma. Todas las horas son del Pacífico."
-meetings.gcal_note,"This is the Area's live Google Calendar — meetings and events together. Anything added there shows up here immediately, and on these pages at the next refresh.","Este es el calendario de Google del Área en vivo, con reuniones y eventos. Lo que se agregue allí aparece aquí de inmediato, y en estas páginas en la próxima actualización."
-meetings.pattern_note,"The same grid as the printed flyer, generated straight from the calendar — so the two can never drift apart.","La misma cuadrícula del volante impreso, generada desde el calendario — así siempre coincide."
+calendar.kicker,Area 09 calendar,Calendario del Área 09
+calendar.title,"Every meeting and event,|in one calendar","Cada reunión y evento,|en un solo calendario"
+calendar.lead,"District, H&I, intergroup and committee meetings, the Area's ASCs and Assemblies, and every workshop, forum and convention — all from the Area's one Google Calendar. Subscribe once and it is in your own calendar too. Everyone is welcome; all times are Pacific.","Las reuniones de distrito, H&I, intergrupos y comités, los CSA y las Asambleas del Área, y cada taller, foro y convención — todo desde el único calendario de Google del Área. Suscríbete una vez y aparecerá también en tu propio calendario. Todos son bienvenidos; todas las horas son del Pacífico."
+calendar.gcal_note,"This is the Area's live Google Calendar. Anything added there shows up here immediately, and in the rest of this page at the next refresh — within six hours.","Este es el calendario de Google del Área en vivo. Lo que se agregue allí aparece aquí de inmediato, y en el resto de esta página en la próxima actualización — en menos de seis horas."
+calendar.pattern_note,"Which week of the month and which day each meeting falls on — the same grid as the printed flyer, generated straight from the calendar so the two can never drift apart.","En qué semana del mes y qué día cae cada reunión — la misma cuadrícula del volante impreso, generada desde el calendario para que siempre coincidan."
+calendar.area_title,Panel {panel} Area business calendar,Calendario de asuntos del Área — Panel {panel}
+calendar.area_title_year,"Area business, {year}","Asuntos del Área, {year}"
+calendar.area_sub,"The Area Service Committee (ASC) meetings, Assemblies, the Foro and the Servathon, every date in order with the district hosting it. Agendas and flyers are inside each one; pick a year to see an earlier panel.","Las reuniones del Comité de Servicio de Área (CSA), las Asambleas, el Foro y el Servathon, en orden y con el distrito anfitrión. Las agendas y los volantes están dentro de cada una; elige un año para ver un panel anterior."
+calendar.past_sub,"Every event the Area has published since December 2020, and the meetings that have stopped, a year at a time. The flyers and agendas went with them.","Todos los eventos que el Área ha publicado desde diciembre de 2020, y las reuniones que ya no se celebran, año por año, con sus volantes y agendas."
+calendar.cta_title,Does your district have an event?,¿Tu distrito tiene un evento?
+calendar.cta_body,"Send us the date, time, place, a service contact and the flyer, and it goes on the Area's calendar. The flyer text is typed into the entry too, so it is searchable and readable on a phone.","Envíanos la fecha, la hora, el lugar, un contacto de servicio y el volante, y lo ponemos en el calendario del Área. El texto del volante también se escribe en la entrada para que se pueda buscar y leer en el teléfono."
+calendar.cta_btn,Submit an event,Enviar un evento
 districts.kicker,Area 09 districts,Distritos del Área 09
 districts.title,Find your district,Encuentra tu distrito
 districts.lead,"A district is a cluster of nearby A.A. groups. Type your city and we will tell you which one is yours, when it meets, and who to write to.","Un distrito es un grupo de grupos de A.A. cercanos. Escribe tu ciudad y te diremos cuál es el tuyo, cuándo se reúne y a quién escribir."
@@ -56,18 +63,6 @@ documents.title,"The Area’s record,|from 2003 to today","El registro del Área
 documents.lead,"Every minute, motion, agenda, newsletter and financial report the Area has published — including everything recovered from both previous websites. Each file is stored here, so nothing breaks when an old site is switched off.","Cada acta, moción, agenda, boletín e informe financiero que el Área ha publicado — incluido todo lo recuperado de los dos sitios anteriores. Cada archivo está alojado aquí, así que nada se rompe cuando se apaga un sitio antiguo."
 documents.placeholder,"Search minutes, motions…","Buscar actas, mociones…"
 documents.gap_note,Minutes are current through December 2024 and motions through August 2025. The Ad Hoc Website Committee flagged that gap; it is shown here rather than hidden.,Las actas llegan hasta diciembre de 2024 y las mociones hasta agosto de 2025. El Comité Ad Hoc señaló esa brecha; se muestra aquí en lugar de ocultarla.
-events.kicker,Area 09 events,Eventos del Área 09
-events.title,"Assemblies, workshops|and celebrations","Asambleas, talleres|y celebraciones"
-events.lead,"Assemblies, workshops, conventions and celebrations from across the Area, straight from the Area's events calendar. Subscribe and they appear in your own calendar too. Everyone is welcome.","Asambleas, talleres, convenciones y celebraciones de toda el Área, directamente del calendario de eventos del Área. Suscríbete y aparecerán también en tu propio calendario. Todos son bienvenidos."
-events.area_tab,Area business,Asuntos del Área
-events.area_title,Panel {panel} Area business calendar,Calendario de asuntos del Área — Panel {panel}
-events.area_title_year,"Area business, {year}","Asuntos del Área, {year}"
-events.area_sub,"The Area Service Committee (ASC) meetings, Assemblies, the Foro and the Servathon, every date in order with the district hosting it. Agendas and flyers are inside each one; pick a year to see an earlier panel's.","Las reuniones del Comité de Servicio de Área (CSA), las Asambleas, el Foro y el Servathon, en orden y con el distrito anfitrión. Las agendas y los volantes están dentro de cada una; elige un año para ver un panel anterior."
-events.past_sub,"Every event the Area has published since December 2020, a year at a time. The flyers and agendas went with them.","Todos los eventos que el Área ha publicado desde diciembre de 2020, año por año, con sus volantes y agendas."
-events.gcal_note,"This is the Area's live events calendar. Anything the web servant adds shows up here immediately, and on this page at the next refresh.","Este es el calendario de eventos del Área en vivo. Lo que agregue el servidor web aparece aquí de inmediato, y en esta página en la próxima actualización."
-events.cta_title,Does your district have an event?,¿Tu distrito tiene un evento?
-events.cta_body,"Send us the date, time, place, a service contact and the flyer, and it goes on the Area's calendar. The flyer text is typed into the entry too, so it is searchable and readable on a phone.","Envíanos la fecha, la hora, el lugar, un contacto de servicio y el volante, y lo ponemos en el calendario del Área. El texto del volante también se escribe en la entrada para que se pueda buscar y leer en el teléfono."
-events.cta_btn,Submit an event,Enviar un evento
 contribute.kicker,Seventh Tradition,Séptima Tradición
 contribute.title,Every group ought to be|fully self-supporting,Cada grupo debe|mantenerse a sí mismo
 contribute.lead,“…declining outside contributions.” The amount is secondary to the spiritual connection that joins us in unity with A.A. groups around the world — but the Area does need it to carry the message.,“…negándose a recibir contribuciones de afuera.” El dinero es secundario frente a la conexión espiritual que nos une con los grupos de A.A. de todo el mundo — pero el Área necesita esa contribución para llevar el mensaje.
@@ -113,7 +108,7 @@ about.who_2,"The Area is made up of {districts} districts: English-speaking dist
 about.who_3,None of this is government. As the Second Tradition puts it: “For our group purpose there is but one ultimate authority — a loving God as He may express Himself in our group conscience. Our leaders are but trusted servants; they do not govern.”,Nada de esto es gobierno. Como dice la Segunda Tradición: “Para el propósito de nuestro grupo sólo existe una autoridad fundamental — un Dios amoroso tal como se exprese en la conciencia de nuestro grupo. Nuestros líderes no son más que servidores de confianza; no gobiernan.”
 about.meets_title,How the Area meets,Cómo se reúne el Área
 about.meets_1,"The Area meets once a month, alternating between the Area Service Committee (ASC) and the Area Service Assembly (ASA). A different district hosts each month, so the meetings travel around the four counties. Everyone is welcome — you do not need a service position to attend.","El Área se reúne una vez al mes, alternando entre el Comité de Servicio de Área (CSA) y la Asamblea de Servicio de Área (ASA). Un distrito diferente es anfitrión cada mes, así que las reuniones viajan por los cuatro condados. Todos son bienvenidos — no hace falta tener un puesto de servicio para asistir."
-about.meets_link,See the 2026 Area calendar →,Ver el calendario del Área 2026 →
+about.meets_link,See the Area business calendar →,Ver el calendario de asuntos del Área →
 about.lang_title,"Two languages, one Area","Dos idiomas, una Área"
 about.lang_1,"Area 09 serves in English and in Spanish. Spanish-speaking districts 20 through 25 cover the same ground as the English-speaking districts, and many Area committees have chairs in both languages. Minutes, motions and agendas are published in both languages.","El Área 09 sirve en inglés y en español. Los distritos hispanos 20 al 25 cubren el mismo territorio que los distritos de habla inglesa, y muchos comités del Área tienen coordinadores en ambos idiomas. Las actas, las mociones y las agendas se publican en los dos idiomas."
 about.glance,At a glance,De un vistazo

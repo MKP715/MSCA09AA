@@ -73,7 +73,7 @@ be rewritten.
 | `data/documents.csv` | Minutes, motions, agendas, reports — the current record *and* the whole archive. `collection` is `Current` or `Archive`; `publish` is `yes` or anything else to withhold a file. |
 | `data/files.csv` | The handful of files the page itself links to — the district calendar flyer, the contributions flyer, the Zelle QR code. `key` is what the page asks for; `url` is its Drive address. |
 | `data/archive-review.csv` | The 313 archived documents that carry a personal e-mail address or phone number, for the Area to triage. Not read by the site. |
-| `data/calendar.ics` | Every business meeting and every event — the Service Calendar, the Events page, district meeting times. A mirror of the Area's **MSCA09** Google Calendar. **Do not edit by hand.** |
+| `data/calendar.ics` | Every business meeting and every event — the Area Calendar page, the home page, district meeting times. A mirror of the Area's **MSCA09** Google Calendar. **Do not edit by hand.** |
 
 Nothing on the page is written into `index.html` — the headings, the menu, the
 labels, the colours and the copy all come from the files above. Meetings and
@@ -95,23 +95,30 @@ headings rather than a wall of cards:
   with a few hundred DOM nodes instead of twenty-five thousand. Inside a
   category, each year is its own fold. Typing in the search box opens whatever
   it matched, and *Expand all* / *Collapse all* sit above the list.
-- **Events** — five views: *Upcoming* (a heading per month), *Month* (a
-  calendar grid; a three-day convention shows on each of its days), *Area
-  business* (every ASC, Assembly, Foro and Servathon of the panel with its
-  host district — or of any year), *Past* (one fold per year back to 2020,
-  whose cards are only built when the year is opened) and the live *Google
-  Calendar*. Filters: search, type, format, host district, year, language.
+- **Area calendar** (`#/calendar`) — every meeting and every event on one
+  page. At the top: the next Area meeting with its flyer and a countdown,
+  the next three events, and the coming week in numbers (meetings today,
+  this week, online only, in Spanish, events), each a link that filters the
+  explorer below. The explorer has seven views: *Agenda* (day by day, from
+  today only to twelve months ahead; an event is a card with its flyer, a
+  meeting one line), *Week*, *Month* (a three-day convention shows on each
+  of its days), *Area business* (every ASC, Assembly, Foro and Servathon of
+  the panel with its host district, or of any year), *Monthly pattern* (the
+  printed flyer's grid, built from the meetings still running), *Past* (one
+  fold per year back to 2020, built only when opened) and the live *Google
+  Calendar*. *Everything / Meetings / Events* narrows the dated views. The
+  filters — search, type, day, time of day, format, host district, year,
+  language — appear only on the views where they mean something.
 - **Panel 76** — the Area's own bodies are open, the twenty-two districts are
   folded. Searching or filtering opens everything that matched.
-- **Service calendar** — five views: *Upcoming* (the next 7, 30, 60 or 90
-  days, a heading per day), *Week*, *Month*, *Monthly pattern* (the printed
-  flyer's grid, built from the meetings still running) and the live *Google
-  Calendar*. Filters: search, type, day, format, time of day, language.
 
-On both calendar pages the view and the filters are kept in the address —
-`#/meetings?view=month&type=District&lang=Spanish`,
-`#/events?view=past&year=2023&type=Workshop` — so a filtered view can be
-bookmarked or sent to someone, and the Back button steps through them.
+On the calendar the view and the filters are kept in the address —
+`#/calendar?view=month&type=District&lang=Spanish`,
+`#/calendar?view=past&show=events&year=2023&type=Workshop` — so a filtered
+view can be bookmarked or sent to someone, and the Back button steps through
+them. The calendar used to be two pages, `#/meetings` and `#/events`; their
+addresses, and every entry link under them, still open the same thing on
+`#/calendar`.
 
 ### To change something
 
@@ -128,8 +135,8 @@ have no effect. See [`tools/README.md`](tools/README.md).
 ### To add an event or a meeting
 
 Not here — in the Area's Google Calendar, **MSCA09**, written the way
-"Writing a calendar event" below describes. Its type decides whether it shows
-on the Service Calendar, the Events page, or both. The site picks it up at the
+"Writing a calendar event" below describes. Its type decides whether it counts
+as a meeting, an event, or both. The site picks it up at the
 next refresh (every six hours, or straight away with *Run workflow* on the
 Actions tab).
 
@@ -279,18 +286,19 @@ The page cannot fetch the Google feed in the browser — Google sends no
 a static site stays in sync; the "Google Calendar" tabs embed the live
 calendar in an iframe, which is never affected.
 
-**Which page an entry is on** depends on its type, through the `pages`
-column of `data/kinds.csv` (set `calendar`):
+**Meeting or event.** The calendar page shows everything; whether an entry
+counts as a meeting, an event or both — for the *Meetings / Events* switch,
+the home page and the Districts page — depends on its type, through the
+`pages` column of `data/kinds.csv` (set `calendar`):
 
-| type | Service Calendar | Events page |
+| type | meeting | event |
 |---|:-:|:-:|
 | `District`, `H&I`, `Intergroup`, `Area`, `Committee` | ✓ | |
 | `Assembly`, `Area Committee` | ✓ | ✓ |
 | `Foro`, `Servathon`, `Workshop`, `Service School`, `Forum`, `Convention`, `YPAA`, `Event` | | ✓ |
 
 The home page "Up next" and the district times on the Districts page come
-from the Service Calendar's entries, "Upcoming Area events" from the Events
-page's. A district's meeting time, place and Zoom therefore live only in its
+from the meetings, "Upcoming Area events" from the events. A district's meeting time, place and Zoom therefore live only in its
 calendar entry; the meeting columns in `data/districts.csv` are just the
 fallback if the calendar cannot be loaded.
 
@@ -352,9 +360,9 @@ not apply.
 name first — `Imperial Alano Club, 8021 Rosecrans Ave, Paramount, CA 90723`);
 for an online-only meeting it is the Zoom join link.
 
-**Under the `--`** is free text. The website shows it as the event's "About"
-on the Events page; on the service calendar it is for people reading Google
-Calendar, and only the `Note:` lines appear on the site.
+**Under the `--`** is free text. The website shows it as an event's "About";
+for a meeting it is for people reading Google Calendar, and only the `Note:`
+lines appear on the site.
 
 **Repeats** use Google Calendar's own *Custom* repeat — "Monthly on the third
 Thursday", "Weekly on Wednesday". Always give it an end date (*Ends on…*),
@@ -407,16 +415,18 @@ Every event, service meeting, district, committee and flyer has its own hash
 URL, so any of them can be linked to or shared directly:
 
 ```
-#/events/msca-area-09-panel-76-servathon-2026-11-14
-#/meetings/msca09-d08-msca09-local
+#/calendar/msca-area-09-panel-76-servathon-2026-11-14
+#/calendar/msca09-d08-msca09-local
 #/districts/12
 #/committees/archives
 #/flyer/https%3A%2F%2Flh3.googleusercontent.com%2Fd%2F<id>
 ```
 
-An event's link is its title and first date. A link shared before the move to
-the calendar — the title alone, `#/events/msca-area-09-panel-76-servathon` —
-still opens the event of that name nearest to today.
+A one-off entry's link is its title and date; a repeating meeting's is its
+Google Calendar id, which never changes. A link shared before the move to the
+calendar — the title alone, `#/calendar/msca-area-09-panel-76-servathon` —
+still opens the entry of that name nearest to today, and the old
+`#/events/…` and `#/meetings/…` links still open theirs.
 
 Opening one of those URLs renders the page behind it and opens the detail as a
 modal. The **Share** button inside every modal uses the phone's native share
@@ -543,7 +553,7 @@ lines of `IntersectionObserver`, which respects
 `prefers-reduced-motion`.
 
 The only run-time request to another website is the optional Google Calendar
-iframe on the calendar and events pages. Everything else is this repository
+iframe in the calendar's *Google Calendar* view. Everything else is this repository
 and Drive.
 
 ---
@@ -575,9 +585,6 @@ switched off the moment the domain moves.
   text was scrubbed of members' phone numbers, addresses and surnames; the
   pictures themselves could not be, so some still show a contact's number.
 - Add `Title-ES:` lines to the bilingual events in the calendar.
-- The old **MSCA09_Events** calendar is no longer used — everything in it was
-  copied into MSCA09 in October 2026. Delete it in Google Calendar (Settings →
-  MSCA09_Events → *Remove calendar* → *Delete*) once you are happy.
 
 ---
 

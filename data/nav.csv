@@ -1,8 +1,6 @@
 ﻿sort,parent,label_en,label_es,href,icon,desc_en,desc_es
 10,,Home,Inicio,#/,house,,
-20,,Meetings & Events,Reuniones y Eventos,,calendar-days,,
-21,Meetings & Events,Service Calendar,Calendario de Servicio,#/meetings,calendar-check,"Every district, H&I, intergroup and Area meeting","Cada reunión de distrito, H&I, intergrupo y Área"
-22,Meetings & Events,Events,Eventos,#/events,star,"Assemblies, workshops, forums and round-ups","Asambleas, talleres, foros y eventos"
+20,,Calendar,Calendario,#/calendar,calendar-days,,
 30,,Districts,Distritos,#/districts,map-location-dot,,
 40,,Service,Servicio,,people-group,,
 41,Service,Committees,Comités,#/committees,sitemap,"What each Area committee does, and who to write",Qué hace cada comité y a quién escribir
