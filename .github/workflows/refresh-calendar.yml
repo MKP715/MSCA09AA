@@ -1,15 +1,12 @@
-name: Refresh calendars
+name: Refresh calendar
 
-# Keeps the site's two calendar mirrors in step with the Area's Google
-# Calendars:
-#
-#   data/calendar.ics  <-  MSCA09         (service / business meetings)
-#   data/events.ics    <-  MSCA09_Events  (assemblies, workshops, events)
+# Keeps data/calendar.ics in step with the Area's Google Calendar, MSCA09 —
+# every business meeting and every event, in one calendar.
 #
 # The site is a static page on GitHub Pages, so it cannot fetch the Google
-# feeds at run time (Google sends no CORS header). Instead this job mirrors
-# the published .ics files into the repository on a schedule; the pages read
-# the mirrors, and the "Google Calendar" tabs embed the live calendars.
+# feed at run time (Google sends no CORS header). Instead this job mirrors
+# the published .ics into the repository on a schedule; the pages read the
+# mirror, and the "Google Calendar" tabs embed the live calendar.
 #
 # Add or change something in Google Calendar and it appears on the site at
 # the next run — or immediately, by pressing "Run workflow" on the Actions tab.
@@ -26,50 +23,46 @@ concurrency:
   group: refresh-calendar
   cancel-in-progress: false
 
+env:
+  CAL_ID: d750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db%40group.calendar.google.com
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download both published calendars
+      - name: Download the published calendar
         run: |
           set -euo pipefail
-          fetch() {   # <calendar id> <output> <minimum events>
-            curl -sSfL --retry 3 --retry-delay 5 -o "$2" \
-              "https://calendar.google.com/calendar/ical/$1/public/basic.ics"
-            head -1 "$2" | grep -q 'BEGIN:VCALENDAR' \
-              || { echo "$2: not an iCalendar file — refusing to publish."; exit 1; }
-            COUNT=$(grep -c 'BEGIN:VEVENT' "$2" || true)
-            echo "$2: $COUNT events"
-            [ "$COUNT" -ge "$3" ] || { echo "$2: suspiciously few events — refusing to publish."; exit 1; }
-          }
-          fetch d750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db%40group.calendar.google.com /tmp/calendar.ics 20
-          fetch 6394a1722b48de86380ff162175c6ba748881fd43cf337fae0466ca8d221b251%40group.calendar.google.com /tmp/events.ics 50
+          curl -sSfL --retry 3 --retry-delay 5 -o /tmp/calendar.ics \
+            "https://calendar.google.com/calendar/ical/${CAL_ID}/public/basic.ics"
+          head -1 /tmp/calendar.ics | grep -q 'BEGIN:VCALENDAR' \
+            || { echo "Not an iCalendar file — refusing to publish."; exit 1; }
+          COUNT=$(grep -c 'BEGIN:VEVENT' /tmp/calendar.ics || true)
+          echo "Entries in the calendar: $COUNT"
+          # meetings and events together run to a few hundred; a feed that
+          # comes back nearly empty is an outage, not the Area's calendar
+          [ "$COUNT" -ge 100 ] || { echo "Suspiciously few entries — refusing to publish."; exit 1; }
 
-      - name: Check the event descriptions
-        # Reports any event that does not follow the description format in
-        # the README. It never blocks the refresh — a typo in one event
+      - name: Check the entries
+        # Reports any entry that does not follow the description format in
+        # the README. It never blocks the refresh — a typo in one entry
         # should not hold back everything else — but it shows in the log.
-        run: python3 tools/check_calendars.py /tmp/calendar.ics /tmp/events.ics || true
+        run: python3 tools/check_calendars.py /tmp/calendar.ics || true
 
-      - name: Commit whatever changed
+      - name: Commit if the calendar changed
         run: |
           set -euo pipefail
           # DTSTAMP changes on every fetch, so compare everything else.
           strip() { grep -v '^DTSTAMP:' "$1" | tr -d '\r'; }
-          changed=()
-          for f in calendar events; do
-            if [ -f "data/$f.ics" ] && diff -q <(strip "data/$f.ics") <(strip "/tmp/$f.ics") >/dev/null; then
-              echo "data/$f.ics: no change."
-            else
-              cp "/tmp/$f.ics" "data/$f.ics"
-              changed+=("data/$f.ics")
-            fi
-          done
-          [ ${#changed[@]} -gt 0 ] || exit 0
+          if [ -f data/calendar.ics ] && diff -q <(strip data/calendar.ics) <(strip /tmp/calendar.ics) >/dev/null; then
+            echo "No change."
+            exit 0
+          fi
+          cp /tmp/calendar.ics data/calendar.ics
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "${changed[@]}"
-          git commit -m "Refresh calendars from Google Calendar"
+          git add data/calendar.ics
+          git commit -m "Refresh calendar from Google Calendar"
           git push

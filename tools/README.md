@@ -46,16 +46,16 @@ lines. Everything else the page needs is in the `<style>` block inside
 ## `check_calendars.py` — are the calendar entries in the agreed shape?
 
 ```sh
-python tools/check_calendars.py                  # data/calendar.ics and data/events.ics
+python tools/check_calendars.py                  # data/calendar.ics
 python tools/check_calendars.py some-feed.ics    # any downloaded feed
 ```
 
-The meetings and events on the site come from the Area's two Google
-Calendars, and the site reads each event's details out of its description —
+The meetings and events on the site come from the Area's Google Calendar,
+MSCA09, and the site reads each entry's details out of its description —
 `MSCA09|<type>|<format>`, then `Language:`, `ZoomID:`, `IMG:` and so on, then
 `--`. The README's "Writing a calendar event" is the full list.
 
-This reports any event that:
+This reports any entry that:
 
 - has no `MSCA09|…|…` first line, or a type `data/kinds.csv` does not know,
   or a format other than In person / Hybrid / Virtual
@@ -64,15 +64,16 @@ This reports any event that:
   msca09aa.org
 - carries a personal e-mail address or a phone number (toll-free numbers and
   Zoom IDs are allowed)
-- is a service meeting held on Zoom with nothing saying how to join
+- is a meeting that still repeats, held on Zoom, with nothing saying how to
+  join
 - repeats with no end date
 
 The refresh Action runs it on every download and prints the report in its
 log; `check_site.py` runs it too, and stops on the anonymity findings.
 
 There is no tool for fetching events any more. msca09aa.org was copied into
-the MSCA09_Events calendar once, in October 2026, flyers and agendas into the
-Drive folder; from here on events are added in Google Calendar.
+the MSCA09 calendar once, in October 2026, flyers and agendas into the Drive
+folder; from here on events are added in Google Calendar.
 
 ## `build_social_card.py` — the picture chat apps show for a shared link
 

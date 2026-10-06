@@ -17,7 +17,7 @@ harder:
 
 | Committee finding | How this site answers it |
 |---|---|
-| Content goes stale; minutes stopped at Dec 2024, motions at Aug 2025 | Every changing word lives in `data/*.csv`, and every meeting and event in one of the Area's two Google Calendars. Editing a row on github.com, or an event in Google Calendar, updates the site — no CMS, no plugin, no webmaster bottleneck. |
+| Content goes stale; minutes stopped at Dec 2024, motions at Aug 2025 | Every changing word lives in `data/*.csv`, and every meeting and event in the Area's one Google Calendar. Editing a row on github.com, or an entry in Google Calendar, updates the site — no CMS, no plugin, no webmaster bottleneck. |
 | Anonymity breaches — personal e-mails, phones, occasional addresses | Published data carries **first name + last initial only** and **role-based service addresses only**. There is nowhere in this repository for a personal phone number to hide. See "Anonymity rules". |
 | Broken links, dead forms, dead QR codes | Every internal link is a `#/` route into the same file, so internal links cannot 404. Every document and flyer is stored **in the Area's own Drive folder** — nothing breaks when the old site is retired. |
 | Navigation is cluttered; information buried in PDFs | Six top-level menu items. The district flyer, the district directory and the meeting calendar are searchable, filterable pages; the PDFs remain as printable downloads, not as the only source. |
@@ -73,14 +73,13 @@ be rewritten.
 | `data/documents.csv` | Minutes, motions, agendas, reports — the current record *and* the whole archive. `collection` is `Current` or `Archive`; `publish` is `yes` or anything else to withhold a file. |
 | `data/files.csv` | The handful of files the page itself links to — the district calendar flyer, the contributions flyer, the Zelle QR code. `key` is what the page asks for; `url` is its Drive address. |
 | `data/archive-review.csv` | The 313 archived documents that carry a personal e-mail address or phone number, for the Area to triage. Not read by the site. |
-| `data/calendar.ics` | The Service Calendar — every business meeting. A mirror of the **MSCA09** Google Calendar. **Do not edit by hand.** |
-| `data/events.ics` | The Events page — assemblies, ASCs, workshops, conventions, with their flyers and agendas. A mirror of the **MSCA09_Events** Google Calendar. **Do not edit by hand.** |
+| `data/calendar.ics` | Every business meeting and every event — the Service Calendar, the Events page, district meeting times. A mirror of the Area's **MSCA09** Google Calendar. **Do not edit by hand.** |
 
 Nothing on the page is written into `index.html` — the headings, the menu, the
 labels, the colours and the copy all come from the files above. Meetings and
-events are the exception: they come from the Area's two Google Calendars, so
-that whoever keeps the calendar up to date keeps the website up to date too.
-See "The two calendars" below.
+events are the exception: they come from the Area's Google Calendar, so that
+whoever keeps the calendar up to date keeps the website up to date too. See
+"The calendar" below.
 
 All CSVs are UTF-8 with a BOM, so Excel opens them correctly on a double-click.
 Keep the header row. If a value contains a comma, wrap it in double quotes —
@@ -96,15 +95,23 @@ headings rather than a wall of cards:
   with a few hundred DOM nodes instead of twenty-five thousand. Inside a
   category, each year is its own fold. Typing in the search box opens whatever
   it matched, and *Expand all* / *Collapse all* sit above the list.
-- **Events** — four tabs: what is coming up (a heading per month), the Area's
-  own business days for the panel (ASCs, Assemblies, the Foro, the
-  Servathon, with the host district), everything already held — one fold per
-  year back to 2020, whose cards are only built when the year is opened — and
-  the live Google Calendar.
+- **Events** — five views: *Upcoming* (a heading per month), *Month* (a
+  calendar grid; a three-day convention shows on each of its days), *Area
+  business* (every ASC, Assembly, Foro and Servathon of the panel with its
+  host district — or of any year), *Past* (one fold per year back to 2020,
+  whose cards are only built when the year is opened) and the live *Google
+  Calendar*. Filters: search, type, format, host district, year, language.
 - **Panel 76** — the Area's own bodies are open, the twenty-two districts are
   folded. Searching or filtering opens everything that matched.
-- **Service calendar** — opens on the next 30 days, with 60 and 90 day
-  options next to the language chips.
+- **Service calendar** — five views: *Upcoming* (the next 7, 30, 60 or 90
+  days, a heading per day), *Week*, *Month*, *Monthly pattern* (the printed
+  flyer's grid, built from the meetings still running) and the live *Google
+  Calendar*. Filters: search, type, day, format, time of day, language.
+
+On both calendar pages the view and the filters are kept in the address —
+`#/meetings?view=month&type=District&lang=Spanish`,
+`#/events?view=past&year=2023&type=Workshop` — so a filtered view can be
+bookmarked or sent to someone, and the Back button steps through them.
 
 ### To change something
 
@@ -120,10 +127,11 @@ have no effect. See [`tools/README.md`](tools/README.md).
 
 ### To add an event or a meeting
 
-Not here — in Google Calendar. An event goes on **MSCA09_Events**, a regular
-business meeting on **MSCA09**, written the way "Writing a calendar event"
-below describes. The site picks it up at the next refresh (every six hours,
-or straight away with *Run workflow* on the Actions tab).
+Not here — in the Area's Google Calendar, **MSCA09**, written the way
+"Writing a calendar event" below describes. Its type decides whether it shows
+on the Service Calendar, the Events page, or both. The site picks it up at the
+next refresh (every six hours, or straight away with *Run workflow* on the
+Actions tab).
 
 ### The home page banner
 
@@ -251,36 +259,55 @@ on that list is a one-cell edit:
 Use the `decision` and `notes` columns in `archive-review.csv` to record what
 the Area decides, so the next panel can see the reasoning.
 
-### The two calendars
+### The calendar
 
-| Google Calendar | Holds | Mirrored to | Feeds |
-|---|---|---|---|
-| **MSCA09** ([open](https://calendar.google.com/calendar/embed?src=d750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db%40group.calendar.google.com&ctz=America%2FLos_Angeles)) | every recurring business meeting — districts, Area committees, H&I, intergroups, the Area meeting, the Service Study | `data/calendar.ics` | Service calendar, home page "Up next", district times and Zoom on the Districts page |
-| **MSCA09_Events** ([open](https://calendar.google.com/calendar/embed?src=6394a1722b48de86380ff162175c6ba748881fd43cf337fae0466ca8d221b251%40group.calendar.google.com&ctz=America%2FLos_Angeles)) | assemblies, ASCs, the Foro, the Servathon, workshops, conventions, YPAA, and everything msca09aa.org ever published, back to December 2020 | `data/events.ics` | Events page, home page "Upcoming Area events" |
+Every business meeting and every event is in one Google Calendar,
+**MSCA09** ([open](https://calendar.google.com/calendar/embed?src=d750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db%40group.calendar.google.com&ctz=America%2FLos_Angeles)):
+the districts, Area committees, H&I, intergroups, the Area meeting and the
+Service Study, and the assemblies, ASCs, Foro, Servathon, workshops,
+conventions and YPAA events — everything msca09aa.org ever published, back
+to December 2020.
 
 A scheduled GitHub Action (`.github/workflows/refresh-calendar.yml`)
-re-downloads both every six hours and commits whichever changed. **So: add or
-change things in Google Calendar, never in the `.ics` files.** To publish a
-change immediately, open the Actions tab and press *Run workflow* on
-"Refresh calendars".
+re-downloads it every six hours into `data/calendar.ics` and commits it when
+it changed. **So: add or change things in Google Calendar, never in the
+`.ics` file.** To publish a change immediately, open the Actions tab and
+press *Run workflow* on "Refresh calendar".
 
-The page cannot fetch the Google feeds in the browser — Google sends no
+The page cannot fetch the Google feed in the browser — Google sends no
 `Access-Control-Allow-Origin` header on the `.ics` endpoint. The mirror is how
 a static site stays in sync; the "Google Calendar" tabs embed the live
-calendars in an iframe, which is never affected.
+calendar in an iframe, which is never affected.
 
-A district's meeting time, place and Zoom on the Districts page come from its
-MSCA09 calendar entry too, so a district that moves is changed in one place.
-The meeting columns in `data/districts.csv` are only the fallback if the
-calendar cannot be loaded; the cities covered and the service address are
-still kept there.
+**Which page an entry is on** depends on its type, through the `pages`
+column of `data/kinds.csv` (set `calendar`):
+
+| type | Service Calendar | Events page |
+|---|:-:|:-:|
+| `District`, `H&I`, `Intergroup`, `Area`, `Committee` | ✓ | |
+| `Assembly`, `Area Committee` | ✓ | ✓ |
+| `Foro`, `Servathon`, `Workshop`, `Service School`, `Forum`, `Convention`, `YPAA`, `Event` | | ✓ |
+
+The home page "Up next" and the district times on the Districts page come
+from the Service Calendar's entries, "Upcoming Area events" from the Events
+page's. A district's meeting time, place and Zoom therefore live only in its
+calendar entry; the meeting columns in `data/districts.csv` are just the
+fallback if the calendar cannot be loaded.
+
+**The Area meeting.** "MSCA09 Area Meeting" repeats on the 2nd Sunday so the
+monthly pattern stays right. Each actual meeting — an ASC or an Assembly,
+with its host district, place, flyer and agenda — is its own entry. When one
+is announced, add its entry and **delete that date from the repeating Area
+Meeting** (open the date, *Delete* → *This event*), or the day will be listed
+twice. Every 2026 meeting already has its own entry, which is why the
+repeating series starts in January 2027.
 
 msca09aa.org is no longer read by anything. Its events, flyers and agendas
-were copied into the events calendar and the Drive folder in October 2026.
+were copied into the calendar and the Drive folder in October 2026.
 
 ### Writing a calendar event
 
-Every event in either calendar keeps its details in the **description**, in
+Every entry, meeting or event, keeps its details in the **description**, in
 the same shape, so it can be filled in from the Google Calendar app on a
 phone:
 
@@ -298,13 +325,10 @@ Anything under the line is free text for people.
 
 **The first line** is `MSCA09|<type>|<format>`.
 
-- *type*, on MSCA09: `District`, `H&I`, `Intergroup`, `Area` or `Committee`.
-- *type*, on MSCA09_Events: `Assembly`, `Area Committee`, `Foro`,
-  `Servathon`, `Workshop`, `Service School`, `Forum`, `Convention`, `YPAA`,
-  `Committee` or `Event`.
+- *type*: one of the types in the table above. They are rows in
+  `data/kinds.csv` (set `calendar`); add a row there to create a new one and
+  say which pages it belongs on.
 - *format*: `In person`, `Hybrid` or `Virtual`.
-
-The types are rows in `data/kinds.csv`; add a row there to create a new one.
 
 **The fields** come next, one per line, above the `--`. Leave out any that do
 not apply.
@@ -341,7 +365,7 @@ just that occurrence. Both carry through to the site.
 **Google's editor** stores a description with bold text or pasted links as
 HTML. That is fine — the site reads it either way.
 
-**`tools/check_calendars.py`** reads both mirrors and lists any event that
+**`tools/check_calendars.py`** reads the mirror and lists any entry that
 does not follow this, or that carries a personal e-mail address or phone
 number. The Action runs it on every refresh and prints the result in its log,
 so a mistake shows up there rather than as a strange card on the site.
@@ -428,7 +452,7 @@ and the site addresses each one by its Drive file id:
 | an image | `https://lh3.googleusercontent.com/d/<id>` |
 
 1,659 documents are served that way from `data/documents.csv`, and another
-465 flyers and agendas from the two calendars — `docs/events/<year>/` holds
+465 flyers and agendas from the calendar — `docs/events/<year>/` holds
 every event msca09aa.org published since December 2020, and `docs/meetings/`
 the business-meeting flyers.
 
@@ -479,12 +503,12 @@ tailwind.css                   built from index.html by tools/build_css.py
 social-card.jpg                the preview image for links shared to chat apps
 hero.jpg  hero-small.jpg       the home page banner photo
 robots.txt  sitemap.xml        for search engines
-data/                          everything that changes, as CSV, plus the two
-                               calendar mirrors (calendar.ics, events.ics)
+data/                          everything that changes, as CSV, plus the
+                               calendar mirror (calendar.ics)
 docs/archive/pages/            58 posts Drive cannot serve as pages
 tools/                         scripts a web servant re-runs; see tools/README.md
 tools/css/                     the Tailwind config tailwind.css is built from
-.github/workflows/             keeps both calendar mirrors in step with Google
+.github/workflows/             keeps data/calendar.ics in step with Google
 ```
 
 **Before you push:**
@@ -550,7 +574,10 @@ switched off the moment the domain moves.
 - Old event flyers (2020–2025) are images straight from msca09aa.org. Their
   text was scrubbed of members' phone numbers, addresses and surnames; the
   pictures themselves could not be, so some still show a contact's number.
-- Add `Title-ES:` lines to the bilingual events on MSCA09_Events.
+- Add `Title-ES:` lines to the bilingual events in the calendar.
+- The old **MSCA09_Events** calendar is no longer used — everything in it was
+  copied into MSCA09 in October 2026. Delete it in Google Calendar (Settings →
+  MSCA09_Events → *Remove calendar* → *Delete*) once you are happy.
 
 ---
 

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Check both calendar mirrors against the description format the site reads.
+Check the calendar mirror against the description format the site reads.
 
-    python tools/check_calendars.py                    # data/calendar.ics + data/events.ics
-    python tools/check_calendars.py a.ics b.ics        # any feeds — the Action checks
-                                                       # the fresh downloads this way
+    python tools/check_calendars.py                    # data/calendar.ics
+    python tools/check_calendars.py some-feed.ics      # any feed — the Action checks
+                                                       # the fresh download this way
 
-Every event in either Google Calendar carries its details in its
-description (see the README, "Writing a calendar event"):
+Every entry in the Area's Google Calendar — meeting or event — carries its
+details in its description (see the README, "Writing a calendar event"):
 
     MSCA09|<Type>|<Format>
     Language: English
@@ -16,13 +16,14 @@ description (see the README, "Writing a calendar event"):
     --
     free text for people
 
-For each event this reports: a missing or unknown type, an unknown format,
+For each entry this reports: a missing or unknown type, an unknown format,
 no "--" line, no Language line, a flyer that is not in Google Drive, a link
-back to the old website, a personal e-mail address or phone number, and a
-repeating event with no end date. Exits 1 if anything was found, so it can
-sit in a git hook; the Action only prints the report.
+back to the old website, a personal e-mail address or phone number, a
+repeating entry with no end date, and a meeting still running that says
+nothing about how to join. Exits 1 if anything was found, so it can sit in a
+git hook; the Action only prints the report.
 """
-import csv, html, io, os, re, sys
+import csv, datetime, html, io, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FORMATS = {'In person', 'Hybrid', 'Virtual'}
@@ -40,11 +41,19 @@ NOT_A_PHONE = re.compile(r'(?i)(zoom|meeting|webinar)\s*(id|#)?\s*:?\s*$|\b(id|p
                          r'pc|pw|code)\s*:?\s*$|/j/$')
 
 
-def kinds(set_name):
+def kinds():
+    """{type: [pages it is listed on]} from data/kinds.csv, set "calendar"."""
     p = os.path.join(ROOT, 'data', 'kinds.csv')
     if not os.path.exists(p):
         return None
-    return {r['key'] for r in csv.DictReader(io.open(p, encoding='utf-8-sig')) if r['set'] == set_name}
+    return {r['key']: re.split(r'[;,\s]+', r.get('pages') or '')
+            for r in csv.DictReader(io.open(p, encoding='utf-8-sig')) if r['set'] == 'calendar'}
+
+
+def still_running(rrule):
+    """A repeating entry whose last date has not passed."""
+    m = re.search(r'UNTIL=(\d{8})', rrule)
+    return not m or m.group(1) >= datetime.date.today().strftime('%Y%m%d')
 
 
 def unescape_ics(v):
@@ -81,9 +90,9 @@ def events(path):
     return name, out
 
 
-def check_event(e, types, service=False):
-    """[problem, ...] for one VEVENT. A service meeting must say how to join;
-    an event long past may simply never have published its Zoom."""
+def check_event(e, types):
+    """[problem, ...] for one VEVENT. A meeting that still repeats must say how
+    to join; an event long past may simply never have published its Zoom."""
     found = []
     if e.get('RECURRENCE-ID'):
         return found                       # one moved date of a series checked elsewhere
@@ -102,7 +111,8 @@ def check_event(e, types, service=False):
         if fmt not in FORMATS:
             found.append('unknown format "%s" (In person, Hybrid or Virtual)' % fmt)
         # how does anyone join? a Zoom, an address to ask, or a website that says
-        if service and fmt in ('Virtual', 'Hybrid') and not re.search(r'(?im)^(zoom\s*id|zoomlink|email|web)\s*:', desc) \
+        meeting = 'meetings' in (types or {}).get(typ, []) and still_running(e.get('RRULE', '')) and e.get('RRULE')
+        if meeting and fmt in ('Virtual', 'Hybrid') and not re.search(r'(?im)^(zoom\s*id|zoomlink|email|web)\s*:', desc) \
                 and 'zoom.us' not in e.get('LOCATION', ''):
             found.append('%s, but nothing says how to join (ZoomID, ZoomLink, Email or Web)' % fmt.lower())
     if not any(re.match(r'^[-–—_]{2,}$', l) for l in lines):
@@ -135,13 +145,12 @@ def check_event(e, types, service=False):
 def check_files(paths):
     """{calendar name: [(summary, problem), ...]}"""
     report = {}
+    types = kinds()
     for path in paths:
         name, evs = events(path)
-        service = 'event' not in name.lower()
-        types = kinds('meeting' if service else 'event')
         rows = report.setdefault('%s (%s)' % (name or os.path.basename(path), os.path.basename(path)), [])
         for e in evs:
-            for p in check_event(e, types, service):
+            for p in check_event(e, types):
                 rows.append(((e.get('SUMMARY') or '(no title)').strip(), p))
     return report
 
@@ -151,12 +160,11 @@ def main():
         sys.stdout.reconfigure(encoding='utf-8')
     except Exception:
         pass
-    paths = sys.argv[1:] or [os.path.join(ROOT, 'data', 'calendar.ics'),
-                             os.path.join(ROOT, 'data', 'events.ics')]
+    paths = sys.argv[1:] or [os.path.join(ROOT, 'data', 'calendar.ics')]
     report = check_files([p for p in paths if os.path.exists(p)])
     total = 0
     for cal, rows in report.items():
-        print('%s: %s' % (cal, '%d problem(s)' % len(rows) if rows else 'all events follow the format'))
+        print('%s: %s' % (cal, '%d problem(s)' % len(rows) if rows else 'every entry follows the format'))
         for title, p in rows:
             print('  - %-40s %s' % (title[:40], p))
         total += len(rows)

@@ -37,8 +37,8 @@ def collect():
         if str(r.get('publish', 'yes')).strip().lower() != 'yes':
             continue
         out.append((r['url'], 'document', 'documents.csv: ' + r['title'][:44]))
-    # flyers and agendas named in the two calendars' event descriptions
-    for ics in ('data/calendar.ics', 'data/events.ics'):
+    # flyers and agendas named in the calendar's descriptions
+    for ics in ('data/calendar.ics',):
         if not os.path.exists(ics):
             continue
         raw = re.sub(r'\r?\n[ \t]', '', io.open(ics, encoding='utf-8').read())

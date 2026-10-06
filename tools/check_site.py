@@ -8,7 +8,7 @@ Run this before pushing. It checks the things that quietly break a static site:
   * no personal e-mail address or phone number in any data file
   * no last names in the published roster
   * every content / ui key the page asks for has a row
-  * both calendar mirrors are committed and every event follows the
+  * the calendar mirror is committed and every entry follows the
     description format (tools/check_calendars.py)
 
     python tools/check_site.py
@@ -57,21 +57,19 @@ for r in docs:
         continue
     check_target(r['url'], 'documents.csv "%s"' % r['title'][:40])
 
-# ── the two calendar mirrors: present, committed, and in the agreed format ─
+# ── the calendar mirror: present, committed, and in the agreed format ─────
 sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import check_calendars
-for ics in ('data/calendar.ics', 'data/events.ics'):
-    if not os.path.exists(ics):
-        problems.append('missing calendar mirror: ' + ics + ' — run the "Refresh calendars" Action')
-    elif ics not in tracked:
-        problems.append(ics + ' is not committed, so the page will have no ' +
-                        ('meetings' if 'calendar' in ics else 'events') + ' once published')
+ICS = 'data/calendar.ics'
+if not os.path.exists(ICS):
+    problems.append('missing calendar mirror: ' + ICS + ' — run the "Refresh calendar" Action')
+elif ICS not in tracked:
+    problems.append(ICS + ' is not committed, so the site will have no meetings or events once published')
 # A personal address or phone number is an anonymity breach and stops the
 # push. Anything else is a gap in somebody's calendar entry — worth fixing in
 # Google Calendar, but nothing in this repository is wrong, so it is a note.
 calendar_notes = []
-for cal, rows in check_calendars.check_files(
-        [p for p in ('data/calendar.ics', 'data/events.ics') if os.path.exists(p)]).items():
+for cal, rows in check_calendars.check_files([ICS] if os.path.exists(ICS) else []).items():
     for title, p in rows:
         line = '%s "%s": %s' % (cal, title[:40], p)
         (problems if re.search(r'personal e-mail|phone number|old website', p) else calendar_notes).append(line)

@@ -514,7 +514,7 @@ function fileIcon(fmt){
 const state = {
   lang: (function(){ try { return localStorage.getItem('msca09.lang') === 'es' ? 'es' : 'en'; } catch(e){ return 'en'; } })(),
   data: {}, content: {}, ui: {}, nav: [], kinds: {}, files: {},
-  ics: null, icsStamp: null, evIcs: null, evStamp: null,
+  ics: null, icsStamp: null,
   route: 'home', params: [], ready: false, docsReady: false
 };
 
@@ -741,7 +741,7 @@ async function loadAll() {
   (state.data['kinds'] || []).forEach(function (r) {
     if (!r.set || !r.key) return;
     (state.kinds[r.set] = state.kinds[r.set] || {})[r.key] =
-      { en:r.label_en, es:r.label_es, c:r.color, fa:r.icon };
+      { en:r.label_en, es:r.label_es, c:r.color, fa:r.icon, pages:r.pages || '' };
   });
   (state.data['files'] || []).forEach(function (r) {
     if (r.key) state.files[r.key] = r.url;
@@ -772,48 +772,38 @@ function needDocs() {
   return docsPromise;
 }
 
-/* ── the two Google Calendars ───────────────────────────────────────────
-   data/calendar.ics mirrors the Area's service-meeting calendar (MSCA09)
-   and data/events.ics its events calendar (MSCA09_Events). A scheduled
-   GitHub Action refreshes both. Google sends no CORS header on the .ics
-   endpoint, so a static page cannot read the feeds directly — the "Google
-   Calendar" tabs embed the live calendars in an iframe instead.          */
+/* ── the Area's calendar ─────────────────────────────────────────────────
+   Every business meeting and every event is one Google Calendar, MSCA09,
+   mirrored into data/calendar.ics by a scheduled GitHub Action. Google
+   sends no CORS header on the .ics endpoint, so a static page cannot read
+   the feed directly — the "Google Calendar" tabs embed the live calendar
+   in an iframe instead.
+
+   Which page an entry belongs on is decided by its type (the second part
+   of its first description line) and the "pages" column for that type in
+   data/kinds.csv: a District meeting is on the service calendar, a
+   Workshop on the Events page, an Assembly on both.                       */
 function gcal(id) {
   const e = encodeURIComponent(id);
   return {
     id: id,
     ics: 'https://calendar.google.com/calendar/ical/' + e + '/public/basic.ics',
     page: 'https://calendar.google.com/calendar/embed?src=' + e + '&ctz=America%2FLos_Angeles',
+    add: 'https://calendar.google.com/calendar/render?cid=' + e,
     embed: function (mode) {
       return 'https://calendar.google.com/calendar/embed?src=' + e + '&ctz=America%2FLos_Angeles&mode=' +
              (mode || 'AGENDA') + '&showTitle=0&showPrint=0&showTabs=1&showCalendars=0&showNav=1';
     }
   };
 }
-const SERVICE_CAL = gcal('d750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db@group.calendar.google.com');
-const EVENTS_CAL  = gcal('6394a1722b48de86380ff162175c6ba748881fd43cf337fae0466ca8d221b251@group.calendar.google.com');
-const GCAL_ID = SERVICE_CAL.id, GCAL_ICS = SERVICE_CAL.ics, GCAL_PAGE = SERVICE_CAL.page,
-      GCAL_EMBED = SERVICE_CAL.embed('AGENDA');
+const CAL = gcal('d750fd36f80cbdca09aefaa2310a3e2710790cd2f9c73d09d293bb23bbb052db@group.calendar.google.com');
+const GCAL_ID = CAL.id, GCAL_ICS = CAL.ics, GCAL_PAGE = CAL.page, GCAL_EMBED = CAL.embed('AGENDA');
 
-function fetchText(path) {
-  return fetch(path, { cache:'no-cache' }).then(function (r) {
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return r.text();
-  });
-}
 function loadCalendars() {
-  return Promise.all([
-    fetchText('data/calendar.ics').then(function (txt) {
-      state.ics = txt; state.icsStamp = latestStamp(txt);
-    }).catch(function (e) {
-      console.warn('[MSCA09] service calendar unavailable:', e.message); state.ics = null;
-    }),
-    fetchText('data/events.ics').then(function (txt) {
-      state.evIcs = txt; state.evStamp = latestStamp(txt);
-    }).catch(function (e) {
-      console.warn('[MSCA09] events calendar unavailable:', e.message); state.evIcs = null;
-    })
-  ]);
+  return fetch('data/calendar.ics', { cache:'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(function (txt) { state.ics = txt; state.icsStamp = latestStamp(txt); })
+    .catch(function (e) { console.warn('[MSCA09] calendar unavailable:', e.message); state.ics = null; });
 }
 function latestStamp(text) {
   let best = null, m;
@@ -826,9 +816,9 @@ function latestStamp(text) {
   return best;
 }
 
-/* ── what an event's description says ────────────────────────────────────
-   Both calendars carry their details in the event description, written the
-   same way, so a chair can fill one in from Google Calendar on a phone:
+/* ── what an entry's description says ────────────────────────────────────
+   Every entry carries its details in its description, written the same
+   way, so a chair can fill one in from Google Calendar on a phone:
 
      MSCA09|District|Hybrid          type | format
      Language: English
@@ -913,10 +903,10 @@ function parseDesc(raw) {
       else if (l) loose.push(l);
       continue;
     }
-    // under the line is for people; a flyer or a note still counts, and an
-    // older event that kept its fields down here is still understood
+    // under the line is for people. A flyer or a note still counts; any
+    // other "Word: text" there is the flyer's own wording ("Hosted by: …",
+    // "Contact: …") and is left as text, never read as a field.
     if (key === 'img' || key === 'note') { addField(d, key, m[2]); continue; }
-    if (key && key !== 'link' && d.f[key] == null) addField(d, key, m[2]);
     body.push(l);
   }
   if (ruled) d.notes = d.notes.concat(loose);
@@ -958,11 +948,9 @@ function linkify(text) {
   });
 }
 
-/* ── reading a feed ──────────────────────────────────────────────────────
+/* ── reading the feed ────────────────────────────────────────────────────
    Every VEVENT, with a single changed or cancelled date (Google writes one
-   as a second VEVENT carrying RECURRENCE-ID) folded back into its series.
-   Times are kept exactly as written (Pacific) rather than converted — the
-   whole Area runs on Pacific time and the printed flyers read the same.  */
+   as a second VEVENT carrying RECURRENCE-ID) folded back into its series. */
 const icsMemo = new Map();
 function icsEvents(text) {
   if (!text || typeof ICAL === 'undefined') return [];
@@ -987,8 +975,8 @@ function icsEvents(text) {
   return list;
 }
 
-/* Google writes a repeating event in Pacific (TZID=America/Los_Angeles) but
-   a one-off event in UTC ("…T150000Z"). Either way the page wants the time
+/* Google writes a repeating entry in Pacific (TZID=America/Los_Angeles) but
+   a one-off entry in UTC ("…T150000Z"). Either way the page wants the time
    as it reads on the flyer, so a UTC time is turned into Pacific first.   */
 const PACIFIC = (function () {
   try {
@@ -1042,112 +1030,114 @@ function ruleOf(ev) {
   } catch (e) { return { freq:'', byday:[] }; }
 }
 
-/* ── the service-meeting calendar ─────────────────────────────────────── */
-const meetMemo = new WeakMap();
-function describeEvent(ev) {
-  const hit = meetMemo.get(ev);
-  if (hit && hit.lang === state.lang) return hit.meta;
+/* ── one entry ───────────────────────────────────────────────────────── */
+const entryMemo = new WeakMap();
+function entryOf(ev) {
+  const hit = entryMemo.get(ev);
+  if (hit) return hit;
   const d = parseDesc(ev.description);
   const f = d.f;
   const title = (ev.summary || '').trim();
   const loc = String(ev.location || '').trim();
   const rule = ruleOf(ev);
-  const s = ev.startDate ? wall(ev.startDate) : null, e = ev.endDate ? wall(ev.endDate) : null;
-  const meta = {
-    uid: ev.uid || title,
-    id: slug(ev.uid || title) || slug(title),
-    title: title,
-    kind: d.type || 'Other',
-    format: d.format || '',
-    location: f.venue || (isUrl(loc) ? '' : loc),
-    zoomId: f.zoomId || '', passcode: f.passcode || '',
-    zoomLink: f.zoomLink || (isUrl(loc) ? loc : ''),
-    web: f.web || '', covers: f.covers || '', email: f.email || '',
-    images: d.images, links: d.links, notes: d.notes,
-    language: langOf(f.language, title + ' ' + d.notes.join(' ')),
-    districtNo: '', freq: rule.freq, byday: rule.byday,
-    hour: s ? s.getHours() : 0, minute: s ? s.getMinutes() : 0,
-    span: (s && e && e > s) ? e - s : 36e5
-  };
-  meta.pattern = ruleLabel(meta.freq, meta.byday);
-  const dm = title.match(/District\s+([0-9]+(?:\s*&\s*[0-9]+)?)/i) || title.match(/Distrito\s+([0-9]+)/i);
-  if (dm) meta.districtNo = dm[1].replace(/\s+/g, ' ');
-  meetMemo.set(ev, { lang: state.lang, meta: meta });
-  return meta;
-}
-
-function expandOccurrences(from, to) {
-  const out = [];
-  icsEvents(state.ics).forEach(function (ev) {
-    const meta = describeEvent(ev);
-    occurrencesOf(ev, from, to).forEach(function (o) {
-      if (o.start < from) return;
-      out.push(Object.assign({}, meta, { date:o.start, end:o.end,
-                                         hour:o.start.getHours(), minute:o.start.getMinutes() }));
-    });
-  });
-  out.sort(function (a, b) { return a.date - b.date; });
-  return out;
-}
-function calendarSeries() { return icsEvents(state.ics).map(describeEvent); }
-function seriesById(id) {
-  return calendarSeries().filter(function (s) { return s.id === id; })[0] || null;
-}
-
-/* A district's meeting details come from the service calendar, so they are
-   written in exactly one place. districts.csv keeps the rest — the cities
-   covered, the service address — and is only the fallback for times.     */
-function districtMeeting(r) {
-  const key = String(r.district || '').replace(/\s+/g, ' ').trim();
-  return calendarSeries().filter(function (s) {
-    return s.kind === 'District' && s.districtNo === key;
-  })[0] || null;
-}
-
-/* ── the events calendar ──────────────────────────────────────────────── */
-/* the Area's own business days, listed together on the Events page */
-const AREA_KINDS = ['Assembly', 'Area Committee', 'Foro', 'Servathon'];
-
-function eventFromIcs(ev) {
-  const d = parseDesc(ev.description);
-  const f = d.f;
-  const title = (ev.summary || '').trim();
-  const loc = String(ev.location || '').trim();
   const start = wall(ev.startDate);
   const end = ev.endDate ? wall(ev.endDate) : start;
-  const rule = ruleOf(ev);
-  return {
-    uid: ev.uid, ev: ev,
-    slug: slug(title) + '-' + ymd(start),
+  const place = f.venue || (isUrl(loc) ? '' : loc);
+  const e = {
+    uid: ev.uid || title, ev: ev,
+    id: slug(ev.uid || title) || slug(title),          // #/meetings/<id>
+    slug: slug(title) + '-' + ymd(start),              // #/events/<slug>
     title: title, title_es: f.titleEs || '',
-    kind: d.type || 'Event', format: d.format || '',
-    language: langOf(f.language, title),
+    kind: d.type || 'Other', format: d.format || '',
+    language: langOf(f.language, title + ' ' + d.notes.join(' ')),
     start: start, end: end, allDay: !!ev.startDate.isDate, span: Math.max(0, end - start),
-    freq: rule.freq, byday: rule.byday,
-    place: f.venue || (isUrl(loc) ? '' : loc),
+    hour: start.getHours(), minute: start.getMinutes(),
+    freq: rule.freq, byday: rule.byday, recurring: !!rule.freq,
+    place: place, location: place,
     zoomId: f.zoomId || '', passcode: f.passcode || '',
     zoomLink: f.zoomLink || (isUrl(loc) ? loc : ''),
-    web: f.web || '', email: f.email || '', cost: f.cost || '', host: f.host || '',
-    images: d.images, links: d.links, notes: d.notes, description: d.body
+    web: f.web || '', email: f.email || '', covers: f.covers || '',
+    cost: f.cost || '', host: f.host || '',
+    images: d.images, links: d.links, notes: d.notes, description: d.body,
+    districtNo: ''
   };
+  const dm = title.match(/District\s+([0-9]+(?:\s*&\s*[0-9]+)?)/i) || title.match(/Distrito\s+([0-9]+)/i);
+  if (dm) e.districtNo = dm[1].replace(/\s+/g, ' ');
+  e.images.forEach(function (u, i) {
+    flyerNames[imgSrc(u)] = title + (e.images.length > 1 ? ' — ' + (i + 1) : '');
+  });
+  entryMemo.set(ev, e);
+  return e;
 }
 
-let evMemo = null;
-function allEvents() {
-  if (evMemo && evMemo.text === state.evIcs) return evMemo.list;
-  const list = icsEvents(state.evIcs).map(eventFromIcs);
+let entriesMemo = null;
+function entries() {
+  if (entriesMemo && entriesMemo.text === state.ics) return entriesMemo.list;
+  const list = icsEvents(state.ics).map(entryOf);
   const seen = {};
   list.forEach(function (e) {                      // keep every link unique
     if (seen[e.slug]) e.slug += '-' + (++seen[e.slug]); else seen[e.slug] = 1;
   });
-  list.forEach(function (e) {
-    e.images.forEach(function (u, i) {
-      flyerNames[imgSrc(u)] = e.title + (e.images.length > 1 ? ' — ' + (i + 1) : '');
-    });
-  });
-  evMemo = { text: state.evIcs, list: list };
+  entriesMemo = { text: state.ics, list: list };
   return list;
 }
+
+/* which page an entry is listed on — kinds.csv, "pages" column */
+function onPage(e, page) {
+  const k = (state.kinds['calendar'] || {})[e.kind];
+  if (k && k.pages) return k.pages.split(/[;,\s]+/).indexOf(page) !== -1;
+  return page === (e.recurring ? 'meetings' : 'events');
+}
+function meetingsList() { return entries().filter(function (e) { return onPage(e, 'meetings'); }); }
+function eventsList()   { return entries().filter(function (e) { return onPage(e, 'events'); }); }
+
+/* every date of every entry in `list` that starts inside [from, to] */
+function occurrences(list, from, to) {
+  const out = [];
+  list.forEach(function (e) {
+    occurrencesOf(e.ev, from, to).forEach(function (o) {
+      if (o.start < from) return;
+      out.push(Object.assign({}, e, { date:o.start, end:o.end,
+                                      hour:o.start.getHours(), minute:o.start.getMinutes() }));
+    });
+  });
+  out.sort(function (a, b) { return a.date - b.date || a.title.localeCompare(b.title); });
+  return out;
+}
+
+/* "#/meetings/<id>" and "#/events/<slug>" both land here. A link shared
+   before the move to the calendar (an event's title alone) still finds its
+   entry: the one of that name closest to today wins.                     */
+function entryById(id) {
+  const list = entries();
+  const hit = list.filter(function (e) { return e.id === id || e.slug === id; })[0];
+  if (hit) return hit;
+  const same = list.filter(function (e) { return slug(e.title) === id; });
+  if (!same.length) return null;
+  const now = Date.now();
+  same.sort(function (a, b) { return Math.abs(a.start - now) - Math.abs(b.start - now); });
+  return same[0];
+}
+
+/* the names the rest of the page already uses */
+function expandOccurrences(from, to) { return occurrences(meetingsList(), from, to); }
+function calendarSeries() { return meetingsList(); }
+function seriesById(id) { return entryById(id); }
+function allEvents() { return eventsList(); }
+function eventById(id) { return entryById(id); }
+
+/* A district's meeting details come from the calendar, so they are written
+   in exactly one place. districts.csv keeps the rest — the cities covered,
+   the service address — and is only the fallback for times.              */
+function districtMeeting(r) {
+  const key = String(r.district || '').replace(/\s+/g, ' ').trim();
+  return meetingsList().filter(function (s) {
+    return s.kind === 'District' && s.recurring && s.districtNo === key;
+  })[0] || null;
+}
+
+/* the Area's own business days, listed together on the Events page */
+const AREA_KINDS = ['Assembly', 'Area Committee', 'Foro', 'Servathon'];
 
 const FAR_PAST = new Date(1990, 0, 1);
 const FAR_OFF  = new Date(2100, 0, 1);
@@ -1164,18 +1154,33 @@ function lastOccurrence(e) {
   return all.length ? all[all.length - 1].start : e.start;
 }
 
-/* "#/events/<slug>", where the slug is the title plus the first date. A
-   link shared before the move (title only) still finds its event: the one
-   closest to today wins.                                                 */
-function eventById(id) {
-  const list = allEvents();
-  const hit = list.filter(function (e) { return e.slug === id; })[0];
-  if (hit) return hit;
-  const same = list.filter(function (e) { return slug(e.title) === id; });
-  if (!same.length) return null;
-  const now = Date.now();
-  same.sort(function (a, b) { return Math.abs(a.start - now) - Math.abs(b.start - now); });
-  return same[0];
+/* ── filters that survive a reload ───────────────────────────────────────
+   "#/meetings?view=month&type=District" opens the page with those filters
+   set, so a filtered view can be bookmarked or shared. Writing the query
+   uses replaceState, which does not trigger the router.                  */
+const lastQuery = {};
+function readQuery() {
+  const q = (location.hash.split('?')[1] || '');
+  const out = {};
+  q.split('&').forEach(function (p) {
+    if (!p) return;
+    const kv = p.split('=');
+    try { out[decodeURIComponent(kv[0])] = decodeURIComponent((kv[1] || '').replace(/\+/g, ' ')); } catch (e) {}
+  });
+  return out;
+}
+function writeQuery(route, obj, defaults) {
+  const parts = [];
+  Object.keys(obj).forEach(function (k) {
+    const v = obj[k];
+    if (v === '' || v == null || (defaults && String(defaults[k]) === String(v))) return;
+    parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
+  });
+  const qs = parts.join('&');
+  lastQuery[route] = qs;
+  const base = location.hash.replace(/^#\/?/, '').split('?')[0];
+  if (base !== route) return;                       // a modal is open over the page
+  try { history.replaceState(null, '', '#/' + route + (qs ? '?' + qs : '')); } catch (e) {}
 }
 
 /* ── category palettes (data/kinds.csv) ─────────────────────────────────── */
@@ -1218,10 +1223,10 @@ const GRAD = {
 };
 function tone(x){ return TONE[x] || TONE.slate; }
 function grad(x){ return GRAD[x] || GRAD.brand; }
-function meetKind(k){ return kindOf('meeting', k); }
-function kindLabel(k){ return kindText('meeting', k); }
-function evKind(k){ return kindOf('event', k); }
-function evKindLabel(k){ return kindText('event', k); }
+/* meetings and events share one list of types: kinds.csv, set "calendar" */
+function calKind(k){ return kindOf('calendar', k); }
+function calKindLabel(k){ return kindText('calendar', k); }
+const meetKind = calKind, kindLabel = calKindLabel, evKind = calKind, evKindLabel = calKindLabel;
 function fmtLabel(f) {
   if (/hybrid/i.test(f)) return t('hybrid');
   if (/physical|person/i.test(f)) return t('inperson');
@@ -1366,12 +1371,14 @@ window.MSCA = {
   DOW_EN, DOW_ES, MON_EN, MON_ES,
   expandOccurrences, calendarSeries, seriesById, latestStamp, districtMeeting,
   allEvents, eventById, eventOccurrences, nextOccurrence, lastOccurrence, AREA_KINDS,
+  entries, meetingsList, eventsList, occurrences, entryById, onPage, readQuery, writeQuery, lastQuery,
+  calKind, calKindLabel,
   ruleLabel, recurLabel, andList, ymd, parseDesc, imgSrc, fileHref, driveId, isUrl, linkify,
   kindOf, kindText, meetKind, TONE, GRAD, tone, grad, kindLabel, evKind, evKindLabel, fmtLabel,
   pageHead, sectionTitle, emptyState, anonNote, linkOut, collapsible,
   CURRENT_PANEL, servants,
   gcalLink, gcalStamp, mapLink, absHash, toast, shareThing,
-  GCAL_EMBED, GCAL_ICS, GCAL_ID, GCAL_PAGE, SERVICE_CAL, EVENTS_CAL,
+  GCAL_EMBED, GCAL_ICS, GCAL_ID, GCAL_PAGE, CAL,
   renderNav, applyStaticContent, applyTheme, loadAll, needDocs, buildNav, L, $, $$
 };
 })();
@@ -1389,7 +1396,7 @@ const VIEWS = {}; M.VIEWS = VIEWS;
 VIEWS.home = function () {
   const districts = S.data['districts'] || [];
   const spanish   = districts.filter(function (d) { return d.language === 'Spanish'; });
-  const series    = M.calendarSeries();
+  const series    = M.currentSeries();
   const now = new Date();
   const soon = M.expandOccurrences(now, new Date(now.getTime() + 14 * 864e5)).slice(0, 8);
   const events = upcomingEvents().slice(0, 3);
@@ -1532,33 +1539,34 @@ function heroPanel(soon) {
 
 /* ── reusable cards ────────────────────────────────────────────────────── */
 function occCard(o) {
-  const st = M.meetKind(o.kind);
+  const st = M.calKind(o.kind);
   return '<a href="#/meetings/' + attr(o.id) + '" class="card card-hover rounded-2xl p-5 flex flex-col text-left">' +
     '<div class="flex items-start justify-between gap-2">' +
-      '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa,'text-[.7rem]') + '<span>' + esc(M.kindLabel(o.kind)) + '</span></span>' +
-      (o.language === 'Spanish' ? '<span class="chip ' + M.tone('orange') + '">ES</span>' : '') +
+      '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(o.kind)) + '</span></span>' +
+      langChip2(o.language) +
     '</div>' +
-    '<h3 class="mt-3 font-display font-bold text-[17px] leading-snug">' + esc(o.title) + '</h3>' +
+    '<h3 class="mt-3 font-display font-bold text-[17px] leading-snug">' + esc(eventTitle(o)) + '</h3>' +
     '<p class="mt-1.5 text-[13.5px] font-semibold text-brand-700 dark:text-brand-300">' +
-      esc(M.fmtDate(o.date)) + ' · ' + esc(M.fmtTime(o.hour, o.minute)) + ' PT</p>' +
-    (o.location ? '<p class="mt-2 text-[13px] opacity-70 leading-snug">' + icon('location-dot','mr-1 opacity-60') + esc(o.location) + '</p>' : '') +
+      esc(M.fmtDate(o.date)) + ' · ' + esc(o.allDay ? t('allDay') : M.fmtTime(o.hour, o.minute) + ' PT') + '</p>' +
+    (o.place ? '<p class="mt-2 text-[13px] opacity-70 leading-snug">' + icon('location-dot','mr-1 opacity-60') + esc(o.place) + '</p>' : '') +
     '<div class="mt-auto pt-3 flex flex-wrap gap-1.5">' +
       (o.format ? '<span class="chip ' + M.tone('slate') + '">' + esc(M.fmtLabel(o.format)) + '</span>' : '') +
-      (o.zoomId ? '<span class="chip ' + M.tone('sky') + '">' + icon('video','text-[.7rem]') + 'Zoom</span>' : '') +
+      ((o.zoomId || o.zoomLink) ? '<span class="chip ' + M.tone('sky') + '">' + icon('video','text-[.7rem]') + 'Zoom</span>' : '') +
+      (o.host ? '<span class="chip ' + M.tone('brand') + '">' + esc(t('hostedBy') + ' ' + o.host) + '</span>' : '') +
     '</div></a>';
 }
 
-/* A repeating event is one calendar entry, so "is it still to come?" is a
+/* A repeating entry is one calendar entry, so "is it still to come?" is a
    question about its dates rather than its first one. nextDate and lastDate
    are worked out once a day here, so the cards and the sorting share them. */
 let datedMemo = null;
 function datedEvents() {
   const today = new Date(); today.setHours(0,0,0,0);
-  if (datedMemo && datedMemo.text === S.evIcs && datedMemo.day === today.getTime()) return datedMemo.list;
-  const list = M.allEvents().map(function (e) {
+  if (datedMemo && datedMemo.text === S.ics && datedMemo.day === today.getTime()) return datedMemo.list;
+  const list = M.eventsList().map(function (e) {
     return Object.assign({}, e, { nextDate: M.nextOccurrence(e, today), lastDate: M.lastOccurrence(e) });
   });
-  datedMemo = { text: S.evIcs, day: today.getTime(), list: list };
+  datedMemo = { text: S.ics, day: today.getTime(), list: list };
   return list;
 }
 function upcomingEvents() {
@@ -1569,6 +1577,11 @@ function pastEvents() {
   return datedEvents().filter(function (e) { return !e.nextDate; })
     .sort(function (a,b) { return (b.lastDate||0) - (a.lastDate||0); });
 }
+/* the meetings that still happen: a series with a date ahead of it */
+function currentSeries() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  return M.meetingsList().filter(function (s) { return s.recurring && M.nextOccurrence(s, today); });
+}
 function eventTitle(e){ return (S.lang === 'es' && e.title_es) ? e.title_es : e.title; }
 function flyerList(e){ return (e.images || []).map(function (u) { return M.imgSrc(u); }); }
 /* the card-sized copy of flyer i, straight from Drive */
@@ -1578,11 +1591,9 @@ function thumbOf(e, i) {
 }
 
 function eventDateLabel(e) {
-  // a repeating event shows the date it next happens; nextDate is put on the
-  // event by datedEvents(), so a card in a list needs no extra work here
   const s = e.nextDate || e.lastDate || e.start;
   if (!s) return '';
-  // an all-day event ends at midnight the morning after
+  // an all-day entry ends at midnight the morning after
   const en = new Date(s.getTime() + Math.max(0, (e.span || 0) - (e.allDay ? 60000 : 0)));
   const base = M.monName(s.getMonth()) + ' ' + s.getDate();
   if (s.toDateString() === en.toDateString()) return base + ', ' + s.getFullYear();
@@ -1607,7 +1618,7 @@ function langChip2(lang, full) {
 function online(fmt) { return /virtual|online/i.test(fmt || ''); }
 
 function eventCard(e) {
-  const k = M.evKind(e.kind);
+  const k = M.calKind(e.kind);
   const fl = e.images || [];
   const where = e.place || (online(e.format) ? t('online') : '');
   return '<a href="#/events/' + attr(e.slug) + '" class="card card-hover rounded-2xl overflow-hidden flex flex-col text-left group">' +
@@ -1622,7 +1633,7 @@ function eventCard(e) {
       : '<span class="block h-1.5 bg-gradient-to-r ' + M.grad(k.c) + '"></span>') +
     '<span class="p-5 flex flex-col flex-1">' +
       '<span class="flex items-center gap-1.5 flex-wrap">' +
-        '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.evKindLabel(e.kind)) + '</span></span>' +
+        '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(e.kind)) + '</span></span>' +
         langChip2(e.language) +
         (e.freq ? '<span class="chip ' + M.tone('violet') + '">' +
            icon('repeat','text-[.7rem]') + '<span>' + esc(M.recurLabel(e)) + '</span></span>' : '') +
@@ -1641,87 +1652,236 @@ function eventCard(e) {
       '</span>' +
     '</span></a>';
 }
-M.occCard = occCard; M.eventCard = eventCard;
+
+/* ── pieces both calendar pages are built from ────────────────────────── */
+const BTN_ROUND = 'w-10 h-10 shrink-0 grid place-items-center rounded-full border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10';
+const BTN_SMALL = 'inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] font-semibold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10';
+
+function selectField(id, label, opts, val) {
+  return '<label class="block min-w-0"><span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' + esc(label) + '</span>' +
+    '<select id="' + attr(id) + '" class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 px-3 py-2.5 text-sm">' +
+      '<option value="">' + esc(t('all')) + '</option>' +
+      opts.map(function (o) {
+        return '<option value="' + attr(o[0]) + '"' + (String(val) === String(o[0]) ? ' selected' : '') + '>' + esc(o[1]) + '</option>';
+      }).join('') + '</select></label>';
+}
+function searchField(id, label, placeholder, val) {
+  return '<label class="block min-w-0 sm:col-span-2">' +
+    '<span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' + esc(label) + '</span>' +
+    '<span class="relative block">' +
+      '<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40 text-sm" aria-hidden="true"></i>' +
+      '<input id="' + attr(id) + '" type="search" value="' + attr(val) + '" placeholder="' + attr(placeholder) + '" ' +
+        'class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 pl-10 pr-3 py-2.5 text-sm">' +
+    '</span></label>';
+}
+function chipButton(attrName, val, label, on, gradient) {
+  return '<button type="button" ' + attrName + '="' + attr(val) + '" aria-pressed="' + on + '" ' +
+    'class="fltbtn chip whitespace-nowrap ' + (on ? 'text-white bg-gradient-to-r ' + (gradient || 'from-brand-600 to-fuchsia-600')
+                         : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+    esc(label) + '</button>';
+}
+function tabRow(tabs, current, attrName) {
+  return '<div class="scroll-x -mx-1 px-1 pb-1"><div class="flex gap-2 w-max" role="tablist">' +
+    tabs.map(function (tb) {
+      const on = current === tb[0];
+      return '<button type="button" role="tab" ' + attrName + '="' + attr(tb[0]) + '" aria-selected="' + on + '" ' +
+        'class="fltbtn inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap ' +
+        (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
+            : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
+        icon(tb[2]) + esc(tb[1]) +
+        (tb[3] != null ? '<span class="chip ' + (on ? 'bg-white/25 text-white' : M.tone('slate')) + '">' + tb[3] + '</span>' : '') +
+        '</button>';
+    }).join('') + '</div></div>';
+}
+/* a language choice keeps the bilingual entries either way */
+function langMatch(want, lang) {
+  if (!want) return true;
+  if (lang === 'Bilingual') return true;
+  return lang === want;
+}
+/* morning before noon, afternoon until five, evening after */
+function timeMatch(want, o) {
+  if (!want) return true;
+  if (o.allDay) return false;
+  const h = o.hour + o.minute / 60;
+  return want === 'morning' ? h < 12 : want === 'afternoon' ? (h >= 12 && h < 17) : h >= 17;
+}
+function liveStamp(stamp) {
+  return stamp
+    ? '<span class="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/40">' +
+      '<span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>' +
+      esc(t('syncedWith') + ' ' + M.monName(stamp.getMonth()) + ' ' + stamp.getDate() + ', ' + stamp.getFullYear()) + '</span>'
+    : '';
+}
+function subscribeButtons(extra) {
+  return '<div class="mt-7 flex flex-wrap gap-2.5">' +
+    '<a href="' + attr(M.CAL.add) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
+      icon('calendar-plus') + esc(t('addGoogle')) + '</a>' +
+    '<a href="' + attr(M.CAL.ics.replace(/^https:/, 'webcal:')) + '" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
+      icon('rss') + esc(t('subscribe')) + '</a>' +
+    (extra || '') + liveStamp(S.icsStamp) +
+  '</div>';
+}
+function gcalPanel(note, mode) {
+  return '<div class="card rounded-3xl p-4 sm:p-5">' +
+    '<p class="text-[13.5px] opacity-70 mb-3">' + esc(note) + '</p>' +
+    '<div class="rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white">' +
+      '<iframe title="MSCA09 calendar" src="' + attr(M.CAL.embed(mode)) + '" ' +
+      'style="border:0" width="100%" height="680" frameborder="0" scrolling="no" loading="lazy"></iframe></div>' +
+    '<div class="mt-4 flex flex-wrap gap-2">' +
+      '<a href="' + attr(M.CAL.page) + '" target="_blank" rel="noopener" class="chip ' + M.tone('brand') + '">' +
+        icon('up-right-from-square','text-[.7rem]') + esc(t('openInGcal')) + '</a>' +
+      '<a href="' + attr(M.CAL.add) + '" target="_blank" rel="noopener" class="chip ' + M.tone('emerald') + '">' +
+        icon('calendar-plus','text-[.7rem]') + esc(t('addGoogle')) + '</a>' +
+      '<a href="' + attr(M.CAL.ics) + '" class="chip ' + M.tone('slate') + '">' +
+        icon('file-arrow-down','text-[.7rem]') + esc(t('downloadIcs')) + '</a>' +
+    '</div></div>';
+}
+function countLine(n, oneKey, manyKey) {
+  return '<p class="mb-4 text-[13px] font-semibold opacity-60" aria-live="polite">' +
+    esc(n + ' ' + t(n === 1 ? oneKey : manyKey)) + '</p>';
+}
+
+/* The month grid both pages use. items: [{date, title, kind, hour, minute,
+   allDay, href}], one per day an entry touches.                          */
+function monthGrid(y, m, items) {
+  const first = new Date(y, m, 1), last = new Date(y, m + 1, 0);
+  const byDay = {};
+  items.forEach(function (o) { (byDay[o.date.getDate()] = byDay[o.date.getDate()] || []).push(o); });
+  const cells = [];
+  for (let i = 0; i < first.getDay(); i++) cells.push(null);
+  for (let d = 1; d <= last.getDate(); d++) cells.push(d);
+  while (cells.length % 7) cells.push(null);
+  const todayStr = new Date().toDateString();
+
+  return '<div class="card rounded-3xl p-4 sm:p-6">' +
+    '<div class="flex items-center justify-between gap-3 mb-5">' +
+      '<button type="button" data-monthstep="-1" class="' + BTN_ROUND + '" aria-label="' + attr(t('previous')) + '">' + icon('chevron-left') + '</button>' +
+      '<div class="text-center"><h3 class="font-display font-extrabold text-lg sm:text-2xl">' + esc(M.monName(m) + ' ' + y) + '</h3>' +
+        '<button type="button" data-monthstep="0" class="mt-1 text-[12.5px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' + esc(t('today')) + '</button></div>' +
+      '<button type="button" data-monthstep="1" class="' + BTN_ROUND + '" aria-label="' + attr(t('next')) + '">' + icon('chevron-right') + '</button>' +
+    '</div>' +
+    '<div class="scroll-x"><div class="min-w-[700px] grid grid-cols-7 gap-1.5">' +
+      M.DOW_EN.map(function (d, i) {
+        return '<div class="text-center text-[11px] font-bold uppercase tracking-widest opacity-55 pb-1.5">' + esc(M.dayName(i).slice(0,3)) + '</div>';
+      }).join('') +
+      cells.map(function (d) {
+        if (d === null) return '<div class="rounded-xl bg-black/[.02] dark:bg-white/[.02] min-h-[104px]"></div>';
+        const isToday = new Date(y, m, d).toDateString() === todayStr;
+        const list = (byDay[d] || []).slice().sort(function (a, b) {
+          return (a.allDay ? -1 : a.hour * 60 + a.minute) - (b.allDay ? -1 : b.hour * 60 + b.minute);
+        });
+        return '<div class="rounded-xl border ' + (isToday ? 'border-fuchsia-400 ring-2 ring-fuchsia-300/40' : 'border-black/5 dark:border-white/10') +
+          ' bg-white/70 dark:bg-white/[.04] p-2 min-h-[104px]">' +
+          '<div class="text-[12px] font-bold ' + (isToday ? 'text-fuchsia-600 dark:text-fuchsia-300' : 'opacity-60') + '">' + d + '</div>' +
+          '<div class="mt-1 space-y-1">' + list.slice(0, 4).map(function (o) {
+            const st = M.calKind(o.kind);
+            const when = o.allDay ? '' : M.fmtTime(o.hour, o.minute).replace(':00', '') + ' ';
+            return '<a href="' + attr(o.href) + '" class="block rounded-md px-1.5 py-1 text-[10.5px] leading-tight font-semibold ' +
+              M.tone(st.c) + ' hover:brightness-95" title="' + attr(o.title + (when ? ' — ' + when : '')) + '">' +
+              esc(when + o.title) + '</a>';
+          }).join('') +
+          (list.length > 4 ? '<div class="text-[10.5px] opacity-60 pl-1">+' + (list.length - 4) + '</div>' : '') +
+          '</div></div>';
+      }).join('') +
+    '</div></div></div>';
+}
+/* step a "YYYY-MM" month by n (0 = this month) */
+function stepMonth(cur, n) {
+  if (!n) { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
+  const p = (cur || stepMonth('', 0)).split('-');
+  const d = new Date(+p[0], +p[1] - 1 + n, 1);
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+}
+function monthOf(val) {
+  const p = (val || stepMonth('', 0)).split('-');
+  return { y: +p[0], m: +p[1] - 1 };
+}
+M.occCard = occCard; M.eventCard = eventCard; M.currentSeries = currentSeries;
 M.upcomingEvents = upcomingEvents; M.pastEvents = pastEvents; M.datedEvents = datedEvents;
 M.eventTitle = eventTitle; M.flyerList = flyerList; M.thumbOf = thumbOf; M.langChip2 = langChip2;
 M.eventDateLabel = eventDateLabel; M.eventTimeLabel = eventTimeLabel; M.online = online;
+Object.assign(M, { selectField:selectField, searchField:searchField, chipButton:chipButton, tabRow:tabRow,
+  langMatch:langMatch, subscribeButtons:subscribeButtons, gcalPanel:gcalPanel, countLine:countLine,
+  monthGrid:monthGrid, stepMonth:stepMonth, monthOf:monthOf, BTN_SMALL:BTN_SMALL, BTN_ROUND:BTN_ROUND });
 
 /* ═══════════════════════════════════════════════════ SERVICE CALENDAR ─── */
-const calState = { view:'upcoming', kind:'', fmt:'', lang:'', dow:'', q:'', month:null, days:30 };
+/* Every business meeting in the Area — districts, H&I, intergroups, Area
+   committees, and the Area's own meetings — five ways to look at them and
+   six filters. The state lives in the address, so a filtered view can be
+   bookmarked or sent to someone.                                         */
+const MEET_DEFAULTS = { view:'upcoming', q:'', type:'', day:'', fmt:'', lang:'', time:'', days:'30', month:'', week:'' };
+const calState = Object.assign({}, MEET_DEFAULTS);
 
 VIEWS.meetings = function () {
   return M.pageHead({
     icon:'calendar-days', kicker:c('meetings.kicker'),
     title:M.cTitle('meetings.title'), lead:c('meetings.lead'),
-    extra:'<div class="mt-7 flex flex-wrap gap-2.5">' +
-      '<a href="' + attr(M.GCAL_ICS) + '" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
-        icon('calendar-plus') + esc(t('subscribe')) + '</a>' +
+    extra:subscribeButtons(
       '<a href="' + attr(M.file('district_calendar')) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
-        icon('file-pdf') + esc(t('printable')) + '</a>' +
-      (S.icsStamp
-        ? '<span class="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/40">' +
-          '<span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>' +
-          esc(t('syncedWith') + ' ' + M.monName(S.icsStamp.getMonth()) + ' ' +
-              S.icsStamp.getDate() + ', ' + S.icsStamp.getFullYear()) + '</span>'
-        : '') +
-    '</div>'
+        icon('file-pdf') + esc(t('printable')) + '</a>')
   }) +
   '<section class="mx-auto max-w-7xl px-4 py-10"><div id="calShell"></div></section>';
 };
 
+/* the address is the filter: whatever it does not say is the default */
 VIEWS.meetings.mount = function () {
+  const q = M.readQuery();
+  Object.keys(MEET_DEFAULTS).forEach(function (k) { calState[k] = q[k] != null ? q[k] : MEET_DEFAULTS[k]; });
   const shell = $('#calShell');
   if (shell) drawCalendar(shell);
 };
 
+function meetMatches(o, ignoreDay) {
+  if (calState.type && o.kind !== calState.type) return false;
+  if (calState.fmt && o.format !== calState.fmt) return false;
+  if (!langMatch(calState.lang, o.language)) return false;
+  if (!timeMatch(calState.time, o)) return false;
+  if (!ignoreDay && calState.day !== '' && o.date && String(o.date.getDay()) !== calState.day) return false;
+  if (calState.q) {
+    const hay = M.norm([o.title, o.title_es, o.place, o.covers, o.web, o.host, o.notes.join(' '),
+                        M.calKindLabel(o.kind), o.kind, o.districtNo ? 'district ' + o.districtNo : ''].join(' '));
+    if (hay.indexOf(M.norm(calState.q)) === -1) return false;
+  }
+  return true;
+}
+function meetHref(o) { return '#/meetings/' + o.id; }
+
 function drawCalendar(shell) {
-  const series = M.calendarSeries();
-  const kinds = M.uniq(series.map(function (s) { return s.kind; })).sort();
-  const fmts  = M.uniq(series.map(function (s) { return s.format; }).filter(Boolean)).sort();
-  const tabs = [['upcoming', t('upcoming'), 'list-ul'], ['month', t('monthView'), 'calendar'],
-                ['pattern', t('patternView'), 'table-cells'], ['gcal', t('gcalView'), 'calendar-day']];
+  const series = M.meetingsList();
+  const kinds = M.uniq(series.map(function (s) { return s.kind; }))
+    .sort(function (a, b) { return M.calKindLabel(a).localeCompare(M.calKindLabel(b)); });
+  const fmts = M.uniq(series.map(function (s) { return s.format; }).filter(Boolean)).sort();
+  const tabs = [['upcoming', t('upcoming'), 'list-ul'], ['week', t('weekView'), 'calendar-week'],
+                ['month', t('monthView'), 'calendar'], ['pattern', t('patternView'), 'table-cells'],
+                ['gcal', t('gcalView'), 'calendar-day']];
+  const filters = calState.view !== 'gcal';
 
   shell.innerHTML =
   '<div class="card rounded-3xl p-4 sm:p-6 mb-6">' +
-    '<div class="scroll-x -mx-1 px-1 pb-1 mb-5"><div class="flex gap-2 w-max" role="tablist">' +
-      tabs.map(function (tb) {
-        const on = calState.view === tb[0];
-        return '<button type="button" role="tab" data-calview="' + attr(tb[0]) + '" aria-selected="' + on + '" ' +
-          'class="fltbtn inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap ' +
-          (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
-              : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
-          icon(tb[2]) + esc(tb[1]) + '</button>';
-      }).join('') +
-    '</div></div>' +
-    '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">' +
-      '<label class="sm:col-span-2 lg:col-span-2 block">' +
-        '<span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' + esc(t('search')) + '</span>' +
-        '<span class="relative block">' +
-          '<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40 text-sm" aria-hidden="true"></i>' +
-          '<input id="calQ" type="search" value="' + attr(calState.q) + '" placeholder="' +
-            attr(t('searchMeetings')) + '" ' +
-            'class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 pl-10 pr-3 py-2.5 text-sm">' +
-        '</span></label>' +
-      selectField('calKind', t('type'), kinds.map(function (k) { return [k, M.kindLabel(k)]; }), calState.kind) +
-      selectField('calDow', t('day'), M.DOW_EN.map(function (d, i) { return [String(i), M.dayName(i)]; }), calState.dow) +
-      selectField('calFmt', t('format'), fmts.map(function (f) { return [f, M.fmtLabel(f)]; }), calState.fmt) +
-    '</div>' +
-    '<div class="mt-3 flex flex-wrap items-center gap-2">' +
-      langChip('', t('all')) + langChip('English', t('english')) + langChip('Spanish', t('spanish')) +
-      (calState.view === 'upcoming'
-        ? '<span class="mx-1 w-px h-6 bg-black/10 dark:bg-white/15 shrink-0"></span>' +
-          [[30, t('next30')], [60, t('next60')], [90, t('next90')]].map(function (r) {
-            const on = calState.days === r[0];
-            return '<button type="button" data-caldays="' + r[0] + '" aria-pressed="' + on + '" ' +
-              'class="fltbtn chip whitespace-nowrap ' +
-              (on ? 'text-white bg-gradient-to-r from-teal-500 to-emerald-600'
-                  : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
-              esc(r[1]) + '</button>';
-          }).join('')
-        : '') +
-      '<button type="button" id="calClear" class="ml-auto py-1 text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
-        icon('rotate-left','mr-1') + esc(t('clearFilters')) + '</button>' +
-    '</div>' +
+    tabRow(tabs, calState.view, 'data-calview') +
+    (filters
+      ? '<div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">' +
+          searchField('calQ', t('search'), t('searchMeetings'), calState.q) +
+          selectField('calType', t('type'), kinds.map(function (k) { return [k, M.calKindLabel(k)]; }), calState.type) +
+          selectField('calDay', t('day'), M.DOW_EN.map(function (d, i) { return [String(i), M.dayName(i)]; }), calState.day) +
+          selectField('calFmt', t('format'), fmts.map(function (f) { return [f, M.fmtLabel(f)]; }), calState.fmt) +
+          selectField('calTime', t('timeOfDay'), [['morning', t('morning')], ['afternoon', t('afternoon')], ['evening', t('evening')]], calState.time) +
+        '</div>' +
+        '<div class="mt-3 flex flex-wrap items-center gap-2">' +
+          [['', t('all')], ['English', t('english')], ['Spanish', t('spanish')]].map(function (l) {
+            return chipButton('data-callang', l[0], l[1], calState.lang === l[0]);
+          }).join('') +
+          (calState.view === 'upcoming'
+            ? '<span class="mx-1 w-px h-6 bg-black/10 dark:bg-white/15 shrink-0"></span>' +
+              [['7', t('next7')], ['30', t('next30')], ['60', t('next60')], ['90', t('next90')]].map(function (r) {
+                return chipButton('data-caldays', r[0], r[1], calState.days === r[0], 'from-teal-500 to-emerald-600');
+              }).join('')
+            : '') +
+          '<button type="button" id="calClear" class="ml-auto py-1 text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
+            icon('rotate-left','mr-1') + esc(t('clearFilters')) + '</button>' +
+        '</div>'
+      : '') +
   '</div>' +
   '<div id="calBody"></div>' +
   '<p class="mt-6 text-[12.5px] opacity-60">' + icon('clock','mr-1.5') + esc(t('allTimesPT')) + '</p>';
@@ -1731,36 +1891,48 @@ function drawCalendar(shell) {
   });
   const q = $('#calQ', shell);
   if (q) { let tm; q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { calState.q = q.value; body(); }, 180); }); }
-  bind('calKind','kind'); bind('calDow','dow'); bind('calFmt','fmt');
+  [['calType','type'], ['calDay','day'], ['calFmt','fmt'], ['calTime','time']].forEach(function (p) {
+    const el = $('#' + p[0], shell);
+    if (el) el.addEventListener('change', function () { calState[p[1]] = el.value; body(); });
+  });
   $$('[data-callang]', shell).forEach(function (b) {
     b.addEventListener('click', function () { calState.lang = b.getAttribute('data-callang'); drawCalendar(shell); });
   });
   $$('[data-caldays]', shell).forEach(function (b) {
-    b.addEventListener('click', function () {
-      calState.days = parseInt(b.getAttribute('data-caldays'), 10);
-      drawCalendar(shell);
-    });
+    b.addEventListener('click', function () { calState.days = b.getAttribute('data-caldays'); drawCalendar(shell); });
   });
   const cl = $('#calClear', shell);
   if (cl) cl.addEventListener('click', function () {
-    calState.kind = calState.fmt = calState.lang = calState.dow = calState.q = '';
-    calState.days = 30;
+    const view = calState.view;
+    Object.assign(calState, MEET_DEFAULTS, { view: view });
     drawCalendar(shell);
   });
 
-  function bind(id, key) {
-    const el = $('#' + id, shell);
-    if (el) el.addEventListener('change', function () { calState[key] = el.value; body(); });
-  }
   function body() {
     const b = $('#calBody', shell);
     if (!b) return;
-    b.innerHTML = calBodyHTML();
+    // the address says only what applies to the view on screen
+    const shown = Object.assign({}, calState);
+    if (shown.view !== 'week') shown.week = '';
+    if (shown.view !== 'month') shown.month = '';
+    if (shown.view !== 'upcoming') shown.days = MEET_DEFAULTS.days;
+    M.writeQuery('meetings', shown, MEET_DEFAULTS);
+    b.innerHTML = calState.view === 'gcal' ? gcalPanel(c('meetings.gcal_note'), 'AGENDA')
+                : calState.view === 'pattern' ? patternHTML()
+                : calState.view === 'month' ? meetMonthHTML()
+                : calState.view === 'week' ? weekHTML()
+                : upcomingHTML();
     $$('[data-monthstep]', b).forEach(function (btn) {
       btn.addEventListener('click', function () {
-        const step = parseInt(btn.getAttribute('data-monthstep'), 10);
-        const cur = calState.month || new Date();
-        calState.month = new Date(cur.getFullYear(), cur.getMonth() + step, 1);
+        calState.month = stepMonth(calState.month, parseInt(btn.getAttribute('data-monthstep'), 10));
+        body();
+      });
+    });
+    $$('[data-weekstep]', b).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const n = parseInt(btn.getAttribute('data-weekstep'), 10);
+        const base = n ? weekStart(calState.week) : weekStart('');
+        calState.week = M.ymd(new Date(base.getFullYear(), base.getMonth(), base.getDate() + 7 * n));
         body();
       });
     });
@@ -1768,64 +1940,23 @@ function drawCalendar(shell) {
   body();
 }
 
-function selectField(id, label, opts, val) {
-  return '<label class="block"><span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' + esc(label) + '</span>' +
-    '<select id="' + attr(id) + '" class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 px-3 py-2.5 text-sm">' +
-      '<option value="">' + esc(t('all')) + '</option>' +
-      opts.map(function (o) {
-        return '<option value="' + attr(o[0]) + '"' + (String(val) === String(o[0]) ? ' selected' : '') + '>' + esc(o[1]) + '</option>';
-      }).join('') + '</select></label>';
-}
-function langChip(val, label) {
-  const on = calState.lang === val;
-  return '<button type="button" data-callang="' + attr(val) + '" aria-pressed="' + on + '" ' +
-    'class="fltbtn chip ' + (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600'
-                               : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
-    esc(label) + '</button>';
-}
-function matches(o) {
-  if (calState.kind && o.kind !== calState.kind) return false;
-  if (calState.fmt && o.format !== calState.fmt) return false;
-  if (calState.lang && o.language !== calState.lang) return false;
-  if (calState.q) {
-    const hay = M.norm([o.title, o.location, o.covers, o.web, o.notes.join(' '), o.kind].join(' '));
-    if (hay.indexOf(M.norm(calState.q)) === -1) return false;
-  }
-  return true;
-}
-
-function calBodyHTML() {
-  if (calState.view === 'gcal') {
-    return '<div class="card rounded-3xl p-4 sm:p-5">' +
-      '<p class="text-[13.5px] opacity-70 mb-3">' + esc(c('meetings.gcal_note')) + '</p>' +
-      '<div class="rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white">' +
-        '<iframe title="MSCA09 Service Meetings calendar" src="' + attr(M.GCAL_EMBED) + '" ' +
-        'style="border:0" width="100%" height="620" frameborder="0" scrolling="no" loading="lazy"></iframe></div>' +
-      '<div class="mt-4 flex flex-wrap gap-2">' +
-        '<a href="' + attr(M.GCAL_PAGE) + '" target="_blank" rel="noopener" class="chip ' + M.tone('brand') + '">' +
-          icon('up-right-from-square','text-[.7rem]') + esc(t('openInGcal')) + '</a>' +
-        '<a href="' + attr(M.GCAL_ICS) + '" class="chip ' + M.tone('emerald') + '">' +
-          icon('calendar-plus','text-[.7rem]') + esc(t('subscribe')) + '</a>' +
-      '</div></div>';
-  }
-  if (calState.view === 'pattern') return patternHTML();
-  if (calState.view === 'month')   return monthHTML();
-  return upcomingHTML();
-}
-
 function upcomingHTML() {
   const now = new Date(); now.setHours(0,0,0,0);
-  const to = new Date(now.getTime() + calState.days * 864e5);
-  let occ = M.expandOccurrences(now, to).filter(matches);
-  if (calState.dow !== '') occ = occ.filter(function (o) { return String(o.date.getDay()) === calState.dow; });
+  const to = new Date(now.getTime() + (parseInt(calState.days, 10) || 30) * 864e5);
+  const occ = M.occurrences(M.meetingsList(), now, to).filter(function (o) { return meetMatches(o); });
   if (!occ.length) return M.emptyState();
 
-  const groups = {};
-  occ.forEach(function (o) { (groups[o.date.toDateString()] = groups[o.date.toDateString()] || []).push(o); });
+  const groups = {}, order = [];
+  occ.forEach(function (o) {
+    const k = o.date.toDateString();
+    if (!groups[k]) { groups[k] = []; order.push(k); }
+    groups[k].push(o);
+  });
 
-  return '<div class="space-y-8">' + Object.keys(groups).map(function (k) {
+  return countLine(occ.length, 'meetingOne', 'meetingMany') +
+    '<div class="space-y-8">' + order.map(function (k) {
     const d = new Date(k);
-    const isToday = d.toDateString() === new Date().toDateString();
+    const isToday = k === new Date().toDateString();
     return '<section>' +
       '<div class="flex items-center gap-3 mb-3">' +
         '<span class="grid place-items-center w-14 h-14 shrink-0 rounded-2xl text-white bg-gradient-to-br ' +
@@ -1835,60 +1966,73 @@ function upcomingHTML() {
             '<span class="block text-xl font-display font-extrabold">' + d.getDate() + '</span></span></span>' +
         '<div class="min-w-0"><h2 class="font-display font-bold text-lg leading-tight">' + esc(M.dayName(d.getDay())) + '</h2>' +
         '<p class="text-[13px] opacity-60">' + esc(M.monName(d.getMonth()) + ' ' + d.getDate() + ', ' + d.getFullYear()) +
-        (isToday ? ' · <span class="font-bold text-fuchsia-600 dark:text-fuchsia-300">' + esc(t('today')) + '</span>' : '') + '</p></div>' +
+        (isToday ? ' · <span class="font-bold text-fuchsia-600 dark:text-fuchsia-300">' + esc(t('today')) + '</span>' : '') +
+        ' · ' + groups[k].length + '</p></div>' +
       '</div>' +
       '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">' + groups[k].map(occCard).join('') + '</div>' +
     '</section>';
   }).join('') + '</div>';
 }
 
-function monthHTML() {
-  const base = calState.month || new Date();
-  const y = base.getFullYear(), m = base.getMonth();
-  const first = new Date(y, m, 1), last = new Date(y, m + 1, 0);
-  let occ = M.expandOccurrences(new Date(y, m, 1, 0, 0), new Date(y, m + 1, 0, 23, 59)).filter(matches);
-  if (calState.dow !== '') occ = occ.filter(function (o) { return String(o.date.getDay()) === calState.dow; });
-
-  const byDay = {};
-  occ.forEach(function (o) { (byDay[o.date.getDate()] = byDay[o.date.getDate()] || []).push(o); });
-
-  const cells = [];
-  for (let i = 0; i < first.getDay(); i++) cells.push(null);
-  for (let d = 1; d <= last.getDate(); d++) cells.push(d);
-  while (cells.length % 7) cells.push(null);
+/* the Sunday that starts the week holding `ymd` (today if empty) */
+function weekStart(ymd) {
+  const d = ymd ? M.parseDT(ymd) : new Date();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate() - d.getDay());
+}
+function weekHTML() {
+  const from = weekStart(calState.week);
+  const to = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 6, 23, 59);
+  const occ = M.occurrences(M.meetingsList(), from, to).filter(function (o) { return meetMatches(o); });
+  const days = [0,1,2,3,4,5,6].map(function (i) { return new Date(from.getFullYear(), from.getMonth(), from.getDate() + i); });
   const todayStr = new Date().toDateString();
+  const label = M.monName(from.getMonth()) + ' ' + from.getDate() + ' – ' +
+    (to.getMonth() !== from.getMonth() ? M.monName(to.getMonth()) + ' ' : '') + to.getDate() + ', ' + to.getFullYear();
 
   return '<div class="card rounded-3xl p-4 sm:p-6">' +
     '<div class="flex items-center justify-between gap-3 mb-5">' +
-      '<button type="button" data-monthstep="-1" class="w-10 h-10 shrink-0 rounded-full border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10" aria-label="Previous month">' + icon('chevron-left') + '</button>' +
-      '<h3 class="font-display font-extrabold text-lg sm:text-2xl text-center">' + esc(M.monName(m) + ' ' + y) + '</h3>' +
-      '<button type="button" data-monthstep="1" class="w-10 h-10 shrink-0 rounded-full border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10" aria-label="Next month">' + icon('chevron-right') + '</button>' +
+      '<button type="button" data-weekstep="-1" class="' + BTN_ROUND + '" aria-label="' + attr(t('previous')) + '">' + icon('chevron-left') + '</button>' +
+      '<div class="text-center"><h3 class="font-display font-extrabold text-lg sm:text-2xl">' + esc(label) + '</h3>' +
+        '<p class="text-[12.5px] opacity-60">' + esc(occ.length + ' ' + t(occ.length === 1 ? 'meetingOne' : 'meetingMany')) + ' · ' +
+        '<button type="button" data-weekstep="0" class="font-semibold text-brand-700 dark:text-brand-300 hover:underline">' + esc(t('thisWeek')) + '</button></p></div>' +
+      '<button type="button" data-weekstep="1" class="' + BTN_ROUND + '" aria-label="' + attr(t('next')) + '">' + icon('chevron-right') + '</button>' +
     '</div>' +
-    '<div class="scroll-x"><div class="min-w-[700px] grid grid-cols-7 gap-1.5">' +
-      M.DOW_EN.map(function (d, i) {
-        return '<div class="text-center text-[11px] font-bold uppercase tracking-widest opacity-55 pb-1.5">' + esc(M.dayName(i).slice(0,3)) + '</div>';
+    '<div class="grid gap-2 md:grid-cols-7">' +
+      days.map(function (d) {
+        const isToday = d.toDateString() === todayStr;
+        const list = occ.filter(function (o) { return o.date.toDateString() === d.toDateString(); });
+        return '<div class="rounded-2xl border ' + (isToday ? 'border-fuchsia-400 ring-2 ring-fuchsia-300/40' : 'border-black/5 dark:border-white/10') +
+          ' bg-white/70 dark:bg-white/[.04] p-2.5 min-h-[120px]">' +
+          '<p class="flex md:block items-baseline gap-2 pb-1.5 mb-1.5 border-b border-black/5 dark:border-white/10">' +
+            '<span class="text-[11px] font-bold uppercase tracking-widest ' + (isToday ? 'text-fuchsia-600 dark:text-fuchsia-300' : 'opacity-60') + '">' +
+              esc(M.dayName(d.getDay()).slice(0, 3)) + '</span> ' +
+            '<span class="font-display font-extrabold text-lg">' + d.getDate() + '</span></p>' +
+          (list.length
+            ? '<div class="space-y-1.5">' + list.map(function (o) {
+                const st = M.calKind(o.kind);
+                return '<a href="' + attr(meetHref(o)) + '" class="block rounded-lg px-2 py-1.5 text-[11.5px] leading-snug font-semibold ' +
+                  M.tone(st.c) + ' hover:brightness-95">' +
+                  '<span class="block font-bold">' + esc(o.allDay ? t('allDay') : M.fmtTime(o.hour, o.minute)) + '</span>' +
+                  esc(eventTitle(o)) +
+                  (o.format ? '<span class="block font-normal opacity-75">' + esc(M.fmtLabel(o.format)) + '</span>' : '') + '</a>';
+              }).join('') + '</div>'
+            : '<p class="text-[12px] opacity-40 px-1">—</p>') +
+        '</div>';
       }).join('') +
-      cells.map(function (d) {
-        if (d === null) return '<div class="rounded-xl bg-black/[.02] dark:bg-white/[.02] min-h-[104px]"></div>';
-        const isToday = new Date(y, m, d).toDateString() === todayStr;
-        const list = byDay[d] || [];
-        return '<div class="rounded-xl border ' + (isToday ? 'border-fuchsia-400 ring-2 ring-fuchsia-300/40' : 'border-black/5 dark:border-white/10') +
-          ' bg-white/70 dark:bg-white/[.04] p-2 min-h-[104px]">' +
-          '<div class="text-[12px] font-bold ' + (isToday ? 'text-fuchsia-600 dark:text-fuchsia-300' : 'opacity-60') + '">' + d + '</div>' +
-          '<div class="mt-1 space-y-1">' + list.slice(0,4).map(function (o) {
-            const st = M.meetKind(o.kind);
-            return '<a href="#/meetings/' + attr(o.id) + '" class="block rounded-md px-1.5 py-1 text-[10.5px] leading-tight font-semibold ' +
-              M.tone(st.c) + ' hover:brightness-95" title="' + attr(o.title + ' — ' + M.fmtTime(o.hour, o.minute)) + '">' +
-              esc(M.fmtTime(o.hour, o.minute).replace(':00','')) + ' ' + esc(o.title) + '</a>';
-          }).join('') +
-          (list.length > 4 ? '<div class="text-[10.5px] opacity-60 pl-1">+' + (list.length - 4) + '</div>' : '') +
-          '</div></div>';
-      }).join('') +
-    '</div></div></div>';
+    '</div></div>';
 }
 
+function meetMonthHTML() {
+  const mo = monthOf(calState.month);
+  const occ = M.occurrences(M.meetingsList(), new Date(mo.y, mo.m, 1), new Date(mo.y, mo.m + 1, 0, 23, 59))
+    .filter(function (o) { return meetMatches(o); })
+    .map(function (o) { return Object.assign({}, o, { href: meetHref(o), title: eventTitle(o) }); });
+  return countLine(occ.length, 'meetingOne', 'meetingMany') + monthGrid(mo.y, mo.m, occ);
+}
+
+/* The same grid as the printed flyer — which week of the month, which day —
+   generated from the meetings that still happen, so the two never drift.  */
 function patternHTML() {
-  const series = M.calendarSeries().filter(matches);
+  const series = currentSeries().filter(function (s) { return meetMatches(s, true); });
   const weeks = [1,2,3,4,5];
   const grid = {};
   weeks.forEach(function (w) { grid[w] = [[],[],[],[],[],[],[]]; });
@@ -1896,13 +2040,16 @@ function patternHTML() {
 
   series.forEach(function (s) {
     s.byday.forEach(function (bd) {
-      const mm = String(bd).match(/^(-?\d)?([A-Z]{2})$/);
+      const mm = String(bd).match(/^([+-]?\d)?([A-Z]{2})$/);
       if (!mm) return;
       const di = DOWI[mm[2]];
       if (di === undefined) return;
-      if (calState.dow !== '' && String(di) !== calState.dow) return;
-      if (mm[1]) { const w = parseInt(mm[1],10); if (grid[w]) grid[w][di].push(s); }
-      else weeks.forEach(function (w) { grid[w][di].push(s); });
+      if (calState.day !== '' && String(di) !== calState.day) return;
+      if (mm[1]) {
+        const w = parseInt(mm[1], 10);
+        const row = w < 0 ? 5 : w;                 // "last" goes on the bottom row
+        if (grid[row]) grid[row][di].push(s);
+      } else weeks.forEach(function (w) { grid[w][di].push(s); });
     });
   });
   if (!weeks.some(function (w) { return grid[w].some(function (cc) { return cc.length; }); })) return M.emptyState();
@@ -1922,18 +2069,18 @@ function patternHTML() {
             if (!cell.length) return '<td class="rounded-xl bg-black/[.02] dark:bg-white/[.02] min-w-[110px]"></td>';
             return '<td class="rounded-xl border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/[.04] p-1.5 align-top min-w-[110px]">' +
               cell.slice().sort(function (a,b) { return (a.hour*60+a.minute) - (b.hour*60+b.minute); }).map(function (s) {
-                const st = M.meetKind(s.kind);
-                return '<a href="#/meetings/' + attr(s.id) + '" class="block rounded-lg px-2 py-1.5 mb-1 text-[11px] leading-tight font-semibold ' +
-                  M.tone(st.c) + ' hover:brightness-95">' + esc(s.title) +
+                const st = M.calKind(s.kind);
+                return '<a href="' + attr(meetHref(s)) + '" class="block rounded-lg px-2 py-1.5 mb-1 text-[11px] leading-tight font-semibold ' +
+                  M.tone(st.c) + ' hover:brightness-95">' + esc(eventTitle(s)) +
                   '<span class="block font-normal opacity-80">' + esc(M.fmtTime(s.hour, s.minute).replace(':00','')) + '</span></a>';
               }).join('') + '</td>';
           }).join('') + '</tr>';
       }).join('') +
     '</tbody></table></div>' +
     '<div class="mt-5 flex flex-wrap gap-2">' +
-      Object.keys(S.kinds['meeting'] || {}).filter(function (k) { return k !== 'Other'; }).map(function (k) {
-        const st = M.meetKind(k);
-        return '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa,'text-[.7rem]') + '<span>' + esc(M.kindLabel(k)) + '</span></span>';
+      M.uniq(series.map(function (s) { return s.kind; })).map(function (k) {
+        const st = M.calKind(k);
+        return '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(k)) + '</span></span>';
       }).join('') +
     '</div></div>';
 }
@@ -2021,7 +2168,7 @@ function districtInfo(r) {
   if (m) {
     const end = new Date(2000, 0, 1, m.hour, m.minute + Math.round(m.span / 60000));
     return {
-      id: m.id, pattern: m.pattern || patternLabel(r), start: M.fmtTime(m.hour, m.minute),
+      id: m.id, pattern: M.recurLabel(m) || patternLabel(r), start: M.fmtTime(m.hour, m.minute),
       end: m.span ? M.fmtTime(end.getHours(), end.getMinutes()) : '',
       format: m.format, place: m.location,
       zoomId: m.zoomId, passcode: m.passcode, zoomLink: m.zoomLink,
@@ -2594,29 +2741,19 @@ VIEWS.documents.mount = function (params) {
 };
 
 /* ═══════════════════════════════════════════════════════════════ EVENTS ── */
-/* Everything on this page comes from the MSCA09_Events Google Calendar,
-   mirrored into data/events.ics. Four tabs: what is coming up, the Area's
-   own business days for this panel, everything already held (by year,
-   folded), and the live Google Calendar.                                 */
-const evState = { view:'upcoming', q:'', kind:'', lang:'', fmt:'' };
+/* The events in the Area's calendar: assemblies, ASCs, the Foro, the
+   Servathon, workshops, conventions, YPAA — everything since December
+   2020. Five views and five filters; the state lives in the address so a
+   filtered view can be bookmarked or shared.                             */
+const EV_DEFAULTS = { view:'upcoming', q:'', type:'', fmt:'', lang:'', host:'', year:'', month:'' };
+const evState = Object.assign({}, EV_DEFAULTS);
 const PANEL_YEARS = [1950 + (+M.CURRENT_PANEL), 1951 + (+M.CURRENT_PANEL)];   // Panel 76 = 2026-27
 
 VIEWS.events = function () {
-  const st = S.evStamp;
   return M.pageHead({
     icon:'star', kicker:c('events.kicker'),
     title:M.cTitle('events.title'), lead:c('events.lead'),
-    extra:'<div class="mt-7 flex flex-wrap gap-2.5">' +
-      '<a href="' + attr(M.EVENTS_CAL.ics) + '" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-ink-900 bg-white hover:bg-amber-100 transition">' +
-        icon('calendar-plus') + esc(t('subscribe')) + '</a>' +
-      '<a href="' + attr(M.EVENTS_CAL.page) + '" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white border-2 border-white/40 hover:bg-white/10 transition">' +
-        icon('up-right-from-square') + esc(t('openInGcal')) + '</a>' +
-      (st
-        ? '<span class="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold bg-emerald-400/20 text-emerald-100 border border-emerald-300/40">' +
-          '<span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>' +
-          esc(t('syncedWith') + ' ' + M.monName(st.getMonth()) + ' ' + st.getDate() + ', ' + st.getFullYear()) + '</span>'
-        : '') +
-    '</div>'
+    extra:M.subscribeButtons()
   }) +
   '<section class="mx-auto max-w-7xl px-4 py-10">' +
     '<div id="evShell"></div>' +
@@ -2632,80 +2769,64 @@ VIEWS.events = function () {
   '</section>';
 };
 
+/* the address is the filter: whatever it does not say is the default */
 VIEWS.events.mount = function () {
+  const q = M.readQuery();
+  Object.keys(EV_DEFAULTS).forEach(function (k) { evState[k] = q[k] != null ? q[k] : EV_DEFAULTS[k]; });
   const shell = $('#evShell');
   if (shell) drawEvents(shell);
 };
 
+/* "D30 & D9" is hosted by both */
+function hostsOf(e) {
+  return String(e.host || '').split(/\s*(?:&|,|\band\b|\/)\s*/i)
+    .map(function (h) { const n = h.match(/\d+/); return n ? 'D' + parseInt(n[0], 10) : ''; })
+    .filter(Boolean);
+}
 function evMatches(e) {
-  if (evState.kind && e.kind !== evState.kind) return false;
+  if (evState.type && e.kind !== evState.type) return false;
   if (evState.fmt && e.format !== evState.fmt) return false;
-  // a bilingual event belongs under either language
-  if (evState.lang === 'English' && e.language === 'Spanish') return false;
-  if (evState.lang === 'Spanish' && e.language === 'English') return false;
+  if (!M.langMatch(evState.lang, e.language)) return false;
+  if (evState.host && hostsOf(e).indexOf(evState.host) === -1) return false;
   if (evState.q) {
     const hay = M.norm([e.title, e.title_es, e.place, e.host, e.description,
-                        M.evKindLabel(e.kind), e.kind].join(' '));
+                        M.calKindLabel(e.kind), e.kind].join(' '));
     if (hay.indexOf(M.norm(evState.q)) === -1) return false;
   }
   return true;
 }
-
-function evSelect(id, label, opts, val) {
-  return '<label class="block"><span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' + esc(label) + '</span>' +
-    '<select id="' + attr(id) + '" class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 px-3 py-2.5 text-sm">' +
-      '<option value="">' + esc(t('all')) + '</option>' +
-      opts.map(function (o) {
-        return '<option value="' + attr(o[0]) + '"' + (String(val) === String(o[0]) ? ' selected' : '') + '>' + esc(o[1]) + '</option>';
-      }).join('') + '</select></label>';
-}
-function evChip(attrName, val, label, on, grad) {
-  return '<button type="button" ' + attrName + '="' + attr(val) + '" aria-pressed="' + on + '" ' +
-    'class="fltbtn chip whitespace-nowrap ' + (on ? 'text-white bg-gradient-to-r ' + grad
-                         : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
-    esc(label) + '</button>';
-}
+function yearOk(d) { return !evState.year || String(d.getFullYear()) === evState.year; }
 
 function drawEvents(shell) {
   const all = M.allEvents();
   const kinds = M.uniq(all.map(function (e) { return e.kind; }))
-    .sort(function (a, b) { return M.evKindLabel(a).localeCompare(M.evKindLabel(b)); });
+    .sort(function (a, b) { return M.calKindLabel(a).localeCompare(M.calKindLabel(b)); });
   const fmts = M.uniq(all.map(function (e) { return e.format; }).filter(Boolean)).sort();
-  const tabs = [['upcoming', t('upcoming'), 'list-ul', M.upcomingEvents().length],
+  const hosts = M.uniq([].concat.apply([], all.map(hostsOf)))
+    .sort(function (a, b) { return (parseInt(a.slice(1), 10) || 0) - (parseInt(b.slice(1), 10) || 0); });
+  const years = M.uniq(all.map(function (e) { return e.start.getFullYear(); })).sort().reverse();
+  const tabs = [['upcoming', t('upcoming'), 'list-ul', M.upcomingEvents().filter(evMatches).length],
+                ['month', t('monthView'), 'calendar', null],
                 ['area', c('events.area_tab'), 'landmark', null],
-                ['past', t('pastEvents'), 'clock-rotate-left', M.pastEvents().length],
+                ['past', t('pastEvents'), 'clock-rotate-left', M.pastEvents().filter(evMatches).length],
                 ['gcal', t('gcalView'), 'calendar-day', null]];
   const filters = evState.view !== 'gcal';
+  const byYear = evState.view === 'past' || evState.view === 'area';
 
   shell.innerHTML =
   '<div class="card rounded-3xl p-4 sm:p-6 mb-8">' +
-    '<div class="scroll-x -mx-1 px-1 pb-1' + (filters ? ' mb-5' : '') + '"><div class="flex gap-2 w-max" role="tablist">' +
-      tabs.map(function (tb) {
-        const on = evState.view === tb[0];
-        return '<button type="button" role="tab" data-evview="' + attr(tb[0]) + '" aria-selected="' + on + '" ' +
-          'class="fltbtn inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold whitespace-nowrap ' +
-          (on ? 'text-white bg-gradient-to-r from-brand-600 to-fuchsia-600 shadow-pop'
-              : 'border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10') + '">' +
-          icon(tb[2]) + esc(tb[1]) +
-          (tb[3] != null ? '<span class="chip ' + (on ? 'bg-white/25 text-white' : M.tone('slate')) + '">' + tb[3] + '</span>' : '') +
-          '</button>';
-      }).join('') +
-    '</div></div>' +
+    M.tabRow(tabs, evState.view, 'data-evview') +
     (filters
-      ? '<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">' +
-          '<label class="sm:col-span-2 block">' +
-            '<span class="block text-[11px] font-bold uppercase tracking-widest opacity-60 mb-1.5">' + esc(t('search')) + '</span>' +
-            '<span class="relative block">' +
-              '<i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 opacity-40 text-sm" aria-hidden="true"></i>' +
-              '<input id="evQ" type="search" value="' + attr(evState.q) + '" placeholder="' + attr(t('searchEvents')) + '" ' +
-                'class="w-full rounded-xl border border-black/10 dark:border-white/15 bg-white dark:bg-ink-900 pl-10 pr-3 py-2.5 text-sm">' +
-            '</span></label>' +
-          evSelect('evKind', t('type'), kinds.map(function (k) { return [k, M.evKindLabel(k)]; }), evState.kind) +
-          evSelect('evFmt', t('format'), fmts.map(function (f) { return [f, M.fmtLabel(f)]; }), evState.fmt) +
+      ? '<div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">' +
+          M.searchField('evQ', t('search'), t('searchEvents'), evState.q) +
+          M.selectField('evKind', t('type'), kinds.map(function (k) { return [k, M.calKindLabel(k)]; }), evState.type) +
+          M.selectField('evFmt', t('format'), fmts.map(function (f) { return [f, M.fmtLabel(f)]; }), evState.fmt) +
+          M.selectField('evHost', t('hostedBy'), hosts.map(function (h) { return [h, t('district') + ' ' + h.slice(1)]; }), evState.host) +
+          (byYear ? M.selectField('evYear', t('year'), years.map(function (y) { return [String(y), String(y)]; }), evState.year) : '') +
         '</div>' +
         '<div class="mt-3 flex flex-wrap items-center gap-2">' +
           [['', t('all')], ['English', t('english')], ['Spanish', t('spanish')]].map(function (l) {
-            return evChip('data-evlang', l[0], l[1], evState.lang === l[0], 'from-brand-600 to-fuchsia-600');
+            return M.chipButton('data-evlang', l[0], l[1], evState.lang === l[0]);
           }).join('') +
           '<button type="button" id="evClear" class="ml-auto py-1 text-[13px] font-semibold text-brand-700 dark:text-brand-300 hover:underline">' +
             icon('rotate-left','mr-1') + esc(t('clearFilters')) + '</button>' +
@@ -2723,39 +2844,54 @@ function drawEvents(shell) {
   });
   const q = $('#evQ', shell);
   if (q) { let tm; q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { evState.q = q.value; body(); }, 180); }); }
-  [['evKind','kind'], ['evFmt','fmt']].forEach(function (p) {
+  [['evKind','type'], ['evFmt','fmt'], ['evHost','host'], ['evYear','year']].forEach(function (p) {
     const el = $('#' + p[0], shell);
     if (el) el.addEventListener('change', function () { evState[p[1]] = el.value; body(); });
   });
   const cl = $('#evClear', shell);
   if (cl) cl.addEventListener('click', function () {
-    evState.q = evState.kind = evState.lang = evState.fmt = '';
+    const view = evState.view;
+    Object.assign(evState, EV_DEFAULTS, { view: view });
     drawEvents(shell);
   });
 
   function body() {
     const b = $('#evBody', shell);
     if (!b) return;
+    // the address says only what applies to the view on screen
+    const shown = Object.assign({}, evState);
+    if (shown.view !== 'month') shown.month = '';
+    if (shown.view !== 'past' && shown.view !== 'area') shown.year = '';
+    M.writeQuery('events', shown, EV_DEFAULTS);
     b.innerHTML = evState.view === 'area' ? evAreaHTML()
                 : evState.view === 'past' ? evPastHTML()
-                : evState.view === 'gcal' ? evGcalHTML()
+                : evState.view === 'month' ? evMonthHTML()
+                : evState.view === 'gcal' ? M.gcalPanel(c('events.gcal_note'), 'MONTH')
                 : evUpcomingHTML();
     if (evState.view === 'past') wirePast(b);
+    $$('[data-monthstep]', b).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        evState.month = M.stepMonth(evState.month, parseInt(btn.getAttribute('data-monthstep'), 10));
+        body();
+      });
+    });
   }
   body();
 }
 
+function filtering() { return !!(evState.q || evState.type || evState.fmt || evState.lang || evState.host || evState.year); }
+
 /* coming up, a heading per month */
 function evUpcomingHTML() {
   const list = M.upcomingEvents().filter(evMatches);
-  if (!list.length) return M.emptyState(evState.q || evState.kind || evState.fmt || evState.lang ? '' : t('noEvents'));
+  if (!list.length) return M.emptyState(filtering() ? '' : t('noEvents'));
   const groups = [], byKey = {};
   list.forEach(function (e) {
     const d = e.nextDate, k = d.getFullYear() + '-' + d.getMonth();
     if (!byKey[k]) { byKey[k] = { d:d, items:[] }; groups.push(byKey[k]); }
     byKey[k].items.push(e);
   });
-  return groups.map(function (g) {
+  return M.countLine(list.length, 'eventOne', 'eventMany') + groups.map(function (g) {
     return '<section class="mb-10 last:mb-0">' +
       '<h2 class="mb-4 flex items-center gap-3 font-display font-extrabold text-xl sm:text-2xl tracking-tight">' +
         '<span class="w-1.5 h-7 rounded-full grad-rule"></span>' + esc(M.monName(g.d.getMonth()) + ' ' + g.d.getFullYear()) +
@@ -2765,11 +2901,35 @@ function evUpcomingHTML() {
   }).join('');
 }
 
-/* the Area's own business days for this panel: ASCs, Assemblies, the Foro
-   and the Servathon, every date in order, the next one marked            */
+/* a month at a glance; a three-day convention shows on each of its days */
+function evMonthHTML() {
+  const mo = M.monthOf(evState.month);
+  const from = new Date(mo.y, mo.m, 1), to = new Date(mo.y, mo.m + 1, 0, 23, 59);
+  const items = [];
+  let count = 0;
+  M.allEvents().filter(evMatches).forEach(function (e) {
+    M.eventOccurrences(e, new Date(from.getTime() - 31 * 864e5), to).forEach(function (s) {
+      const last = new Date(s.getTime() + Math.max(0, e.span - (e.allDay ? 60000 : 0)));
+      let counted = false;
+      for (let d = new Date(s.getFullYear(), s.getMonth(), s.getDate()); d <= last; d.setDate(d.getDate() + 1)) {
+        if (d < from || d > to) continue;
+        items.push(Object.assign({}, e, { date: new Date(d), href: '#/events/' + e.slug, title: M.eventTitle(e),
+                                          hour: s.getHours(), minute: s.getMinutes(),
+                                          allDay: e.allDay || d.toDateString() !== s.toDateString() }));
+        if (!counted) { count++; counted = true; }
+      }
+    });
+  });
+  return M.countLine(count, 'eventOne', 'eventMany') + M.monthGrid(mo.y, mo.m, items);
+}
+
+/* the Area's own business days, every date in order, the next one marked.
+   This panel by default; any year with the year filter.                   */
 function evAreaHTML() {
   const today = new Date(); today.setHours(0,0,0,0);
-  const from = new Date(PANEL_YEARS[0], 0, 1), to = new Date(PANEL_YEARS[1], 11, 31, 23, 59);
+  const y0 = evState.year ? +evState.year : PANEL_YEARS[0];
+  const y1 = evState.year ? +evState.year : PANEL_YEARS[1];
+  const from = new Date(y0, 0, 1), to = new Date(y1, 11, 31, 23, 59);
   const rows = [];
   M.allEvents().filter(function (e) { return M.AREA_KINDS.indexOf(e.kind) !== -1 && evMatches(e); })
     .forEach(function (e) {
@@ -2778,16 +2938,19 @@ function evAreaHTML() {
   rows.sort(function (a, b) { return a.d - b.d; });
   let next = -1;
   rows.some(function (r, i) { if (r.d >= today) { next = i; return true; } return false; });
-  return '<div class="mb-6"><h2 class="font-display font-extrabold text-2xl tracking-tight">' +
-      esc(c('events.area_title').replace('{panel}', M.CURRENT_PANEL)) + '</h2>' +
+  const heading = evState.year
+    ? c('events.area_title_year').replace('{year}', evState.year)
+    : c('events.area_title').replace('{panel}', M.CURRENT_PANEL);
+  return '<div class="mb-6"><h2 class="font-display font-extrabold text-2xl tracking-tight">' + esc(heading) + '</h2>' +
       '<p class="mt-2 text-[14.5px] opacity-75 max-w-3xl leading-relaxed">' + esc(c('events.area_sub')) + '</p></div>' +
     (rows.length
-      ? '<div class="grid gap-3 md:grid-cols-2 items-start">' +
+      ? M.countLine(rows.length, 'meetingOne', 'meetingMany') +
+        '<div class="grid gap-3 md:grid-cols-2 items-start">' +
           rows.map(function (r, i) { return areaRow(r.e, r.d, i === next, r.d < today); }).join('') + '</div>'
       : M.emptyState());
 }
 function areaRow(e, d, isNext, isPast) {
-  const k = M.evKind(e.kind);
+  const k = M.calKind(e.kind);
   return '<a href="#/events/' + attr(e.slug) + '" class="flex items-start gap-4 p-4 rounded-2xl transition ' +
       (isPast ? 'opacity-55 hover:opacity-90 border border-black/5 dark:border-white/10' : 'card card-hover') +
       (isNext ? ' ring-2 ring-fuchsia-400/70' : '') + '">' +
@@ -2797,7 +2960,7 @@ function areaRow(e, d, isNext, isPast) {
         '<span class="block text-xl font-display font-extrabold">' + d.getDate() + '</span></span></span>' +
     '<span class="min-w-0 flex-1">' +
       '<span class="flex flex-wrap items-center gap-1.5">' +
-        '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.evKindLabel(e.kind)) + '</span></span>' +
+        '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(e.kind)) + '</span></span>' +
         (isNext ? '<span class="chip ' + M.tone('fuchsia') + '">' + esc(t('nextUp')) + '</span>' : '') +
       '</span>' +
       '<span class="mt-1.5 block font-display font-bold text-[16px] leading-snug break-words">' + esc(M.eventTitle(e)) + '</span>' +
@@ -2815,8 +2978,9 @@ function areaRow(e, d, isNext, isPast) {
 
 /* everything already held, a fold per year. The cards are only built when a
    year is opened, so five years of flyers cost nothing until asked for.  */
+let evPastCache = {};
 function evPastHTML() {
-  const list = M.pastEvents().filter(evMatches);
+  const list = M.pastEvents().filter(function (e) { return evMatches(e) && yearOk(e.lastDate || e.start); });
   if (!list.length) return M.emptyState();
   const years = [];
   const byY = {};
@@ -2826,19 +2990,19 @@ function evPastHTML() {
     byY[y].push(e);
   });
   evPastCache = byY;
-  const searching = !!(evState.q || evState.kind || evState.fmt || evState.lang);
+  const open = filtering();
   return '<p class="mb-4 text-[14.5px] opacity-75 max-w-3xl leading-relaxed">' + esc(c('events.past_sub')) + '</p>' +
+    M.countLine(list.length, 'eventOne', 'eventMany') +
     '<div class="card rounded-2xl px-4 sm:px-5 py-1">' +
       years.map(function (y) {
         return M.collapsible({
           label:String(y), count:byY[y].length, size:'lg', cls:'border-b border-black/5 dark:border-white/10 last:border-0',
-          icon:'clock-rotate-left', tone:'slate', open:searching, attrs:' data-evyear="' + y + '"',
+          icon:'clock-rotate-left', tone:'slate', open:open, attrs:' data-evyear="' + y + '"',
           body:'<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 items-stretch pb-4" data-evyearbody="' + y + '"></div>'
         });
       }).join('') +
     '</div>';
 }
-let evPastCache = {};
 function wirePast(root) {
   $$('details[data-evyear]', root).forEach(function (d) {
     const fill = function () {
@@ -2849,20 +3013,6 @@ function wirePast(root) {
     if (d.open) fill();
     d.addEventListener('toggle', function () { if (d.open) fill(); });
   });
-}
-
-function evGcalHTML() {
-  return '<div class="card rounded-3xl p-4 sm:p-5">' +
-    '<p class="text-[13.5px] opacity-70 mb-3">' + esc(c('events.gcal_note')) + '</p>' +
-    '<div class="rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white">' +
-      '<iframe title="MSCA09 Events calendar" src="' + attr(M.EVENTS_CAL.embed('MONTH')) + '" ' +
-      'style="border:0" width="100%" height="680" frameborder="0" scrolling="no" loading="lazy"></iframe></div>' +
-    '<div class="mt-4 flex flex-wrap gap-2">' +
-      '<a href="' + attr(M.EVENTS_CAL.page) + '" target="_blank" rel="noopener" class="chip ' + M.tone('brand') + '">' +
-        icon('up-right-from-square','text-[.7rem]') + esc(t('openInGcal')) + '</a>' +
-      '<a href="' + attr(M.EVENTS_CAL.ics) + '" class="chip ' + M.tone('emerald') + '">' +
-        icon('calendar-plus','text-[.7rem]') + esc(t('subscribe')) + '</a>' +
-    '</div></div>';
 }
 
 /* ══════════════════════════════════════════════════════════ CONTRIBUTE ─── */
@@ -3289,7 +3439,7 @@ function defRow(iconName, label, value, href, ext) {
       '<p class="mt-0.5 text-[14.5px] leading-relaxed break-words">' + inner + '</p></div></div>';
 }
 
-/* ── pieces both calendars' modals use ─────────────────────────────────── */
+/* ── pieces the calendar modals use ────────────────────────────────────── */
 function zoomRow(z) {
   if (!z.zoomId && !z.zoomLink) return '';
   const href = z.zoomLink || ('https://zoom.us/j/' + String(z.zoomId).replace(/\D/g, ''));
@@ -3338,53 +3488,62 @@ function noteBlock(notes) {
       notes.map(function (n) { return '<p>' + M.linkify(n) + '</p>'; }).join('') + '</div>'
     : '';
 }
+function clock(h, m, plusMs) {
+  const d = new Date(2000, 0, 1, h, m + Math.round((plusMs || 0) / 60000));
+  return M.fmtTime(d.getHours(), d.getMinutes());
+}
 const BTN = 'inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold border border-black/10 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/10 transition';
 
-/* ── event ─────────────────────────────────────────────────────────────── */
-MODALS.events = function (idParts) {
-  const base = M.eventById(idParts[0]);
+/* ── one entry of the calendar ─────────────────────────────────────────
+   A district meeting, an ASC, a workshop — the same window for all of
+   them, opened from "#/meetings/<id>" or "#/events/<slug>". A repeating
+   entry shows its pattern and its next dates; an event its flyer text.   */
+function entryModal(id) {
+  const base = M.entryById(id);
   if (!base) return null;
-  const k = M.evKind(base.kind);
-  // a repeating event opens on the next date it happens, and "add to
-  // calendar" adds that one rather than the first of the series
+  const k = M.calKind(base.kind);
   const today = new Date(); today.setHours(0,0,0,0);
-  const upcoming = M.eventOccurrences(base, today, new Date(today.getTime() + 400 * 864e5));
-  const start = upcoming[0] || M.lastOccurrence(base) || base.start;
+  const ahead = M.eventOccurrences(base, today, new Date(today.getTime() + 400 * 864e5));
+  const start = ahead[0] || M.lastOccurrence(base) || base.start;
   const end = new Date(start.getTime() + base.span);
   const e = Object.assign({}, base, { nextDate: start });
   const title = M.eventTitle(e);
   const where = e.place || (M.online(e.format) ? t('online') : '');
   const join = zoomHref(e);
+  const pattern = e.recurring ? M.recurLabel(e) : '';
+  const range = e.allDay ? t('allDay') : clock(e.hour, e.minute) + ' – ' + clock(e.hour, e.minute, e.span) + ' PT';
 
   const chips =
-    '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.evKindLabel(e.kind)) + '</span></span>' +
+    '<span class="chip ' + M.tone(k.c) + '">' + icon(k.fa,'text-[.7rem]') + '<span>' + esc(M.calKindLabel(e.kind)) + '</span></span>' +
+    (e.format ? '<span class="chip ' + M.tone(M.online(e.format) || e.format === 'Hybrid' ? 'sky' : 'slate') + '">' + esc(M.fmtLabel(e.format)) + '</span>' : '') +
     M.langChip2(e.language, true) +
-    (e.format && !/person|physical/i.test(e.format) ? '<span class="chip ' + M.tone('sky') + '">' + esc(M.fmtLabel(e.format)) + '</span>' : '') +
-    (e.freq ? '<span class="chip ' + M.tone('violet') + '">' + icon('repeat','text-[.7rem]') +
-       '<span>' + esc(M.recurLabel(e)) + '</span></span>' : '') +
+    (pattern ? '<span class="chip ' + M.tone('violet') + '">' + icon('repeat','text-[.7rem]') + '<span>' + esc(pattern) + '</span></span>' : '') +
     (e.host ? '<span class="chip ' + M.tone('brand') + '">' + esc(t('hostedBy') + ' ' + e.host) + '</span>' : '') +
     (e.cost ? '<span class="chip ' + M.tone('emerald') + '">' + esc(e.cost) + '</span>' : '');
 
+  const dates = e.recurring ? ahead.slice(1, 9) : [];
   const body =
     '<div class="grid gap-3 sm:grid-cols-2">' +
-      defRow('calendar-day', t('when'), M.eventDateLabel(e) + ' · ' + M.eventTimeLabel(e)) +
+      defRow(e.recurring ? 'repeat' : 'calendar-day', t('when'),
+             e.recurring ? pattern + ' · ' + range : M.eventDateLabel(e) + ' · ' + M.eventTimeLabel(e)) +
+      (e.recurring && ahead[0] ? defRow('calendar-day', t('nextUp'), M.fmtDateY(ahead[0])) : '') +
       defRow('location-dot', t('where'), where || '—', e.place ? M.mapLink(e.place) : '', true) +
       zoomRow(e) +
       (e.web ? defRow('globe', t('website'), siteLabel(e.web), siteHref(e.web), true) : '') +
       (e.email ? defRow('envelope', t('contact'), e.email, M.mailto(e.email, title)) : '') +
     '</div>' +
-    // every date in the series, so nobody has to work the rule out themselves
-    (upcoming.length > 1
-      ? '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' +
-          esc(t('alsoOn')) + '</p><div class="flex flex-wrap gap-2">' +
-          upcoming.slice(1, 13).map(function (d) {
-            return '<span class="chip ' + M.tone('slate') + '">' + esc(M.fmtDateY(d)) + '</span>';
-          }).join('') +
-          (upcoming.length > 13 ? '<span class="chip ' + M.tone('slate') + '">+' +
-             esc(upcoming.length - 13) + '</span>' : '') +
-        '</div></div>' : '') +
+    (e.covers ? '<div>' + defRow('city', t('covers'), e.covers) + '</div>' : '') +
     noteBlock(e.notes) +
-    (e.description
+    (dates.length
+      ? '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' + esc(t('alsoOn')) + '</p>' +
+        '<div class="flex flex-wrap gap-2">' + dates.map(function (d) {
+          return '<span class="chip ' + M.tone('slate') + '">' + icon('calendar-day','text-[.7rem]') + '<span>' + esc(M.fmtDate(d)) + '</span></span>';
+        }).join('') +
+        (ahead.length > 9 ? '<span class="chip ' + M.tone('slate') + '">+' + esc(ahead.length - 9) + '</span>' : '') +
+        '</div></div>' : '') +
+    // the text under the line is the flyer for an event; a meeting's is a
+    // note for whoever keeps the calendar, so it is not shown here
+    (e.description && M.onPage(e, 'events')
       ? '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' + esc(t('about')) + '</p>' +
         '<div class="text-[14.5px] leading-relaxed opacity-85 whitespace-pre-line break-words max-h-80 overflow-y-auto pr-1">' +
         M.linkify(e.description) + '</div></div>' : '') +
@@ -3392,71 +3551,23 @@ MODALS.events = function (idParts) {
     flyerStrip(e.images, title);
 
   const actions =
-    '<a href="' + attr(M.gcalLink(title, start, end, e.place || join, e.description, e.allDay)) + '" target="_blank" rel="noopener" class="' + BTN + '">' +
+    '<a href="' + attr(M.gcalLink(title, start, end, e.place || join, e.description || e.notes.join(' '), e.allDay)) + '" target="_blank" rel="noopener" class="' + BTN + '">' +
       icon('calendar-plus') + esc(t('addToCal')) + '</a>' +
     (join ? '<a href="' + attr(join) + '" target="_blank" rel="noopener" class="' + BTN + '">' + icon('video') + esc(t('joinZoom')) + '</a>' : '') +
     (e.place ? '<a href="' + attr(M.mapLink(e.place)) + '" target="_blank" rel="noopener" class="' + BTN + '">' +
       icon('map-location-dot') + esc(t('map')) + '</a>' : '') +
+    (e.kind === 'District' && e.districtNo ? '<a href="#/districts/' + attr(M.slug(e.districtNo)) + '" class="' + BTN + '">' +
+      icon('map-location-dot') + esc(t('district') + ' ' + e.districtNo) + '</a>' : '') +
     (e.images.length ? '<a href="' + attr(M.fileHref(e.images[0])) + '" target="_blank" rel="noopener" class="' + BTN + '">' +
       icon('image') + esc(t('flyer')) + '</a>' : '');
 
-  return { html: modalShell({ hero:flyerHero(e.images, title), icon:k.fa, color:k.c, kicker:M.evKindLabel(e.kind),
-                              title:title, sub:M.eventDateLabel(e), chips:chips, body:body, actions:actions }),
-           share: { title:title, text:title + ' — ' + M.eventDateLabel(e) } };
-};
-
-/* ── service meeting (calendar series) ─────────────────────────────────── */
-function clock(h, m, plusMs) {
-  const d = new Date(2000, 0, 1, h, m + Math.round((plusMs || 0) / 60000));
-  return M.fmtTime(d.getHours(), d.getMinutes());
+  const sub = e.recurring ? pattern : M.eventDateLabel(e);
+  return { html: modalShell({ hero:flyerHero(e.images, title), icon:k.fa, color:k.c, kicker:M.calKindLabel(e.kind),
+                              title:title, sub:sub, chips:chips, body:body, actions:actions }),
+           share: { title:title, text:title + ' — ' + sub } };
 }
-MODALS.meetings = function (idParts) {
-  const s = M.seriesById(idParts[0]);
-  if (!s) return null;
-  const st = M.meetKind(s.kind);
-  const now = new Date(); now.setHours(0,0,0,0);
-  const next = M.expandOccurrences(now, new Date(now.getTime() + 200 * 864e5))
-    .filter(function (o) { return o.id === s.id; }).slice(0, 6);
-  const when = (s.pattern ? s.pattern + ' · ' : '') + clock(s.hour, s.minute) + ' – ' + clock(s.hour, s.minute, s.span) + ' PT';
-  const where = s.location || (M.online(s.format) ? t('online') : '');
-  const join = zoomHref(s);
-
-  const chips =
-    '<span class="chip ' + M.tone(st.c) + '">' + icon(st.fa,'text-[.7rem]') + '<span>' + esc(M.kindLabel(s.kind)) + '</span></span>' +
-    (s.format ? '<span class="chip ' + M.tone('slate') + '">' + esc(M.fmtLabel(s.format)) + '</span>' : '') +
-    M.langChip2(s.language, true);
-
-  const body =
-    '<div class="grid gap-3 sm:grid-cols-2">' +
-      defRow('repeat', t('when'), when) +
-      defRow('location-dot', t('where'), where || '—', s.location ? M.mapLink(s.location) : '', true) +
-      zoomRow(s) +
-      (s.web ? defRow('globe', t('website'), siteLabel(s.web), siteHref(s.web), true) : '') +
-      (s.email ? defRow('envelope', t('contact'), s.email, M.mailto(s.email, s.title)) : '') +
-    '</div>' +
-    (s.covers ? '<div>' + defRow('city', t('covers'), s.covers) + '</div>' : '') +
-    noteBlock(s.notes) +
-    (next.length
-      ? '<div><p class="text-[11px] font-bold uppercase tracking-widest opacity-50 mb-2">' + esc(t('nextDates')) + '</p>' +
-        '<div class="flex flex-wrap gap-2">' + next.map(function (o) {
-          return '<span class="chip ' + M.tone('brand') + '">' + icon('calendar-day','text-[.7rem]') +
-            '<span>' + esc(M.fmtDate(o.date)) + '</span></span>';
-        }).join('') + '</div></div>' : '') +
-    docList(s.links) +
-    flyerStrip(s.images, s.title);
-
-  const first = next[0];
-  const actions =
-    (first ? '<a href="' + attr(M.gcalLink(s.title, first.date, new Date(first.date.getTime() + s.span), s.location || join, s.notes.join(' '))) +
-      '" target="_blank" rel="noopener" class="' + BTN + '">' + icon('calendar-plus') + esc(t('addToCal')) + '</a>' : '') +
-    (join ? '<a href="' + attr(join) + '" target="_blank" rel="noopener" class="' + BTN + '">' + icon('video') + esc(t('joinZoom')) + '</a>' : '') +
-    (s.districtNo ? '<a href="#/districts/' + attr(M.slug(s.districtNo)) + '" class="' + BTN + '">' +
-      icon('map-location-dot') + esc(t('district') + ' ' + s.districtNo) + '</a>' : '');
-
-  return { html: modalShell({ hero:flyerHero(s.images, s.title), icon:st.fa, color:st.c, kicker:t('meetingDetails'),
-                              title:s.title, sub:s.pattern, chips:chips, body:body, actions:actions }),
-           share: { title:s.title, text:s.title + ' — ' + (s.pattern || '') } };
-};
+MODALS.events = function (idParts) { return entryModal(idParts[0]); };
+MODALS.meetings = function (idParts) { return entryModal(idParts[0]); };
 
 /* ── district ──────────────────────────────────────────────────────────── */
 MODALS.districts = function (idParts) {
@@ -3690,6 +3801,8 @@ const MODAL_PARENT = { events:'events', meetings:'meetings', districts:'district
                        committees:'committees', flyer:'events' };
 /* routes whose parameter selects a view rather than opening a modal */
 const PARAM_PAGES = { documents:true };
+/* pages that keep their view and filters in the address (?view=month&…) */
+const QUERY_PAGES = { meetings:true, events:true };
 
 const TITLES = {
   home:{en:'Mid-Southern California Area 09 of Alcoholics Anonymous', es:'Área 09 del Medio-Sur de California de Alcohólicos Anónimos'},
@@ -3753,6 +3866,13 @@ function render() {
       try { baseView.mount(r.params); } catch (e) { console.error('[MSCA09] mount failed', e); }
     }
     rise();
+  } else if (!isModalRoute && QUERY_PAGES[baseName] && typeof baseView.mount === 'function') {
+    // same page, different filters in the address (a shared link, the back
+    // button): apply them without rebuilding the page around them
+    const qs = (location.hash.split('?')[1] || '');
+    if (qs !== (M.lastQuery[baseName] || '')) {
+      try { baseView.mount(r.params); } catch (e) { console.error('[MSCA09] mount failed', e); }
+    }
   }
 
   const typed = (location.hash || '').replace(/^#\/?/, '').split('/')[0].toLowerCase();
@@ -3784,7 +3904,9 @@ M.render = render;
 M.dismissModal = function () {
   const r = parseHash();
   const parent = MODAL_PARENT[r.name];
-  if (parent) location.hash = '#/' + (parent === 'home' ? '' : parent);
+  // back to the page as it was left — with its filters, if it had any
+  const qs = parent && M.lastQuery[parent];
+  if (parent) location.hash = '#/' + (parent === 'home' ? '' : parent) + (qs ? '?' + qs : '');
   else M.closeModal();
 };
 

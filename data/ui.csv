@@ -27,7 +27,7 @@ website,Website,Sitio web
 contact,Contact,Contacto
 district,District,Distrito
 addToCal,Add to my calendar,Añadir a mi calendario
-subscribe,Subscribe to this calendar,Suscribirse a este calendario
+subscribe,"Subscribe (Apple, Outlook)","Suscribirse (Apple, Outlook)"
 week,Week,Semana
 today,Today,Hoy
 printable,Printable flyer (PDF),Volante imprimible (PDF)
@@ -98,3 +98,19 @@ nextUp,Next,Próxima
 documents,Agendas & documents,Agendas y documentos
 flyers,Flyers,Volantes
 everyMonthLast,Last {day} of the month,Último {day} del mes
+weekView,Week,Semana
+timeOfDay,Time of day,Hora del día
+morning,Morning (before noon),Mañana (antes del mediodía)
+afternoon,Afternoon (noon–5 PM),Tarde (mediodía–5 PM)
+evening,Evening (after 5 PM),Noche (después de las 5 PM)
+next7,Next 7 days,Próximos 7 días
+meetingOne,meeting,reunión
+meetingMany,meetings,reuniones
+eventOne,event,evento
+eventMany,events,eventos
+previous,Previous,Anterior
+next,Next,Siguiente
+thisWeek,This week,Esta semana
+addGoogle,Add to Google Calendar,Añadir a Google Calendar
+downloadIcs,Download .ics,Descargar .ics
+year,Year,Año
